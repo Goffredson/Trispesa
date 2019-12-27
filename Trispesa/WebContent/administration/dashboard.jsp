@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 
 <head>
@@ -9,15 +11,14 @@
 <title>Trispesa</title>
 
 <!-- Bootstrap  -->
-<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- css -->
-<link href="../css/main.css" rel="stylesheet">
+<link href="css/main.css" rel="stylesheet">
 
 </head>
 <body>
 
-	<!-- Navigation NON TOCCARE!!! -->
 	<!-- Navigation NON TOCCARE!!! -->
 	<nav id="nav"
 		class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -34,12 +35,13 @@
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Gestione</a>
 						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#">Gestione supermercati</a> <a
-								class="dropdown-item" href="#">Gestione prodotti</a>
+							<a class="dropdown-item" href="administration/supermarket">Gestione
+								supermercati</a> <a class="dropdown-item" href="administration/product">Gestione
+								prodotti</a>
 						</div></li>
 					<li class="nav-item"><a class="nav-link" href="#">Statistiche</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">Mappe</a></li>
-					<li class="nav-item"><a href="../index.html" id="loginButton"
+					<li class="nav-item"><a href="home" id="logoutButton"
 						class="btn btn-danger" role="button">Logout</a></li>
 				</ul>
 			</div>
@@ -54,11 +56,10 @@
 
 		<div class="row mx-auto">
 			<div class="col-lg-6 col-md-6 mb-4">
-				<a href="#">
+				<a href="administration/supermarket">
 					<div class="card d-flex">
 						<img class="card-img-top"
-							src="../images/administration/superMarket.png" height="250"
-							alt="" />
+							src="images/administration/superMarket.png" height="250" alt="" />
 						<div class="card-body mx-auto">
 							<h4 class="card-title">Gestione supermercati</h4>
 						</div>
@@ -67,11 +68,10 @@
 			</div>
 
 			<div class="col-lg-6 col-md-6 mb-4">
-				<a href="#">
+				<a href="administration/product">
 					<div class="card d-flex">
-						<img class="card-img-top"
-							src="../images/administration/products.png" height="250"
-							alt="" />
+						<img class="card-img-top" src="images/administration/products.png"
+							height="250" alt="" />
 						<div class="card-body mx-auto">
 							<h4 class="card-title">Gestione prodotti</h4>
 						</div>
@@ -85,8 +85,7 @@
 				<a href="#">
 					<div class="card d-flex">
 						<img class="card-img-top"
-							src="../images/administration/statistics.jpg" height="250"
-							alt="" />
+							src="images/administration/statistics.jpg" height="250" alt="" />
 						<div class="card-body mx-auto">
 							<h4 class="card-title">Statistiche</h4>
 						</div>
@@ -97,9 +96,8 @@
 			<div class="col-lg-6 col-md-6 mb-4">
 				<a href="#">
 					<div class="card d-flex">
-						<img class="card-img-top"
-							src="../images/administration/maps.jpg" height="250"
-							alt="" />
+						<img class="card-img-top" src="images/administration/maps.jpg"
+							height="250" alt="" />
 						<div class="card-body mx-auto">
 							<h4 class="card-title">Mappe</h4>
 						</div>
@@ -120,8 +118,9 @@
 	</footer>
 
 	<!-- Bootstrap core JavaScript -->
-	<script src="../vendor/jquery/jquery.min.js"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>

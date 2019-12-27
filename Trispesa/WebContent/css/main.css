@@ -9,3 +9,15 @@ body {
 #loginButton {
 	margin-left: 10px;
 }
+
+#search-bar {
+	margin: 10px !important;
+}
+
+#addSuperMarket {
+	margin: 10px !important;
+}
+
+#addProduct {
+	margin: 10px !important;
+}

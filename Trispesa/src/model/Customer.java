@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class Customer {
 
-	private int ID;
 	private String username;
 	private String password;
 	private String name;

@@ -30,3 +30,11 @@ body {
 #add-product-form {
 	margin: 10px !important;
 }
+
+#supermarket-affiliate {
+	color: green;
+}
+
+#supermarket-not-affiliate {
+	color: red;
+}

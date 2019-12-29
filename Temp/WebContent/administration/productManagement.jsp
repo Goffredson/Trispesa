@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,8 +38,9 @@
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Gestione</a>
 						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#">Gestione supermercati</a> <a
-								class="dropdown-item" href="#">Gestione prodotti</a>
+							<a class="dropdown-item" href="supermarket">Gestione
+								supermercati</a> <a class="dropdown-item" href="">Gestione
+								prodotti</a>
 						</div></li>
 					<li class="nav-item"><a class="nav-link" href="#">Statistiche</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">Mappe</a></li>
@@ -61,8 +64,8 @@
 			</div>
 			<!-- Aggiungi supermercato -->
 			<div id="addSuperMarket" class="">
-				<a href="addProduct.jsp" class="btn btn-success" role="button"> + Aggiungi
-					prodotto</a>
+				<a href="addProduct.jsp" class="btn btn-success" role="button">
+					+ Aggiungi prodotto</a>
 			</div>
 		</div>
 
@@ -77,18 +80,19 @@
 				<th></th>
 				<th></th>
 			</tr>
-			<!-- foreach supermercato -->
-			<tr>
-				<td>123456678</td>
-				<td>Spaghetti barilla</td>
-				<td>500g</td>
-				<td>Conad</td>
-				<td>Pasta</td>
-				<td>10,00 &euro;</td>
-				<td width="10%"><a href="#" class="btn btn-info" role="button">modifica</a></td>
-				<td width="10%"><a href="#" class="btn btn-danger"
-					role="button">elimina</a></td>
-			</tr>
+			<c:forEach items="${products}" var="product">
+				<tr>
+					<td>${product.barcode}</td>
+					<td>${product.name}</td>
+					<td>${product.weight} g</td>
+					<td>${product.superMarket.name}</td>
+					<td>${product.category}</td>
+					<td>${product.price} &euro;</td>
+					<td width="10%"><a href="#" class="btn btn-info" role="button">modifica</a></td>
+					<td width="10%"><a href="#" class="btn btn-danger"
+						role="button">elimina</a></td>
+				</tr>
+			</c:forEach>
 		</table>
 
 	</div>

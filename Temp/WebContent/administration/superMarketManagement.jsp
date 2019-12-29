@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,8 +38,8 @@
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Gestione</a>
 						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#">Gestione supermercati</a> <a
-								class="dropdown-item" href="#">Gestione prodotti</a>
+							<a class="dropdown-item" href="">Gestione supermercati</a> <a
+								class="dropdown-item" href="product">Gestione prodotti</a>
 						</div></li>
 					<li class="nav-item"><a class="nav-link" href="#">Statistiche</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">Mappe</a></li>
@@ -61,8 +63,8 @@
 			</div>
 			<!-- Aggiungi supermercato -->
 			<div id="addSuperMarket" class="">
-				<a href="addSupermarket.html" class="btn btn-success" role="button"> + Aggiungi
-					supermercato</a>
+				<a href="addSupermarket.html" class="btn btn-success" role="button">
+					+ Aggiungi supermercato</a>
 			</div>
 		</div>
 
@@ -75,17 +77,22 @@
 				<th></th>
 				<th></th>
 			</tr>
-			<!-- foreach supermercato -->
-			<tr>
-				<td>Conad</td>
-				<td>Cosenza</td>
-				<td>Via dei Mille, 9</td>
-				<!-- if si allora success else danger -->
-				<td>SI</td>
-				<td width="10%"><a href="#" class="btn btn-info" role="button">modifica</a></td>
-				<td width="10%"><a href="#" class="btn btn-danger"
-					role="button">elimina</a></td>
-			</tr>
+			<c:forEach items="${superMarkets}" var="superMarket">
+				<tr>
+					<td>${superMarket.name}</td>
+					<td>${superMarket.city}</td>
+					<td>${superMarket.address}</td>
+					<c:if test="${superMarket.affiliate == true}">
+						<td id="supermarket-affiliate">SI</td>
+					</c:if>
+					<c:if test="${superMarket.affiliate == false}">
+						<td id="supermarket-not-affiliate">NO</td>
+					</c:if>
+					<td width="10%"><a href="#" class="btn btn-info" role="button">modifica</a></td>
+					<td width="10%"><a href="#" class="btn btn-danger"
+						role="button">elimina</a></td>
+				</tr>
+			</c:forEach>
 		</table>
 
 	</div>

@@ -61,7 +61,7 @@
 			</div>
 			<!-- Aggiungi supermercato -->
 			<div id="addSuperMarket" class="">
-				<a href="#" class="btn btn-success" role="button"> + Aggiungi
+				<a href="addProduct.jsp" class="btn btn-success" role="button"> + Aggiungi
 					prodotto</a>
 			</div>
 		</div>

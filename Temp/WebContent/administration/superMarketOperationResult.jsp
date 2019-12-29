@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
-<html>
+
 <head>
 
 <meta charset="utf-8">
@@ -11,10 +13,11 @@
 <title>Trispesa</title>
 
 <!-- Bootstrap  -->
-<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="../../vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- css -->
-<link href="../css/main.css" rel="stylesheet">
+<link href="../../css/main.css" rel="stylesheet">
 
 </head>
 <body>
@@ -36,8 +39,9 @@
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Gestione</a>
 						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#">Gestione supermercati</a> <a
-								class="dropdown-item" href="#">Gestione prodotti</a>
+							<a class="dropdown-item" href="../administration/supermarket">Gestione
+								supermercati</a> <a class="dropdown-item"
+								href="../administration/product">Gestione prodotti</a>
 						</div></li>
 					<li class="nav-item"><a class="nav-link" href="#">Statistiche</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">Mappe</a></li>
@@ -48,49 +52,13 @@
 		</div>
 	</nav>
 
-	<div class="container">
-
-		<div class="d-flex justify-content-between">
-			<!-- barra di ricerca -->
-			<div id="search-bar" class="input-group">
-				<input type="text" class="form-control" placeholder="Prodotto">
-				<div class="input-group-append">
-					<a href="#"><span class="input-group-text"><img
-							src="../images/search.png" width="25px" /></span></a>
-				</div>
-			</div>
-			<!-- Aggiungi supermercato -->
-			<div id="addSuperMarket" class="">
-				<a href="#" class="btn btn-success" role="button"> + Aggiungi
-					prodotto</a>
-			</div>
-		</div>
-
-		<table class="table table-hover table-responsive">
-			<tr>
-				<th>Codice a barre</th>
-				<th>Nome</th>
-				<th>Peso</th>
-				<th>Supermercato</th>
-				<th>Categoria</th>
-				<th>Prezzo</th>
-				<th></th>
-				<th></th>
-			</tr>
-			<!-- foreach supermercato -->
-			<tr>
-				<td>123456678</td>
-				<td>Spaghetti barilla</td>
-				<td>500g</td>
-				<td>Conad</td>
-				<td>Pasta</td>
-				<td>10,00 &euro;</td>
-				<td width="10%"><a href="#" class="btn btn-info" role="button">modifica</a></td>
-				<td width="10%"><a href="#" class="btn btn-danger"
-					role="button">elimina</a></td>
-			</tr>
-		</table>
-
+	<div class="container d-flex justify-content-center">
+		<c:if test="${result == true}">
+			<h1>Il supermercato è stato aggiunto con successo</h1>
+		</c:if>
+		<c:if test="${result == false}">
+			<h1>Non è stato possibile aggiungere il supermercato</h1>
+		</c:if>
 	</div>
 
 	<!-- Footer -->
@@ -103,8 +71,9 @@
 	</footer>
 
 	<!-- Bootstrap core JavaScript -->
-	<script src="../vendor/jquery/jquery.min.js"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../../vendor/jquery/jquery.min.js"></script>
+	<script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

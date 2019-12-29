@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html>
+
 <head>
 
 <meta charset="utf-8">
@@ -36,8 +36,9 @@
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Gestione</a>
 						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#">Gestione supermercati</a> <a
-								class="dropdown-item" href="#">Gestione prodotti</a>
+							<a class="dropdown-item" href="../administration/supermarket">Gestione
+								supermercati</a> <a class="dropdown-item"
+								href="../administration/product">Gestione prodotti</a>
 						</div></li>
 					<li class="nav-item"><a class="nav-link" href="#">Statistiche</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">Mappe</a></li>
@@ -50,46 +51,7 @@
 
 	<div class="container">
 
-		<div class="d-flex justify-content-between">
-			<!-- barra di ricerca -->
-			<div id="search-bar" class="input-group">
-				<input type="text" class="form-control" placeholder="Prodotto">
-				<div class="input-group-append">
-					<a href="#"><span class="input-group-text"><img
-							src="../images/search.png" width="25px" /></span></a>
-				</div>
-			</div>
-			<!-- Aggiungi supermercato -->
-			<div id="addSuperMarket" class="">
-				<a href="#" class="btn btn-success" role="button"> + Aggiungi
-					prodotto</a>
-			</div>
-		</div>
-
-		<table class="table table-hover table-responsive">
-			<tr>
-				<th>Codice a barre</th>
-				<th>Nome</th>
-				<th>Peso</th>
-				<th>Supermercato</th>
-				<th>Categoria</th>
-				<th>Prezzo</th>
-				<th></th>
-				<th></th>
-			</tr>
-			<!-- foreach supermercato -->
-			<tr>
-				<td>123456678</td>
-				<td>Spaghetti barilla</td>
-				<td>500g</td>
-				<td>Conad</td>
-				<td>Pasta</td>
-				<td>10,00 &euro;</td>
-				<td width="10%"><a href="#" class="btn btn-info" role="button">modifica</a></td>
-				<td width="10%"><a href="#" class="btn btn-danger"
-					role="button">elimina</a></td>
-			</tr>
-		</table>
+		<h1>OK</h1>
 
 	</div>
 
@@ -106,5 +68,31 @@
 	<script src="../vendor/jquery/jquery.min.js"></script>
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+	<script>
+		// Disable form submissions if there are invalid fields
+		(function() {
+			'use strict';
+			window.addEventListener('load',
+					function() {
+						// Get the forms we want to add validation styles to
+						var forms = document
+								.getElementsByClassName('needs-validation');
+						// Loop over them and prevent submission
+						var validation = Array.prototype.filter.call(forms,
+								function(form) {
+									form.addEventListener('submit', function(
+											event) {
+										if (form.checkValidity() === false) {
+											event.preventDefault();
+											event.stopPropagation();
+										}
+										form.classList.add('was-validated');
+									}, false);
+								});
+					}, false);
+		})();
+	</script>
+
 </body>
+
 </html>

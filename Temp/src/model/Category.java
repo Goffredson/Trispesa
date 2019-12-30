@@ -9,6 +9,14 @@ public class Category {
 	private Category parent;
 	private ArrayList<Category> children;
 
+	public Category(int iD, String name, Category parent, ArrayList<Category> children) {
+		super();
+		ID = iD;
+		this.name = name;
+		this.parent = parent;
+		this.children = children;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -32,15 +40,15 @@ public class Category {
 	public void setChildren(ArrayList<Category> children) {
 		this.children = children;
 	}
-	
+
 	public void addChidren(Category child) {
 		this.children.add(child);
 	}
-	
+
 	public void removeChidren(Category child) {
 		this.children.remove(child);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Category) {

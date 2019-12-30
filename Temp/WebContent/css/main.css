@@ -38,3 +38,11 @@ body {
 #supermarket-not-affiliate {
 	color: red;
 }
+
+#product-not-offbrand {
+	color: green;
+}
+
+#product-offbrand {
+	color: red;
+}

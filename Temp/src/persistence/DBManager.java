@@ -2,6 +2,7 @@ package persistence;
 
 import java.util.ArrayList;
 
+import controller.AddSupermarket;
 import model.Category;
 import model.Customer;
 import model.Product;
@@ -39,9 +40,39 @@ public class DBManager {
 		products.add(new Product(0, 5, "iewhvoiw", 1.1, 123, conad, true, "schifo"));
 		products.add(new Product(0, 6, "ciqo", 1.1, 123, conad, true, "schifo"));
 		products.add(new Product(0, 7, "ciqo", 1.1, 123, conad, true, "schifo"));
-		products.add(new Product(0, 8, "ciao che bello", 1000000000, 123, conad, true, "schifo"));
+		products.add(new Product(0, 8, "ciao che bello", 1000, 123, conad, true, "schifo"));
 		products.add(new Product(0, 9, "ciqo", 1.1, 123, conad, true, "schifo"));
 		products.add(new Product(0, 10, "funziona", 1.1, 123, conad, true, "schifo"));
+
+		categories = new ArrayList<Category>();
+		categories.add(new Category(0, "pasta", null, null));
+		categories.add(new Category(0, "pane", null, null));
+		categories.add(new Category(0, "acqua", null, null));
+		categories.add(new Category(0, "ceci", null, null));
+
+	}
+
+	public boolean addSupermarket(SuperMarket superMarket) {
+		// se lo posso aggiungere ecc
+		superMarkets.add(superMarket);
+		return true;
+	}
+
+	public boolean addProduct(Product product) {
+		// se lo posso aggiungere ecc
+		products.add(product);
+		return true;
+	}
+
+	public SuperMarket getSuperMarketByID(String superMarketString) {
+		for (SuperMarket superMarket : superMarkets) {
+			String temp = "(" + superMarket.getName() + "," + superMarket.getCity() + "," + superMarket.getAddress()
+					+ ")";
+			if (superMarketString.equals(temp)) {
+				return superMarket;
+			}
+		}
+		return null;
 	}
 
 	public ArrayList<Customer> getCustomers() {

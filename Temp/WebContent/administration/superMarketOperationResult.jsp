@@ -26,7 +26,7 @@
 	<nav id="nav"
 		class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="../administration">Trispesa</a>
+			<a class="navbar-brand" href="../../administration">Trispesa</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarResponsive" aria-controls="navbarResponsive"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -35,17 +35,17 @@
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item active"><a class="nav-link"
-						href="../administration">Home</a></li>
+						href="../../administration">Home</a></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Gestione</a>
 						<div class="dropdown-menu">
-							<a class="dropdown-item" href="../administration/supermarket">Gestione
+							<a class="dropdown-item" href="../../administration/supermarket">Gestione
 								supermercati</a> <a class="dropdown-item"
-								href="../administration/product">Gestione prodotti</a>
+								href="../../administration/product">Gestione prodotti</a>
 						</div></li>
 					<li class="nav-item"><a class="nav-link" href="#">Statistiche</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">Mappe</a></li>
-					<li class="nav-item"><a href="../home" id="logoutButton"
+					<li class="nav-item"><a href="../../home" id="logoutButton"
 						class="btn btn-danger" role="button">Logout</a></li>
 				</ul>
 			</div>

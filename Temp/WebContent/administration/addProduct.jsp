@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 
 <head>
@@ -9,10 +13,11 @@
 <title>Trispesa</title>
 
 <!-- Bootstrap  -->
-<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="../../vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- css -->
-<link href="../css/main.css" rel="stylesheet">
+<link href="../../css/main.css" rel="stylesheet">
 
 </head>
 <body>
@@ -21,7 +26,7 @@
 	<nav id="nav"
 		class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="../administration">Trispesa</a>
+			<a class="navbar-brand" href="../../administration">Trispesa</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarResponsive" aria-controls="navbarResponsive"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -30,17 +35,17 @@
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item active"><a class="nav-link"
-						href="../administration">Home</a></li>
+						href="../../administration">Home</a></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Gestione</a>
 						<div class="dropdown-menu">
-							<a class="dropdown-item" href="../administration/supermarket">Gestione
+							<a class="dropdown-item" href="../../administration/supermarket">Gestione
 								supermercati</a> <a class="dropdown-item"
-								href="../administration/product">Gestione prodotti</a>
+								href="../../administration/product">Gestione prodotti</a>
 						</div></li>
 					<li class="nav-item"><a class="nav-link" href="#">Statistiche</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">Mappe</a></li>
-					<li class="nav-item"><a href="../home" id="logoutButton"
+					<li class="nav-item"><a href="../../home" id="logoutButton"
 						class="btn btn-danger" role="button">Logout</a></li>
 				</ul>
 			</div>
@@ -49,10 +54,10 @@
 
 	<div class="container">
 
-		<form id="add-product-form" method="post" action="product/add"
+		<form id="add-product-form" method="post" action="../product/add"
 			class="needs-validation" novalidate autocomplete="on">
 			<div class="form-group">
-				<label for="barcode">Codice a barre:</label> <input type="text"
+				<label for="barcode">Codice a barre:</label> <input type="number"
 					class="form-control" id="name" placeholder="Codice a barre"
 					name="barcode" required autocomplete="off">
 				<div class="valid-feedback">Valido.</div>
@@ -66,17 +71,38 @@
 				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
 			</div>
 			<div class="form-group">
-				<label for="weight">Peso in grammi:</label> <input type="number" min="1"
-					class="form-control" id="weight" placeholder="Peso" name="weight"
-					required autocomplete="off">
+				<label for="weight">Peso in grammi:</label> <input type="number"
+					min="1" class="form-control" id="weight" placeholder="Peso"
+					name="weight" required autocomplete="off">
 				<div class="valid-feedback">Valido.</div>
 				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
 			</div>
 			<!-- supermercato e categoria sono da vedere con il server!!! -->
+
 			<div class="form-group">
-				<label for="price">Prezzo in euro:</label> <input type="number" step="0.01" min="0.01"
-					class="form-control" id="price" placeholder="Prezzo" name="price"
-					required autocomplete="off">
+				<label for="superMarket">Supermercato:</label> <select
+					name="superMarket" class="form-control" id="superMarket">
+					<c:forEach items="${superMarkets}" var="supermarket">
+						<option
+							value="(${supermarket.name},${supermarket.city},${supermarket.address})">${supermarket.name}-${supermarket.city}-
+							${supermarket.address}</option>
+					</c:forEach>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="category">Categoria:</label> <select name="category"
+					class="form-control" id="category">
+					<c:forEach items="${categories}" var="category">
+						<option value="${category.name}">${category.name}</option>
+					</c:forEach>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="price">Prezzo in euro:</label> <input type="number"
+					step="0.01" min="0.01" class="form-control" id="price"
+					placeholder="Prezzo" name="price" required autocomplete="off">
 				<div class="valid-feedback">Valido.</div>
 				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
 			</div>
@@ -107,8 +133,8 @@
 	</footer>
 
 	<!-- Bootstrap core JavaScript -->
-	<script src="../vendor/jquery/jquery.min.js"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../../vendor/jquery/jquery.min.js"></script>
+	<script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<script>
 		// Disable form submissions if there are invalid fields

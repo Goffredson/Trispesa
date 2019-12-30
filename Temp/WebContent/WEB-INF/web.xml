@@ -71,4 +71,14 @@
   	<url-pattern>/administration/product/add</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>AddProductForm</servlet-name>
+  	<servlet-class>controller.AddProductForm</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>AddProductForm</servlet-name>
+  	<url-pattern>/administration/product/addProductForm</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

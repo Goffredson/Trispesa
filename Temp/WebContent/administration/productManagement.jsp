@@ -64,8 +64,8 @@
 			</div>
 			<!-- Aggiungi supermercato -->
 			<div id="addSuperMarket" class="">
-				<a href="product/addProductForm" class="btn btn-success" role="button">
-					+ Aggiungi prodotto</a>
+				<a href="product/manageProductForm?action=add"
+					class="btn btn-success" role="button"> + Aggiungi prodotto</a>
 			</div>
 		</div>
 
@@ -78,6 +78,7 @@
 				<th>Di marca</th>
 				<th>Categoria</th>
 				<th>Prezzo</th>
+				<th>Quantita</th>
 				<th></th>
 				<th></th>
 			</tr>
@@ -85,7 +86,7 @@
 				<tr>
 					<td>${product.barcode}</td>
 					<td>${product.name}</td>
-					<td>${product.weight} g</td>
+					<td>${product.weight}g</td>
 					<td>${product.superMarket.name}</td>
 					<c:if test="${product.offBrand == true}">
 						<td id="product-offbrand">NO</td>
@@ -93,11 +94,15 @@
 					<c:if test="${product.offBrand == false}">
 						<td id="product-not-offbrand">SI</td>
 					</c:if>
-					<td>${product.category}</td>
-					<td>${product.price} &euro;</td>
-					<td width="10%"><a href="#" class="btn btn-info" role="button">modifica</a></td>
-					<td width="10%"><a href="#" class="btn btn-danger"
-						role="button">elimina</a></td>
+					<td>${product.category.familyName}</td>
+					<td>${product.price}&euro;</td>
+					<td>${product.quantity}pz.</td>
+					<td width="10%"><a
+						href="product/manageProductForm?action=mod&barcode=${product.barcode}&superMarket=(${product.superMarket.name},${product.superMarket.city},${product.superMarket.address})"
+						class="btn btn-info" role="button">modifica</a></td>
+					<td width="10%"><a
+						href="product/manage?action=del&barcode=${product.barcode}&superMarket=(${product.superMarket.name},${product.superMarket.city},${product.superMarket.address})"
+						class="btn btn-danger" role="button">elimina</a></td>
 				</tr>
 			</c:forEach>
 		</table>

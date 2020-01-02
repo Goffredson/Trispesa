@@ -2,27 +2,17 @@ package model;
 
 public class SuperMarket {
 
-	private int ID;
 	private String name;
 	private String city;
 	private String address;
 	private boolean affiliate;
 
-	public SuperMarket(int ID, String name, String city, String address, boolean affiliate) {
+	public SuperMarket(String name, String city, String address, boolean affiliate) {
 		super();
-		this.ID = ID;
 		this.name = name;
 		this.city = city;
 		this.address = address;
 		this.affiliate = affiliate;
-	}
-
-	public int getID() {
-		return ID;
-	}
-
-	public void setID(int iD) {
-		ID = iD;
 	}
 
 	public String getName() {
@@ -55,6 +45,16 @@ public class SuperMarket {
 
 	public void setAffiliate(boolean affiliate) {
 		this.affiliate = affiliate;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof SuperMarket) {
+			SuperMarket superMarket = (SuperMarket) obj;
+			return name.equalsIgnoreCase(superMarket.name) && city.equalsIgnoreCase(superMarket.city)
+					&& address.equalsIgnoreCase(superMarket.address);
+		}
+		return false;
 	}
 
 }

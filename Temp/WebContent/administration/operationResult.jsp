@@ -54,10 +54,10 @@
 
 	<div class="container d-flex justify-content-center">
 		<c:if test="${result == true}">
-			<h1>Il supermercato è stato aggiunto con successo</h1>
+			<h1>ok</h1>
 		</c:if>
 		<c:if test="${result == false}">
-			<h1>Non è stato possibile aggiungere il supermercato</h1>
+			<h1>errore</h1>
 		</c:if>
 	</div>
 

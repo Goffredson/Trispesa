@@ -52,33 +52,43 @@
   </servlet-mapping>
   
   <servlet>
-  	<servlet-name>AddSupermarket</servlet-name>
-  	<servlet-class>controller.AddSupermarket</servlet-class>
+  	<servlet-name>ManageSupermarket</servlet-name>
+  	<servlet-class>controller.ManageSupermarket</servlet-class>
   </servlet>
   
   <servlet-mapping>
-  	<servlet-name>AddSupermarket</servlet-name>
-  	<url-pattern>/administration/supermarket/add</url-pattern>
+  	<servlet-name>ManageSupermarket</servlet-name>
+  	<url-pattern>/administration/supermarket/manage</url-pattern>
   </servlet-mapping>
   
   <servlet>
-  	<servlet-name>AddProduct</servlet-name>
-  	<servlet-class>controller.AddProduct</servlet-class>
+  	<servlet-name>ManageProduct</servlet-name>
+  	<servlet-class>controller.ManageProduct</servlet-class>
   </servlet>
   
   <servlet-mapping>
-  	<servlet-name>AddProduct</servlet-name>
-  	<url-pattern>/administration/product/add</url-pattern>
+  	<servlet-name>ManageProduct</servlet-name>
+  	<url-pattern>/administration/product/manage</url-pattern>
   </servlet-mapping>
   
   <servlet>
-  	<servlet-name>AddProductForm</servlet-name>
-  	<servlet-class>controller.AddProductForm</servlet-class>
+  	<servlet-name>ManageProductForm</servlet-name>
+  	<servlet-class>controller.ManageProductForm</servlet-class>
   </servlet>
   
   <servlet-mapping>
-  	<servlet-name>AddProductForm</servlet-name>
-  	<url-pattern>/administration/product/addProductForm</url-pattern>
+  	<servlet-name>ManageProductForm</servlet-name>
+  	<url-pattern>/administration/product/manageProductForm</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>ManageSuperMarketForm</servlet-name>
+  	<servlet-class>controller.ManageSuperMarketForm</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>ManageSuperMarketForm</servlet-name>
+  	<url-pattern>/administration/supermarket/manageSuperMarketForm</url-pattern>
   </servlet-mapping>
   
 </web-app>

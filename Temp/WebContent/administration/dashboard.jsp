@@ -36,8 +36,8 @@
 						class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Gestione</a>
 						<div class="dropdown-menu">
 							<a class="dropdown-item" href="administration/supermarket">Gestione
-								supermercati</a> <a class="dropdown-item" href="administration/product">Gestione
-								prodotti</a>
+								supermercati</a> <a class="dropdown-item"
+								href="administration/product">Gestione prodotti</a>
 						</div></li>
 					<li class="nav-item"><a class="nav-link" href="#">Statistiche</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">Mappe</a></li>

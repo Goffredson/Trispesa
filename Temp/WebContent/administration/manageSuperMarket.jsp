@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 
 <head>
@@ -9,10 +13,11 @@
 <title>Trispesa</title>
 
 <!-- Bootstrap  -->
-<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="../../vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- css -->
-<link href="../css/main.css" rel="stylesheet">
+<link href="../../css/main.css" rel="stylesheet">
 
 </head>
 <body>
@@ -49,42 +54,72 @@
 
 	<div class="container">
 
-		<form id="add-supermarket-form" method="post" action="supermarket/add" class="needs-validation"
+		<form id="add-supermarket-form" method="post"
+			action="../supermarket/manage?action=${action}&old=(${superMarket.name},${superMarket.city},${superMarket.address})" class="needs-validation"
 			novalidate autocomplete="on">
 			<div class="form-group">
-				<label for="name">Nome:</label> <input type="text"
-					class="form-control" id="name" placeholder="Nome" name="name"
-					required autocomplete="off">
+				<label for="name">Nome:</label>
+				<c:if test="${action == 'add'}">
+					<input type="text" class="form-control" id="name"
+						placeholder="Nome" name="name" required autocomplete="off">
+				</c:if>
+				<c:if test="${action == 'mod'}">
+					<input type="text" value="${superMarket.name}" class="form-control"
+						id="name" placeholder="Nome" name="name" required
+						autocomplete="off">
+				</c:if>
 				<div class="valid-feedback">Valido.</div>
 				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
 			</div>
 			<div class="form-group">
-				<label for="city">Citt√†:</label> <input type="text"
-					class="form-control" id="city" placeholder="Citt√†" name="city"
-					required autocomplete="off">
+				<label for="city">Citt‡†:</label>
+				<c:if test="${action == 'add'}">
+					<input type="text" class="form-control" id="city"
+						placeholder="Citt‡†" name="city" required autocomplete="off">
+				</c:if>
+				<c:if test="${action == 'mod'}">
+					<input type="text" value="${superMarket.city}" class="form-control"
+						id="city" placeholder="Citt‡†" name="city" required
+						autocomplete="off">
+				</c:if>
 				<div class="valid-feedback">Valido.</div>
 				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
 			</div>
 			<div class="form-group">
-				<label for="address">Indirizzo:</label> <input type="text"
-					class="form-control" id="address" placeholder="Indirizzo"
-					name="address" required autocomplete="off">
+				<label for="address">Indirizzo:</label>
+				<c:if test="${action == 'add'}">
+					<input type="text" class="form-control" id="address"
+						placeholder="Indirizzo" name="address" required autocomplete="off">
+				</c:if>
+				<c:if test="${action == 'mod'}">
+					<input type="text" value="${superMarket.address}"
+						class="form-control" id="address" placeholder="Indirizzo"
+						name="address" required autocomplete="off">
+				</c:if>
 				<div class="valid-feedback">Valido.</div>
 				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
 			</div>
+			<c:if test="${action == 'add'}">
 			Affiliato:
 			<div class="form-check">
-				<label class="form-check-label"> <input type="radio"
-					class="form-check-input" name="affiliate" value="yes">SI
-				</label>
-			</div>
-			<div class="form-check">
-				<label class="form-check-label"> <input type="radio"
-					class="form-check-input" name="affiliate" value="no" checked>NO
-				</label>
-			</div>
-			<button type="submit" class="btn btn-primary">Aggiungi
-				supermercato</button>
+					<label class="form-check-label"> <input type="radio"
+						class="form-check-input" name="affiliate" value="yes">SI
+					</label>
+				</div>
+				<div class="form-check">
+					<label class="form-check-label"> <input type="radio"
+						class="form-check-input" name="affiliate" value="no" checked>NO
+					</label>
+				</div>
+			</c:if>
+			<c:if test="${action == 'add'}">
+				<button type="submit" class="btn btn-primary">Aggiungi
+					supermercato</button>
+			</c:if>
+			<c:if test="${action == 'mod'}">
+				<button type="submit" class="btn btn-primary">Modifica
+					supermercato</button>
+			</c:if>
 		</form>
 
 	</div>
@@ -99,8 +134,8 @@
 	</footer>
 
 	<!-- Bootstrap core JavaScript -->
-	<script src="../vendor/jquery/jquery.min.js"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../../vendor/jquery/jquery.min.js"></script>
+	<script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<script>
 		// Disable form submissions if there are invalid fields

@@ -2,7 +2,6 @@ package persistence;
 
 import java.util.ArrayList;
 
-import controller.AddSupermarket;
 import model.Category;
 import model.Customer;
 import model.Product;
@@ -26,40 +25,56 @@ public class DBManager {
 	private DBManager() {
 		// cazzate sul db
 		superMarkets = new ArrayList<SuperMarket>();
-		superMarkets.add(new SuperMarket(1, "conad", "cosenza", "via della banana, 33", true));
-		superMarkets.add(new SuperMarket(1, "coop", "cosenza", "via della vita, 33", false));
-		superMarkets.add(new SuperMarket(1, "lidl", "cosenza", "via della morte, 33", true));
-		superMarkets.add(new SuperMarket(1, "auchan", "cosenza", "via della citre, 33", true));
-		superMarkets.add(new SuperMarket(1, "conad", "rende", "via ciccio bello, 33", false));
+		superMarkets.add(new SuperMarket("conad", "cosenza", "via della banana, 33", true));
+		superMarkets.add(new SuperMarket("coop", "cosenza", "via della vita, 33", false));
+		superMarkets.add(new SuperMarket("lidl", "cosenza", "via della morte, 33", true));
+		superMarkets.add(new SuperMarket("auchan", "cosenza", "via della citre, 33", true));
+		superMarkets.add(new SuperMarket("conad", "rende", "via ciccio bello, 33", false));
 		SuperMarket conad = superMarkets.get(0);
-		products = new ArrayList<Product>();
-		products.add(new Product(0, 1, "ciqo", 1.1, 123.0, conad, true, "schifo"));
-		products.add(new Product(0, 2, "wesdrtf", 1.1, 123, conad, true, "schifo"));
-		products.add(new Product(0, 3, "igwhw", 1.1, 123, conad, true, "schifo"));
-		products.add(new Product(0, 4, "ciqo", 1.1, 123, conad, true, "schifo"));
-		products.add(new Product(0, 5, "iewhvoiw", 1.1, 123, conad, true, "schifo"));
-		products.add(new Product(0, 6, "ciqo", 1.1, 123, conad, true, "schifo"));
-		products.add(new Product(0, 7, "ciqo", 1.1, 123, conad, true, "schifo"));
-		products.add(new Product(0, 8, "ciao che bello", 1000, 123, conad, true, "schifo"));
-		products.add(new Product(0, 9, "ciqo", 1.1, 123, conad, true, "schifo"));
-		products.add(new Product(0, 10, "funziona", 1.1, 123, conad, true, "schifo"));
 
 		categories = new ArrayList<Category>();
-		categories.add(new Category(0, "pasta", null, null));
-		categories.add(new Category(0, "pane", null, null));
-		categories.add(new Category(0, "acqua", null, null));
-		categories.add(new Category(0, "ceci", null, null));
+		Category pasta = new Category("pasta", null);
+		Category pastaIntegrale = new Category("integrale", pasta);
+		Category pastaBianca = new Category("bianca", pasta);
+		Category pane = new Category("pane", null);
+		Category paneBianco = new Category("bianco", pane);
+		Category paneIntegrale = new Category("integrale", pane);
+		categories.add(pastaIntegrale);
+		categories.add(pastaBianca);
+		categories.add(paneBianco);
+		categories.add(paneIntegrale);
 
+		products = new ArrayList<Product>();
+		products.add(new Product(1, "ciqo", 1.1, 123.0, conad, true, pastaIntegrale, 9));
+		products.add(new Product(2, "wesdrtf", 1.1, 123, conad, true, pastaIntegrale, 9));
+		products.add(new Product(3, "igwhw", 1.1, 123, conad, true, pastaIntegrale, 9));
+		products.add(new Product(4, "ciqo", 1.1, 123, conad, true, pastaIntegrale, 9));
+		products.add(new Product(5, "iewhvoiw", 1.1, 123, conad, true, pastaIntegrale, 9));
+		products.add(new Product(6, "ciqo", 1.1, 123, conad, true, pastaIntegrale, 9));
+		products.add(new Product(7, "ciqo", 1.1, 123, conad, true, pastaIntegrale, 9));
+		products.add(new Product(8, "ciao che bello", 1000, 123, conad, true, pastaIntegrale, 9));
+		products.add(new Product(9, "ciqo", 1.1, 123, conad, true, pastaIntegrale, 9));
+		products.add(new Product(10, "funziona", 1.1, 123, conad, true, pastaIntegrale, 9));
 	}
 
 	public boolean addSupermarket(SuperMarket superMarket) {
 		// se lo posso aggiungere ecc
+		for (SuperMarket temp : superMarkets) {
+			if (temp.equals(superMarket)) {
+				return false;
+			}
+		}
 		superMarkets.add(superMarket);
 		return true;
 	}
 
 	public boolean addProduct(Product product) {
 		// se lo posso aggiungere ecc
+		for (Product temp : products) {
+			if (temp.getBarcode() == product.getBarcode() && temp.getSuperMarket().equals(product.getSuperMarket())) {
+				return false;
+			}
+		}
 		products.add(product);
 		return true;
 	}
@@ -73,6 +88,74 @@ public class DBManager {
 			}
 		}
 		return null;
+	}
+
+	public Category getCategoryByFamilyName(String familyName) {
+		for (Category category : categories) {
+			if (category.getFamilyName().equals(familyName)) {
+				return category;
+			}
+		}
+		return null;
+	}
+
+	public boolean removeProductByID(int barcode, SuperMarket superMarket) {
+		for (Product temp : products) {
+			if (temp.getBarcode() == barcode && temp.getSuperMarket().equals(superMarket)) {
+				products.remove(temp);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Product getProductByID(int barcode, SuperMarket superMarket) {
+		for (Product temp : products) {
+			if (temp.getBarcode() == barcode && temp.getSuperMarket().equals(superMarket)) {
+				return temp;
+			}
+		}
+		return null;
+	}
+
+	public boolean modifyProduct(Product product) {
+		Product temp = getProductByID(product.getBarcode(), product.getSuperMarket());
+		if (temp == null) {
+			return false;
+		}
+		temp.setPrice(product.getPrice());
+		temp.setQuantity(product.getQuantity());
+		temp.setOffBrand(product.isOffBrand());
+		return true;
+	}
+
+	public boolean removeAffiliateSuperMarketByID(String superMarketString) {
+		SuperMarket temp = getSuperMarketByID(superMarketString);
+		if (temp == null) {
+			return false;
+		}
+		temp.setAffiliate(false);
+		return true;
+	}
+
+	public boolean modifySuperMarket(String oldSuperMarketString, SuperMarket superMarket) {
+		SuperMarket temp = getSuperMarketByID(oldSuperMarketString);
+		if (temp == null) {
+			return false;
+		}
+		temp.setName(superMarket.getName());
+		temp.setCity(superMarket.getCity());
+		temp.setAddress(superMarket.getAddress());
+		return true;
+	}
+
+	public boolean addAffiliateSuperMarketByID(String superMarketString) {
+		SuperMarket temp = getSuperMarketByID(superMarketString);
+		if (temp == null) {
+			return false;
+		}
+		temp.setAffiliate(true);
+		return true;
 	}
 
 	public ArrayList<Customer> getCustomers() {

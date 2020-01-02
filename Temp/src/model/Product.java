@@ -2,19 +2,18 @@ package model;
 
 public class Product {
 
-	private int ID; // lo identifica univocamente nel db (autoincrement)
 	private int barcode;
 	private String name;
 	private double price;
 	private double weight;
 	private SuperMarket superMarket;
 	private boolean offBrand; // sottomarca
-	private String category;
+	private Category category;
+	private int quantity;
 
-	public Product(int ID, int barcode, String name, double price, double weight, SuperMarket superMarket,
-			boolean offBrand, String category) {
+	public Product(int barcode, String name, double price, double weight, SuperMarket superMarket, boolean offBrand,
+			Category category, int quantity) {
 		super();
-		this.ID = ID;
 		this.barcode = barcode;
 		this.name = name;
 		this.price = price;
@@ -22,14 +21,7 @@ public class Product {
 		this.superMarket = superMarket;
 		this.offBrand = offBrand;
 		this.category = category;
-	}
-
-	public int getID() {
-		return ID;
-	}
-
-	public void setID(int iD) {
-		ID = iD;
+		this.quantity = quantity;
 	}
 
 	public int getBarcode() {
@@ -80,12 +72,29 @@ public class Product {
 		this.offBrand = offBrand;
 	}
 
-	public String getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Product) {
+			Product product = (Product) obj;
+			return barcode == product.barcode && superMarket.equals(product.superMarket);
+		}
+		return false;
 	}
 
 	// inserendo un prodotto si genera nel db una tupla di prodotto e una di

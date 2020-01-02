@@ -63,8 +63,8 @@
 			</div>
 			<!-- Aggiungi supermercato -->
 			<div id="addSuperMarket" class="">
-				<a href="addSupermarket.html" class="btn btn-success" role="button">
-					+ Aggiungi supermercato</a>
+				<a href="supermarket/manageSuperMarketForm?action=add"
+					class="btn btn-success" role="button"> + Aggiungi supermercato</a>
 			</div>
 		</div>
 
@@ -88,9 +88,18 @@
 					<c:if test="${superMarket.affiliate == false}">
 						<td id="supermarket-not-affiliate">NO</td>
 					</c:if>
-					<td width="10%"><a href="#" class="btn btn-info" role="button">modifica</a></td>
-					<td width="10%"><a href="#" class="btn btn-danger"
-						role="button">elimina</a></td>
+					<td width="10%"><a
+						href="supermarket/manageSuperMarketForm?action=mod&superMarket=(${superMarket.name},${superMarket.city},${superMarket.address})"
+						class="btn btn-info" role="button">modifica</a></td>
+					<td width="10%"><c:if test="${superMarket.affiliate == true}">
+							<a
+								href="supermarket/manage?action=del&superMarket=(${superMarket.name},${superMarket.city},${superMarket.address})"
+								class="btn btn-danger" role="button">rimuovi</a>
+						</c:if><c:if test="${superMarket.affiliate == false}">
+							<a
+								href="supermarket/manage?action=aff&superMarket=(${superMarket.name},${superMarket.city},${superMarket.address})"
+								class="btn btn-success" role="button">affillia</a>
+						</c:if></td>
 				</tr>
 			</c:forEach>
 		</table>

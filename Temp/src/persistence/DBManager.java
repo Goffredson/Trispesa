@@ -46,16 +46,18 @@ public class DBManager {
 		categories.add(paneIntegrale);
 
 		products = new ArrayList<Product>();
-		products.add(new Product(1, "ciqo", 1.1, 123.0, conad, true, pastaIntegrale, 9));
-		products.add(new Product(2, "wesdrtf", 1.1, 123, conad, true, pastaIntegrale, 9));
-		products.add(new Product(3, "igwhw", 1.1, 123, conad, true, pastaIntegrale, 9));
-		products.add(new Product(4, "ciqo", 1.1, 123, conad, true, pastaIntegrale, 9));
-		products.add(new Product(5, "iewhvoiw", 1.1, 123, conad, true, pastaIntegrale, 9));
-		products.add(new Product(6, "ciqo", 1.1, 123, conad, true, pastaIntegrale, 9));
-		products.add(new Product(7, "ciqo", 1.1, 123, conad, true, pastaIntegrale, 9));
-		products.add(new Product(8, "ciao che bello", 1000, 123, conad, true, paneBianco, 9));
-		products.add(new Product(9, "ciqo", 1.1, 123, conad, true, pastaIntegrale, 9));
-		products.add(new Product(10, "funziona", 1.1, 123, superMarkets.get(1), true, pastaIntegrale, 9));
+		products.add(new Product(1, "pasta", 1.1, 123.0, conad, true, pastaIntegrale, 9));
+		products.add(new Product(1, "pasta", 1.1, 123.0, conad, true, pastaIntegrale, 9));
+		products.add(new Product(1, "pasta", 1.1, 123.0, conad, true, pastaIntegrale, 9));
+		products.add(new Product(2, "a", 1.1, 123, conad, true, pastaIntegrale, 9));
+		products.add(new Product(3, "b", 1.1, 123, conad, true, pastaIntegrale, 9));
+		products.add(new Product(4, "c", 1.1, 123, conad, true, pastaIntegrale, 9));
+		products.add(new Product(5, "d", 1.1, 123, conad, true, pastaIntegrale, 9));
+		products.add(new Product(6, "e", 1.1, 123, conad, true, pastaIntegrale, 9));
+		products.add(new Product(7, "f", 1.1, 123, conad, true, pastaIntegrale, 9));
+		products.add(new Product(8, "pasta", 1000, 123, conad, true, paneBianco, 9));
+		products.add(new Product(9, "pasta", 1.1, 123, conad, true, pastaIntegrale, 9));
+		products.add(new Product(10, "pasta", 1.1, 123, superMarkets.get(1), true, pastaIntegrale, 9));
 	}
 
 	public void addSupermarket(SuperMarket superMarket) throws DBOperationException {

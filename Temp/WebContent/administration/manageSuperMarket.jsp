@@ -133,6 +133,32 @@
 				<div class="valid-feedback">Valido.</div>
 				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
 			</div>
+			<div class="form-group">
+				<label for="address">Latitudine:</label>
+				<c:if test="${action == 'add'}">
+					<input type="number" step="0.0000000000001" class="form-control" id="latitude"
+						placeholder="Latitudine" name="latitude" required autocomplete="off">
+				</c:if>
+				<c:if test="${action == 'mod'}">
+					<input type="number" step="0.0000000000001" value="${superMarket.latitude}" class="form-control" id="latitude"
+						placeholder="Latitudine" name="latitude" required autocomplete="off">
+				</c:if>
+				<div class="valid-feedback">Valido.</div>
+				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
+			</div>
+			<div class="form-group">
+				<label for="address">Longitudine:</label>
+				<c:if test="${action == 'add'}">
+					<input type="number" step="0.0000000000001" class="form-control" id="longitude"
+						placeholder="Longitudine" name="longitude" required autocomplete="off">
+				</c:if>
+				<c:if test="${action == 'mod'}">
+					<input type="number" step="0.0000000000001" value="${superMarket.longitude}" class="form-control" id="longitude"
+						placeholder="Longitudine" name="longitude" required autocomplete="off">
+				</c:if>
+				<div class="valid-feedback">Valido.</div>
+				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
+			</div>
 			<c:if test="${action == 'add'}">
 			Affiliato:
 			<div class="form-check">

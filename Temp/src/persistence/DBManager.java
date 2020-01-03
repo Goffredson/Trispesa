@@ -26,11 +26,11 @@ public class DBManager {
 	private DBManager() {
 		// cazzate sul db
 		superMarkets = new ArrayList<SuperMarket>();
-		superMarkets.add(new SuperMarket("conad", "cosenza", "via della banana, 33", true));
-		superMarkets.add(new SuperMarket("coop", "cosenza", "via della vita, 33", false));
-		superMarkets.add(new SuperMarket("lidl", "cosenza", "via della morte, 33", true));
-		superMarkets.add(new SuperMarket("auchan", "cosenza", "via della citre, 33", true));
-		superMarkets.add(new SuperMarket("conad", "rende", "via ciccio bello, 33", false));
+		superMarkets.add(new SuperMarket("conad", "cosenza", "via della banana, 33", true, 0, 0));
+		superMarkets.add(new SuperMarket("coop", "cosenza", "via della vita, 33", false, 0, 0));
+		superMarkets.add(new SuperMarket("lidl", "cosenza", "via della morte, 33", true, 0, 0));
+		superMarkets.add(new SuperMarket("auchan", "cosenza", "via della citre, 33", true, 0, 0));
+		superMarkets.add(new SuperMarket("conad", "rende", "via ciccio bello, 33", false, 0, 0));
 		SuperMarket conad = superMarkets.get(0);
 
 		categories = new ArrayList<Category>();
@@ -142,6 +142,8 @@ public class DBManager {
 		temp.setName(superMarket.getName());
 		temp.setCity(superMarket.getCity());
 		temp.setAddress(superMarket.getAddress());
+		temp.setLatitude(superMarket.getLatitude());
+		temp.setLongitude(superMarket.getLongitude());
 	}
 
 	public void addAffiliateSuperMarketByID(String superMarketString) throws DBOperationException {

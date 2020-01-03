@@ -6,13 +6,17 @@ public class SuperMarket {
 	private String city;
 	private String address;
 	private boolean affiliate;
+	private double latitude;
+	private double longitude;
 
-	public SuperMarket(String name, String city, String address, boolean affiliate) {
+	public SuperMarket(String name, String city, String address, boolean affiliate, double latitude, double longitude) {
 		super();
 		this.name = name;
 		this.city = city;
 		this.address = address;
 		this.affiliate = affiliate;
+		this.latitude = latitude;
+		this.longitude = longitude;
 	}
 
 	public String getName() {
@@ -45,6 +49,22 @@ public class SuperMarket {
 
 	public void setAffiliate(boolean affiliate) {
 		this.affiliate = affiliate;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
 	}
 
 	@Override

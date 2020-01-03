@@ -33,10 +33,12 @@ public class ManageSupermarket extends HttpServlet {
 				String city = (String) req.getParameter("city");
 				String address = (String) req.getParameter("address");
 				String affiliate = (String) req.getParameter("affiliate");
+				double latitude = Double.parseDouble(req.getParameter("latitude"));
+				double longitude = Double.parseDouble(req.getParameter("longitude"));
 				if (affiliate.equals("yes"))
-					superMarket = new SuperMarket(name, city, address, true);
+					superMarket = new SuperMarket(name, city, address, true, latitude, longitude);
 				else
-					superMarket = new SuperMarket(name, city, address, false);
+					superMarket = new SuperMarket(name, city, address, false, latitude, longitude);
 
 				DBManager.getIstance().addSupermarket(superMarket);
 
@@ -53,7 +55,9 @@ public class ManageSupermarket extends HttpServlet {
 				String name = (String) req.getParameter("name");
 				String city = (String) req.getParameter("city");
 				String address = (String) req.getParameter("address");
-				SuperMarket superMarket = new SuperMarket(name, city, address, true);
+				double latitude = Double.parseDouble(req.getParameter("latitude"));
+				double longitude = Double.parseDouble(req.getParameter("longitude"));
+				SuperMarket superMarket = new SuperMarket(name, city, address, true, latitude, longitude);
 
 				String oldSuperMarketString = (String) req.getParameter("old");
 

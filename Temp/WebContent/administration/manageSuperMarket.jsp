@@ -108,12 +108,12 @@
 			<div class="form-group">
 				<label for="city">Città :</label>
 				<c:if test="${action == 'add'}">
-					<input type="text" class="form-control" id="city"
+					<input type="text" class="form-control" id="town"
 						placeholder="Città " name="city" required autocomplete="off">
 				</c:if>
 				<c:if test="${action == 'mod'}">
 					<input type="text" value="${superMarket.city}" class="form-control"
-						id="city" placeholder="Città " name="city" required
+						id="town" placeholder="Città " name="city" required
 						autocomplete="off">
 				</c:if>
 				<div class="valid-feedback">Valido.</div>
@@ -136,12 +136,15 @@
 			<div class="form-group">
 				<label for="address">Latitudine:</label>
 				<c:if test="${action == 'add'}">
-					<input type="number" step="0.0000000000001" class="form-control" id="latitude"
-						placeholder="Latitudine" name="latitude" required autocomplete="off">
+					<input type="number" step="0.0000000000001" class="form-control"
+						id="lat" placeholder="Latitudine" name="latitude" required
+						autocomplete="off">
 				</c:if>
 				<c:if test="${action == 'mod'}">
-					<input type="number" step="0.0000000000001" value="${superMarket.latitude}" class="form-control" id="latitude"
-						placeholder="Latitudine" name="latitude" required autocomplete="off">
+					<input type="number" step="0.0000000000001"
+						value="${superMarket.latitude}" class="form-control" id="lat"
+						placeholder="Latitudine" name="latitude" required
+						autocomplete="off">
 				</c:if>
 				<div class="valid-feedback">Valido.</div>
 				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
@@ -149,12 +152,15 @@
 			<div class="form-group">
 				<label for="address">Longitudine:</label>
 				<c:if test="${action == 'add'}">
-					<input type="number" step="0.0000000000001" class="form-control" id="longitude"
-						placeholder="Longitudine" name="longitude" required autocomplete="off">
+					<input type="number" step="0.0000000000001" class="form-control"
+						id="lon" placeholder="Longitudine" name="longitude" required
+						autocomplete="off">
 				</c:if>
 				<c:if test="${action == 'mod'}">
-					<input type="number" step="0.0000000000001" value="${superMarket.longitude}" class="form-control" id="longitude"
-						placeholder="Longitudine" name="longitude" required autocomplete="off">
+					<input type="number" step="0.0000000000001"
+						value="${superMarket.longitude}" class="form-control" id="lon"
+						placeholder="Longitudine" name="longitude" required
+						autocomplete="off">
 				</c:if>
 				<div class="valid-feedback">Valido.</div>
 				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
@@ -180,6 +186,7 @@
 				<button type="submit" class="btn btn-primary">Modifica
 					supermercato</button>
 			</c:if>
+			<button class="btn btn-secondary" onclick="clearMapForm()">Reset</button>
 		</form>
 
 	</div>
@@ -234,13 +241,27 @@
             $('#super-market-name').keyup(event => {
                 if(event.keyCode == 13)
                     $('#super-market-button').click();
-            })
-
-            $('#main-box-button').on('click', function() {
-                $('#main-box').slideToggle("slow");
             });
 
+            /*$('#main-box-button').on('click', function() {
+                $('#main-box').slideToggle("slow");
+            });*/
+
             //$('#main-box').hide();
+
+            $('#lat').change(event => {
+                if($('#lat').val() != '' && $('#lon').val() != '')
+                    addMarkerOnMap($('#lat').val(), $('#lon').val());
+                else 
+                    mymap.setView([41.458, 12.706], 6);
+            });
+
+            $('#lon').change(event => {
+                if($('#lat').val() != '' && $('#lon').val() != '')
+                    addMarkerOnMap($('#lat').val(), $('#lon').val());
+                else 
+                    mymap.setView([41.458, 12.706], 6);
+            });
 
             function querySuperMarkets () {
                 var superMarketName = $('#super-market-name').val();
@@ -255,21 +276,65 @@
                     queryResults.empty();
                     fetch(url).then(response => {return response.json()}).then(data => {
                         for(i in data) {
-                            if(data[i].class == 'shop' || data[i].type == 'retail' || data[i].type == 'commercial')
-                                queryResults.append('<div id="query-result-element" class="p-2 bd-highlight" onClick="addMarkerOnSuperMarket(' + data[i].lat + ',' + data[i].lon +')">'+ data[i].display_name +'</div>');
+                        	if(data[i].class == 'shop' || data[i].type == 'retail' || data[i].type == 'commercial'){
+	                        	var town;
+	                        	if (data[i].address.town != undefined)
+	                        		town = data[i].address.town;
+	                        	else if(data[i].address.city != undefined)
+	                        		town = data[i].address.city;
+	                        	else
+	                        		town = data[i].address.village;
+	                        	var parameterString = data[i].lat + ', ' + data[i].lon + ', \'' + removeSingleQuotes(data[i].address[data[i].type]) + '\', \'' + removeSingleQuotes(town) + '\', \'' + removeSingleQuotes(data[i].display_name) + '\'';
+                                queryResults.append('<div id="query-result-element" class="p-2 bd-highlight" onClick="addMarkerOnSuperMarket(' + parameterString + ')">'+ data[i].display_name +'</div>');
+                        	}
                         }
                     }).catch(err => {console.log(err)});
                 }
             }
-
-            function addMarkerOnSuperMarket(lat, lon) {
+            
+            function addMarkerOnMap(lat, lon) {
                 if(marker != null)
                     marker.removeFrom(mymap);
-                marker = L.marker([parseFloat(lat), parseFloat(lon)]).addTo(mymap)
-                        .bindPopup('<button type="button" class="btn btn-primary" onClick="location.href=\'http://www.example.com\'">Seleziona il supermercato</button>')
-                        .openPopup();
-                mymap.setView([parseFloat(lat), parseFloat(lon)], 18);
+                marker = L.marker([lat, lon]).addTo(mymap);
+                mymap.setView([lat, lon], 18);
             }
+
+            function addMarkerOnSuperMarket(lat, lon, name, town, address) {
+                var parameterString = lat + ', ' + lon + ', \'' + name + '\', \'' + town + '\', \'' + address + '\'';
+                addMarkerOnMap(lat, lon);
+                marker.bindPopup('<button type="button" class="btn btn-primary" onClick="fillMapForm(' + parameterString + ')">Seleziona il supermercato</button>')
+                      .openPopup();
+            }
+
+            function fillMapForm(lat, lon, name, town, address) {
+                $('#name').val(name);
+                $('#town').val(town);
+                $('#address').val(address);
+                $('#lat').val(lat);
+                $('#lon').val(lon);
+            }
+            
+            function removeSingleQuotes(string) {
+                if(string != undefined)
+                    return string.replace(/'/g, "");
+                return 'Da specificare';
+            }
+
+            function clearMapForm() {
+                $('#name').val('');
+                $('#town').val('');
+                $('#address').val('');
+                $('#lat').val('');
+                $('#lon').val('');
+                $('#query-result').empty();
+                marker.removeFrom(mymap);
+                mymap.setView([41.458, 12.706], 6);
+            }
+            
+          	$(document).ready(event => {
+          		if ($('#lat').val() != '' && $('#lon').val() != '')
+                    addMarkerOnMap($('#lat').val(), $('#lon').val());
+          	});
         </script>
 
 </body>

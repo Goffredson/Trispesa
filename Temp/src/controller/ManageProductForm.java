@@ -18,7 +18,7 @@ public class ManageProductForm extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		ArrayList<SuperMarket> supeMarkets = DBManager.getIstance().getSuperMarkets();
+		ArrayList<SuperMarket> supeMarkets = DBManager.getIstance().getAffiliateSuperMarkets();
 		req.setAttribute("superMarkets", supeMarkets);
 		ArrayList<Category> categories = DBManager.getIstance().getCategories();
 		req.setAttribute("categories", categories);

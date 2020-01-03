@@ -104,7 +104,8 @@
 			<div class="form-group">
 				<label for="superMarket">Supermercato:</label>
 				<c:if test="${action == 'add'}">
-					<select name="superMarket" class="form-control" id="superMarket">
+					<select name="superMarket" required class="form-control"
+						id="superMarket">
 						<c:forEach items="${superMarkets}" var="supermarket">
 							<option
 								value="(${supermarket.name},${supermarket.city},${supermarket.address})">${supermarket.name}-${supermarket.city}-
@@ -113,7 +114,7 @@
 					</select>
 				</c:if>
 				<c:if test="${action == 'mod'}">
-					<select name="superMarket-select" disabled class="form-control"
+					<select name="superMarket-select" disabled required class="form-control"
 						id="superMarket">
 						<c:forEach items="${superMarkets}" var="supermarket">
 							<c:set var="s1"
@@ -135,18 +136,20 @@
 					<input type="hidden" name="superMarket"
 						value="(${product.superMarket.name},${product.superMarket.city},${product.superMarket.address})">
 				</c:if>
+				<div class="valid-feedback">Valido.</div>
+				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
 			</div>
 			<div class="form-group">
 				<label for="category">Categoria:</label>
 				<c:if test="${action == 'add'}">
-					<select name="category" class="form-control" id="category">
+					<select name="category" class="form-control" id="category" required>
 						<c:forEach items="${categories}" var="category">
 							<option value="${category.familyName}">${category.familyName}</option>
 						</c:forEach>
 					</select>
 				</c:if>
 				<c:if test="${action == 'mod'}">
-					<select disabled name="category-select" class="form-control"
+					<select disabled required name="category-select" class="form-control"
 						id="category">
 						<c:forEach items="${categories}" var="category">
 							<c:if
@@ -162,6 +165,8 @@
 					<input type="hidden" name="category"
 						value="${product.category.familyName}">
 				</c:if>
+				<div class="valid-feedback">Valido.</div>
+				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
 			</div>
 			<div class="form-group">
 				<label for="price">Prezzo in euro:</label>

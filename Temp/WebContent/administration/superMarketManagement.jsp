@@ -92,14 +92,40 @@
 						href="supermarket/manageSuperMarketForm?action=mod&superMarket=(${superMarket.name},${superMarket.city},${superMarket.address})"
 						class="btn btn-info" role="button">modifica</a></td>
 					<td width="10%"><c:if test="${superMarket.affiliate == true}">
-							<a
-								href="supermarket/manage?action=del&superMarket=(${superMarket.name},${superMarket.city},${superMarket.address})"
+							<a href="" data-toggle="modal" data-target="#delete-modal"
 								class="btn btn-danger" role="button">rimuovi</a>
-						</c:if><c:if test="${superMarket.affiliate == false}">
+						</c:if> <c:if test="${superMarket.affiliate == false}">
 							<a
 								href="supermarket/manage?action=aff&superMarket=(${superMarket.name},${superMarket.city},${superMarket.address})"
 								class="btn btn-success" role="button">affilia</a>
-						</c:if></td>
+						</c:if> <!-- The Modal -->
+						<div class="modal" id="delete-modal">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<!-- Modal Header -->
+									<div class="modal-header">
+										<h4 class="modal-title">ATTENZIONE!</h4>
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+									</div>
+									<!-- Modal body -->
+									<div class="modal-body">
+										Rimuovendo l'affiliazione del supermercato verrano rimossi
+										tutti i prodotti venduti dal supermercato.<br>Sei sicuro
+										di voler continuare?
+									</div>
+									<!-- Modal footer -->
+									<div class="modal-footer">
+										<a
+											href="supermarket/manage?action=del&superMarket=(${superMarket.name},${superMarket.city},${superMarket.address})"
+											type="button" class="btn btn-danger">Rimuovi
+											affilizione</a>
+										<a href="" type="button" class="btn btn-secondary"
+											data-dismiss="modal">Annulla</a>
+									</div>
+
+								</div>
+							</div>
+						</div></td>
 				</tr>
 			</c:forEach>
 		</table>

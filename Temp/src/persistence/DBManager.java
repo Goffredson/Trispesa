@@ -26,11 +26,11 @@ public class DBManager {
 	private DBManager() {
 		// cazzate sul db
 		superMarkets = new ArrayList<SuperMarket>();
-		superMarkets.add(new SuperMarket("conad", "cosenza", "via della banana, 33", true, 0, 0));
-		superMarkets.add(new SuperMarket("coop", "cosenza", "via della vita, 33", false, 0, 0));
-		superMarkets.add(new SuperMarket("lidl", "cosenza", "via della morte, 33", true, 0, 0));
-		superMarkets.add(new SuperMarket("auchan", "cosenza", "via della citre, 33", true, 0, 0));
-		superMarkets.add(new SuperMarket("conad", "rende", "via ciccio bello, 33", false, 0, 0));
+		superMarkets.add(new SuperMarket("conad", "cosenza", "via della banana, 33", true, 1, 1));
+		superMarkets.add(new SuperMarket("coop", "cosenza", "via della vita, 33", false, 2, 2));
+		superMarkets.add(new SuperMarket("lidl", "cosenza", "via della morte, 33", true, 3, 3));
+		superMarkets.add(new SuperMarket("auchan", "cosenza", "via della citre, 33", true, 4, 4));
+		superMarkets.add(new SuperMarket("conad", "rende", "via ciccio bello, 33", false, 5, 5));
 		SuperMarket conad = superMarkets.get(0);
 
 		categories = new ArrayList<Category>();
@@ -53,13 +53,12 @@ public class DBManager {
 		products.add(new Product(5, "iewhvoiw", 1.1, 123, conad, true, pastaIntegrale, 9));
 		products.add(new Product(6, "ciqo", 1.1, 123, conad, true, pastaIntegrale, 9));
 		products.add(new Product(7, "ciqo", 1.1, 123, conad, true, pastaIntegrale, 9));
-		products.add(new Product(8, "ciao che bello", 1000, 123, conad, true, pastaIntegrale, 9));
+		products.add(new Product(8, "ciao che bello", 1000, 123, conad, true, paneBianco, 9));
 		products.add(new Product(9, "ciqo", 1.1, 123, conad, true, pastaIntegrale, 9));
-		products.add(new Product(10, "funziona", 1.1, 123, conad, true, pastaIntegrale, 9));
+		products.add(new Product(10, "funziona", 1.1, 123, superMarkets.get(1), true, pastaIntegrale, 9));
 	}
 
 	public void addSupermarket(SuperMarket superMarket) throws DBOperationException {
-		// se lo posso aggiungere ecc
 		for (SuperMarket temp : superMarkets) {
 			if (temp.equals(superMarket)) {
 				throw new DBOperationException("Il supermercato è già presente nel database", superMarket.toString());
@@ -132,6 +131,14 @@ public class DBManager {
 			throw new DBOperationException("Il supermercato da rimuovere non è stato trovato", "null");
 		}
 		temp.setAffiliate(false);
+		
+		ArrayList<Product> tempProducts = new ArrayList<Product>();
+		for (Product product : products) {
+			if (!(product.getSuperMarket().equals(temp))) {
+				tempProducts.add(product);
+			}
+		}
+		products = tempProducts;
 	}
 
 	public void modifySuperMarket(String oldSuperMarketString, SuperMarket superMarket) throws DBOperationException {
@@ -152,6 +159,16 @@ public class DBManager {
 			throw new DBOperationException("Il supermercato da affiliare non è stato trovato", "null");
 		}
 		temp.setAffiliate(true);
+	}
+
+	public ArrayList<SuperMarket> getAffiliateSuperMarkets() {
+		ArrayList<SuperMarket> temp = new ArrayList<SuperMarket>();
+		for (SuperMarket superMarket : superMarkets) {
+			if (superMarket.isAffiliate()) {
+				temp.add(superMarket);
+			}
+		}
+		return temp;
 	}
 
 	public ArrayList<Customer> getCustomers() {

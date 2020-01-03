@@ -1,15 +1,13 @@
 body {
 	padding-top: 56px;
 }
-
+.login{
+	background-color: cornflowerblue !important;
+	border: none;
+}
 #nav {
 	background-color: cornflowerblue !important;
 }
-
-#loginButton {
-	margin-left: 10px;
-}
-
 #search-bar {
 	margin: 10px !important;
 	width: 75%;

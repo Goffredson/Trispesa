@@ -13,10 +13,10 @@
 <title>Trispesa</title>
 
 <!-- Bootstrap  -->
-<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- css -->
-<link href="css/main.css" rel="stylesheet">
+<link href="../css/main.css" rel="stylesheet">
 
 </head>
 
@@ -40,32 +40,8 @@
 							personale</a></li>
 					<li class="nav-item"><a class="nav-link" href="#"><img
 							src="images/cart.png" width="30" /></a></li>
-					<!-- Menu form login -->
-					<div class="dropdown">
-						<a class="btn btn-secondary dropdown-toggle login" href="#"
-							role="button" id="buttonLogin" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false">Login</a>
-
-						<div class="dropdown-menu">
-							<form class="px-4 py-3">
-								<div class="form-group">
-									<label for="exampleDropdownFormEmail1">Indirizzo Email</label> <input
-										type="email" class="form-control"
-										id="exampleDropdownFormEmail1" placeholder="email@example.com">
-								</div>
-								<div class="form-group">
-									<label for="exampleDropdownFormPassword1">Password</label> <input
-										type="password" class="form-control"
-										id="exampleDropdownFormPassword1" placeholder="Password">
-								</div>
-								<button type="submit" class="btn btn-primary">Autenticati</button>
-							</form>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Effettua registrazione</a> <a
-								class="dropdown-item" href="#">Password dimenticata?</a>
-							</div>	
-					</div>
-					<!--Chiusura Menu form login -->
+					<li class="nav-item"><a href="#" id="loginButton"
+						class="btn btn-success" role="button">Login</a></li>
 					<li class="nav-item"><a class="nav-link" href="administration">Parte
 							admin (NON TOCCARE!)</a></li>
 				</ul>
@@ -121,43 +97,26 @@
 				</a>
 			</div>
 			<!-- /carosello -->
-
-			<!-- left col -->
-			<div class="col-lg-3">
-
-				<h1>Categorie (filtri)</h1>
-				<div class="list-group">
-					<c:forEach items="${listaCategorie}" var="categoria">
-						<a href="user/showProducts?categoria=${categoria.name}"
-							class="list-group-item">${categoria.name}</a>
-					</c:forEach>
-				</div>
-
-			</div>
 			<!-- /left col -->
 
 			<div class="col-lg-9">
-
-
-
-				<%-- 				<c:forEach items="${listaProdotti}" var="prodotto"> --%>
-				<!-- 					<div class="row"> -->
-				<!-- 						<div class="col-lg-4 col-md-6 mb-4"> -->
-				<!-- 							<div class="card h-100"> -->
-				<!-- 								<a href="#"><img class="card-img-top" -->
-				<!-- 									src="http://placehold.it/700x400" alt=""></a> -->
-				<!-- 								<div class="card-body"> -->
-				<!-- 									<h4 class="card-title"> -->
-				<%-- 										<a href="#">${prodotto.name}</a> --%>
-				<!-- 									</h4> -->
-				<%-- 									<h5>${prodotto.price}</h5> --%>
-				<!-- 								</div> -->
-				<!-- 								<div class="card-footer"> -->
-				<!-- 									Le stelline -->
-				<!-- 								</div> -->
-				<!-- 							</div> -->
-				<!-- 						</div> -->
-				<%-- 				</c:forEach> --%>
+				<c:forEach items="${listaProdotti}" var="prodotto">
+					<div class="row">
+						<div class="col-lg-4 col-md-6 mb-4">
+							<div class="card h-100">
+								<a href="#"><img class="card-img-top"
+									src="http://placehold.it/700x400" alt=""></a>
+								<div class="card-body">
+									<h4 class="card-title">
+										<a href="#">${prodotto.name}</a>
+									</h4>
+									<h5>${prodotto.price}</h5>
+								</div>
+								<div class="card-footer">Le stelline</div>
+							</div>
+						</div>
+					</div>
+				</c:forEach>
 
 			</div>
 			<!-- /.row -->

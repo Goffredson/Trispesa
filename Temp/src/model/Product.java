@@ -6,6 +6,7 @@ public class Product {
 	private String name;
 	private double price;
 	private double weight;
+	private double discount;
 	private SuperMarket superMarket;
 	private boolean offBrand; // sottomarca
 	private Category category;
@@ -22,6 +23,15 @@ public class Product {
 		this.offBrand = offBrand;
 		this.category = category;
 		this.quantity = quantity;
+		this.discount=0;
+	}
+
+	public double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(double discount) {
+		this.discount = discount;
 	}
 
 	public int getBarcode() {
@@ -41,7 +51,7 @@ public class Product {
 	}
 
 	public double getPrice() {
-		return price;
+		return price-this.discount;
 	}
 
 	public void setPrice(double price) {

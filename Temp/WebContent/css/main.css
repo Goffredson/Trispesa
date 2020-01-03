@@ -46,3 +46,13 @@ body {
 #product-offbrand {
 	color: red;
 }
+
+#error-message {
+	background-color: rgba(255, 0, 0, 0.40);
+	margin: 10px !important;
+}
+
+#success-message {
+	background-color: rgba(0, 255, 0, 0.40);
+	margin: 10px !important;
+}

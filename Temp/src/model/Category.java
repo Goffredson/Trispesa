@@ -32,5 +32,10 @@ public class Category {
 	public Category getParent() {
 		return parent;
 	}
+	
+	@Override
+	public String toString() {
+		return familyName;
+	}
 
 }

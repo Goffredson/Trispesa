@@ -2,6 +2,7 @@ package persistence;
 
 import java.util.ArrayList;
 
+import exceptions.DBOperationException;
 import model.Category;
 import model.Customer;
 import model.Product;
@@ -57,26 +58,23 @@ public class DBManager {
 		products.add(new Product(10, "funziona", 1.1, 123, conad, true, pastaIntegrale, 9));
 	}
 
-	public boolean addSupermarket(SuperMarket superMarket) {
+	public void addSupermarket(SuperMarket superMarket) throws DBOperationException {
 		// se lo posso aggiungere ecc
 		for (SuperMarket temp : superMarkets) {
 			if (temp.equals(superMarket)) {
-				return false;
+				throw new DBOperationException("Il supermercato è già presente nel database", superMarket.toString());
 			}
 		}
 		superMarkets.add(superMarket);
-		return true;
 	}
 
-	public boolean addProduct(Product product) {
-		// se lo posso aggiungere ecc
+	public void addProduct(Product product) throws DBOperationException {
 		for (Product temp : products) {
 			if (temp.getBarcode() == product.getBarcode() && temp.getSuperMarket().equals(product.getSuperMarket())) {
-				return false;
+				throw new DBOperationException("Il prodotto è già presente nel database", product.toString());
 			}
 		}
 		products.add(product);
-		return true;
 	}
 
 	public SuperMarket getSuperMarketByID(String superMarketString) {
@@ -99,14 +97,14 @@ public class DBManager {
 		return null;
 	}
 
-	public boolean removeProductByID(int barcode, SuperMarket superMarket) {
+	public void removeProductByID(int barcode, SuperMarket superMarket) throws DBOperationException {
 		for (Product temp : products) {
 			if (temp.getBarcode() == barcode && temp.getSuperMarket().equals(superMarket)) {
 				products.remove(temp);
-				return true;
+				return;
 			}
 		}
-		return false;
+		throw new DBOperationException("Il prodotto da eliminare non è stato trovato", "null");
 	}
 
 	public Product getProductByID(int barcode, SuperMarket superMarket) {
@@ -118,44 +116,40 @@ public class DBManager {
 		return null;
 	}
 
-	public boolean modifyProduct(Product product) {
+	public void modifyProduct(Product product) throws DBOperationException {
 		Product temp = getProductByID(product.getBarcode(), product.getSuperMarket());
 		if (temp == null) {
-			return false;
+			throw new DBOperationException("Il prodotto da modificare non è stato trovato", "null");
 		}
 		temp.setPrice(product.getPrice());
 		temp.setQuantity(product.getQuantity());
 		temp.setOffBrand(product.isOffBrand());
-		return true;
 	}
 
-	public boolean removeAffiliateSuperMarketByID(String superMarketString) {
+	public void removeAffiliateSuperMarketByID(String superMarketString) throws DBOperationException {
 		SuperMarket temp = getSuperMarketByID(superMarketString);
 		if (temp == null) {
-			return false;
+			throw new DBOperationException("Il supermercato da rimuovere non è stato trovato", "null");
 		}
 		temp.setAffiliate(false);
-		return true;
 	}
 
-	public boolean modifySuperMarket(String oldSuperMarketString, SuperMarket superMarket) {
+	public void modifySuperMarket(String oldSuperMarketString, SuperMarket superMarket) throws DBOperationException {
 		SuperMarket temp = getSuperMarketByID(oldSuperMarketString);
 		if (temp == null) {
-			return false;
+			throw new DBOperationException("Il supermercato da modificare non è stato trovato", "null");
 		}
 		temp.setName(superMarket.getName());
 		temp.setCity(superMarket.getCity());
 		temp.setAddress(superMarket.getAddress());
-		return true;
 	}
 
-	public boolean addAffiliateSuperMarketByID(String superMarketString) {
+	public void addAffiliateSuperMarketByID(String superMarketString) throws DBOperationException {
 		SuperMarket temp = getSuperMarketByID(superMarketString);
 		if (temp == null) {
-			return false;
+			throw new DBOperationException("Il supermercato da affiliare non è stato trovato", "null");
 		}
 		temp.setAffiliate(true);
-		return true;
 	}
 
 	public ArrayList<Customer> getCustomers() {

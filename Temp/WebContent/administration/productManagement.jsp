@@ -87,7 +87,8 @@
 					<td>${product.barcode}</td>
 					<td>${product.name}</td>
 					<td>${product.weight}g</td>
-					<td>${product.superMarket.name}</td>
+					<td>${product.superMarket.name},${product.superMarket.city},
+						${product.superMarket.address}</td>
 					<c:if test="${product.offBrand == true}">
 						<td id="product-offbrand">NO</td>
 					</c:if>

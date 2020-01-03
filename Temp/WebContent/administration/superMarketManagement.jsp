@@ -98,7 +98,7 @@
 						</c:if><c:if test="${superMarket.affiliate == false}">
 							<a
 								href="supermarket/manage?action=aff&superMarket=(${superMarket.name},${superMarket.city},${superMarket.address})"
-								class="btn btn-success" role="button">affillia</a>
+								class="btn btn-success" role="button">affilia</a>
 						</c:if></td>
 				</tr>
 			</c:forEach>

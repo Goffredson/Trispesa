@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import exceptions.DBOperationException;
 import model.SuperMarket;
 import persistence.DBManager;
 
@@ -21,78 +22,87 @@ public class ManageSupermarket extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RequestDispatcher rd;
-		boolean result;
+		boolean result = true;
 
-		switch (req.getParameter("action")) {
-		case "add": {
-			SuperMarket superMarket;
-			String name = (String) req.getParameter("name");
-			String city = (String) req.getParameter("city");
-			String address = (String) req.getParameter("address");
-			String affiliate = (String) req.getParameter("affiliate");
-			if (affiliate.equals("yes"))
-				superMarket = new SuperMarket(name, city, address, true);
-			else
-				superMarket = new SuperMarket(name, city, address, false);
+		try {
+			switch (req.getParameter("action")) {
+			case "add": {
+				req.setAttribute("op", "Aggiungi supermercato");
+				SuperMarket superMarket;
+				String name = (String) req.getParameter("name");
+				String city = (String) req.getParameter("city");
+				String address = (String) req.getParameter("address");
+				String affiliate = (String) req.getParameter("affiliate");
+				if (affiliate.equals("yes"))
+					superMarket = new SuperMarket(name, city, address, true);
+				else
+					superMarket = new SuperMarket(name, city, address, false);
 
-			if (DBManager.getIstance().addSupermarket(superMarket))
-				result = true;
-			else
-				result = false;
+				DBManager.getIstance().addSupermarket(superMarket);
 
+				req.setAttribute("result", result);
+				req.setAttribute("object", superMarket.toString());
+
+				rd = req.getRequestDispatcher("../operationResult.jsp");
+				rd.forward(req, resp);
+			}
+				break;
+
+			case "mod": {
+				req.setAttribute("op", "Modifica supermercato");
+				String name = (String) req.getParameter("name");
+				String city = (String) req.getParameter("city");
+				String address = (String) req.getParameter("address");
+				SuperMarket superMarket = new SuperMarket(name, city, address, true);
+
+				String oldSuperMarketString = (String) req.getParameter("old");
+
+				DBManager.getIstance().modifySuperMarket(oldSuperMarketString, superMarket);
+
+				req.setAttribute("result", result);
+				req.setAttribute("object", superMarket.toString());
+
+				rd = req.getRequestDispatcher("../operationResult.jsp");
+				rd.forward(req, resp);
+			}
+				break;
+
+			case "del": {
+				req.setAttribute("op", "Rimuovi affiliazione supermercato");
+				String superMarketString = (String) req.getParameter("superMarket");
+				SuperMarket superMarket = DBManager.getIstance().getSuperMarketByID(superMarketString);
+
+				DBManager.getIstance().removeAffiliateSuperMarketByID(superMarketString);
+
+				req.setAttribute("result", result);
+				req.setAttribute("object", superMarket.toString());
+
+				rd = req.getRequestDispatcher("../operationResult.jsp");
+				rd.forward(req, resp);
+			}
+				break;
+
+			case "aff": {
+				req.setAttribute("op", "Aggiungi affiliazione supermercato");
+				String superMarketString = (String) req.getParameter("superMarket");
+				SuperMarket superMarket = DBManager.getIstance().getSuperMarketByID(superMarketString);
+
+				DBManager.getIstance().addAffiliateSuperMarketByID(superMarketString);
+
+				req.setAttribute("result", result);
+				req.setAttribute("object", superMarket.toString());
+
+				rd = req.getRequestDispatcher("../operationResult.jsp");
+				rd.forward(req, resp);
+			}
+				break;
+			}
+		} catch (DBOperationException e) {
+			result = false;
 			req.setAttribute("result", result);
-
+			req.setAttribute("exception", e);
 			rd = req.getRequestDispatcher("../operationResult.jsp");
 			rd.forward(req, resp);
-		}
-			break;
-
-		case "mod": {
-			String name = (String) req.getParameter("name");
-			String city = (String) req.getParameter("city");
-			String address = (String) req.getParameter("address");
-			SuperMarket superMarket = new SuperMarket(name, city, address, true);
-
-			String oldSuperMarketString = (String) req.getParameter("old");
-
-			if (DBManager.getIstance().modifySuperMarket(oldSuperMarketString, superMarket))
-				result = true;
-			else
-				result = false;
-
-			req.setAttribute("result", result);
-
-			rd = req.getRequestDispatcher("../operationResult.jsp");
-			rd.forward(req, resp);
-		}
-			break;
-
-		case "del": {
-			String superMarketString = (String) req.getParameter("superMarket");
-			if (DBManager.getIstance().removeAffiliateSuperMarketByID(superMarketString))
-				result = true;
-			else
-				result = false;
-
-			req.setAttribute("result", result);
-
-			rd = req.getRequestDispatcher("../operationResult.jsp");
-			rd.forward(req, resp);
-		}
-			break;
-
-		case "aff":
-			String superMarketString = (String) req.getParameter("superMarket");
-			if (DBManager.getIstance().addAffiliateSuperMarketByID(superMarketString))
-				result = true;
-			else
-				result = false;
-
-			req.setAttribute("result", result);
-
-			rd = req.getRequestDispatcher("../operationResult.jsp");
-			rd.forward(req, resp);
-			break;
 		}
 	}
 

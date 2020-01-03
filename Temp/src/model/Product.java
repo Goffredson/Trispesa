@@ -97,6 +97,13 @@ public class Product {
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return barcode + ", " + name + ", " + superMarket + ", " + category;
+	}
+	
+	
+
 	// inserendo un prodotto si genera nel db una tupla di prodotto e una di
 	// descrittore prodotto (GIORGIO)
 

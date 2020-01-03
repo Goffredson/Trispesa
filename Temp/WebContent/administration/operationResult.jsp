@@ -54,10 +54,33 @@
 
 	<div class="container d-flex justify-content-center">
 		<c:if test="${result == true}">
-			<h1>ok</h1>
+			<div id="success-message" class="jumbotron">
+				<h1>L'operazione è stata completata</h1>
+				<p>
+					<b>Tipo: </b>${op}
+				</p>
+				<p>
+					<b>Oggetto: </b>${object}
+				</p>
+				<p>
+					<b>Stato: </b>COMPLETATO
+				</p>
+			</div>
 		</c:if>
+
 		<c:if test="${result == false}">
-			<h1>errore</h1>
+			<div id="error-message" class="jumbotron">
+				<h1>L'operazione è stata annullata</h1>
+				<p>
+					<b>Tipo: </b>${op}
+				</p>
+				<p>
+					<b>Oggetto: </b>${exception.object}
+				</p>
+				<p>
+					<b>Stato: </b>${exception.message}
+				</p>
+			</div>
 		</c:if>
 	</div>
 

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import exceptions.DBOperationException;
 import model.Category;
 import model.Product;
 import model.SuperMarket;
@@ -22,83 +23,91 @@ public class ManageProduct extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		boolean result;
 		RequestDispatcher rd;
+		boolean result = true;
 
-		switch (req.getParameter("action")) {
-		case "add": {
-			Product product;
-			int barcode = Integer.parseInt(req.getParameter("barcode"));
-			String name = (String) req.getParameter("name");
-			double weight = Double.parseDouble(req.getParameter("weight"));
-			double price = Double.parseDouble(req.getParameter("price"));
-			int quantity = Integer.parseInt(req.getParameter("quantity"));
-			String superMarketString = (String) req.getParameter("superMarket");
-			SuperMarket superMarket = DBManager.getIstance().getSuperMarketByID(superMarketString);
-			String categoryString = (String) req.getParameter("category");
-			Category category = DBManager.getIstance().getCategoryByFamilyName(categoryString);
-			String offbrand = (String) req.getParameter("offbrand");
-			if (offbrand.equals("yes"))
-				product = new Product(barcode, name, price, weight, superMarket, true, category, quantity);
-			else
-				product = new Product(barcode, name, price, weight, superMarket, false, category, quantity);
+		try {
+			switch (req.getParameter("action")) {
+			case "add": {
+				req.setAttribute("op", "Aggiungi prodotto");
+				Product product;
+				int barcode = Integer.parseInt(req.getParameter("barcode"));
+				String name = (String) req.getParameter("name");
+				double weight = Double.parseDouble(req.getParameter("weight"));
+				double price = Double.parseDouble(req.getParameter("price"));
+				int quantity = Integer.parseInt(req.getParameter("quantity"));
+				String superMarketString = (String) req.getParameter("superMarket");
+				SuperMarket superMarket = DBManager.getIstance().getSuperMarketByID(superMarketString);
+				String categoryString = (String) req.getParameter("category");
+				Category category = DBManager.getIstance().getCategoryByFamilyName(categoryString);
+				String offbrand = (String) req.getParameter("offbrand");
+				if (offbrand.equals("yes"))
+					product = new Product(barcode, name, price, weight, superMarket, true, category, quantity);
+				else
+					product = new Product(barcode, name, price, weight, superMarket, false, category, quantity);
 
-			if (DBManager.getIstance().addProduct(product))
-				result = true;
-			else
-				result = false;
+				DBManager.getIstance().addProduct(product);
 
+				req.setAttribute("result", result);
+				req.setAttribute("object", product.toString());
+
+				rd = req.getRequestDispatcher("../operationResult.jsp");
+				rd.forward(req, resp);
+			}
+				break;
+
+			case "mod": {
+				req.setAttribute("op", "Modifica prodotto");
+				Product product;
+				int barcode = Integer.parseInt(req.getParameter("barcode"));
+				String name = (String) req.getParameter("name");
+				double weight = Double.parseDouble(req.getParameter("weight"));
+				double price = Double.parseDouble(req.getParameter("price"));
+				int quantity = Integer.parseInt(req.getParameter("quantity"));
+				String superMarketString = (String) req.getParameter("superMarket");
+				SuperMarket superMarket = DBManager.getIstance().getSuperMarketByID(superMarketString);
+				String categoryString = (String) req.getParameter("category");
+				Category category = DBManager.getIstance().getCategoryByFamilyName(categoryString);
+				String offbrand = (String) req.getParameter("offbrand");
+				if (offbrand.equals("yes"))
+					product = new Product(barcode, name, price, weight, superMarket, true, category, quantity);
+				else
+					product = new Product(barcode, name, price, weight, superMarket, false, category, quantity);
+
+				DBManager.getIstance().modifyProduct(product);
+
+				req.setAttribute("result", result);
+				req.setAttribute("object", product.toString());
+
+				rd = req.getRequestDispatcher("../operationResult.jsp");
+				rd.forward(req, resp);
+			}
+				break;
+
+			case "del": {
+				req.setAttribute("op", "Elimina prodotto");
+				int barcode = Integer.parseInt(req.getParameter("barcode"));
+				String superMarketString = (String) req.getParameter("superMarket");
+				SuperMarket superMarket = DBManager.getIstance().getSuperMarketByID(superMarketString);
+				Product product = DBManager.getIstance().getProductByID(barcode, superMarket);
+				
+				DBManager.getIstance().removeProductByID(barcode, superMarket);
+
+				req.setAttribute("result", result);
+				req.setAttribute("object", product.toString());
+
+				rd = req.getRequestDispatcher("../operationResult.jsp");
+				rd.forward(req, resp);
+			}
+				break;
+
+			}
+		} catch (DBOperationException e) {
+			result = false;
 			req.setAttribute("result", result);
-
+			req.setAttribute("exception", e);
 			rd = req.getRequestDispatcher("../operationResult.jsp");
 			rd.forward(req, resp);
-		}
-			break;
-
-		case "mod": {
-			Product product;
-			int barcode = Integer.parseInt(req.getParameter("barcode"));
-			String name = (String) req.getParameter("name");
-			double weight = Double.parseDouble(req.getParameter("weight"));
-			double price = Double.parseDouble(req.getParameter("price"));
-			int quantity = Integer.parseInt(req.getParameter("quantity"));
-			String superMarketString = (String) req.getParameter("superMarket");
-			SuperMarket superMarket = DBManager.getIstance().getSuperMarketByID(superMarketString);
-			String categoryString = (String) req.getParameter("category");
-			Category category = DBManager.getIstance().getCategoryByFamilyName(categoryString);
-			String offbrand = (String) req.getParameter("offbrand");
-			if (offbrand.equals("yes"))
-				product = new Product(barcode, name, price, weight, superMarket, true, category, quantity);
-			else
-				product = new Product(barcode, name, price, weight, superMarket, false, category, quantity);
-
-			if (DBManager.getIstance().modifyProduct(product))
-				result = true;
-			else
-				result = false;
-
-			req.setAttribute("result", result);
-
-			rd = req.getRequestDispatcher("../operationResult.jsp");
-			rd.forward(req, resp);
-		}
-			break;
-
-		case "del": {
-			int barcode = Integer.parseInt(req.getParameter("barcode"));
-			String superMarketString = (String) req.getParameter("superMarket");
-			SuperMarket superMarket = DBManager.getIstance().getSuperMarketByID(superMarketString);
-			if (DBManager.getIstance().removeProductByID(barcode, superMarket))
-				result = true;
-			else
-				result = false;
-
-			req.setAttribute("result", result);
-
-			rd = req.getRequestDispatcher("../operationResult.jsp");
-			rd.forward(req, resp);
-		}
-			break;
 		}
 	}
 

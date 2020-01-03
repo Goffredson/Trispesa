@@ -1,94 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
-  <display-name>Trispesa</display-name>
-  
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list>
-  
-  <servlet>
-  	<servlet-name>AdminDashboard</servlet-name>
-  	<servlet-class>controller.AdminDashboard</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>AdminDashboard</servlet-name>
-  	<url-pattern>/administration</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-  	<servlet-name>Home</servlet-name>
-  	<servlet-class>controller.Home</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>Home</servlet-name>
-  	<url-pattern>/home</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-  	<servlet-name>SuperMarketManagement</servlet-name>
-  	<servlet-class>controller.SuperMarketManagement</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>SuperMarketManagement</servlet-name>
-  	<url-pattern>/administration/supermarket</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-  	<servlet-name>ProductManagement</servlet-name>
-  	<servlet-class>controller.ProductManagement</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>ProductManagement</servlet-name>
-  	<url-pattern>/administration/product</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-  	<servlet-name>ManageSupermarket</servlet-name>
-  	<servlet-class>controller.ManageSupermarket</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>ManageSupermarket</servlet-name>
-  	<url-pattern>/administration/supermarket/manage</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-  	<servlet-name>ManageProduct</servlet-name>
-  	<servlet-class>controller.ManageProduct</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>ManageProduct</servlet-name>
-  	<url-pattern>/administration/product/manage</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-  	<servlet-name>ManageProductForm</servlet-name>
-  	<servlet-class>controller.ManageProductForm</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>ManageProductForm</servlet-name>
-  	<url-pattern>/administration/product/manageProductForm</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-  	<servlet-name>ManageSuperMarketForm</servlet-name>
-  	<servlet-class>controller.ManageSuperMarketForm</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>ManageSuperMarketForm</servlet-name>
-  	<url-pattern>/administration/supermarket/manageSuperMarketForm</url-pattern>
-  </servlet-mapping>
-  
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	id="WebApp_ID" version="4.0">
+	<display-name>Trispesa</display-name>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+
+	<servlet>
+		<servlet-name>AdminDashboard</servlet-name>
+		<servlet-class>controller.AdminDashboard</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>AdminDashboard</servlet-name>
+		<url-pattern>/administration</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Home</servlet-name>
+		<servlet-class>controller.Home</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Home</servlet-name>
+		<url-pattern>/home</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ShowProducts</servlet-name>
+		<servlet-class>controller.ShowProducts</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ShowProducts</servlet-name>
+		<url-pattern>/user/showProducts</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>SuperMarketManagement</servlet-name>
+		<servlet-class>controller.SuperMarketManagement</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>SuperMarketManagement</servlet-name>
+		<url-pattern>/administration/supermarket</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ProductManagement</servlet-name>
+		<servlet-class>controller.ProductManagement</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ProductManagement</servlet-name>
+		<url-pattern>/administration/product</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ManageSupermarket</servlet-name>
+		<servlet-class>controller.ManageSupermarket</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ManageSupermarket</servlet-name>
+		<url-pattern>/administration/supermarket/manage</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ManageProduct</servlet-name>
+		<servlet-class>controller.ManageProduct</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ManageProduct</servlet-name>
+		<url-pattern>/administration/product/manage</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ManageProductForm</servlet-name>
+		<servlet-class>controller.ManageProductForm</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ManageProductForm</servlet-name>
+		<url-pattern>/administration/product/manageProductForm</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ManageSuperMarketForm</servlet-name>
+		<servlet-class>controller.ManageSuperMarketForm</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ManageSuperMarketForm</servlet-name>
+		<url-pattern>/administration/supermarket/manageSuperMarketForm</url-pattern>
+	</servlet-mapping>
+
 </web-app>

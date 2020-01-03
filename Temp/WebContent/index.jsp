@@ -103,9 +103,9 @@
 
 				<h1>Categorie (filtri)</h1>
 				<div class="list-group">
-				<c:forEach items="${listaCategorie}" var="categoria">
-					<a href="#" class="list-group-item">${categoria.name}</a>
-				</c:forEach> 
+					<c:forEach items="${listaCategorie}" var="categoria">
+						<a href="user/showProducts?categoria=${categoria.name}" class="list-group-item">${categoria.name}</a>
+					</c:forEach>
 				</div>
 
 			</div>

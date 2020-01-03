@@ -104,8 +104,8 @@
 					<div class="row">
 						<div class="col-lg-4 col-md-6 mb-4">
 							<div class="card h-100">
-								<a href="#"><img class="card-img-top"
-									src="http://placehold.it/700x400" alt=""></a>
+								<img class="card-img-top" src="../${prodotto.imagePath}"
+									height="250" alt="" />
 								<div class="card-body">
 									<h4 class="card-title">
 										<a href="#">${prodotto.name}</a>
@@ -127,7 +127,6 @@
 	</div>
 	<!-- /.row -->
 
-	</div>
 	<!-- /.container -->
 
 	<!-- Footer -->
@@ -140,8 +139,8 @@
 	</footer>
 
 	<!-- Bootstrap core JavaScript -->
-	<script src="vendor/jquery/jquery.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../vendor/jquery/jquery.min.js"></script>
+	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

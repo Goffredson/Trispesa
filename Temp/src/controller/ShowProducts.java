@@ -19,7 +19,7 @@ public class ShowProducts extends HttpServlet {
 		String categoryName=req.getParameter("categoria");
 		ArrayList<Product> prodotti=DBManager.getIstance().getProductsByCategory(categoryName);
 		req.setAttribute("listaProdotti",prodotti);
-		System.out.println(categoryName);
+		System.out.println(prodotti.get(0).getImagePath());
 		rd.forward(req,resp);
 	}
 	

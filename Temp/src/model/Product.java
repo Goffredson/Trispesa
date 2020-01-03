@@ -1,5 +1,7 @@
 package model;
 
+import java.io.File;
+
 public class Product {
 
 	private int barcode;
@@ -11,7 +13,12 @@ public class Product {
 	private boolean offBrand; // sottomarca
 	private Category category;
 	private int quantity;
+	private String imagePath;
 
+	public String getImagePath() {
+		return imagePath;
+	}
+	
 	public Product(int barcode, String name, double price, double weight, SuperMarket superMarket, boolean offBrand,
 			Category category, int quantity) {
 		super();
@@ -24,6 +31,7 @@ public class Product {
 		this.category = category;
 		this.quantity = quantity;
 		this.discount=0;
+		this.imagePath = "images" + File.separator + "products" + File.separator + this.barcode + ".png";
 	}
 
 	public double getDiscount() {

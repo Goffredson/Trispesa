@@ -108,8 +108,7 @@
 						id="superMarket">
 						<c:forEach items="${superMarkets}" var="supermarket">
 							<option
-								value="(${supermarket.name},${supermarket.city},${supermarket.address})">${supermarket.name}-${supermarket.city}-
-								${supermarket.address}</option>
+								value="(${supermarket.name},${supermarket.city},${supermarket.address})">${supermarket}</option>
 						</c:forEach>
 					</select>
 				</c:if>
@@ -123,8 +122,7 @@
 								value="(${product.superMarket.name},${product.superMarket.city},${product.superMarket.address})"></c:set>
 							<c:if test="${s1 eq s2}">
 								<option selected
-									value="(${supermarket.name},${supermarket.city},${supermarket.address})">${supermarket.name}-${supermarket.city}-
-									${supermarket.address}</option>
+									value="(${supermarket.name},${supermarket.city},${supermarket.address})">${supermarket}</option>
 							</c:if>
 							<c:if test="${s1 ne s2}">
 								<option

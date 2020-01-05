@@ -50,8 +50,9 @@ public class ManageUser extends HttpServlet {
 
 					DBManager.getIstance().removePaymentMethod(customer, paymentMethod);
 
-					RequestDispatcher rd = req.getRequestDispatcher("");
-					rd.forward(req, resp);
+					req.getSession().setAttribute("result", "true");
+					req.getSession().setAttribute("message", "Il metodo di pagamento è stato eliminato con successo!");
+					resp.sendRedirect("../user?page=profile");
 				}
 					break;
 				}
@@ -69,11 +70,12 @@ public class ManageUser extends HttpServlet {
 					Customer customer = (Customer) req.getSession().getAttribute("customer");
 					String deliveryAddressString = req.getParameter("deliveryAddress");
 					DeliveryAddress deliveryAddress = customer.getDeliveryAddressByID(deliveryAddressString);
-					
+
 					DBManager.getIstance().removeDeliveryAddress(customer, deliveryAddress);
-					
-					RequestDispatcher rd = req.getRequestDispatcher("");
-					rd.forward(req, resp);
+
+					req.getSession().setAttribute("result", "true");
+					req.getSession().setAttribute("message", "L'indirizzo di consegna è stato eliminato con successo!");
+					resp.sendRedirect("../user?page=profile");
 				}
 					break;
 				}
@@ -81,10 +83,9 @@ public class ManageUser extends HttpServlet {
 				break;
 			}
 		} catch (DBOperationException e) {
-//			req.setAttribute("result", false);
-//			req.setAttribute("exception", e);
-//			RequestDispatcher rd = req.getRequestDispatcher("../operationResult.jsp");
-//			rd.forward(req, resp);
+			req.getSession().setAttribute("result", true);
+			req.getSession().setAttribute("message", e.getMessage());
+			resp.sendRedirect("../user?page=profile");
 		}
 	}
 

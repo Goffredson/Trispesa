@@ -1,13 +1,16 @@
 body {
 	padding-top: 56px;
 }
-.login{
+
+.login {
 	background-color: cornflowerblue !important;
 	border: none;
 }
+
 #nav {
 	background-color: cornflowerblue !important;
 }
+
 #search-bar {
 	margin: 10px !important;
 	width: 75%;
@@ -90,4 +93,8 @@ body {
 .bd-highlight {
 	background-color: rgba(195, 228, 253, 0.15);
 	border: 1px solid rgba(136, 201, 251, 0.562);
+}
+
+#colonna {
+	margin: 20px !important;
 }

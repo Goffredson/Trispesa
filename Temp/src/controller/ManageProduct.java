@@ -30,12 +30,11 @@ public class ManageProduct extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		RequestDispatcher rd;
-		boolean result = true;
-
 		try {
 			switch (req.getParameter("action")) {
 			case "add": {
+				req.getSession().setAttribute("op", "Aggiungi prodotto");
+
 				// gets absolute path of the web application
 				String applicationPath = req.getServletContext().getRealPath("");
 				// constructs path of the directory to save uploaded file
@@ -44,10 +43,8 @@ public class ManageProduct extends HttpServlet {
 				// creates the save directory if it does not exists
 				File fileSaveDir = new File(uploadFilePath);
 				if (!fileSaveDir.exists()) {
-					System.out.println("ciao");
 					fileSaveDir.mkdirs();
 				}
-				System.out.println("Upload File Directory=" + fileSaveDir.getAbsolutePath());
 				String fileName = null;
 				String imagePath = null;
 				// Get all the parts from request and write it to the file on server
@@ -57,16 +54,13 @@ public class ManageProduct extends HttpServlet {
 						fileName = req.getParameter("barcode") + "." + ext;
 						imagePath = uploadFilePath + File.separator + fileName;
 						part.write(imagePath);
-						System.out.println(imagePath);
 					}
 				}
 				if (fileName == null) {
 					fileName = "imageNotFound.png";
 					imagePath = uploadFilePath + File.separator + fileName;
-					System.out.println(imagePath);
 				}
 
-				req.setAttribute("op", "Aggiungi prodotto");
 				Product product;
 				int barcode = Integer.parseInt(req.getParameter("barcode"));
 				String name = (String) req.getParameter("name");
@@ -87,15 +81,15 @@ public class ManageProduct extends HttpServlet {
 
 				DBManager.getIstance().addProduct(product);
 
-				req.setAttribute("result", result);
-				req.setAttribute("object", product.toString());
-
-				rd = req.getRequestDispatcher("../operationResult.jsp");
-				rd.forward(req, resp);
+				req.getSession().setAttribute("result", true);
+				req.getSession().setAttribute("object", product.toString());
+				resp.sendRedirect("../product");
 			}
 				break;
 
 			case "mod": {
+				req.getSession().setAttribute("op", "Modifica prodotto");
+
 				// gets absolute path of the web application
 				String applicationPath = req.getServletContext().getRealPath("");
 				// constructs path of the directory to save uploaded file
@@ -104,10 +98,8 @@ public class ManageProduct extends HttpServlet {
 				// creates the save directory if it does not exists
 				File fileSaveDir = new File(uploadFilePath);
 				if (!fileSaveDir.exists()) {
-					System.out.println("ciao");
 					fileSaveDir.mkdirs();
 				}
-				System.out.println("Upload File Directory=" + fileSaveDir.getAbsolutePath());
 				String fileName = null;
 				String imagePath = null;
 				// Get all the parts from request and write it to the file on server
@@ -117,7 +109,6 @@ public class ManageProduct extends HttpServlet {
 						fileName = req.getParameter("barcode") + "." + ext;
 						imagePath = uploadFilePath + File.separator + fileName;
 						part.write(imagePath);
-						System.out.println(imagePath);
 					}
 				}
 				int barcode = Integer.parseInt(req.getParameter("barcode"));
@@ -128,9 +119,7 @@ public class ManageProduct extends HttpServlet {
 					fileName = oldProduct.getImagePath().substring(16);
 				}
 
-				req.setAttribute("op", "Modifica prodotto");
 				Product product;
-				
 				String name = (String) req.getParameter("name");
 				double weight = Double.parseDouble(req.getParameter("weight"));
 				double price = Double.parseDouble(req.getParameter("price"));
@@ -139,22 +128,23 @@ public class ManageProduct extends HttpServlet {
 				Category category = DBManager.getIstance().getCategoryByFamilyName(categoryString);
 				String offbrand = (String) req.getParameter("offbrand");
 				if (offbrand.equals("yes"))
-					product = new Product(barcode, name, price, weight, superMarket, true, category, quantity, fileName);
+					product = new Product(barcode, name, price, weight, superMarket, true, category, quantity,
+							fileName);
 				else
-					product = new Product(barcode, name, price, weight, superMarket, false, category, quantity, fileName);
+					product = new Product(barcode, name, price, weight, superMarket, false, category, quantity,
+							fileName);
 
 				DBManager.getIstance().modifyProduct(product);
 
-				req.setAttribute("result", result);
-				req.setAttribute("object", product.toString());
-
-				rd = req.getRequestDispatcher("../operationResult.jsp");
-				rd.forward(req, resp);
+				req.getSession().setAttribute("result", true);
+				req.getSession().setAttribute("object", product.toString());
+				resp.sendRedirect("../product");
 			}
 				break;
 
 			case "del": {
-				req.setAttribute("op", "Elimina prodotto");
+				req.getSession().setAttribute("op", "Elimina prodotto");
+
 				int barcode = Integer.parseInt(req.getParameter("barcode"));
 				String superMarketString = (String) req.getParameter("superMarket");
 				SuperMarket superMarket = DBManager.getIstance().getSuperMarketByID(superMarketString);
@@ -162,21 +152,17 @@ public class ManageProduct extends HttpServlet {
 
 				DBManager.getIstance().removeProductByID(barcode, superMarket);
 
-				req.setAttribute("result", result);
-				req.setAttribute("object", product.toString());
-
-				rd = req.getRequestDispatcher("../operationResult.jsp");
-				rd.forward(req, resp);
+				req.getSession().setAttribute("result", true);
+				req.getSession().setAttribute("object", product.toString());
+				resp.sendRedirect("../product");
 			}
 				break;
 
 			}
 		} catch (DBOperationException e) {
-			result = false;
-			req.setAttribute("result", result);
-			req.setAttribute("exception", e);
-			rd = req.getRequestDispatcher("../operationResult.jsp");
-			rd.forward(req, resp);
+			req.getSession().setAttribute("result", false);
+			req.getSession().setAttribute("exception", e);
+			resp.sendRedirect("../product");
 		}
 	}
 

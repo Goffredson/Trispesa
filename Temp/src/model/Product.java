@@ -1,7 +1,5 @@
 package model;
 
-import java.io.File;
-
 public class Product {
 
 	private int barcode;

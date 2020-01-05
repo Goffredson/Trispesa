@@ -30,12 +30,18 @@ public class ShowProducts extends HttpServlet {
 		parametri.remove(0); // Tolgo 
 		ArrayList<Product> prodotti = null;
 		String nomeProdotto = req.getParameter("nomeProdotto");
+		// Se non ci sono categorie per cui filtrare
+		prodotti = DBManager.getIstance().getProductsByName(nomeProdotto);
+		RequestDispatcher rd = req.getRequestDispatcher("showProducts.jsp");
 		if (parametri.isEmpty()) {
-			prodotti = DBManager.getIstance().getProductsByName(nomeProdotto);
-			RequestDispatcher rd = req.getRequestDispatcher("showProducts.jsp");
-			req.setAttribute("listaProdotti", prodotti);
-			rd.forward(req, resp);
 		}
+		else {
+			for (String categoria : parametri) {
+				DBManager.getIstance().escludiProdotti(categoria, prodotti);
+			}
+		}
+		req.setAttribute("listaProdotti", prodotti);
+		rd.forward(req, resp);
 		
 
 	}

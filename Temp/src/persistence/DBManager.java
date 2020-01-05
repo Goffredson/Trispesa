@@ -2,6 +2,7 @@ package persistence;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 import exceptions.DBOperationException;
 import model.Category;
@@ -256,7 +257,7 @@ public class DBManager {
 				return;
 			}
 		}
-		throw new DBOperationException("Non è stato possibile eliminare il metodo di pagamento",
+		throw new DBOperationException("Non ï¿½ stato possibile eliminare il metodo di pagamento",
 				paymentMethod.toString());
 	}
 
@@ -267,8 +268,19 @@ public class DBManager {
 				return;
 			}
 		}
-		throw new DBOperationException("Non è stato possibile eliminare l'indirizzo di consegna",
+		throw new DBOperationException("Non ï¿½ stato possibile eliminare l'indirizzo di consegna",
 				deliveryAddress.toString());
+	}
+
+	public void escludiProdotti(String categoria, ArrayList<Product> prodotti) {
+		ListIterator<Product> iter = prodotti.listIterator();
+		while (iter.hasNext()) {
+			//System.out.println("Il prodotto " + iter.next().getName() + "Ã¨ di categoria " + iter.next().getCategory().getName());
+			if (!(iter.next().getCategory().getName().equals(categoria))) {
+				iter.remove();
+			}
+		}
+		
 	}
 
 }

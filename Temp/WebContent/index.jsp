@@ -101,6 +101,7 @@
 						<hr>
 						<ul class="list-group list-group-flush">
 
+							<!-- TODO: Deve diventare un menù a tendina, checkbox non hanno senso -->
 							<c:forEach items="${listaCategorieFoglia}" var="categoria">
 								<li class="list-group-item">
 									<!-- Default checked -->

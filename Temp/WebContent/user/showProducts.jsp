@@ -17,7 +17,7 @@
 
 <!-- css -->
 <link href="../css/main.css" rel="stylesheet">
-
+<script src="../js/cart.js"></script>
 </head>
 
 <body>
@@ -38,8 +38,10 @@
 					<li class="nav-item"><a class="nav-link" href="#">Dieta</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">Area
 							personale</a></li>
-					<li class="nav-item"><a class="nav-link" href="#"><img
-							src="../images/cart.png" width="30" /></a></li>
+					<li>
+						<button type="button" class="btn btn-primary" data-toggle="modal"
+							data-target="#modalCart" onclick="addProductsToDOM()">Carrello</button>
+					</li>
 					<li class="nav-item"><a href="#" id="loginButton"
 						class="btn btn-success" role="button">Login</a></li>
 					<li class="nav-item"><a class="nav-link" href="administration">Parte
@@ -99,6 +101,51 @@
 			<!-- /carosello -->
 			<!-- /left col -->
 
+			<!-- Button trigger modal-->
+
+
+			<!-- Modal: modalCart -->
+			<div class="modal fade" id="modalCart" tabindex="-1" role="dialog"
+				aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<!--Header-->
+						<div class="modal-header">
+							<h4 class="modal-title" id="myModalLabel">Your cart</h4>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<!--Body-->
+						<div class="modal-body">
+
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>N.</th>
+										<th>Nome prodotto</th>
+										<th>Prezzo</th>
+										<th>Rimuovi</th>
+									</tr>
+								</thead>
+								<tbody id="listaProdottiCarrello">
+								
+								</tbody>
+							</table>
+
+						</div>
+						<!--Footer-->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-outline-primary"
+								data-dismiss="modal">Close</button>
+							<button class="btn btn-primary">Checkout</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Modal: modalCart -->
+
 			<div class="col-lg-9">
 				<c:forEach items="${listaProdotti}" var="prodotto">
 					<div class="row">
@@ -110,6 +157,9 @@
 									<h4 class="card-title">
 										<a href="#">${prodotto.name}</a>
 									</h4>
+									<input type="button"
+										onclick="c.addProduct(${prodotto.barcode}, '${prodotto.superMarket.name}', ${prodotto.quantity}, ${prodotto.price})"
+										value="Aggiungi Al Carrello">
 									<h5>${prodotto.price}</h5>
 								</div>
 								<div class="card-footer">Le stelline</div>
@@ -140,7 +190,9 @@
 
 	<!-- Bootstrap core JavaScript -->
 	<script src="../vendor/jquery/jquery.min.js"></script>
+
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 
 </body>
 

@@ -39,7 +39,7 @@
 					<li class="nav-item"><a class="nav-link" href="#">Area
 							personale</a></li>
 					<li class="nav-item"><a class="nav-link" href="#"><img
-							src="images/cart.png" width="30" /></a></li>
+							src="../images/cart.png" width="30" /></a></li>
 					<li class="nav-item"><a href="#" id="loginButton"
 						class="btn btn-success" role="button">Login</a></li>
 					<li class="nav-item"><a class="nav-link" href="administration">Parte

@@ -5,7 +5,7 @@ public class Category {
 	private String name;
 	private String familyName;
 	private Category parent;
-//	private ArrayList<Category> children; // potrebbe non servire
+	//private ArrayList<Category> children; // potrebbe non servire
 
 	public Category(String name, Category parent) {
 		super();
@@ -23,6 +23,12 @@ public class Category {
 
 	public String getName() {
 		return name;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		Category cat = (Category) obj;
+		return this.name.equals(cat.name);
 	}
 
 	public String getFamilyName() {

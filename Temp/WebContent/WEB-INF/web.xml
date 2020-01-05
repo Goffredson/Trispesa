@@ -112,5 +112,25 @@
 		<servlet-name>Map</servlet-name>
 		<url-pattern>/administration/map</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>UserManagement</servlet-name>
+		<servlet-class>controller.UserManagement</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>UserManagement</servlet-name>
+		<url-pattern>/user</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ManageUser</servlet-name>
+		<servlet-class>controller.ManageUser</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ManageUser</servlet-name>
+		<url-pattern>/user/manage</url-pattern>
+	</servlet-mapping>
 
 </web-app>

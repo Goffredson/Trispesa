@@ -1,10 +1,13 @@
 package persistence;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import exceptions.DBOperationException;
 import model.Category;
 import model.Customer;
+import model.DeliveryAddress;
+import model.PaymentMethod;
 import model.Product;
 import model.SuperMarket;
 
@@ -58,12 +61,42 @@ public class DBManager {
 		products.add(new Product(8, "pasta", 1000, 123, conad, true, paneBianco, 9, ""));
 		products.add(new Product(9, "pasta", 1.1, 123, conad, true, pastaIntegrale, 9, ""));
 		products.add(new Product(10, "pasta", 1.1, 123, superMarkets.get(1), true, pastaIntegrale, 9, ""));
+
+		Customer customer = new Customer("Goffredson", "bellecose", "Alfredo", "Aloi", "a.a@a.a",
+				LocalDate.of(1999, 11, 3), LocalDate.of(2019, 3, 3), null, null);
+		customer.addDeliveryAddress(new DeliveryAddress("Iatlia", "Cosenza", "via della banana"));
+		customer.addDeliveryAddress(new DeliveryAddress("Iatlia", "43253", "via della banana"));
+		customer.addDeliveryAddress(new DeliveryAddress("Iatlia", "Cos5436enza", "via della banana"));
+		customer.addDeliveryAddress(new DeliveryAddress("Iat42lia", "Cosenza", "via del4352435la banana"));
+
+		customer.addPaymentMethod(new PaymentMethod(1232345, "Boh", 11, 2021, 950));
+		customer.addPaymentMethod(new PaymentMethod(12345, "Bociaoh", 14321, 2021, 950));
+		customer.addPaymentMethod(new PaymentMethod(123345, "Boh", 11, 20221, 950));
+		customers = new ArrayList<Customer>();
+		customers.add(customer);
+	}
+
+	public ArrayList<Customer> getCustomers() {
+		return customers;
+	}
+
+	public ArrayList<Product> getProducts() {
+		return products;
+	}
+
+	public ArrayList<Category> getCategories() {
+		return categories;
+	}
+
+	public ArrayList<SuperMarket> getSuperMarkets() {
+		return superMarkets;
 	}
 
 	public void addSupermarket(SuperMarket superMarket) throws DBOperationException {
 		for (SuperMarket temp : superMarkets) {
 			if (temp.equals(superMarket)) {
-				throw new DBOperationException("Il supermercato ï¿½ giï¿½ presente nel database", superMarket.toString());
+				throw new DBOperationException("Il supermercato ï¿½ giï¿½ presente nel database",
+						superMarket.toString());
 			}
 		}
 		superMarkets.add(superMarket);
@@ -134,7 +167,7 @@ public class DBManager {
 			throw new DBOperationException("Il supermercato da rimuovere non ï¿½ stato trovato", "null");
 		}
 		temp.setAffiliate(false);
-		
+
 		ArrayList<Product> tempProducts = new ArrayList<Product>();
 		for (Product product : products) {
 			if (!(product.getSuperMarket().equals(temp))) {
@@ -173,29 +206,44 @@ public class DBManager {
 		}
 		return temp;
 	}
-	public ArrayList<Product> getProductsByCategory(String category){
-		ArrayList<Product> productsByCategory=new ArrayList<Product>();
-		for(Product i:products) {
-			if(i.getCategory().getName().equals(category)) {
+
+	public ArrayList<Product> getProductsByCategory(String category) {
+		ArrayList<Product> productsByCategory = new ArrayList<Product>();
+		for (Product i : products) {
+			if (i.getCategory().getName().equals(category)) {
 				productsByCategory.add(i);
 			}
 		}
 		return productsByCategory;
 	}
-	public ArrayList<Customer> getCustomers() {
-		return customers;
+
+	public Customer getCustomerByID(String username) {
+		for (Customer customer : customers) {
+			if (customer.getUsername().equals(username)) {
+				return customer;
+			}
+		}
+		return null;
 	}
 
-	public ArrayList<Product> getProducts() {
-		return products;
+	public void removePaymentMethod(Customer customer, PaymentMethod paymentMethod) throws DBOperationException {
+		for (Customer temp : customers) {
+			if (temp.equals(customer)) {
+				temp.removePaymentMethod(paymentMethod);
+				return;
+			}
+		}
+		throw new DBOperationException("Non è stato possibile eliminare il metodo di pagamento", paymentMethod.toString());
 	}
 
-	public ArrayList<Category> getCategories() {
-		return categories;
-	}
-
-	public ArrayList<SuperMarket> getSuperMarkets() {
-		return superMarkets;
+	public void removeDeliveryAddress(Customer customer, DeliveryAddress deliveryAddress) throws DBOperationException {
+		for (Customer temp : customers) {
+			if (temp.equals(customer)) {
+				temp.removeDeliveryAddress(deliveryAddress);
+				return;
+			}
+		}
+		throw new DBOperationException("Non è stato possibile eliminare l'indirizzo di consegna", deliveryAddress.toString());
 	}
 
 }

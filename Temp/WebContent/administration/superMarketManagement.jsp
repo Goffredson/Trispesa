@@ -131,7 +131,58 @@
 				<c:set var="cont" value="${cont + 1}"></c:set>
 			</c:forEach>
 		</table>
+	</div>
 
+	<!-- MODALE -->
+	<div class="modal" id="modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<c:if test="${sessionScope.result == true}">
+						<h4 class="modal-title">Operazione eseguita con successo</h4>
+					</c:if>
+					<c:if test="${sessionScope.result == false}">
+						<h4 class="modal-title">Operazione annullata</h4>
+					</c:if>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<!-- Modal body -->
+				<div class="modal-body">
+					<c:if test="${sessionScope.result == true}">
+						<div id="success-message" class="jumbotron">
+							<p>
+								<b>Tipo: </b>${sessionScope.op}
+							</p>
+							<p>
+								<b>Oggetto: </b>${sessionScope.object}
+							</p>
+							<p>
+								<b>Stato: </b>COMPLETATO
+							</p>
+						</div>
+					</c:if>
+
+					<c:if test="${sessionScope.result == false}">
+						<div id="error-message" class="jumbotron">
+							<p>
+								<b>Tipo: </b>${sessionScope.op}
+							</p>
+							<p>
+								<b>Oggetto: </b>${sessionScope.exception.object}
+							</p>
+							<p>
+								<b>Stato: </b>${sessionScope.exception.message}
+							</p>
+						</div>
+					</c:if>
+				</div>
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="close" data-dismiss="modal">Chiudi</button>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<!-- Footer -->
@@ -146,6 +197,24 @@
 	<!-- Bootstrap core JavaScript -->
 	<script src="../vendor/jquery/jquery.min.js"></script>
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+	<script>
+		$(document).ready( e => {
+			if (${sessionScope.result != null}) {
+				$('#modal').modal('show');
+			}
+		});
+	</script>
+
+	<%
+		if (session.getAttribute("result") != null && (boolean) session.getAttribute("result")) {
+			session.removeAttribute("object");
+		} else {
+			session.removeAttribute("exception");
+		}
+		session.removeAttribute("result");
+		session.removeAttribute("op");
+	%>
 
 </body>
 </html>

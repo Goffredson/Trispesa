@@ -21,13 +21,11 @@ public class ManageSupermarket extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		RequestDispatcher rd;
-		boolean result = true;
-
 		try {
 			switch (req.getParameter("action")) {
 			case "add": {
-				req.setAttribute("op", "Aggiungi supermercato");
+				req.getSession().setAttribute("op", "Aggiungi supermercato");
+
 				SuperMarket superMarket;
 				String name = (String) req.getParameter("name");
 				String city = (String) req.getParameter("city");
@@ -42,16 +40,15 @@ public class ManageSupermarket extends HttpServlet {
 
 				DBManager.getIstance().addSupermarket(superMarket);
 
-				req.setAttribute("result", result);
-				req.setAttribute("object", superMarket.toString());
-
-				rd = req.getRequestDispatcher("../operationResult.jsp");
-				rd.forward(req, resp);
+				req.getSession().setAttribute("result", true);
+				req.getSession().setAttribute("object", superMarket.toString());
+				resp.sendRedirect("../supermarket");
 			}
 				break;
 
 			case "mod": {
-				req.setAttribute("op", "Modifica supermercato");
+				req.getSession().setAttribute("op", "Modifica supermercato");
+
 				String name = (String) req.getParameter("name");
 				String city = (String) req.getParameter("city");
 				String address = (String) req.getParameter("address");
@@ -63,50 +60,42 @@ public class ManageSupermarket extends HttpServlet {
 
 				DBManager.getIstance().modifySuperMarket(oldSuperMarketString, superMarket);
 
-				req.setAttribute("result", result);
-				req.setAttribute("object", superMarket.toString());
-
-				rd = req.getRequestDispatcher("../operationResult.jsp");
-				rd.forward(req, resp);
+				req.getSession().setAttribute("result", true);
+				req.getSession().setAttribute("object", superMarket.toString());
+				resp.sendRedirect("../supermarket");
 			}
 				break;
 
 			case "del": {
-				req.setAttribute("op", "Rimuovi affiliazione supermercato");
+				req.getSession().setAttribute("op", "Rimuovi affiliazione supermercato");
 				String superMarketString = (String) req.getParameter("superMarket");
 				SuperMarket superMarket = DBManager.getIstance().getSuperMarketByID(superMarketString);
 
 				DBManager.getIstance().removeAffiliateSuperMarketByID(superMarketString);
 
-				req.setAttribute("result", result);
-				req.setAttribute("object", superMarket.toString());
-
-				rd = req.getRequestDispatcher("../operationResult.jsp");
-				rd.forward(req, resp);
+				req.getSession().setAttribute("result", true);
+				req.getSession().setAttribute("object", superMarket.toString());
+				resp.sendRedirect("../supermarket");
 			}
 				break;
 
 			case "aff": {
-				req.setAttribute("op", "Aggiungi affiliazione supermercato");
+				req.getSession().setAttribute("op", "Aggiungi affiliazione supermercato");
 				String superMarketString = (String) req.getParameter("superMarket");
 				SuperMarket superMarket = DBManager.getIstance().getSuperMarketByID(superMarketString);
 
 				DBManager.getIstance().addAffiliateSuperMarketByID(superMarketString);
 
-				req.setAttribute("result", result);
-				req.setAttribute("object", superMarket.toString());
-
-				rd = req.getRequestDispatcher("../operationResult.jsp");
-				rd.forward(req, resp);
+				req.getSession().setAttribute("result", true);
+				req.getSession().setAttribute("object", superMarket.toString());
+				resp.sendRedirect("../supermarket");
 			}
 				break;
 			}
 		} catch (DBOperationException e) {
-			result = false;
-			req.setAttribute("result", result);
-			req.setAttribute("exception", e);
-			rd = req.getRequestDispatcher("../operationResult.jsp");
-			rd.forward(req, resp);
+			req.getSession().setAttribute("result", false);
+			req.getSession().setAttribute("exception", e);
+			resp.sendRedirect("../supermarket");
 		}
 	}
 

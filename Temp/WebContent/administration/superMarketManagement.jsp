@@ -77,6 +77,7 @@
 				<th></th>
 				<th></th>
 			</tr>
+			<c:set var="cont" value="1"></c:set>
 			<c:forEach items="${superMarkets}" var="superMarket">
 				<tr>
 					<td>${superMarket.name}</td>
@@ -92,14 +93,15 @@
 						href="supermarket/manageSuperMarketForm?action=mod&superMarket=(${superMarket.name},${superMarket.city},${superMarket.address})"
 						class="btn btn-info" role="button">modifica</a></td>
 					<td width="10%"><c:if test="${superMarket.affiliate == true}">
-							<a href="" data-toggle="modal" data-target="#delete-modal"
-								class="btn btn-danger" role="button">rimuovi</a>
+							<a href="" data-toggle="modal"
+								data-target="#delete-modal-${cont}" class="btn btn-danger"
+								role="button">rimuovi</a>
 						</c:if> <c:if test="${superMarket.affiliate == false}">
 							<a
 								href="supermarket/manage?action=aff&superMarket=(${superMarket.name},${superMarket.city},${superMarket.address})"
 								class="btn btn-success" role="button">affilia</a>
 						</c:if> <!-- The Modal -->
-						<div class="modal" id="delete-modal">
+						<div class="modal" id="delete-modal-${cont}">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<!-- Modal Header -->
@@ -117,8 +119,7 @@
 									<div class="modal-footer">
 										<a
 											href="supermarket/manage?action=del&superMarket=(${superMarket.name},${superMarket.city},${superMarket.address})"
-											type="button" class="btn btn-danger">Rimuovi
-											affilizione</a>
+											type="button" class="btn btn-danger">Rimuovi affilizione</a>
 										<a href="" type="button" class="btn btn-secondary"
 											data-dismiss="modal">Annulla</a>
 									</div>
@@ -127,6 +128,7 @@
 							</div>
 						</div></td>
 				</tr>
+				<c:set var="cont" value="${cont + 1}"></c:set>
 			</c:forEach>
 		</table>
 

@@ -40,7 +40,7 @@
 								href="administration/product">Gestione prodotti</a>
 						</div></li>
 					<li class="nav-item"><a class="nav-link" href="#">Statistiche</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Mappe</a></li>
+					<li class="nav-item"><a class="nav-link" href="administration/map">Mappe</a></li>
 					<li class="nav-item"><a href="home" id="logoutButton"
 						class="btn btn-danger" role="button">Logout</a></li>
 				</ul>
@@ -94,7 +94,7 @@
 			</div>
 
 			<div class="col-lg-6 col-md-6 mb-4">
-				<a href="#">
+				<a href="administration/map">
 					<div class="card d-flex">
 						<img class="card-img-top" src="images/administration/maps.jpg"
 							height="250" alt="" />

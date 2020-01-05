@@ -56,7 +56,7 @@
 
 		<form id="add-product-form" method="post"
 			action="../product/manage?action=${action}" class="needs-validation"
-			novalidate autocomplete="on">
+			novalidate autocomplete="on" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="barcode">Codice a barre:</label>
 				<c:if test="${action == 'add'}">
@@ -114,8 +114,8 @@
 					</select>
 				</c:if>
 				<c:if test="${action == 'mod'}">
-					<select name="superMarket-select" disabled required class="form-control"
-						id="superMarket">
+					<select name="superMarket-select" disabled required
+						class="form-control" id="superMarket">
 						<c:forEach items="${superMarkets}" var="supermarket">
 							<c:set var="s1"
 								value="(${supermarket.name},${supermarket.city},${supermarket.address})"></c:set>
@@ -149,8 +149,8 @@
 					</select>
 				</c:if>
 				<c:if test="${action == 'mod'}">
-					<select disabled required name="category-select" class="form-control"
-						id="category">
+					<select disabled required name="category-select"
+						class="form-control" id="category">
 						<c:forEach items="${categories}" var="category">
 							<c:if
 								test="${product.category.familyName eq category.familyName}">
@@ -196,6 +196,23 @@
 				</c:if>
 				<div class="valid-feedback">Valido.</div>
 				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
+			</div>
+			<div class="form-group">
+				<label for="image">Immagine:</label><br />
+				<c:if test="${action == 'add'}">
+					<img id="image" name="image" height="200px" alt="immagine"
+						src="../../images/imageNotFound.png" />
+					<br />
+					<input type="file" name="image-chooser" id="image-chooser"
+						class="file" accept="image/*">
+				</c:if>
+				<c:if test="${action == 'mod'}">
+					<img id="image" name="image" height="200px" alt="immagine"
+						src="../../${product.imagePath}" />
+					<br />
+					<input type="file" name="image-chooser" id="image-chooser"
+						class="file" accept="image/*">
+				</c:if>
 			</div>
 			Di marca:
 			<c:if test="${action == 'add'}">
@@ -282,6 +299,25 @@
 								});
 					}, false);
 		})();
+	</script>
+
+	<script>
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$('#image').attr('src', e.target.result);
+
+				}
+				reader.readAsDataURL(input.files[0]);
+			} else {
+				$('#image').attr('src', "../../images/imageNotFound.png");
+			}
+		}
+
+		$("#image-chooser").change(function() {
+			readURL(this);
+		});
 	</script>
 
 </body>

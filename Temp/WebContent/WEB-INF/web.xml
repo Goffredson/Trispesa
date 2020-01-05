@@ -102,5 +102,15 @@
 		<servlet-name>ManageSuperMarketForm</servlet-name>
 		<url-pattern>/administration/supermarket/manageSuperMarketForm</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Map</servlet-name>
+		<servlet-class>controller.Map</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Map</servlet-name>
+		<url-pattern>/administration/map</url-pattern>
+	</servlet-mapping>
 
 </web-app>

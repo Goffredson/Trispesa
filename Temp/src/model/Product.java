@@ -15,12 +15,8 @@ public class Product {
 	private int quantity;
 	private String imagePath;
 
-	public String getImagePath() {
-		return imagePath;
-	}
-	
 	public Product(int barcode, String name, double price, double weight, SuperMarket superMarket, boolean offBrand,
-			Category category, int quantity) {
+			Category category, int quantity, String imagePath) {
 		super();
 		this.barcode = barcode;
 		this.name = name;
@@ -30,8 +26,16 @@ public class Product {
 		this.offBrand = offBrand;
 		this.category = category;
 		this.quantity = quantity;
-		this.discount=0;
-		this.imagePath = "images" + File.separator + "products" + File.separator + this.barcode + ".png";
+		this.discount = 0;
+		this.imagePath = "images/products/" + imagePath;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 
 	public double getDiscount() {
@@ -59,7 +63,7 @@ public class Product {
 	}
 
 	public double getPrice() {
-		return price-this.discount;
+		return price - this.discount;
 	}
 
 	public void setPrice(double price) {
@@ -105,7 +109,7 @@ public class Product {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Product) {
@@ -119,8 +123,6 @@ public class Product {
 	public String toString() {
 		return barcode + ", " + name + ", " + superMarket + ", " + category;
 	}
-	
-	
 
 	// inserendo un prodotto si genera nel db una tupla di prodotto e una di
 	// descrittore prodotto (GIORGIO)

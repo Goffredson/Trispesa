@@ -68,6 +68,7 @@ public class DBManager {
 		products.add(new Product(9, "pasta", 1.1, 123, conad, true, pastaIntegrale, 9, ""));
 		products.add(new Product(10, "pasta", 1.1, 123, superMarkets.get(1), true, pastaIntegrale, 9, ""));
 	}
+	
 
 	public void addSupermarket(SuperMarket superMarket) throws DBOperationException {
 		for (SuperMarket temp : superMarkets) {

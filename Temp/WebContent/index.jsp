@@ -37,8 +37,8 @@
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item active"><a class="nav-link" href="#">Home</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">Dieta</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Area
-							personale</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Ordini</a></li>
+					<li class="nav-item"><a class="nav-link" href="user?page=profile">Profilo</a></li>
 					<li class="nav-item"><a class="nav-link" href="#"><img
 							src="images/cart.png" width="30" /></a></li>
 					<!-- Menu form login -->
@@ -82,21 +82,20 @@
 			<!-- barra di ricerca -->
 			<form id="searchProduct" method="post" action="user/showProducts">
 				<div class="input-group">
-					<input id="nomeProdotto" name="nomeProdotto" type="text" class="form-control"
-						placeholder="Prodotto">
-				<script type="text/javascript">
-					document.getElementById("searchProduct").onsubmit = function(
-							e) {
+					<input id="nomeProdotto" name="nomeProdotto" type="text"
+						class="form-control" placeholder="Prodotto">
+					<script type="text/javascript">
+						document.getElementById("searchProduct").onsubmit = function(
+								e) {
 
-
-						var nomeProdotto = document
-								.getElementById("nomeProdotto").value;
-						if (nomeProdotto == "") {
-							window.alert("Inserisci un prodotto");
-							e.preventDefault();
+							var nomeProdotto = document
+									.getElementById("nomeProdotto").value;
+							if (nomeProdotto == "") {
+								window.alert("Inserisci un prodotto");
+								e.preventDefault();
+							}
 						}
-					}
-				</script>
+					</script>
 
 					<div class="container my-4">
 						<hr>

@@ -126,7 +126,7 @@
 										<th>N.</th>
 										<th>Nome prodotto</th>
 										<th>Prezzo</th>
-										<th>Rimuovi</th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody id="listaProdottiCarrello">

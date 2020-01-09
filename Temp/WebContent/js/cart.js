@@ -8,13 +8,16 @@ function addProductToDOM() {
 	var inner = document.getElementById("listaProdottiCarrello");
 	inner.innerHTML = "";
 	for (var i = 0; i < c.products.length; i += 1) {
+		bc = c.products[i].barcode;
 		//window.alert("entrato");
 		inner.innerHTML = inner.innerHTML
 				+ '<tr>\n <th scope="row" id="quantita">' + c.products[i].quantita
-				+ '</th>\n' + '<td>' + c.products[i].barcode + '</td>\n'
+				+ '</th>\n' + '<td id="'+ c.products[i].barcode + '">' + c.products[i].barcode + '</td>\n'
 				+ '<td id="prezzo">' + c.products[i].prezzo*c.products[i].quantita + '</td>\n'
-				+ '<td><a><i class="fas fa-times"></i></a></td>\n' + '</tr>';
+				+ '<td><a><i class="fas fa-times"></i></a></td>\n'
+				+ '<td><button type="button" onclick="c.removeProduct(bc)" class="btn btn-danger">Rimuovi</button></td>\n';
 	}
+	//inner.innerHTML += '<td id="prezzoTotale">' + c.totalPrice + '</td>\n</tr>';
 }
 function Cart() {
 	this.products = new Array();
@@ -54,6 +57,24 @@ function Cart() {
 			}
 		}
 		return false;
+	}
+	this.removeProduct = function(barcode) {
+		for (var i = 0; i < c.products.length; i += 1) {
+			if (c.products[i].barcode == barcode) {
+				
+				if (c.products[i].quantita == 1) {
+					c.products.splice(i,1);
+					this.updatePrice();
+					addProductToDOM();
+					return;
+				}
+				else {
+					c.products[i].quantita--;
+					this.updatePrice();
+					addProductToDOM();
+				}
+			}
+		}
 	}
 }
 

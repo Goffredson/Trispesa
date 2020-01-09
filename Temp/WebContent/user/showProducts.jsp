@@ -40,7 +40,7 @@
 							personale</a></li>
 					<li>
 						<button type="button" class="btn btn-primary" data-toggle="modal"
-							data-target="#modalCart" onclick="addProductsToDOM()">Carrello</button>
+							data-target="#modalCart">Carrello</button>
 					</li>
 					<li class="nav-item"><a href="#" id="loginButton"
 						class="btn btn-success" role="button">Login</a></li>

@@ -58,18 +58,18 @@ public class DBManager {
 		macroCategories.add(pane);
 
 		products = new ArrayList<Product>();
-		products.add(new Product(1, "pasta", 1.1, 123.0, conad, true, pastaIntegrale, 9, ""));
-		products.add(new Product(1, "pasta", 1.1, 123.0, conad, true, pastaIntegrale, 9, ""));
-		products.add(new Product(1, "pasta", 1.1, 123.0, conad, true, pastaIntegrale, 9, ""));
-		products.add(new Product(2, "a", 1.1, 123, conad, true, pastaIntegrale, 9, ""));
-		products.add(new Product(3, "b", 1.1, 123, conad, true, pastaIntegrale, 9, ""));
-		products.add(new Product(4, "c", 1.1, 123, conad, true, pastaIntegrale, 9, ""));
-		products.add(new Product(5, "d", 1.1, 123, conad, true, pastaIntegrale, 9, ""));
-		products.add(new Product(6, "e", 1.1, 123, conad, true, pastaIntegrale, 9, ""));
-		products.add(new Product(7, "f", 1.1, 123, conad, true, pastaIntegrale, 9, ""));
-		products.add(new Product(8, "pasta", 1000, 123, conad, true, paneBianco, 9, ""));
-		products.add(new Product(9, "pasta", 1.1, 123, conad, true, pastaIntegrale, 9, ""));
-		products.add(new Product(10, "pasta", 1.1, 123, superMarkets.get(1), true, pastaIntegrale, 9, ""));
+		products.add(new Product(1, "pasta", 1.1, 123.0, conad, true, pastaIntegrale, 1, ""));
+		products.add(new Product(2, "pasta", 1.1, 123.0, conad, true, pastaIntegrale, 1, ""));
+		products.add(new Product(3, "pasta", 1.1, 123.0, conad, true, pastaIntegrale, 1, ""));
+		products.add(new Product(4, "a", 1.1, 123, conad, true, pastaIntegrale, 1, ""));
+		products.add(new Product(5, "b", 1.1, 123, conad, true, pastaIntegrale, 1, ""));
+		products.add(new Product(6, "c", 1.1, 123, conad, true, pastaIntegrale, 1, ""));
+		products.add(new Product(7, "d", 1.1, 123, conad, true, pastaIntegrale, 1, ""));
+		products.add(new Product(8, "e", 1.1, 123, conad, true, pastaIntegrale, 1, ""));
+		products.add(new Product(9, "f", 1.1, 123, conad, true, pastaIntegrale, 1, ""));
+		products.add(new Product(10, "pasta", 1000, 123, conad, true, paneBianco, 1, ""));
+		products.add(new Product(11, "pasta", 1.1, 123, conad, true, pastaIntegrale, 1, ""));
+		products.add(new Product(12, "pasta", 1.1, 123, superMarkets.get(1), true, pastaIntegrale, 1, ""));
 
 		Customer customer = new Customer("Goffredson", "bellecose", "Alfredo", "Aloi", "a.a@a.a",
 				LocalDate.of(1999, 11, 3), LocalDate.of(2019, 3, 3), null, null);

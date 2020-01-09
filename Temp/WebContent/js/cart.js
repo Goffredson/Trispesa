@@ -6,13 +6,13 @@ function Product(barcode, supermercato, quantita, prezzo) {
 }
 function addProductToDOM() {
 	var inner = document.getElementById("listaProdottiCarrello");
-	inner.innerHTML = ""
+	inner.innerHTML = "";
 	for (var i = 0; i < c.products.length; i += 1) {
 		//window.alert("entrato");
 		inner.innerHTML = inner.innerHTML
 				+ '<tr>\n <th scope="row" id="quantita">' + c.products[i].quantita
 				+ '</th>\n' + '<td>' + c.products[i].barcode + '</td>\n'
-				+ '<td id="prezzo">' + c.products[i].prezzo + '</td>\n'
+				+ '<td id="prezzo">' + c.products[i].prezzo*c.products[i].quantita + '</td>\n'
 				+ '<td><a><i class="fas fa-times"></i></a></td>\n' + '</tr>';
 	}
 }
@@ -37,14 +37,14 @@ function Cart() {
 		if (this.giaContenuto(barcode) == false) {
 			var p = new Product(barcode, supermercato, quantita, prezzo);
 			this.products.push(p);
-			addProductToDOM();
 			this.updatePrice();
+			addProductToDOM();
 			// window.alert("Nuovo prezzo " + this.totalPrice);
 		} else {
 			//window.alert("ciaoooooo");
 			this.updateQuantity(barcode);
-			addProductToDOM();
 			this.updatePrice();
+			addProductToDOM();
 		}
 	}
 	this.giaContenuto = function(barcode) {

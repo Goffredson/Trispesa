@@ -111,7 +111,7 @@
 					<div class="modal-content">
 						<!--Header-->
 						<div class="modal-header">
-							<h4 class="modal-title" id="myModalLabel">Your cart</h4>
+							<h4 class="modal-title" id="myModalLabel">Il tuo carrello</h4>
 							<button type="button" class="close" data-dismiss="modal"
 								aria-label="Close">
 								<span aria-hidden="true">×</span>
@@ -138,8 +138,8 @@
 						<!--Footer-->
 						<div class="modal-footer">
 							<button type="button" class="btn btn-outline-primary"
-								data-dismiss="modal">Close</button>
-							<button class="btn btn-primary">Checkout</button>
+								data-dismiss="modal">Chiudi</button>
+							<button class="btn btn-primary">Conferma ordine</button>
 						</div>
 					</div>
 				</div>

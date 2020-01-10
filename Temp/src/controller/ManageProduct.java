@@ -116,7 +116,11 @@ public class ManageProduct extends HttpServlet {
 				SuperMarket superMarket = DBManager.getIstance().getSuperMarketByID(superMarketString);
 				Product oldProduct = DBManager.getIstance().getProductByID(barcode, superMarket);
 				if (fileName == null) {
-					fileName = oldProduct.getImagePath().substring(16);
+					if (oldProduct != null) {
+						fileName = oldProduct.getImagePath().substring(16);
+					} else {
+						fileName = null;
+					}
 				}
 
 				Product product;

@@ -47,6 +47,15 @@
 		<servlet-name>ShowProducts</servlet-name>
 		<url-pattern>/user/showProducts</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>Login</servlet-name>
+		<servlet-class>controller.Login</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Login</servlet-name>
+		<url-pattern>/user/effettuaLogin</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>SuperMarketManagement</servlet-name>

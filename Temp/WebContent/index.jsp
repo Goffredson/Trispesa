@@ -18,6 +18,9 @@
 <!-- css -->
 <link href="css/main.css" rel="stylesheet">
 
+<script src="js/login.js"></script>
+
+
 </head>
 
 
@@ -34,32 +37,35 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a class="nav-link" href="#">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Dieta</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Ordini</a></li>
-					<li class="nav-item"><a class="nav-link" href="user?page=profile">Profilo</a></li>
+				<ul class="navbar-nav ml-auto" id ="ulNavBar">
+					<li class="nav-item active"><a class="nav-link"
+						href="#">Home</a></li>
+
 					<li class="nav-item"><a class="nav-link" href="#"><img
 							src="images/cart.png" width="30" /></a></li>
 					<!-- Menu form login -->
-					<div class="dropdown">
+					<div class="dropdown" id="iduno">
 						<a class="btn btn-secondary dropdown-toggle login" href="#"
 							role="button" id="buttonLogin" data-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="false">Login</a>
 
-						<div class="dropdown-menu">
+						<div class="dropdown-menu" id="iddue">
 							<form class="px-4 py-3">
 								<div class="form-group">
-									<label for="exampleDropdownFormEmail1">Indirizzo Email</label>
-									<input type="email" class="form-control"
-										id="exampleDropdownFormEmail1" placeholder="email@example.com">
+									<label for="exampleDropdownFormEmail1">Nome utente</label> <input
+										type="text" class="form-control" id="inputUsername"
+										placeholder="Inserisci nome utente">
 								</div>
 								<div class="form-group">
-									<label for="exampleDropdownFormPassword1">Password</label> <input
-										type="password" class="form-control"
-										id="exampleDropdownFormPassword1" placeholder="Password">
+									<label for="inputPassword">Password</label> <input
+										type="password" class="form-control" id="inputPassword"
+										placeholder="Password">
 								</div>
-								<button type="submit" class="btn btn-primary">Autenticati</button>
+								<!-- 
+								<button type="submit" id="submitButton"
+									class="btn btn-primary">Autenticati</button>
+								 -->
+								 <input type="button" class="btn btn-primary" value="Autenticati" onclick="effettuaLogin()">
 							</form>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href="#">Effettua registrazione</a> <a
@@ -223,6 +229,8 @@
 	<!-- Bootstrap core JavaScript -->
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
 
 </body>
 

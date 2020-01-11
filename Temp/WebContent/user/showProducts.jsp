@@ -17,6 +17,7 @@
 
 <!-- css -->
 <link href="../css/main.css" rel="stylesheet">
+
 <script src="../js/cart.js"></script>
 </head>
 

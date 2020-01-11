@@ -33,6 +33,11 @@
 		<servlet-name>Home</servlet-name>
 		<url-pattern>/home</url-pattern>
 	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>Home</servlet-name>
+		<url-pattern></url-pattern>
+	</servlet-mapping>
 	<servlet>
 		<servlet-name>ShowProducts</servlet-name>
 		<servlet-class>controller.ShowProducts</servlet-class>

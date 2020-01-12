@@ -7,12 +7,12 @@ import model.Customer;
 public interface CustomerDao {
 
 	// CREATE
-	public void save(Customer customer);
+	public void insert(Customer customer);
 
 	// RETRIEVE
-	public ArrayList<Customer> findAll();
+	public ArrayList<Customer> retrieveAll();
 
-	public Customer findByPrimaryKey(Long id);
+	public Customer retrieveByPrimaryKey(Long id);
 
 	// UPDATE
 	public void update(Customer customer);

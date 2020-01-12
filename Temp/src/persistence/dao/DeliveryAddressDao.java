@@ -7,12 +7,12 @@ import model.DeliveryAddress;
 public interface DeliveryAddressDao {
 
 	// CREATE
-	public void save(DeliveryAddress deliveryAddress);
+	public void insert(DeliveryAddress deliveryAddress);
 
 	// RETRIEVE
-	public ArrayList<DeliveryAddress> findAll();
+	public ArrayList<DeliveryAddress> retrieveAll();
 
-	public DeliveryAddress findByPrimaryKey(Long id);
+	public DeliveryAddress retrieveByPrimaryKey(Long id);
 
 	// UPDATE
 	public void update(DeliveryAddress deliveryAddress);

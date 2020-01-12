@@ -7,12 +7,12 @@ import model.Administrator;
 public interface AdministratorDao {
 
 	// CREATE
-	public void save(Administrator administrator);
+	public void insert(Administrator administrator);
 
 	// RETRIEVE
-	public ArrayList<Administrator> findAll();
+	public ArrayList<Administrator> retrieveAll();
 
-	public Administrator findByPrimaryKey(Long id);
+	public Administrator retrieveByPrimaryKey(Long id);
 
 	// UPDATE
 	public void update(Administrator administrator);

@@ -7,12 +7,12 @@ import model.Category;
 public interface CategoryDao {
 
 	// CREATE
-	public void save(Category category);
+	public void insert(Category category);
 
 	// RETRIEVE
-	public ArrayList<Category> findAll();
+	public ArrayList<Category> retrieveAll();
 
-	public Category findByPrimaryKey(Long id);
+	public Category retrieveByPrimaryKey(Long id);
 
 	// UPDATE
 	public void update(Category category);

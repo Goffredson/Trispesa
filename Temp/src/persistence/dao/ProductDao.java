@@ -7,12 +7,12 @@ import model.Product;
 public interface ProductDao {
 
 	// CREATE
-	public void save(Product product);
+	public void insert(Product product);
 
 	// RETRIEVE
-	public ArrayList<Product> findAll();
+	public ArrayList<Product> retrieveAll();
 
-	public Product findByPrimaryKey(Long id);
+	public Product retrieveByPrimaryKey(Long id);
 
 	// UPDATE
 	public void update(Product product);

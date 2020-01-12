@@ -19,7 +19,7 @@ public class AdministratorDaoJdbc implements AdministratorDao {
 		this.dataSource = dataSource;
 	}
 
-	public void save(Administrator administrator) {
+	public void insert(Administrator administrator) {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
@@ -49,7 +49,7 @@ public class AdministratorDaoJdbc implements AdministratorDao {
 	}
 
 	@Override
-	public ArrayList<Administrator> findAll() {
+	public ArrayList<Administrator> retrieveAll() {
 		Connection connection = null;
 		ArrayList<Administrator> administrators = new ArrayList<Administrator>();
 		try {
@@ -80,7 +80,7 @@ public class AdministratorDaoJdbc implements AdministratorDao {
 	}
 
 	@Override
-	public Administrator findByPrimaryKey(Long id) {
+	public Administrator retrieveByPrimaryKey(Long id) {
 		Connection connection = null;
 		Administrator administrator = null;
 		try {

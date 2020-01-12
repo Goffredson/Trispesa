@@ -19,7 +19,7 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 		this.dataSource = dataSource;
 	}
 
-	public void save(SuperMarket supermarket) {
+	public void insert(SuperMarket supermarket) {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
@@ -54,7 +54,7 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 	}
 
 	@Override
-	public ArrayList<SuperMarket> findAll() {
+	public ArrayList<SuperMarket> retrieveAll() {
 		Connection connection = null;
 		ArrayList<SuperMarket> supermarkets = new ArrayList<SuperMarket>();
 		try {
@@ -87,7 +87,7 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 	}
 
 	@Override
-	public SuperMarket findByPrimaryKey(Long id) {
+	public SuperMarket retrieveByPrimaryKey(Long id) {
 		Connection connection = null;
 		SuperMarket supermarket = null;
 		try {

@@ -21,7 +21,7 @@ public class ProductDaoJdbc implements ProductDao {
 		this.dataSource = dataSource;
 	}
 
-	public void save(Product product) {
+	public void insert(Product product) {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
@@ -61,7 +61,7 @@ public class ProductDaoJdbc implements ProductDao {
 	}
 
 	@Override
-	public ArrayList<Product> findAll() {
+	public ArrayList<Product> retrieveAll() {
 		Connection connection = null;
 		ArrayList<Product> products = new ArrayList<Product>();
 		try {
@@ -72,8 +72,8 @@ public class ProductDaoJdbc implements ProductDao {
 			while (resultSet.next()) {
 				products.add(new Product(resultSet.getLong("id"), resultSet.getLong("barcode"),
 						resultSet.getString("name"), resultSet.getString("brand"), resultSet.getDouble("weight"),
-						new SuperMarketDaoJdbc(dataSource).findByPrimaryKey(resultSet.getLong("supermarket")),
-						new CategoryDaoJdbc(dataSource).findByPrimaryKey(resultSet.getLong("category")),
+						new SuperMarketDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("supermarket")),
+						new CategoryDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("category")),
 						resultSet.getBoolean("offbrand"), resultSet.getDouble("price"), resultSet.getLong("quantity"),
 						resultSet.getDouble("discount"), resultSet.getString("image_path"),
 						resultSet.getBoolean("deleted")));
@@ -97,7 +97,7 @@ public class ProductDaoJdbc implements ProductDao {
 	}
 
 	@Override
-	public Product findByPrimaryKey(Long id) {
+	public Product retrieveByPrimaryKey(Long id) {
 		Connection connection = null;
 		Product product = null;
 		try {
@@ -109,8 +109,8 @@ public class ProductDaoJdbc implements ProductDao {
 			if (resultSet.next()) {
 				product = new Product(resultSet.getLong("id"), resultSet.getLong("barcode"),
 						resultSet.getString("name"), resultSet.getString("brand"), resultSet.getDouble("weight"),
-						new SuperMarketDaoJdbc(dataSource).findByPrimaryKey(resultSet.getLong("supermarket")),
-						new CategoryDaoJdbc(dataSource).findByPrimaryKey(resultSet.getLong("category")),
+						new SuperMarketDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("supermarket")),
+						new CategoryDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("category")),
 						resultSet.getBoolean("offbrand"), resultSet.getDouble("price"), resultSet.getLong("quantity"),
 						resultSet.getDouble("discount"), resultSet.getString("image_path"),
 						resultSet.getBoolean("deleted"));

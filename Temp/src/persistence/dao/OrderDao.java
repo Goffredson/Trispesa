@@ -7,12 +7,12 @@ import model.Order;
 public interface OrderDao {
 
 	// CREATE
-	public void save(Order order);
+	public void insert(Order order);
 
 	// RETRIEVE
-	public ArrayList<Order> findAll();
+	public ArrayList<Order> retrieveAll();
 
-	public Order findByPrimaryKey(Long id);
+	public Order retrieveByPrimaryKey(Long id);
 
 	// UPDATE
 	public void update(Order order);

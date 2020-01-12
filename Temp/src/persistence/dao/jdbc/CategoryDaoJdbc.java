@@ -19,13 +19,13 @@ public class CategoryDaoJdbc implements CategoryDao {
 		this.dataSource = dataSource;
 	}
 
-	public void save(Category category) {
+	public void insert(Category category) {
 		// TODO In teoria non serve a nulla, in quanto non modifichiamo niente da
 		// codice!
 	}
 
 	@Override
-	public ArrayList<Category> findAll() {
+	public ArrayList<Category> retrieveAll() {
 		Connection connection = null;
 		ArrayList<Category> categories = new ArrayList<Category>();
 		try {
@@ -39,7 +39,7 @@ public class CategoryDaoJdbc implements CategoryDao {
 					categories.add(new Category(resultSet.getLong("id"), resultSet.getString("name"), null));
 				} else {
 					categories.add(new Category(resultSet.getLong("id"), resultSet.getString("name"),
-							new CategoryDaoJdbc(dataSource).findByPrimaryKey(parentId)));
+							new CategoryDaoJdbc(dataSource).retrieveByPrimaryKey(parentId)));
 				}
 			}
 		} catch (SQLException e) {
@@ -61,7 +61,7 @@ public class CategoryDaoJdbc implements CategoryDao {
 	}
 
 	@Override
-	public Category findByPrimaryKey(Long id) {
+	public Category retrieveByPrimaryKey(Long id) {
 		Connection connection = null;
 		Category category = null;
 		try {
@@ -76,7 +76,7 @@ public class CategoryDaoJdbc implements CategoryDao {
 					category = new Category(resultSet.getLong("id"), resultSet.getString("name"), null);
 				} else {
 					category = new Category(resultSet.getLong("id"), resultSet.getString("name"),
-							new CategoryDaoJdbc(dataSource).findByPrimaryKey(parentId));
+							new CategoryDaoJdbc(dataSource).retrieveByPrimaryKey(parentId));
 				}
 			}
 		} catch (SQLException e) {

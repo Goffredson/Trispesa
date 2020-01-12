@@ -13,10 +13,17 @@ import model.PaymentMethod;
 import model.Product;
 import model.SuperMarket;
 import persistence.dao.AdministratorDao;
+import persistence.dao.CartDao;
 import persistence.dao.CategoryDao;
+import persistence.dao.CustomerDao;
+import persistence.dao.DeliveryAddressDao;
+import persistence.dao.OrderDao;
+import persistence.dao.PaymentMethodDao;
+import persistence.dao.ProductDao;
 import persistence.dao.SuperMarketDao;
 import persistence.dao.jdbc.AdministratorDaoJdbc;
 import persistence.dao.jdbc.CategoryDaoJdbc;
+import persistence.dao.jdbc.ProductDaoJdbc;
 import persistence.dao.jdbc.SuperMarketDaoJdbc;
 
 public class DBManager {
@@ -45,7 +52,7 @@ public class DBManager {
 			e.printStackTrace();
 		}
 
-		for (Category category : getCategoryDao().findAll()) {
+		for (Category category : getCategoryDao().retrieveAll()) {
 			if (category.getParent() != null) {
 				System.out.println(category.getId() + " " + category.getName() + " " + category.getParent().getName());
 			} else {
@@ -109,8 +116,32 @@ public class DBManager {
 		return new AdministratorDaoJdbc(dataSource);
 	}
 
+	public CartDao getCartDao() {
+		return null;
+	}
+
 	public CategoryDao getCategoryDao() {
 		return new CategoryDaoJdbc(dataSource);
+	}
+
+	public CustomerDao getCustomerDao() {
+		return null;
+	}
+
+	public DeliveryAddressDao getDeliveryAddressDao() {
+		return null;
+	}
+
+	public OrderDao getOrderDao() {
+		return null;
+	}
+
+	public PaymentMethodDao getPaymentMethodDao() {
+		return null;
+	}
+
+	public ProductDao getProductDao() {
+		return new ProductDaoJdbc(dataSource);
 	}
 
 	public SuperMarketDao getSuperMarketDao() {

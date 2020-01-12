@@ -7,12 +7,12 @@ import model.PaymentMethod;
 public interface PaymentMethodDao {
 
 	// CREATE
-	public void save(PaymentMethod paymentMethod);
+	public void insert(PaymentMethod paymentMethod);
 
 	// RETRIEVE
-	public ArrayList<PaymentMethod> findAll();
+	public ArrayList<PaymentMethod> retrieveAll();
 
-	public PaymentMethod findByPrimaryKey(Long id);
+	public PaymentMethod retrieveByPrimaryKey(Long id);
 
 	// UPDATE
 	public void update(PaymentMethod paymentMethod);

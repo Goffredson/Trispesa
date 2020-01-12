@@ -7,12 +7,12 @@ import model.SuperMarket;
 public interface SuperMarketDao {
 
 	// CREATE
-	public void save(SuperMarket SuperMarket);
+	public void insert(SuperMarket SuperMarket);
 
 	// RETRIEVE
-	public ArrayList<SuperMarket> findAll();
+	public ArrayList<SuperMarket> retrieveAll();
 
-	public SuperMarket findByPrimaryKey(Long id);
+	public SuperMarket retrieveByPrimaryKey(Long id);
 
 	// UPDATE
 	public void update(SuperMarket SuperMarket);

@@ -7,12 +7,12 @@ import model.Cart;
 public interface CartDao {
 
 	// CREATE
-	public void save(Cart cart);
+	public void insert(Cart cart);
 
 	// RETRIEVE
-	public ArrayList<Cart> findAll();
+	public ArrayList<Cart> retrieveAll();
 
-	public Cart findByPrimaryKey(Long id);
+	public Cart retrieveByPrimaryKey(Long id);
 
 	// UPDATE
 	public void update(Cart cart);

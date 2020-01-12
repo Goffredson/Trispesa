@@ -13,7 +13,11 @@ import model.PaymentMethod;
 import model.Product;
 import model.SuperMarket;
 import persistence.dao.AdministratorDao;
+import persistence.dao.CategoryDao;
+import persistence.dao.SuperMarketDao;
 import persistence.dao.jdbc.AdministratorDaoJdbc;
+import persistence.dao.jdbc.CategoryDaoJdbc;
+import persistence.dao.jdbc.SuperMarketDaoJdbc;
 
 public class DBManager {
 
@@ -39,6 +43,14 @@ public class DBManager {
 					"DJ8nD9eyeT4VjZAvTnAvUDcc-ExoZTN_");
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			e.printStackTrace();
+		}
+
+		for (Category category : getCategoryDao().findAll()) {
+			if (category.getParent() != null) {
+				System.out.println(category.getId() + " " + category.getName() + " " + category.getParent().getName());
+			} else {
+				System.out.println(category.getId() + " " + category.getName() + " null");
+			}
 		}
 
 //		// cazzate sul db
@@ -97,6 +109,14 @@ public class DBManager {
 		return new AdministratorDaoJdbc(dataSource);
 	}
 
+	public CategoryDao getCategoryDao() {
+		return new CategoryDaoJdbc(dataSource);
+	}
+
+	public SuperMarketDao getSuperMarketDao() {
+		return new SuperMarketDaoJdbc(dataSource);
+	}
+
 	public ArrayList<Category> getMacroCategories() {
 		return macroCategories;
 	}
@@ -150,7 +170,7 @@ public class DBManager {
 		throw new DBOperationException("Il prodotto da eliminare non � stato trovato", "null");
 	}
 
-	public Product getProductByID(int barcode, SuperMarket superMarket) {
+	public Product getProductByID(long barcode, SuperMarket superMarket) {
 		for (Product temp : products) {
 			if (temp.getBarcode() == barcode && temp.getSuperMarket().equals(superMarket)) {
 				return temp;

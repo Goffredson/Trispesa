@@ -20,32 +20,8 @@ public class AdministratorDaoJdbc implements AdministratorDao {
 	}
 
 	public void insert(Administrator administrator) {
-		Connection connection = null;
-		try {
-			connection = this.dataSource.getConnection();
-			Long id = IdBroker.getId(connection, sequenceName);
-			administrator.setId(id);
-			String insert = "insert into administrator(id, username, password) values (?, ?, ?)";
-			PreparedStatement statement = connection.prepareStatement(insert);
-			statement.setLong(1, administrator.getId());
-			statement.setString(2, administrator.getUsername());
-			statement.setString(3, administrator.getPassword());
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			if (connection != null) {
-				try {
-					connection.rollback();
-				} catch (SQLException excep) {
-					throw new RuntimeException(e.getMessage());
-				}
-			}
-		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
-		}
+		// TODO In teoria non serve a nulla, in quanto non modifichiamo niente da
+		// codice!
 	}
 
 	@Override
@@ -113,56 +89,14 @@ public class AdministratorDaoJdbc implements AdministratorDao {
 
 	@Override
 	public void update(Administrator administrator) {
-		Connection connection = null;
-		try {
-			connection = this.dataSource.getConnection();
-			String update = "update administrator set username=?, password=? where id=?";
-			PreparedStatement statement = connection.prepareStatement(update);
-			statement.setString(1, administrator.getUsername());
-			statement.setString(2, administrator.getPassword());
-			statement.setLong(3, administrator.getId());
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			if (connection != null) {
-				try {
-					connection.rollback();
-				} catch (SQLException excep) {
-					throw new RuntimeException(e.getMessage());
-				}
-			}
-		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
-		}
+		// TODO In teoria non serve a nulla, in quanto non modifichiamo niente da
+		// codice!
 	}
 
 	@Override
 	public void delete(Administrator administrator) {
-		Connection connection = null;
-		try {
-			connection = this.dataSource.getConnection();
-			String delete = "delete from administrator where id=?";
-			PreparedStatement statement = connection.prepareStatement(delete);
-			statement.setLong(1, administrator.getId());
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			if (connection != null) {
-				try {
-					connection.rollback();
-				} catch (SQLException excep) {
-					throw new RuntimeException(e.getMessage());
-				}
-			}
-		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
-		}
+		// TODO In teoria non serve a nulla, in quanto non modifichiamo niente da
+		// codice!
 	}
 
 }

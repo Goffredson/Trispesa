@@ -68,9 +68,9 @@ public class ManageProduct extends HttpServlet {
 				double price = Double.parseDouble(req.getParameter("price"));
 				int quantity = Integer.parseInt(req.getParameter("quantity"));
 				String superMarketString = (String) req.getParameter("superMarket");
-				SuperMarket superMarket = DBManager.getIstance().getSuperMarketByID(superMarketString);
+				SuperMarket superMarket = DBManager.getInstance().getSuperMarketByID(superMarketString);
 				String categoryString = (String) req.getParameter("category");
-				Category category = DBManager.getIstance().getCategoryByFamilyName(categoryString);
+				Category category = DBManager.getInstance().getCategoryByFamilyName(categoryString);
 				String offbrand = (String) req.getParameter("offbrand");
 				if (offbrand.equals("yes"))
 					product = new Product(barcode, name, price, weight, superMarket, true, category, quantity,
@@ -79,7 +79,7 @@ public class ManageProduct extends HttpServlet {
 					product = new Product(barcode, name, price, weight, superMarket, false, category, quantity,
 							fileName);
 
-				DBManager.getIstance().addProduct(product);
+				DBManager.getInstance().addProduct(product);
 
 				req.getSession().setAttribute("result", true);
 				req.getSession().setAttribute("object", product.toString());
@@ -113,8 +113,8 @@ public class ManageProduct extends HttpServlet {
 				}
 				int barcode = Integer.parseInt(req.getParameter("barcode"));
 				String superMarketString = (String) req.getParameter("superMarket");
-				SuperMarket superMarket = DBManager.getIstance().getSuperMarketByID(superMarketString);
-				Product oldProduct = DBManager.getIstance().getProductByID(barcode, superMarket);
+				SuperMarket superMarket = DBManager.getInstance().getSuperMarketByID(superMarketString);
+				Product oldProduct = DBManager.getInstance().getProductByID(barcode, superMarket);
 				if (fileName == null) {
 					if (oldProduct != null) {
 						fileName = oldProduct.getImagePath().substring(16);
@@ -129,7 +129,7 @@ public class ManageProduct extends HttpServlet {
 				double price = Double.parseDouble(req.getParameter("price"));
 				int quantity = Integer.parseInt(req.getParameter("quantity"));
 				String categoryString = (String) req.getParameter("category");
-				Category category = DBManager.getIstance().getCategoryByFamilyName(categoryString);
+				Category category = DBManager.getInstance().getCategoryByFamilyName(categoryString);
 				String offbrand = (String) req.getParameter("offbrand");
 				if (offbrand.equals("yes"))
 					product = new Product(barcode, name, price, weight, superMarket, true, category, quantity,
@@ -138,7 +138,7 @@ public class ManageProduct extends HttpServlet {
 					product = new Product(barcode, name, price, weight, superMarket, false, category, quantity,
 							fileName);
 
-				DBManager.getIstance().modifyProduct(product);
+				DBManager.getInstance().modifyProduct(product);
 
 				req.getSession().setAttribute("result", true);
 				req.getSession().setAttribute("object", product.toString());
@@ -151,10 +151,10 @@ public class ManageProduct extends HttpServlet {
 
 				int barcode = Integer.parseInt(req.getParameter("barcode"));
 				String superMarketString = (String) req.getParameter("superMarket");
-				SuperMarket superMarket = DBManager.getIstance().getSuperMarketByID(superMarketString);
-				Product product = DBManager.getIstance().getProductByID(barcode, superMarket);
+				SuperMarket superMarket = DBManager.getInstance().getSuperMarketByID(superMarketString);
+				Product product = DBManager.getInstance().getProductByID(barcode, superMarket);
 
-				DBManager.getIstance().removeProductByID(barcode, superMarket);
+				DBManager.getInstance().removeProductByID(barcode, superMarket);
 
 				req.getSession().setAttribute("result", true);
 				req.getSession().setAttribute("object", product.toString());

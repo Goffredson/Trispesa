@@ -18,7 +18,7 @@ public class ShowProducts extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RequestDispatcher rd = req.getRequestDispatcher("showProducts.jsp");
 		String categoryName = req.getParameter("categoria");
-		ArrayList<Product> prodotti = DBManager.getIstance().getProductsByCategory(categoryName);
+		ArrayList<Product> prodotti = DBManager.getInstance().getProductsByCategory(categoryName);
 		req.setAttribute("listaProdotti", prodotti);
 		System.out.println(prodotti.get(0).getImagePath());
 		rd.forward(req, resp);
@@ -31,13 +31,13 @@ public class ShowProducts extends HttpServlet {
 		ArrayList<Product> prodotti = null;
 		String nomeProdotto = req.getParameter("nomeProdotto");
 		// Se non ci sono categorie per cui filtrare
-		prodotti = DBManager.getIstance().getProductsByName(nomeProdotto);
+		prodotti = DBManager.getInstance().getProductsByName(nomeProdotto);
 		RequestDispatcher rd = req.getRequestDispatcher("showProducts.jsp");
 		if (parametri.isEmpty()) {
 		}
 		else {
 			for (String categoria : parametri) {
-				DBManager.getIstance().escludiProdotti(categoria, prodotti);
+				DBManager.getInstance().escludiProdotti(categoria, prodotti);
 			}
 		}
 		req.setAttribute("listaProdotti", prodotti);

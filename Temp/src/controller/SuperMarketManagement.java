@@ -16,7 +16,7 @@ public class SuperMarketManagement extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		ArrayList<SuperMarket> superMarkets = DBManager.getIstance().getSuperMarkets();
+		ArrayList<SuperMarket> superMarkets = DBManager.getInstance().getSuperMarkets();
 		req.setAttribute("superMarkets", superMarkets);
 
 		RequestDispatcher rd = req.getRequestDispatcher("superMarketManagement.jsp");

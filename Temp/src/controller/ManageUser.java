@@ -48,7 +48,7 @@ public class ManageUser extends HttpServlet {
 					int cardNumber = Integer.parseInt(req.getParameter("card"));
 					PaymentMethod paymentMethod = customer.getPaymentMethodByCardNumber(cardNumber);
 
-					DBManager.getIstance().removePaymentMethod(customer, paymentMethod);
+					DBManager.getInstance().removePaymentMethod(customer, paymentMethod);
 
 					req.getSession().setAttribute("result", "true");
 					req.getSession().setAttribute("message", "Il metodo di pagamento è stato eliminato con successo!");
@@ -71,7 +71,7 @@ public class ManageUser extends HttpServlet {
 					String deliveryAddressString = req.getParameter("deliveryAddress");
 					DeliveryAddress deliveryAddress = customer.getDeliveryAddressByID(deliveryAddressString);
 
-					DBManager.getIstance().removeDeliveryAddress(customer, deliveryAddress);
+					DBManager.getInstance().removeDeliveryAddress(customer, deliveryAddress);
 
 					req.getSession().setAttribute("result", "true");
 					req.getSession().setAttribute("message", "L'indirizzo di consegna è stato eliminato con successo!");

@@ -140,15 +140,6 @@ public class Product {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof Product) {
-			Product product = (Product) obj;
-			return this.id == product.id;
-		}
-		return false;
-	}
-
-	@Override
 	public String toString() {
 		return barcode + ", " + name + ", " + superMarket + ", " + category;
 	}

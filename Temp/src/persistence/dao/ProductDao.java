@@ -13,6 +13,8 @@ public interface ProductDao {
 	public ArrayList<Product> retrieveAll();
 
 	public Product retrieveByPrimaryKey(Long id);
+	
+	public ArrayList<Product> retrieveByName(String name);
 
 	// UPDATE
 	public void update(Product product);

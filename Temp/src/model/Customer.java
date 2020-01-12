@@ -3,8 +3,11 @@ package model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import javafx.util.Pair;
+
 public class Customer {
 
+	private long id;
 	private String username;
 	private String password;
 	private String name;
@@ -12,15 +15,15 @@ public class Customer {
 	private String email;
 	private LocalDate birthDate;
 	private LocalDate registrationDate;
-	// arraylist di ordini (chiusi e/o in consegna)
-	// carrello
 	private ArrayList<DeliveryAddress> deliveryAddresses;
 	private ArrayList<PaymentMethod> paymentMethods;
+	private ArrayList<Pair<Product, Long>> cart;
 
-	public Customer(String username, String password, String name, String surname, String email, LocalDate birthDate,
-			LocalDate registrationDate, ArrayList<DeliveryAddress> deliveryAddresses,
-			ArrayList<PaymentMethod> paymentMethods) {
+	public Customer(long id, String username, String password, String name, String surname, String email,
+			LocalDate birthDate, LocalDate registrationDate, ArrayList<DeliveryAddress> deliveryAddresses,
+			ArrayList<PaymentMethod> paymentMethods, ArrayList<Pair<Product, Long>> cart) {
 		super();
+		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.name = name;
@@ -29,13 +32,16 @@ public class Customer {
 		this.birthDate = birthDate;
 		this.registrationDate = registrationDate;
 		this.deliveryAddresses = deliveryAddresses;
-		if (deliveryAddresses == null) {
-			this.deliveryAddresses = new ArrayList<DeliveryAddress>();
-		}
 		this.paymentMethods = paymentMethods;
-		if (paymentMethods == null) {
-			this.paymentMethods = new ArrayList<PaymentMethod>();
-		}
+		this.cart = cart;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getUsername() {
@@ -102,57 +108,20 @@ public class Customer {
 		this.deliveryAddresses = deliveryAddresses;
 	}
 
-	public void addDeliveryAddress(DeliveryAddress deliveryAddress) {
-		this.deliveryAddresses.add(deliveryAddress);
-	}
-
-	public void removeDeliveryAddress(DeliveryAddress deliveryAddress) {
-		this.deliveryAddresses.remove(deliveryAddress);
-	}
-
 	public ArrayList<PaymentMethod> getPaymentMethods() {
 		return paymentMethods;
 	}
 
-	public void setPaymentMethods(ArrayList<PaymentMethod> payementMethods) {
-		this.paymentMethods = payementMethods;
+	public void setPaymentMethods(ArrayList<PaymentMethod> paymentMethods) {
+		this.paymentMethods = paymentMethods;
 	}
 
-	public void addPaymentMethod(PaymentMethod paymentMethod) {
-		this.paymentMethods.add(paymentMethod);
+	public ArrayList<Pair<Product, Long>> getCart() {
+		return cart;
 	}
 
-	public void removePaymentMethod(PaymentMethod paymentMethod) {
-		this.paymentMethods.remove(paymentMethod);
-	}
-
-	public PaymentMethod getPaymentMethodByCardNumber(int cardNumber) {
-		for (PaymentMethod paymentMethod : paymentMethods) {
-			if (paymentMethod.getCardNumber() == cardNumber) {
-				return paymentMethod;
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof Customer) {
-			Customer customer = (Customer) obj;
-			return this.username.equals(customer.username);
-		}
-		return false;
-	}
-
-	public DeliveryAddress getDeliveryAddressByID(String deliveryAddressString) {
-		for (DeliveryAddress deliveryAddress : deliveryAddresses) {
-			String temp = "(" + deliveryAddress.getCountry() + "," + deliveryAddress.getCity() + ","
-					+ deliveryAddress.getAddress() + ")";
-			if (temp.equals(deliveryAddressString)) {
-				return deliveryAddress;
-			}
-		}
-		return null;
+	public void setCart(ArrayList<Pair<Product, Long>> cart) {
+		this.cart = cart;
 	}
 
 }

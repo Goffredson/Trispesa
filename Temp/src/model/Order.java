@@ -7,22 +7,22 @@ import javafx.util.Pair;
 public class Order {
 
 	private long id;
-	private String currentState;
 	private double totalPrice;
 	private Customer customer;
 	private DeliveryAddress deliveryAddress;
 	private PaymentMethod paymentMethod;
-	private ArrayList<Pair<Product, Integer>> products;
+	private CurrentState currentState;
+	private ArrayList<Pair<Product, Long>> products;
 
-	public Order(long id, String currentState, double totalPrice, Customer customer, DeliveryAddress deliveryAddress,
-			PaymentMethod paymentMethod, ArrayList<Pair<Product, Integer>> products) {
+	public Order(long id, double totalPrice, Customer customer, DeliveryAddress deliveryAddress,
+			PaymentMethod paymentMethod, CurrentState currentState, ArrayList<Pair<Product, Long>> products) {
 		super();
 		this.id = id;
-		this.currentState = currentState;
 		this.totalPrice = totalPrice;
 		this.customer = customer;
 		this.deliveryAddress = deliveryAddress;
 		this.paymentMethod = paymentMethod;
+		this.currentState = currentState;
 		this.products = products;
 	}
 
@@ -32,14 +32,6 @@ public class Order {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public String getCurrentState() {
-		return currentState;
-	}
-
-	public void setCurrentState(String currentState) {
-		this.currentState = currentState;
 	}
 
 	public double getTotalPrice() {
@@ -74,11 +66,19 @@ public class Order {
 		this.paymentMethod = paymentMethod;
 	}
 
-	public ArrayList<Pair<Product, Integer>> getProducts() {
+	public CurrentState getCurrentState() {
+		return currentState;
+	}
+
+	public void setCurrentState(CurrentState currentState) {
+		this.currentState = currentState;
+	}
+
+	public ArrayList<Pair<Product, Long>> getProducts() {
 		return products;
 	}
 
-	public void setProducts(ArrayList<Pair<Product, Integer>> products) {
+	public void setProducts(ArrayList<Pair<Product, Long>> products) {
 		this.products = products;
 	}
 

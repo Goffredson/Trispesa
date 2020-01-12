@@ -6,10 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import model.Administrator;
 import model.Product;
 import persistence.DataSource;
-import persistence.dao.AdministratorDao;
 import persistence.dao.ProductDao;
 
 public class ProductDaoJdbc implements ProductDao {
@@ -134,6 +132,12 @@ public class ProductDaoJdbc implements ProductDao {
 	}
 
 	@Override
+	public ArrayList<Product> retrieveByName(String name) {
+		// TODO Implementarlo
+		return null;
+	}
+
+	@Override
 	public void update(Product product) {
 		Connection connection = null;
 		try {
@@ -173,28 +177,8 @@ public class ProductDaoJdbc implements ProductDao {
 
 	@Override
 	public void delete(Product product) {
-		Connection connection = null;
-		try {
-			connection = this.dataSource.getConnection();
-			String delete = "delete from product where id=?";
-			PreparedStatement statement = connection.prepareStatement(delete);
-			statement.setLong(1, product.getId());
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			if (connection != null) {
-				try {
-					connection.rollback();
-				} catch (SQLException excep) {
-					throw new RuntimeException(e.getMessage());
-				}
-			}
-		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
-		}
+		// TODO In teoria non serve a nulla, in quanto non modifichiamo niente da
+		// codice!
 	}
 
 }

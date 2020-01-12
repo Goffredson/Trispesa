@@ -38,7 +38,7 @@ public class ManageSupermarket extends HttpServlet {
 				else
 					superMarket = new SuperMarket(0, name, "Italy", city, address, latitude, longitude, false);
 
-				DBManager.getIstance().getSuperMarketDao().insert(superMarket);
+				DBManager.getInstance().getSuperMarketDao().insert(superMarket);
 
 				req.getSession().setAttribute("result", true);
 				req.getSession().setAttribute("object", superMarket.toString());
@@ -58,7 +58,7 @@ public class ManageSupermarket extends HttpServlet {
 
 				String oldSuperMarketString = (String) req.getParameter("old");
 
-				DBManager.getIstance().modifySuperMarket(oldSuperMarketString, superMarket);
+				DBManager.getInstance().modifySuperMarket(oldSuperMarketString, superMarket);
 
 				req.getSession().setAttribute("result", true);
 				req.getSession().setAttribute("object", superMarket.toString());
@@ -69,9 +69,9 @@ public class ManageSupermarket extends HttpServlet {
 			case "del": {
 				req.getSession().setAttribute("op", "Rimuovi affiliazione supermercato");
 				String superMarketString = (String) req.getParameter("superMarket");
-				SuperMarket superMarket = DBManager.getIstance().getSuperMarketByID(superMarketString);
+				SuperMarket superMarket = DBManager.getInstance().getSuperMarketByID(superMarketString);
 
-				DBManager.getIstance().removeAffiliateSuperMarketByID(superMarketString);
+				DBManager.getInstance().removeAffiliateSuperMarketByID(superMarketString);
 
 				req.getSession().setAttribute("result", true);
 				req.getSession().setAttribute("object", superMarket.toString());
@@ -82,9 +82,9 @@ public class ManageSupermarket extends HttpServlet {
 			case "aff": {
 				req.getSession().setAttribute("op", "Aggiungi affiliazione supermercato");
 				String superMarketString = (String) req.getParameter("superMarket");
-				SuperMarket superMarket = DBManager.getIstance().getSuperMarketByID(superMarketString);
+				SuperMarket superMarket = DBManager.getInstance().getSuperMarketByID(superMarketString);
 
-				DBManager.getIstance().addAffiliateSuperMarketByID(superMarketString);
+				DBManager.getInstance().addAffiliateSuperMarketByID(superMarketString);
 
 				req.getSession().setAttribute("result", true);
 				req.getSession().setAttribute("object", superMarket.toString());

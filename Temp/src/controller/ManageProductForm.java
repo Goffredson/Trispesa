@@ -18,9 +18,9 @@ public class ManageProductForm extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		ArrayList<SuperMarket> supeMarkets = DBManager.getIstance().getAffiliateSuperMarkets();
+		ArrayList<SuperMarket> supeMarkets = DBManager.getInstance().getAffiliateSuperMarkets();
 		req.setAttribute("superMarkets", supeMarkets);
-		ArrayList<Category> categories = DBManager.getIstance().getCategories();
+		ArrayList<Category> categories = DBManager.getInstance().getCategories();
 		req.setAttribute("categories", categories);
 
 
@@ -33,8 +33,8 @@ public class ManageProductForm extends HttpServlet {
 			req.setAttribute("action", "mod");
 			int barcode = Integer.parseInt(req.getParameter("barcode"));
 			String superMarketString = (String) req.getParameter("superMarket");
-			SuperMarket superMarket = DBManager.getIstance().getSuperMarketByID(superMarketString);
-			Product product = DBManager.getIstance().getProductByID(barcode, superMarket);
+			SuperMarket superMarket = DBManager.getInstance().getSuperMarketByID(superMarketString);
+			Product product = DBManager.getInstance().getProductByID(barcode, superMarket);
 			req.setAttribute("product", product);
 			break;
 		}

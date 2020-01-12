@@ -1,29 +1,40 @@
 package model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class PaymentMethod {
 
-	private int cardNumber;
+	private long id;
+	private String cardNumber;
 	private String owner;
-	private int expirationMonth;
-	private int expirationYear;
+	private LocalDate expirationDate;
 	private int securityCode;
+	private boolean deleted;
 
-	public PaymentMethod(int cardNumber, String owner, int expirationMonth, int expirationYear, int securityCode) {
+	public PaymentMethod(long id, String cardNumber, String owner, LocalDate expirationDate, int securityCode,
+			boolean deleted) {
 		super();
+		this.id = id;
 		this.cardNumber = cardNumber;
 		this.owner = owner;
-		this.expirationMonth = expirationMonth;
-		this.expirationYear = expirationYear;
+		this.expirationDate = expirationDate;
 		this.securityCode = securityCode;
+		this.deleted = deleted;
 	}
 
-	public int getCardNumber() {
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getCardNumber() {
 		return cardNumber;
 	}
 
-	public void setCardNumber(int cardNumber) {
+	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
 	}
 
@@ -35,20 +46,12 @@ public class PaymentMethod {
 		this.owner = owner;
 	}
 
-	public int getExpirationMonth() {
-		return expirationMonth;
+	public LocalDate getExpirationDate() {
+		return expirationDate;
 	}
 
-	public void setExpirationMonth(int expirationMonth) {
-		this.expirationMonth = expirationMonth;
-	}
-
-	public int getExpirationYear() {
-		return expirationYear;
-	}
-
-	public void setExpirationYear(int expirationYear) {
-		this.expirationYear = expirationYear;
+	public void setExpirationDate(LocalDate expirationDate) {
+		this.expirationDate = expirationDate;
 	}
 
 	public int getSecurityCode() {
@@ -59,16 +62,12 @@ public class PaymentMethod {
 		this.securityCode = securityCode;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof PaymentMethod) {
-			PaymentMethod paymentMethod = (PaymentMethod) obj;
-			return this.cardNumber == paymentMethod.cardNumber && this.owner.equals(paymentMethod.owner)
-					&& this.expirationMonth == paymentMethod.expirationMonth
-					&& this.expirationYear == paymentMethod.expirationYear
-					&& this.securityCode == paymentMethod.securityCode;
-		}
-		return false;
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 }

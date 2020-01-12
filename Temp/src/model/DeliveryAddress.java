@@ -2,15 +2,27 @@ package model;
 
 public class DeliveryAddress {
 
+	private long id;
 	private String country;
 	private String city;
 	private String address;
+	private boolean deleted;
 
-	public DeliveryAddress(String country, String city, String address) {
+	public DeliveryAddress(long id, String country, String city, String address, boolean deleted) {
 		super();
+		this.id = id;
 		this.country = country;
 		this.city = city;
 		this.address = address;
+		this.deleted = deleted;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getCountry() {
@@ -37,14 +49,12 @@ public class DeliveryAddress {
 		this.address = address;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof DeliveryAddress) {
-			DeliveryAddress deliveryAddress = (DeliveryAddress) obj;
-			return this.country.equals(deliveryAddress.country) && this.city.equals(deliveryAddress.city)
-					&& this.address.equals(deliveryAddress.address);
-		}
-		return false;
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 }

@@ -6,35 +6,33 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import model.SuperMarket;
+import model.DeliveryAddress;
 import persistence.DataSource;
-import persistence.dao.SuperMarketDao;
+import persistence.dao.DeliveryAddressDao;
 
-public class SuperMarketDaoJdbc implements SuperMarketDao {
-
+public class DeliveryAddressDaoJdbc implements DeliveryAddressDao {
+	
 	private DataSource dataSource;
-	private final String sequenceName = "supermarket_sequence";
+	private final String sequenceName = "delivery_address_sequence";
 
-	public SuperMarketDaoJdbc(DataSource dataSource) {
+	public DeliveryAddressDaoJdbc(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 
-	public void insert(SuperMarket supermarket) {
+	@Override
+	public void insert(DeliveryAddress deliveryAddress) {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
 			Long id = IdBroker.getId(connection, sequenceName);
-			supermarket.setId(id);
-			String insert = "insert into supermarket(id, name, country, city, address, latitude, longitude, affiliate) values (?, ?, ?, ?, ?, ?, ?, ?)";
+			deliveryAddress.setId(id);
+			String insert = "insert into delivery_address(id, country, city, address, deleted) values (?, ?, ?, ?, ?)";
 			PreparedStatement statement = connection.prepareStatement(insert);
-			statement.setLong(1, supermarket.getId());
-			statement.setString(2, supermarket.getName());
-			statement.setString(3, supermarket.getCountry());
-			statement.setString(4, supermarket.getCity());
-			statement.setString(5, supermarket.getAddress());
-			statement.setDouble(6, supermarket.getLatitude());
-			statement.setDouble(7, supermarket.getLongitude());
-			statement.setBoolean(8, supermarket.isAffiliate());
+			statement.setLong(1, deliveryAddress.getId());
+			statement.setString(2, deliveryAddress.getCountry());
+			statement.setString(3, deliveryAddress.getCity());
+			statement.setString(4, deliveryAddress.getAddress());
+			statement.setBoolean(5, deliveryAddress.isDeleted());
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -54,19 +52,17 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 	}
 
 	@Override
-	public ArrayList<SuperMarket> retrieveAll() {
+	public ArrayList<DeliveryAddress> retrieveAll() {
 		Connection connection = null;
-		ArrayList<SuperMarket> supermarkets = new ArrayList<SuperMarket>();
+		ArrayList<DeliveryAddress> deliveryAddresses = new ArrayList<DeliveryAddress>();
 		try {
 			connection = this.dataSource.getConnection();
-			String query = "select * from supermarket";
+			String query = "select * from delivery_address";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				supermarkets.add(new SuperMarket(resultSet.getLong("id"), resultSet.getString("name"),
-						resultSet.getString("country"), resultSet.getString("city"), resultSet.getString("address"),
-						resultSet.getDouble("latitude"), resultSet.getDouble("longitude"),
-						resultSet.getBoolean("affiliate")));
+				deliveryAddresses.add(new DeliveryAddress(resultSet.getLong("id"), resultSet.getString("country"),
+						resultSet.getString("city"), resultSet.getString("address"), resultSet.getBoolean("deleted")));
 			}
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -83,24 +79,22 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 				throw new RuntimeException(e.getMessage());
 			}
 		}
-		return supermarkets;
+		return deliveryAddresses;
 	}
 
 	@Override
-	public SuperMarket retrieveByPrimaryKey(Long id) {
+	public DeliveryAddress retrieveByPrimaryKey(Long id) {
 		Connection connection = null;
-		SuperMarket supermarket = null;
+		DeliveryAddress deliveryAddress = null;
 		try {
 			connection = this.dataSource.getConnection();
-			String query = "select * from supermarket where id=?";
+			String query = "select * from delivery_address where id=?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setLong(1, id);
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
-				supermarket = new SuperMarket(resultSet.getLong("id"), resultSet.getString("name"),
-						resultSet.getString("country"), resultSet.getString("city"), resultSet.getString("address"),
-						resultSet.getDouble("latitude"), resultSet.getDouble("longitude"),
-						resultSet.getBoolean("affiliate"));
+				deliveryAddress = new DeliveryAddress(resultSet.getLong("id"), resultSet.getString("country"),
+						resultSet.getString("city"), resultSet.getString("address"), resultSet.getBoolean("deleted"));
 			}
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -117,24 +111,21 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 				throw new RuntimeException(e.getMessage());
 			}
 		}
-		return supermarket;
+		return deliveryAddress;
 	}
 
 	@Override
-	public void update(SuperMarket supermarket) {
+	public void update(DeliveryAddress deliveryAddress) {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
-			String update = "update supermarket set name=?, country=?, city=?, address=?, latitude=?, longitude=?, affiliate=? where id=?";
+			String update = "update delivery_address set country=?, city=?, address=?, deleted=? where id=?";
 			PreparedStatement statement = connection.prepareStatement(update);
-			statement.setString(1, supermarket.getName());
-			statement.setString(2, supermarket.getCountry());
-			statement.setString(2, supermarket.getCity());
-			statement.setString(2, supermarket.getAddress());
-			statement.setDouble(2, supermarket.getLatitude());
-			statement.setDouble(2, supermarket.getLongitude());
-			statement.setBoolean(2, supermarket.isAffiliate());
-			statement.setLong(8, supermarket.getId());
+			statement.setString(1, deliveryAddress.getCountry());
+			statement.setString(2, deliveryAddress.getCity());
+			statement.setString(3, deliveryAddress.getAddress());
+			statement.setBoolean(4, deliveryAddress.isDeleted());
+			statement.setLong(5, deliveryAddress.getId());
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -154,7 +145,7 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 	}
 
 	@Override
-	public void delete(SuperMarket supermarket) {
+	public void delete(DeliveryAddress deliveryAddress) {
 		// TODO In teoria non serve a nulla, in quanto non modifichiamo niente da
 		// codice!
 	}

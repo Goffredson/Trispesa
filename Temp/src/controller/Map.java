@@ -16,7 +16,7 @@ public class Map extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		ArrayList<SuperMarket> superMarkets = DBManager.getIstance().getSuperMarkets();
+		ArrayList<SuperMarket> superMarkets = DBManager.getInstance().getSuperMarkets();
 		for (SuperMarket superMarket : superMarkets) {
 			
 		}

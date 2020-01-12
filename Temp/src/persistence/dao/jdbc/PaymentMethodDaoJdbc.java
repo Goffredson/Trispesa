@@ -1,40 +1,40 @@
 package persistence.dao.jdbc;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import model.SuperMarket;
+import model.PaymentMethod;
 import persistence.DataSource;
-import persistence.dao.SuperMarketDao;
+import persistence.dao.PaymentMethodDao;
 
-public class SuperMarketDaoJdbc implements SuperMarketDao {
+public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 
 	private DataSource dataSource;
-	private final String sequenceName = "supermarket_sequence";
+	private final String sequenceName = "payment_method_sequence";
 
-	public SuperMarketDaoJdbc(DataSource dataSource) {
+	public PaymentMethodDaoJdbc(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 
-	public void insert(SuperMarket supermarket) {
+	@Override
+	public void insert(PaymentMethod paymentMethod) {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
 			Long id = IdBroker.getId(connection, sequenceName);
-			supermarket.setId(id);
-			String insert = "insert into supermarket(id, name, country, city, address, latitude, longitude, affiliate) values (?, ?, ?, ?, ?, ?, ?, ?)";
+			paymentMethod.setId(id);
+			String insert = "insert into payment_method(id, card_number, owner, expiration_date, security_code, deleted) values (?, ?, ?, ?, ?, ?)";
 			PreparedStatement statement = connection.prepareStatement(insert);
-			statement.setLong(1, supermarket.getId());
-			statement.setString(2, supermarket.getName());
-			statement.setString(3, supermarket.getCountry());
-			statement.setString(4, supermarket.getCity());
-			statement.setString(5, supermarket.getAddress());
-			statement.setDouble(6, supermarket.getLatitude());
-			statement.setDouble(7, supermarket.getLongitude());
-			statement.setBoolean(8, supermarket.isAffiliate());
+			statement.setLong(1, paymentMethod.getId());
+			statement.setString(2, paymentMethod.getCardNumber());
+			statement.setString(3, paymentMethod.getOwner());
+			statement.setDate(4, Date.valueOf(paymentMethod.getExpirationDate()));
+			statement.setInt(5, paymentMethod.getSecurityCode());
+			statement.setBoolean(6, paymentMethod.isDeleted());
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -54,19 +54,18 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 	}
 
 	@Override
-	public ArrayList<SuperMarket> retrieveAll() {
+	public ArrayList<PaymentMethod> retrieveAll() {
 		Connection connection = null;
-		ArrayList<SuperMarket> supermarkets = new ArrayList<SuperMarket>();
+		ArrayList<PaymentMethod> paymentMethods = new ArrayList<PaymentMethod>();
 		try {
 			connection = this.dataSource.getConnection();
-			String query = "select * from supermarket";
+			String query = "select * from payment_method";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				supermarkets.add(new SuperMarket(resultSet.getLong("id"), resultSet.getString("name"),
-						resultSet.getString("country"), resultSet.getString("city"), resultSet.getString("address"),
-						resultSet.getDouble("latitude"), resultSet.getDouble("longitude"),
-						resultSet.getBoolean("affiliate")));
+				paymentMethods.add(new PaymentMethod(resultSet.getLong("id"), resultSet.getString("card_number"),
+						resultSet.getString("owner"), resultSet.getDate("expiration_date").toLocalDate(),
+						resultSet.getInt("security_code"), resultSet.getBoolean("deleted")));
 			}
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -83,24 +82,23 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 				throw new RuntimeException(e.getMessage());
 			}
 		}
-		return supermarkets;
+		return paymentMethods;
 	}
 
 	@Override
-	public SuperMarket retrieveByPrimaryKey(Long id) {
+	public PaymentMethod retrieveByPrimaryKey(Long id) {
 		Connection connection = null;
-		SuperMarket supermarket = null;
+		PaymentMethod paymentMethod = null;
 		try {
 			connection = this.dataSource.getConnection();
-			String query = "select * from supermarket where id=?";
+			String query = "select * from payment_method where id=?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setLong(1, id);
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
-				supermarket = new SuperMarket(resultSet.getLong("id"), resultSet.getString("name"),
-						resultSet.getString("country"), resultSet.getString("city"), resultSet.getString("address"),
-						resultSet.getDouble("latitude"), resultSet.getDouble("longitude"),
-						resultSet.getBoolean("affiliate"));
+				paymentMethod = new PaymentMethod(resultSet.getLong("id"), resultSet.getString("card_number"),
+						resultSet.getString("owner"), resultSet.getDate("expiration_date").toLocalDate(),
+						resultSet.getInt("security_code"), resultSet.getBoolean("deleted"));
 			}
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -117,24 +115,22 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 				throw new RuntimeException(e.getMessage());
 			}
 		}
-		return supermarket;
+		return paymentMethod;
 	}
 
 	@Override
-	public void update(SuperMarket supermarket) {
+	public void update(PaymentMethod paymentMethod) {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
-			String update = "update supermarket set name=?, country=?, city=?, address=?, latitude=?, longitude=?, affiliate=? where id=?";
+			String update = "update payment_method set card_number=?, owner=?, expiration_date=?, security_code=?, deleted=? where id=?";
 			PreparedStatement statement = connection.prepareStatement(update);
-			statement.setString(1, supermarket.getName());
-			statement.setString(2, supermarket.getCountry());
-			statement.setString(2, supermarket.getCity());
-			statement.setString(2, supermarket.getAddress());
-			statement.setDouble(2, supermarket.getLatitude());
-			statement.setDouble(2, supermarket.getLongitude());
-			statement.setBoolean(2, supermarket.isAffiliate());
-			statement.setLong(8, supermarket.getId());
+			statement.setString(1, paymentMethod.getCardNumber());
+			statement.setString(2, paymentMethod.getOwner());
+			statement.setDate(3, Date.valueOf(paymentMethod.getExpirationDate()));
+			statement.setInt(4, paymentMethod.getSecurityCode());
+			statement.setBoolean(5, paymentMethod.isDeleted());
+			statement.setLong(6, paymentMethod.getId());
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -154,9 +150,9 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 	}
 
 	@Override
-	public void delete(SuperMarket supermarket) {
-		// TODO In teoria non serve a nulla, in quanto non modifichiamo niente da
-		// codice!
+	public void delete(PaymentMethod paymentMethod) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

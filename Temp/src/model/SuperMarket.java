@@ -2,6 +2,8 @@ package model;
 
 public class SuperMarket {
 
+	// TODO La classe potrebbe contenere un DeliveryAddress, anziché tre campi privati?
+	
 	private long id;
 	private String name;
 	private String country;

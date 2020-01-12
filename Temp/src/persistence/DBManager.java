@@ -1,11 +1,9 @@
 package persistence;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
 import exceptions.DBOperationException;
-import model.Administrator;
 import model.Category;
 import model.Customer;
 import model.DeliveryAddress;
@@ -13,7 +11,6 @@ import model.PaymentMethod;
 import model.Product;
 import model.SuperMarket;
 import persistence.dao.AdministratorDao;
-import persistence.dao.CartDao;
 import persistence.dao.CategoryDao;
 import persistence.dao.CustomerDao;
 import persistence.dao.DeliveryAddressDao;
@@ -37,7 +34,7 @@ public class DBManager {
 	private ArrayList<Category> categories;
 	private ArrayList<Category> macroCategories;
 
-	public static DBManager getIstance() {
+	public static DBManager getInstance() {
 		if (istance == null)
 			istance = new DBManager();
 		return istance;
@@ -116,9 +113,6 @@ public class DBManager {
 		return new AdministratorDaoJdbc(dataSource);
 	}
 
-	public CartDao getCartDao() {
-		return null;
-	}
 
 	public CategoryDao getCategoryDao() {
 		return new CategoryDaoJdbc(dataSource);

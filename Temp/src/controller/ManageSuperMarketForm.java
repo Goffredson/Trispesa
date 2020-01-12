@@ -29,7 +29,7 @@ public class ManageSuperMarketForm extends HttpServlet {
 		case "mod":
 			req.setAttribute("action", "mod");
 			String superMarketString = (String) req.getParameter("superMarket");
-			SuperMarket superMarket = DBManager.getIstance().getSuperMarketByID(superMarketString);
+			SuperMarket superMarket = DBManager.getInstance().getSuperMarketByID(superMarketString);
 			req.setAttribute("superMarket", superMarket);
 			break;
 		}

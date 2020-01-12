@@ -16,7 +16,7 @@ public class ProductManagement extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		ArrayList<Product> products = DBManager.getIstance().getProducts();
+		ArrayList<Product> products = DBManager.getInstance().getProducts();
 		req.setAttribute("products", products);
 		
 		RequestDispatcher rd = req.getRequestDispatcher("productManagement.jsp");

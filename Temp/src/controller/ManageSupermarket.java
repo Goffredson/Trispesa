@@ -38,7 +38,7 @@ public class ManageSupermarket extends HttpServlet {
 				else
 					superMarket = new SuperMarket(0, name, "Italy", city, address, latitude, longitude, false);
 
-				DBManager.getInstance().getSuperMarketDao().insert(superMarket);
+				DBManager.getInstance().addSupermarket(superMarket);
 
 				req.getSession().setAttribute("result", true);
 				req.getSession().setAttribute("object", superMarket.toString());

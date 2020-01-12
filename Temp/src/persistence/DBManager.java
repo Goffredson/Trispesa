@@ -20,6 +20,10 @@ import persistence.dao.ProductDao;
 import persistence.dao.SuperMarketDao;
 import persistence.dao.jdbc.AdministratorDaoJdbc;
 import persistence.dao.jdbc.CategoryDaoJdbc;
+import persistence.dao.jdbc.CustomerDaoJdbc;
+import persistence.dao.jdbc.DeliveryAddressDaoJdbc;
+import persistence.dao.jdbc.OrderDaoJdbc;
+import persistence.dao.jdbc.PaymentMethodDaoJdbc;
 import persistence.dao.jdbc.ProductDaoJdbc;
 import persistence.dao.jdbc.SuperMarketDaoJdbc;
 
@@ -28,11 +32,11 @@ public class DBManager {
 	private static DBManager istance = null;
 	private static DataSource dataSource = null;
 
-	private ArrayList<Customer> customers;
-	private ArrayList<Product> products;
-	private ArrayList<SuperMarket> superMarkets;
-	private ArrayList<Category> categories;
-	private ArrayList<Category> macroCategories;
+//	private ArrayList<Customer> customers;
+//	private ArrayList<Product> products;
+//	private ArrayList<SuperMarket> superMarkets;
+//	private ArrayList<Category> categories;
+//	private ArrayList<Category> macroCategories;
 
 	public static DBManager getInstance() {
 		if (istance == null)
@@ -113,25 +117,24 @@ public class DBManager {
 		return new AdministratorDaoJdbc(dataSource);
 	}
 
-
 	public CategoryDao getCategoryDao() {
 		return new CategoryDaoJdbc(dataSource);
 	}
 
 	public CustomerDao getCustomerDao() {
-		return null;
+		return new CustomerDaoJdbc(dataSource);
 	}
 
 	public DeliveryAddressDao getDeliveryAddressDao() {
-		return null;
+		return new DeliveryAddressDaoJdbc(dataSource);
 	}
 
 	public OrderDao getOrderDao() {
-		return null;
+		return new OrderDaoJdbc(dataSource);
 	}
 
 	public PaymentMethodDao getPaymentMethodDao() {
-		return null;
+		return new PaymentMethodDaoJdbc(dataSource);
 	}
 
 	public ProductDao getProductDao() {
@@ -142,94 +145,135 @@ public class DBManager {
 		return new SuperMarketDaoJdbc(dataSource);
 	}
 
-	public ArrayList<Category> getMacroCategories() {
-		return macroCategories;
-	}
-
 	public void addSupermarket(SuperMarket superMarket) throws DBOperationException {
-		for (SuperMarket temp : superMarkets) {
-			if (temp.equals(superMarket)) {
-				throw new DBOperationException("Il supermercato ï¿½ giï¿½ presente nel database",
-						superMarket.toString());
+		for (SuperMarket temp : getSuperMarketDao().retrieveAll()) {
+			if (temp.getId() == superMarket.getId()) {
+				throw new DBOperationException("Il supermercato è già presente nel database", superMarket.toString());
 			}
 		}
-		superMarkets.add(superMarket);
+		getSuperMarketDao().insert(superMarket);
 	}
 
 	public void addProduct(Product product) throws DBOperationException {
-		for (Product temp : products) {
-			if (temp.getBarcode() == product.getBarcode() && temp.getSuperMarket().equals(product.getSuperMarket())) {
-				throw new DBOperationException("Il prodotto ï¿½ giï¿½ presente nel database", product.toString());
+		for (Product temp : getProductDao().retrieveAll()) {
+			if (temp.getId() == product.getId()) {
+				throw new DBOperationException("Il prodotto è già presente nel database", product.toString());
 			}
 		}
-		products.add(product);
+		getProductDao().insert(product);
 	}
 
-	public SuperMarket getSuperMarketByID(String superMarketString) {
-		for (SuperMarket superMarket : superMarkets) {
-			String temp = "(" + superMarket.getName() + "," + superMarket.getCity() + "," + superMarket.getAddress()
-					+ ")";
-			if (superMarketString.equals(temp)) {
-				return superMarket;
-			}
+	public SuperMarket getSupermarketById(long id) throws DBOperationException {
+		SuperMarket superMarket = getSuperMarketDao().retrieveByPrimaryKey(id);
+		if (superMarket == null) {
+			throw new DBOperationException("Il supermercato con id " + id + " non è stato trovato", id + "");
 		}
-		return null;
+		return superMarket;
 	}
 
-	public Category getCategoryByFamilyName(String familyName) {
-		for (Category category : categories) {
-			if (category.getFamilyName().equals(familyName)) {
-				return category;
-			}
+	// TODO da eliminare ora che abbiamo gli id nei bean
+//	public SuperMarket getSuperMarketByID(String superMarketString) {
+//		for (SuperMarket superMarket : superMarkets) {
+//			String temp = "(" + superMarket.getName() + "," + superMarket.getCity() + "," + superMarket.getAddress()
+//					+ ")";
+//			if (superMarketString.equals(temp)) {
+//				return superMarket;
+//			}
+//		}
+//		return null;
+//	}
+
+	public void removeProductById(long id) throws DBOperationException {
+		Product product = getProductDao().retrieveByPrimaryKey(id);
+		if (product == null) {
+			throw new DBOperationException("Il prodotto con id " + id + " non è stato trovato", id + "");
 		}
-		return null;
+		product.setDeleted(true);
+		getProductDao().update(product);
 	}
 
-	public void removeProductByID(int barcode, SuperMarket superMarket) throws DBOperationException {
-		for (Product temp : products) {
-			if (temp.getBarcode() == barcode && temp.getSuperMarket().equals(superMarket)) {
-				products.remove(temp);
-				return;
-			}
+	// TODO da eliminare ora che abbiamo gli id nei bean
+//	public void removeProductByID(int barcode, SuperMarket superMarket) throws DBOperationException {
+//		for (Product temp : products) {
+//			if (temp.getBarcode() == barcode && temp.getSuperMarket().equals(superMarket)) {
+//				products.remove(temp);
+//				return;
+//			}
+//		}
+//		throw new DBOperationException("Il prodotto da eliminare non ï¿½ stato trovato", "null");
+//	}
+
+	public Product getProductById(long id) throws DBOperationException {
+		Product product = getProductDao().retrieveByPrimaryKey(id);
+		if (product == null) {
+			throw new DBOperationException("Il prodotto con id " + id + " non è stato trovato", id + "");
 		}
-		throw new DBOperationException("Il prodotto da eliminare non ï¿½ stato trovato", "null");
+		return product;
 	}
 
-	public Product getProductByID(long barcode, SuperMarket superMarket) {
-		for (Product temp : products) {
-			if (temp.getBarcode() == barcode && temp.getSuperMarket().equals(superMarket)) {
-				return temp;
-			}
-		}
-		return null;
-	}
+	// TODO da eliminare ora che abbiamo gli id nei bean
+//	public Product getProductByID(long barcode, SuperMarket superMarket) {
+//		for (Product temp : products) {
+//			if (temp.getBarcode() == barcode && temp.getSuperMarket().equals(superMarket)) {
+//				return temp;
+//			}
+//		}
+//		return null;
+//	}
 
 	public void modifyProduct(Product product) throws DBOperationException {
-		Product temp = getProductByID(product.getBarcode(), product.getSuperMarket());
-		if (temp == null) {
-			throw new DBOperationException("Il prodotto da modificare non ï¿½ stato trovato", "null");
+		if (getProductDao().retrieveByPrimaryKey(product.getId()) == null) {
+			throw new DBOperationException("Il prodotto con id " + product.getId() + " non è stato trovato",
+					product.getId() + "");
 		}
-		temp.setPrice(product.getPrice());
-		temp.setQuantity(product.getQuantity());
-		temp.setOffBrand(product.isOffBrand());
+		getProductDao().update(product);
 	}
 
-	public void removeAffiliateSuperMarketByID(String superMarketString) throws DBOperationException {
-		SuperMarket temp = getSuperMarketByID(superMarketString);
-		if (temp == null) {
-			throw new DBOperationException("Il supermercato da rimuovere non ï¿½ stato trovato", "null");
+	public void removeAffiliateSuperMarketById(long id) throws DBOperationException {
+		SuperMarket superMarket = getSuperMarketDao().retrieveByPrimaryKey(id);
+		if (superMarket == null) {
+			throw new DBOperationException("Il supermercato con id " + id + " non è stato trovato", id + "");
 		}
-		temp.setAffiliate(false);
-
-		ArrayList<Product> tempProducts = new ArrayList<Product>();
-		for (Product product : products) {
-			if (!(product.getSuperMarket().equals(temp))) {
-				tempProducts.add(product);
-			}
-		}
-		products = tempProducts;
+		superMarket.setAffiliate(false);
+		getSuperMarketDao().update(superMarket);
 	}
 
+	// TODO da eliminare ora che abbiamo gli id nei bean
+//	public void removeAffiliateSuperMarketByID(String superMarketString) throws DBOperationException {
+//		SuperMarket temp = getSuperMarketByID(superMarketString);
+//		if (temp == null) {
+//			throw new DBOperationException("Il supermercato da rimuovere non ï¿½ stato trovato", "null");
+//		}
+//		temp.setAffiliate(false);
+//
+//		ArrayList<Product> tempProducts = new ArrayList<Product>();
+//		for (Product product : products) {
+//			if (!(product.getSuperMarket().equals(temp))) {
+//				tempProducts.add(product);
+//			}
+//		}
+//		products = tempProducts;
+//	}
+
+	public void addAffiliateSuperMarketById(long id) throws DBOperationException {
+		SuperMarket superMarket = getSuperMarketDao().retrieveByPrimaryKey(id);
+		if (superMarket == null) {
+			throw new DBOperationException("Il supermercato con id " + id + " non è stato trovato", id + "");
+		}
+		superMarket.setAffiliate(true);
+		getSuperMarketDao().update(superMarket);
+	}
+
+	// TODO da eliminare ora che abbiamo gli id nei bean
+//	public void addAffiliateSuperMarketByID(String superMarketString) throws DBOperationException {
+//		SuperMarket temp = getSuperMarketByID(superMarketString);
+//		if (temp == null) {
+//			throw new DBOperationException("Il supermercato da affiliare non ï¿½ stato trovato", "null");
+//		}
+//		temp.setAffiliate(true);
+//	}
+
+	// TODO da vedere
 	public void modifySuperMarket(String oldSuperMarketString, SuperMarket superMarket) throws DBOperationException {
 		SuperMarket temp = getSuperMarketByID(oldSuperMarketString);
 		if (temp == null) {
@@ -242,24 +286,12 @@ public class DBManager {
 		temp.setLongitude(superMarket.getLongitude());
 	}
 
-	public void addAffiliateSuperMarketByID(String superMarketString) throws DBOperationException {
-		SuperMarket temp = getSuperMarketByID(superMarketString);
-		if (temp == null) {
-			throw new DBOperationException("Il supermercato da affiliare non ï¿½ stato trovato", "null");
-		}
-		temp.setAffiliate(true);
-	}
-
+	// TODO nuova funzione nel dao che torna solo gli affiliati
 	public ArrayList<SuperMarket> getAffiliateSuperMarkets() {
-		ArrayList<SuperMarket> temp = new ArrayList<SuperMarket>();
-		for (SuperMarket superMarket : superMarkets) {
-			if (superMarket.isAffiliate()) {
-				temp.add(superMarket);
-			}
-		}
-		return temp;
+		return getSuperMarketDao().retrieveAll();
 	}
 
+	// TODO va fatto il metodo nel dao
 	public ArrayList<Product> getProductsByCategory(String category) {
 		ArrayList<Product> productsByCategory = new ArrayList<Product>();
 		for (Product i : products) {
@@ -271,29 +303,44 @@ public class DBManager {
 	}
 
 	public ArrayList<Customer> getCustomers() {
-		return customers;
+		return getCustomerDao().retrieveAll();
 	}
 
 	public ArrayList<Product> getProducts() {
-		return products;
+		return getProductDao().retrieveAll();
 	}
 
 	public ArrayList<Category> getCategories() {
-		return categories;
+		return getCategoryDao().retrieveAll();
+	}
+
+	// TODO metodo nel dao
+	public ArrayList<Category> getMacroCategories() {
+		return macroCategories;
 	}
 
 	public ArrayList<Category> getLeafCategories() {
 		ArrayList<Category> leafCategories = new ArrayList<Category>();
-		for (Category c : this.categories)
-			if (!(leafCategories.contains(c)))
-				leafCategories.add(c);
+		for (Category category : getCategoryDao().retrieveAll()) {
+			boolean isLeaf = true;
+			for (Category temp : getCategoryDao().retrieveAll()) {
+				if (temp.getParent() != null && temp.getParent().getId() == category.getId()) {
+					isLeaf = false;
+					break;
+				}
+			}
+			if (isLeaf) {
+				leafCategories.add(category);
+			}
+		}
 		return leafCategories;
 	}
 
 	public ArrayList<SuperMarket> getSuperMarkets() {
-		return superMarkets;
+		return getSuperMarketDao().retrieveAll();
 	}
 
+	// TODO metodo nel dao
 	public ArrayList<Product> getProductsByName(String nomeProdotto) {
 		ArrayList<Product> prodotti = new ArrayList<Product>();
 		for (Product p : this.products)
@@ -302,15 +349,7 @@ public class DBManager {
 		return prodotti;
 	}
 
-	public Customer getCustomerByID(String username) {
-		for (Customer customer : customers) {
-			if (customer.getUsername().equals(username)) {
-				return customer;
-			}
-		}
-		return null;
-	}
-
+	// TODO alfredo e ciccio
 	public void removePaymentMethod(Customer customer, PaymentMethod paymentMethod) throws DBOperationException {
 		for (Customer temp : customers) {
 			if (temp.equals(customer)) {
@@ -322,6 +361,7 @@ public class DBManager {
 				paymentMethod.toString());
 	}
 
+	// TODO alfredo e ciccio
 	public void removeDeliveryAddress(Customer customer, DeliveryAddress deliveryAddress) throws DBOperationException {
 		for (Customer temp : customers) {
 			if (temp.equals(customer)) {

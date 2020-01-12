@@ -133,7 +133,7 @@ public class ProductDaoJdbc implements ProductDao {
 
 	@Override
 	public ArrayList<Product> retrieveByName(String name) {
-		// TODO Implementarlo
+		// TODO Implementarlo giorgio
 		return null;
 	}
 

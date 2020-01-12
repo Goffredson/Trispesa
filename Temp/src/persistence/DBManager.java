@@ -273,7 +273,7 @@ public class DBManager {
 //		temp.setAffiliate(true);
 //	}
 
-	// TODO da vedere
+	// TODO da vedere alfredo e ciccio
 	public void modifySuperMarket(String oldSuperMarketString, SuperMarket superMarket) throws DBOperationException {
 		SuperMarket temp = getSuperMarketByID(oldSuperMarketString);
 		if (temp == null) {
@@ -286,12 +286,12 @@ public class DBManager {
 		temp.setLongitude(superMarket.getLongitude());
 	}
 
-	// TODO nuova funzione nel dao che torna solo gli affiliati
+	// TODO nuova funzione nel dao che torna solo gli affiliati alfredo
 	public ArrayList<SuperMarket> getAffiliateSuperMarkets() {
 		return getSuperMarketDao().retrieveAll();
 	}
 
-	// TODO va fatto il metodo nel dao
+	// TODO va fatto il metodo nel dao giorgio
 	public ArrayList<Product> getProductsByCategory(String category) {
 		ArrayList<Product> productsByCategory = new ArrayList<Product>();
 		for (Product i : products) {
@@ -314,7 +314,7 @@ public class DBManager {
 		return getCategoryDao().retrieveAll();
 	}
 
-	// TODO metodo nel dao
+	// TODO metodo nel dao giorgio
 	public ArrayList<Category> getMacroCategories() {
 		return macroCategories;
 	}
@@ -340,7 +340,7 @@ public class DBManager {
 		return getSuperMarketDao().retrieveAll();
 	}
 
-	// TODO metodo nel dao
+	// TODO metodo nel dao giorgio
 	public ArrayList<Product> getProductsByName(String nomeProdotto) {
 		ArrayList<Product> prodotti = new ArrayList<Product>();
 		for (Product p : this.products)

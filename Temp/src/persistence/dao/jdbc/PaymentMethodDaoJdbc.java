@@ -151,8 +151,6 @@ public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 
 	@Override
 	public void delete(PaymentMethod paymentMethod) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

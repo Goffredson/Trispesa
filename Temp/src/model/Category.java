@@ -2,16 +2,26 @@ package model;
 
 public class Category {
 
+	private long id;
 	private String name;
 	private String familyName;
 	private Category parent;
-	//private ArrayList<Category> children; // potrebbe non servire
+	// private ArrayList<Category> children; // potrebbe non servire
 
-	public Category(String name, Category parent) {
+	public Category(long id, String name, Category parent) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.parent = parent;
 		this.familyName = buildFamilyName();
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	private String buildFamilyName() {
@@ -24,7 +34,7 @@ public class Category {
 	public String getName() {
 		return name;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		Category cat = (Category) obj;
@@ -38,7 +48,7 @@ public class Category {
 	public Category getParent() {
 		return parent;
 	}
-	
+
 	@Override
 	public String toString() {
 		return familyName;

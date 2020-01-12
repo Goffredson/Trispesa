@@ -2,30 +2,61 @@ package model;
 
 public class Product {
 
-	private int barcode;
+	private long id;
+	private long barcode;
 	private String name;
-	private double price;
+	private String brand;
 	private double weight;
-	private double discount;
 	private SuperMarket superMarket;
-	private boolean offBrand; // sottomarca
 	private Category category;
-	private int quantity;
+	private boolean offBrand; // sottomarca
+	private double price;
+	private long quantity;
+	private double discount;
 	private String imagePath;
+	private boolean deleted;
 
-	public Product(int barcode, String name, double price, double weight, SuperMarket superMarket, boolean offBrand,
-			Category category, int quantity, String imagePath) {
+	public Product(long id, long barcode, String name, String brand, double weight, SuperMarket superMarket,
+			Category category, boolean offBrand, double price, long quantity, double discount, String imagePath,
+			boolean deleted) {
 		super();
+		this.id = id;
 		this.barcode = barcode;
 		this.name = name;
-		this.price = price;
+		this.brand = brand;
 		this.weight = weight;
 		this.superMarket = superMarket;
-		this.offBrand = offBrand;
 		this.category = category;
+		this.offBrand = offBrand;
+		this.price = price;
 		this.quantity = quantity;
-		this.discount = 0;
+		this.discount = discount;
 		this.imagePath = "images/products/" + imagePath;
+		this.deleted = deleted;
+	}
+
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getImagePath() {
@@ -44,11 +75,11 @@ public class Product {
 		this.discount = discount;
 	}
 
-	public int getBarcode() {
+	public long getBarcode() {
 		return barcode;
 	}
 
-	public void setBarcode(int barcode) {
+	public void setBarcode(long barcode) {
 		this.barcode = barcode;
 	}
 
@@ -100,11 +131,11 @@ public class Product {
 		this.category = category;
 	}
 
-	public int getQuantity() {
+	public long getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(long quantity) {
 		this.quantity = quantity;
 	}
 
@@ -112,7 +143,7 @@ public class Product {
 	public boolean equals(Object obj) {
 		if (obj instanceof Product) {
 			Product product = (Product) obj;
-			return barcode == product.barcode && superMarket.equals(product.superMarket);
+			return this.id == product.id;
 		}
 		return false;
 	}
@@ -121,8 +152,5 @@ public class Product {
 	public String toString() {
 		return barcode + ", " + name + ", " + superMarket + ", " + category;
 	}
-
-	// inserendo un prodotto si genera nel db una tupla di prodotto e una di
-	// descrittore prodotto (GIORGIO)
 
 }

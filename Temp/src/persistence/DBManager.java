@@ -5,16 +5,20 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 
 import exceptions.DBOperationException;
+import model.Administrator;
 import model.Category;
 import model.Customer;
 import model.DeliveryAddress;
 import model.PaymentMethod;
 import model.Product;
 import model.SuperMarket;
+import persistence.dao.AdministratorDao;
+import persistence.dao.jdbc.AdministratorDaoJdbc;
 
 public class DBManager {
 
 	private static DBManager istance = null;
+	private static DataSource dataSource = null;
 
 	private ArrayList<Customer> customers;
 	private ArrayList<Product> products;
@@ -28,61 +32,73 @@ public class DBManager {
 		return istance;
 	}
 
-	public ArrayList<Category> getMacroCategories() {
-		return macroCategories;
+	private DBManager() {
+		try {
+			Class.forName("org.postgresql.Driver").newInstance();
+			dataSource = new DataSource("jdbc:postgresql://rogue.db.elephantsql.com:5432/zqnyocaq", "zqnyocaq",
+					"DJ8nD9eyeT4VjZAvTnAvUDcc-ExoZTN_");
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+//		// cazzate sul db
+//		superMarkets = new ArrayList<SuperMarket>();
+//		superMarkets.add(new SuperMarket("conad", "cosenza", "via della banana, 33", true, 1, 1));
+//		superMarkets.add(new SuperMarket("coop", "cosenza", "via della vita, 33", false, 2, 2));
+//		superMarkets.add(new SuperMarket("lidl", "cosenza", "via della morte, 33", true, 3, 3));
+//		superMarkets.add(new SuperMarket("auchan", "cosenza", "via della citre, 33", true, 4, 4));
+//		superMarkets.add(new SuperMarket("conad", "rende", "via ciccio bello, 33", false, 5, 5));
+//		SuperMarket conad = superMarkets.get(0);
+//
+//		categories = new ArrayList<Category>();
+//		macroCategories = new ArrayList<Category>();
+//		Category pasta = new Category("pasta", null);
+//		Category pastaIntegrale = new Category("integrale", pasta);
+//		Category pastaBianca = new Category("bianca", pasta);
+//		Category pane = new Category("pane", null);
+//		Category paneBianco = new Category("bianco", pane);
+//		Category paneIntegrale = new Category("integrale", pane);
+//		categories.add(pastaIntegrale);
+//		categories.add(pastaBianca);
+//		categories.add(paneBianco);
+//		categories.add(paneIntegrale);
+//		macroCategories.add(pasta);
+//		macroCategories.add(pane);
+//
+//		products = new ArrayList<Product>();
+//		products.add(new Product(1, "pasta", 1.1, 123.0, conad, true, pastaIntegrale, 1, ""));
+//		products.add(new Product(2, "pasta", 1.1, 123.0, conad, true, pastaIntegrale, 1, ""));
+//		products.add(new Product(3, "pasta", 1.1, 123.0, conad, true, pastaIntegrale, 1, ""));
+//		products.add(new Product(4, "a", 1.1, 123, conad, true, pastaIntegrale, 1, ""));
+//		products.add(new Product(5, "b", 1.1, 123, conad, true, pastaIntegrale, 1, ""));
+//		products.add(new Product(6, "c", 1.1, 123, conad, true, pastaIntegrale, 1, ""));
+//		products.add(new Product(7, "d", 1.1, 123, conad, true, pastaIntegrale, 1, ""));
+//		products.add(new Product(8, "e", 1.1, 123, conad, true, pastaIntegrale, 1, ""));
+//		products.add(new Product(9, "f", 1.1, 123, conad, true, pastaIntegrale, 1, ""));
+//		products.add(new Product(10, "pasta", 1000, 123, conad, true, paneBianco, 1, ""));
+//		products.add(new Product(11, "pasta", 1.1, 123, conad, true, pastaIntegrale, 1, ""));
+//		products.add(new Product(12, "pasta", 1.1, 123, superMarkets.get(1), true, pastaIntegrale, 1, ""));
+//
+//		Customer customer = new Customer("Goffredson", "bellecose", "Alfredo", "Aloi", "a.a@a.a",
+//				LocalDate.of(1999, 11, 3), LocalDate.of(2019, 3, 3), null, null);
+//		customer.addDeliveryAddress(new DeliveryAddress("Iatlia", "Cosenza", "via della banana"));
+//		customer.addDeliveryAddress(new DeliveryAddress("Iatlia", "43253", "via della banana"));
+//		customer.addDeliveryAddress(new DeliveryAddress("Iatlia", "Cos5436enza", "via della banana"));
+//		customer.addDeliveryAddress(new DeliveryAddress("Iat42lia", "Cosenza", "via del4352435la banana"));
+//
+//		customer.addPaymentMethod(new PaymentMethod(1232345, "Boh", 11, 2021, 950));
+//		customer.addPaymentMethod(new PaymentMethod(12345, "Bociaoh", 14321, 2021, 950));
+//		customer.addPaymentMethod(new PaymentMethod(123345, "Boh", 11, 20221, 950));
+//		customers = new ArrayList<Customer>();
+//		customers.add(customer);
 	}
 
-	private DBManager() {
-		// cazzate sul db
-		superMarkets = new ArrayList<SuperMarket>();
-		superMarkets.add(new SuperMarket("conad", "cosenza", "via della banana, 33", true, 1, 1));
-		superMarkets.add(new SuperMarket("coop", "cosenza", "via della vita, 33", false, 2, 2));
-		superMarkets.add(new SuperMarket("lidl", "cosenza", "via della morte, 33", true, 3, 3));
-		superMarkets.add(new SuperMarket("auchan", "cosenza", "via della citre, 33", true, 4, 4));
-		superMarkets.add(new SuperMarket("conad", "rende", "via ciccio bello, 33", false, 5, 5));
-		SuperMarket conad = superMarkets.get(0);
+	public AdministratorDao getAdministratorDao() {
+		return new AdministratorDaoJdbc(dataSource);
+	}
 
-		categories = new ArrayList<Category>();
-		macroCategories = new ArrayList<Category>();
-		Category pasta = new Category("pasta", null);
-		Category pastaIntegrale = new Category("integrale", pasta);
-		Category pastaBianca = new Category("bianca", pasta);
-		Category pane = new Category("pane", null);
-		Category paneBianco = new Category("bianco", pane);
-		Category paneIntegrale = new Category("integrale", pane);
-		categories.add(pastaIntegrale);
-		categories.add(pastaBianca);
-		categories.add(paneBianco);
-		categories.add(paneIntegrale);
-		macroCategories.add(pasta);
-		macroCategories.add(pane);
-
-		products = new ArrayList<Product>();
-		products.add(new Product(1, "pasta", 1.1, 123.0, conad, true, pastaIntegrale, 1, ""));
-		products.add(new Product(2, "pasta", 1.1, 123.0, conad, true, pastaIntegrale, 1, ""));
-		products.add(new Product(3, "pasta", 1.1, 123.0, conad, true, pastaIntegrale, 1, ""));
-		products.add(new Product(4, "a", 1.1, 123, conad, true, pastaIntegrale, 1, ""));
-		products.add(new Product(5, "b", 1.1, 123, conad, true, pastaIntegrale, 1, ""));
-		products.add(new Product(6, "c", 1.1, 123, conad, true, pastaIntegrale, 1, ""));
-		products.add(new Product(7, "d", 1.1, 123, conad, true, pastaIntegrale, 1, ""));
-		products.add(new Product(8, "e", 1.1, 123, conad, true, pastaIntegrale, 1, ""));
-		products.add(new Product(9, "f", 1.1, 123, conad, true, pastaIntegrale, 1, ""));
-		products.add(new Product(10, "pasta", 1000, 123, conad, true, paneBianco, 1, ""));
-		products.add(new Product(11, "pasta", 1.1, 123, conad, true, pastaIntegrale, 1, ""));
-		products.add(new Product(12, "pasta", 1.1, 123, superMarkets.get(1), true, pastaIntegrale, 1, ""));
-
-		Customer customer = new Customer("Goffredson", "bellecose", "Alfredo", "Aloi", "a.a@a.a",
-				LocalDate.of(1999, 11, 3), LocalDate.of(2019, 3, 3), null, null);
-		customer.addDeliveryAddress(new DeliveryAddress("Iatlia", "Cosenza", "via della banana"));
-		customer.addDeliveryAddress(new DeliveryAddress("Iatlia", "43253", "via della banana"));
-		customer.addDeliveryAddress(new DeliveryAddress("Iatlia", "Cos5436enza", "via della banana"));
-		customer.addDeliveryAddress(new DeliveryAddress("Iat42lia", "Cosenza", "via del4352435la banana"));
-
-		customer.addPaymentMethod(new PaymentMethod(1232345, "Boh", 11, 2021, 950));
-		customer.addPaymentMethod(new PaymentMethod(12345, "Bociaoh", 14321, 2021, 950));
-		customer.addPaymentMethod(new PaymentMethod(123345, "Boh", 11, 20221, 950));
-		customers = new ArrayList<Customer>();
-		customers.add(customer);
+	public ArrayList<Category> getMacroCategories() {
+		return macroCategories;
 	}
 
 	public void addSupermarket(SuperMarket superMarket) throws DBOperationException {
@@ -275,12 +291,13 @@ public class DBManager {
 	public void escludiProdotti(String categoria, ArrayList<Product> prodotti) {
 		ListIterator<Product> iter = prodotti.listIterator();
 		while (iter.hasNext()) {
-			//System.out.println("Il prodotto " + iter.next().getName() + "è di categoria " + iter.next().getCategory().getName());
+			// System.out.println("Il prodotto " + iter.next().getName() + "è di categoria
+			// " + iter.next().getCategory().getName());
 			if (!(iter.next().getCategory().getName().equals(categoria))) {
 				iter.remove();
 			}
 		}
-		
+
 	}
 
 }

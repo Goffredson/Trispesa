@@ -40,7 +40,6 @@ public class Login extends HttpServlet {
 				resp.sendError(401);
 			}
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

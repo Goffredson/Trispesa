@@ -9,38 +9,34 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.Gson;
+
+import javafx.util.Pair;
+import model.Customer;
+import persistence.DBManager;
 
 public class Login extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-
 		StringBuffer jsonReceived = new StringBuffer();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(req.getInputStream()));		
+		BufferedReader reader = new BufferedReader(new InputStreamReader(req.getInputStream()));
 		String line = reader.readLine();
 		while (line != null) {
 			jsonReceived.append(line);
 			line = reader.readLine();
 		}
-			
-		try {
-			JSONObject json = new JSONObject(jsonReceived.toString());	
-			String username = json.getString("username");
-			String password = json.getString("password");
-			
-			// Faremo poi la query
-			boolean esisteUtente = true;
-			if (esisteUtente) {
-				req.getSession().setAttribute("username", username);
-			}
-			else {
-				resp.sendError(401);
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
+
+		Gson gson = new Gson();
+		Pair<String, String> credenziali;
+		credenziali = gson.fromJson(jsonReceived.toString(), Pair.class);
+		// Faremo poi la query
+		Customer customer = DBManager.getInstance().checkIfExists(credenziali.getKey(),credenziali.getValue());
+		if (customer != null) {
+			req.getSession().setAttribute("username", credenziali.getKey());
+		} else {
+			resp.sendError(401);
 		}
 	}
 

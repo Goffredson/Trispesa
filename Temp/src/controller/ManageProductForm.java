@@ -18,34 +18,34 @@ public class ManageProductForm extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		ArrayList<SuperMarket> supeMarkets = DBManager.getInstance().getAffiliateSuperMarkets();
-		req.setAttribute("superMarkets", supeMarkets);
-		ArrayList<Category> categories = DBManager.getInstance().getCategories();
-		req.setAttribute("categories", categories);
-
-
-		switch (req.getParameter("action")) {
-		case "add":
-			req.setAttribute("action", "add");
-			break;
-
-		case "mod":
-			req.setAttribute("action", "mod");
-			int barcode = Integer.parseInt(req.getParameter("barcode"));
-			String superMarketString = (String) req.getParameter("superMarket");
-			SuperMarket superMarket = DBManager.getInstance().getSuperMarketByID(superMarketString);
-			Product product = DBManager.getInstance().getProductByID(barcode, superMarket);
-			req.setAttribute("product", product);
-			break;
-		}
-
-		RequestDispatcher rd = req.getRequestDispatcher("../manageProduct.jsp");
-		rd.forward(req, resp);
+//		ArrayList<SuperMarket> supeMarkets = DBManager.getInstance().getAffiliateSuperMarkets();
+//		req.setAttribute("superMarkets", supeMarkets);
+//		ArrayList<Category> categories = DBManager.getInstance().getCategories();
+//		req.setAttribute("categories", categories);
+//
+//
+//		switch (req.getParameter("action")) {
+//		case "add":
+//			req.setAttribute("action", "add");
+//			break;
+//
+//		case "mod":
+//			req.setAttribute("action", "mod");
+//			int barcode = Integer.parseInt(req.getParameter("barcode"));
+//			String superMarketString = (String) req.getParameter("superMarket");
+//			SuperMarket superMarket = DBManager.getInstance().getSuperMarketByID(superMarketString);
+//			Product product = DBManager.getInstance().getProductByID(barcode, superMarket);
+//			req.setAttribute("product", product);
+//			break;
+//		}
+//
+//		RequestDispatcher rd = req.getRequestDispatcher("../manageProduct.jsp");
+//		rd.forward(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doGet(req, resp);
+		//doGet(req, resp);
 	}
 
 }

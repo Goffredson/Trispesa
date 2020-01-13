@@ -11,6 +11,7 @@ public interface CustomerDao {
 
 	// RETRIEVE
 	public ArrayList<Customer> retrieveAll();
+	public Customer checkIfExists(String username,String password);
 
 	public Customer retrieveByPrimaryKey(Long id);
 

@@ -225,4 +225,37 @@ public class CustomerDaoJdbc implements CustomerDao {
 	public void delete(Customer customer) {
 	}
 
+	@Override
+	public Customer checkIfExists(String username, String password) {
+		Connection connection = null;
+		Customer customer=null;
+		try {
+			connection = this.dataSource.getConnection();
+			String exists = "select * from customer where name=? and password=?";
+			PreparedStatement statement = connection.prepareStatement(exists);
+			statement.setString(1, username);
+			statement.setString(2, password);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				customer=retrieveByPrimaryKey(resultSet.getLong("id"));
+			}
+			
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
+		}
+		return customer;
+	}
+	
 }

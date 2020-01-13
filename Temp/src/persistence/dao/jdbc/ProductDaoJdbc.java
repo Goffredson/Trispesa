@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import model.Category;
 import model.Product;
 import persistence.DataSource;
 import persistence.dao.ProductDao;
@@ -181,4 +182,77 @@ public class ProductDaoJdbc implements ProductDao {
 		// codice!
 	}
 
+	public ArrayList<Product> retrieveProductsByName(String name) {
+		Connection connection = null;
+		ArrayList<Product> products = new ArrayList<Product>();
+		try {
+			connection = this.dataSource.getConnection();
+			String query = "select * from product where name~*?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, name);
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				products.add(new Product(resultSet.getLong("id"), resultSet.getLong("barcode"),
+						resultSet.getString("name"), resultSet.getString("brand"), resultSet.getDouble("weight"),
+						new SuperMarketDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("supermarket")),
+						new CategoryDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("category")),
+						resultSet.getBoolean("offbrand"), resultSet.getDouble("price"), resultSet.getLong("quantity"),
+						resultSet.getDouble("discount"), resultSet.getString("image_path"),
+						resultSet.getBoolean("deleted")));
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
+		}
+		return products;
+	}
+
+	public ArrayList<Category> retrieveMacroCategories() {
+		Connection connection = null;
+		ArrayList<Category> categories = new ArrayList<Category>();
+		try {
+			connection = this.dataSource.getConnection();
+			String query = "select * from category where parent=? or parent=?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setLong(1, 1);
+			statement.setLong(2, 13);
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				if(resultSet.getLong("parent")==1) {
+					categories.add(new Category(resultSet.getLong("id"), resultSet.getString("name"),
+							new Category(1,"Alimentare",null)));
+				}
+				else {
+					categories.add(new Category(resultSet.getLong("id"), resultSet.getString("name"),
+							new Category(13,"Non alimentare",null)));
+				}
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
+		}
+		return categories;
+	}
 }

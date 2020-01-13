@@ -2,6 +2,7 @@ package persistence.dao;
 
 import java.util.ArrayList;
 
+import model.Category;
 import model.Product;
 
 public interface ProductDao {
@@ -16,10 +17,12 @@ public interface ProductDao {
 	
 	public ArrayList<Product> retrieveByName(String name);
 
+	public ArrayList<Category> retrieveMacroCategories();
 	// UPDATE
 	public void update(Product product);
 
 	// DELETE
 	public void delete(Product product);
+
 
 }

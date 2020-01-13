@@ -145,7 +145,7 @@ public class CustomerDaoJdbc implements CustomerDao {
 				String deliveryAddressesQuery = "select delivery_address from delivery_address_refers_to_customer where customer=?";
 				PreparedStatement deliveryAddressesStatement = connection.prepareStatement(deliveryAddressesQuery);
 				deliveryAddressesStatement.setLong(1, customer.getId());
-				ResultSet deliveryAddressesResultSet = statement.executeQuery();
+				ResultSet deliveryAddressesResultSet = deliveryAddressesStatement.executeQuery();
 				while (deliveryAddressesResultSet.next()) {
 					deliveryAddresses.add(new DeliveryAddressDaoJdbc(dataSource)
 							.retrieveByPrimaryKey(deliveryAddressesResultSet.getLong("delivery_address")));
@@ -154,7 +154,7 @@ public class CustomerDaoJdbc implements CustomerDao {
 				String paymentMethodsQuery = "select payment_method from payment_method_refers_to_customer where customer=?";
 				PreparedStatement paymentMethodsStatement = connection.prepareStatement(paymentMethodsQuery);
 				paymentMethodsStatement.setLong(1, customer.getId());
-				ResultSet paymentMethodsResultSet = statement.executeQuery();
+				ResultSet paymentMethodsResultSet = paymentMethodsStatement.executeQuery();
 				while (paymentMethodsResultSet.next()) {
 					paymentMethods.add(new PaymentMethodDaoJdbc(dataSource)
 							.retrieveByPrimaryKey(paymentMethodsResultSet.getLong("payment_method")));
@@ -163,7 +163,7 @@ public class CustomerDaoJdbc implements CustomerDao {
 				String cartQuery = "select product, amount from cart where customer=?";
 				PreparedStatement cartStatement = connection.prepareStatement(cartQuery);
 				cartStatement.setLong(1, customer.getId());
-				ResultSet cartResultSet = statement.executeQuery();
+				ResultSet cartResultSet = cartStatement.executeQuery();
 				while (cartResultSet.next()) {
 					cart.add(new Pair<Product, Long>(
 							new ProductDaoJdbc(dataSource).retrieveByPrimaryKey(cartResultSet.getLong("id")),
@@ -231,7 +231,7 @@ public class CustomerDaoJdbc implements CustomerDao {
 		Customer customer=null;
 		try {
 			connection = this.dataSource.getConnection();
-			String exists = "select * from customer where name=? and password=?";
+			String exists = "select * from customer where username=? and password=?";
 			PreparedStatement statement = connection.prepareStatement(exists);
 			statement.setString(1, username);
 			statement.setString(2, password);

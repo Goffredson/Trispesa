@@ -11,8 +11,8 @@ public interface CategoryDao {
 
 	// RETRIEVE
 	public ArrayList<Category> retrieveAll();
-
 	public Category retrieveByPrimaryKey(Long id);
+	ArrayList<Category> retrieveMacroCategories();
 
 	// UPDATE
 	public void update(Category category);

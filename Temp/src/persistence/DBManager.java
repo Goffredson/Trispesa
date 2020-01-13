@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 
 import exceptions.DBOperationException;
+import model.Administrator;
 import model.Category;
 import model.Customer;
 import model.DeliveryAddress;
@@ -51,14 +52,6 @@ public class DBManager {
 					"DJ8nD9eyeT4VjZAvTnAvUDcc-ExoZTN_");
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			e.printStackTrace();
-		}
-
-		for (Category category : getCategoryDao().retrieveAll()) {
-			if (category.getParent() != null) {
-				System.out.println(category.getId() + " " + category.getName() + " " + category.getParent().getName());
-			} else {
-				System.out.println(category.getId() + " " + category.getName() + " null");
-			}
 		}
 
 //		// cazzate sul db
@@ -314,9 +307,8 @@ public class DBManager {
 		return getCategoryDao().retrieveAll();
 	}
 
-	// TODO metodo nel dao giorgio
 	public ArrayList<Category> getMacroCategories() {
-		return getProductDao().retrieveMacroCategories();
+		return getCategoryDao().retrieveMacroCategories();
 	}
 
 	public ArrayList<Category> getLeafCategories() {
@@ -345,9 +337,15 @@ public class DBManager {
 		ArrayList<Product> prodotti = getProductDao().retrieveByName(nomeProdotto);
 		return prodotti;
 	}
-	public Customer checkIfExists(String username,String password) {
-		Customer customer=getCustomerDao().checkIfExists(username, password);
+
+	public Customer checkIfCustomerExists(String username, String password) {
+		Customer customer = getCustomerDao().checkIfExists(username, password);
 		return customer;
+	}
+
+	public Administrator checkIfAdministratorExists(String username, String password) {
+		Administrator administrator = getAdministratorDao().checkIfExists(username, password);
+		return administrator;
 	}
 
 	// TODO alfredo e ciccio

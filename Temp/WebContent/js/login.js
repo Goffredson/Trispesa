@@ -10,8 +10,12 @@ function effettuaLogin() {
 				url : "user/effettuaLogin",
 				datatype : "JSON",
 				data : JSON.stringify(cliente),
-				success : function() {
-					// alert("Ok!");
+				success : function(response) {
+
+					if (response.redirect) {
+						window.location.href = response.redirect_url;
+					}
+					
 					$("#buttonLogin").remove();
 					var ordini = $('<li class="nav-item"><a class="nav-link" href="#">Ordini</a></li>\n');
 					var profilo = $('<li class="nav-item"><a class="nav-link" href="user?page=profile">Profilo</a></li>\n');
@@ -26,6 +30,8 @@ function effettuaLogin() {
 					$("#iddue").removeClass("dropdown-menu show");
 					$("#iduno").addClass("dropdown");
 					$("#iddue").addClass("dropdown-menu");
+					
+
 
 				},
 				error : function(httpObj, textStatus) {

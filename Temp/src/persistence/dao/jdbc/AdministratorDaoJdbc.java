@@ -99,4 +99,36 @@ public class AdministratorDaoJdbc implements AdministratorDao {
 		// codice!
 	}
 
+	@Override
+	public Administrator checkIfExists(String username, String password) {
+		Connection connection = null;
+		Administrator admin = null;
+		try {
+			connection = this.dataSource.getConnection();
+			String exists = "select * from administrator where username=? and password=?";
+			PreparedStatement statement = connection.prepareStatement(exists);
+			statement.setString(1, username);
+			statement.setString(2, password);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				admin = retrieveByPrimaryKey(resultSet.getLong("id"));
+			}
+
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
+		}
+		return admin;
+	}
 }

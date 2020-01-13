@@ -11,8 +11,9 @@ public interface AdministratorDao {
 
 	// RETRIEVE
 	public ArrayList<Administrator> retrieveAll();
-
 	public Administrator retrieveByPrimaryKey(Long id);
+	public Administrator checkIfExists(String username, String password);
+	
 
 	// UPDATE
 	public void update(Administrator administrator);

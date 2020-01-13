@@ -17,7 +17,7 @@ public interface ProductDao {
 	
 	public ArrayList<Product> retrieveByName(String name);
 
-	public ArrayList<Category> retrieveMacroCategories();
+
 	// UPDATE
 	public void update(Product product);
 

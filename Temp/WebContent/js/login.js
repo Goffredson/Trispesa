@@ -5,7 +5,8 @@ function effettuaLogin() {
 		password : $("#inputPassword").val()
 	};
 
-	$.ajax({
+	$
+			.ajax({
 				type : "POST",
 				url : "user/effettuaLogin",
 				datatype : "JSON",
@@ -14,24 +15,23 @@ function effettuaLogin() {
 
 					if (response.redirect) {
 						window.location.href = response.redirect_url;
-					}
-					
-					$("#buttonLogin").remove();
-					var ordini = $('<li class="nav-item"><a class="nav-link" href="#">Ordini</a></li>\n');
-					var profilo = $('<li class="nav-item"><a class="nav-link" href="user?page=profile">Profilo</a></li>\n');
-					var dieta = $('<li class="nav-item"><a class="nav-link" href="#">Dieta</a></li>\n');
-					$("#ulNavBar").append(dieta);
-					$("#ulNavBar").append(ordini);
-					$("#ulNavBar").append(profilo);
-					$("#buttonLogin").attr("aria-expanded", "false");
-					
-					// E' grezzo, riguardalo dopo
-					$("#iduno").removeClass("dropdown show");
-					$("#iddue").removeClass("dropdown-menu show");
-					$("#iduno").addClass("dropdown");
-					$("#iddue").addClass("dropdown-menu");
-					
+					} else {
+						$("#buttonLogin").remove();
+						var ordini = $('<li class="nav-item"><a class="nav-link" href="#">Ordini</a></li>\n');
+						var profilo = $('<li class="nav-item"><a class="nav-link" href="user?page=profile">Profilo</a></li>\n');
+						var dieta = $('<li class="nav-item"><a class="nav-link" href="#">Dieta</a></li>\n');
+						$("#ulNavBar").append(dieta);
+						$("#ulNavBar").append(ordini);
+						$("#ulNavBar").append(profilo);
+						$("#buttonLogin").attr("aria-expanded", "false");
 
+						// E' grezzo, riguardalo dopo
+						$("#iduno").removeClass("dropdown show");
+						$("#iddue").removeClass("dropdown-menu show");
+						$("#iduno").addClass("dropdown");
+						$("#iddue").addClass("dropdown-menu");
+						$('#welcomeToast').toast('show');
+					}
 
 				},
 				error : function(httpObj, textStatus) {
@@ -40,11 +40,11 @@ function effettuaLogin() {
 					}
 				}
 			});
-	
+
 }
 
-//$('#submitButton').on('submit', function(e) { // use on if jQuery 1.7+
-//	alert("ciaooo");
-//	effettuaLogin();
-//	e.preventDefault();
-//});
+// $('#submitButton').on('submit', function(e) { // use on if jQuery 1.7+
+// alert("ciaooo");
+// effettuaLogin();
+// e.preventDefault();
+// });

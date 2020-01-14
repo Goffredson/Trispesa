@@ -311,22 +311,22 @@ public class DBManager {
 		return getCategoryDao().retrieveMacroCategories();
 	}
 
-	public ArrayList<Category> getLeafCategories() {
-		ArrayList<Category> leafCategories = new ArrayList<Category>();
-		for (Category category : getCategoryDao().retrieveAll()) {
-			boolean isLeaf = true;
-			for (Category temp : getCategoryDao().retrieveAll()) {
-				if (temp.getParent() != null && temp.getParent().getId() == category.getId()) {
-					isLeaf = false;
-					break;
-				}
-			}
-			if (isLeaf) {
-				leafCategories.add(category);
-			}
-		}
-		return leafCategories;
-	}
+//	public ArrayList<Category> getLeafCategories() {
+//		ArrayList<Category> leafCategories = new ArrayList<Category>();
+//		for (Category category : getCategoryDao().retrieveAll()) {
+//			boolean isLeaf = true;
+//			for (Category temp : getCategoryDao().retrieveAll()) {
+//				if (temp.getParent() != null && temp.getParent().getId() == category.getId()) {
+//					isLeaf = false;
+//					break;
+//				}
+//			}
+//			if (isLeaf) {
+//				leafCategories.add(category);
+//			}
+//		}
+//		return leafCategories;
+//	}
 
 	public ArrayList<SuperMarket> getSuperMarkets() {
 		return getSuperMarketDao().retrieveAll();

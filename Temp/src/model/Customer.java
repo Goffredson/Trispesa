@@ -18,7 +18,7 @@ public class Customer {
 	private ArrayList<DeliveryAddress> deliveryAddresses;
 	private ArrayList<PaymentMethod> paymentMethods;
 	private ArrayList<Pair<Product, Long>> cart;
-
+	//Per costruire dal db
 	public Customer(long id, String username, String password, String name, String surname, String email,
 			LocalDate birthDate, LocalDate registrationDate, ArrayList<DeliveryAddress> deliveryAddresses,
 			ArrayList<PaymentMethod> paymentMethods, ArrayList<Pair<Product, Long>> cart) {
@@ -35,7 +35,21 @@ public class Customer {
 		this.paymentMethods = paymentMethods;
 		this.cart = cart;
 	}
-
+	//Per costruire dall'inizio
+	public Customer(String username, String password, String name, String surname, String email,
+			LocalDate birthDate) {
+		this.username = username;
+		this.password = password;
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+		this.birthDate = birthDate;
+		this.registrationDate =LocalDate.now();
+		this.deliveryAddresses =new ArrayList<DeliveryAddress>();
+		this.paymentMethods =new ArrayList<PaymentMethod>();
+		this.cart =new ArrayList<Pair<Product,Long>>();
+	}
+	
 	public long getId() {
 		return id;
 	}

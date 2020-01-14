@@ -37,9 +37,8 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav ml-auto" id ="ulNavBar">
-					<li class="nav-item active"><a class="nav-link"
-						href="#">Home</a></li>
+				<ul class="navbar-nav ml-auto" id="ulNavBar">
+					<li class="nav-item active"><a class="nav-link" href="#">Home</a></li>
 
 					<li class="nav-item"><a class="nav-link" href="#"><img
 							src="images/cart.png" width="30" /></a></li>
@@ -65,10 +64,13 @@
 								<button type="submit" id="submitButton"
 									class="btn btn-primary">Autenticati</button>
 								 -->
-								 <input type="button" class="btn btn-primary" value="Autenticati" onclick="effettuaLogin()">
+								<input type="button" class="btn btn-primary" value="Autenticati"
+									onclick="effettuaLogin()">
+
 							</form>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Effettua registrazione</a> <a
+							<a class="dropdown-item" href="#" data-toggle="modal"
+								data-target="#modalLogin">Effettua registrazione</a> <a
 								class="dropdown-item" href="#">Password dimenticata?</a>
 						</div>
 					</div>
@@ -79,6 +81,92 @@
 			</div>
 		</div>
 	</nav>
+
+	<!-- 	form registrazione -->
+	<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<!--Header-->
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">Registrazione</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<!--Body-->
+				<div class="modal-body">
+					<form action="user/signup"
+						class="text-center border border-light p-5" method="post"
+						name="registrationForm">
+						<div class="form-row mb-4">
+							<div class="col">
+								<!-- First name -->
+								<input type="text" name="firstName"
+									class="form-control" placeholder="Nome">
+							</div>
+							<div class="col">
+								<!-- Last name -->
+								<input type="text" name="lastName"
+									class="form-control" placeholder="Cognome">
+							</div>
+						</div>
+
+						<!-- E-mail -->
+						<input type="email" name="email"
+							class="form-control mb-4" placeholder="E-mail">
+
+						<div class="col">
+							<!-- Username -->
+							<input type="text" name="username"
+								class="form-control" placeholder="Username">
+						</div>
+
+						<!-- Password -->
+						<input type="password" name="password"
+							class="form-control" placeholder="Password"
+							aria-describedby="defaultRegisterFormPasswordHelpBlock">
+						<small id="defaultRegisterFormPasswordHelpBlock"
+							class="form-text text-muted mb-4"> Almeno 8 caratteri e
+							un numero</small>
+
+
+
+						<!-- Date birth -->
+						<input type="date" name="birthDate"
+							class="form-control" placeholder="Data di nascita"
+							aria-describedby="defaultRegisterFormPhoneHelpBlock">
+
+
+						<!-- Sign up button -->
+						<div class="modal-footer">
+							<input type="submit"
+								class="btn btn-info my-4 btn-block waves-effect waves-light"
+								value="Registrati">
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- chiusura	form registrazione -->
+
+
+
+	<div id="welcomeToast" class="toast" role="alert" aria-live="assertive"
+		aria-atomic="true" data-delay="5000">
+		<div class="toast-header">
+			<img src="..." class="rounded mr-2" alt="..."> <strong
+				class="mr-auto">Trispesa staff</strong> <small>Proprio ora</small>
+			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="toast-body">Bentornato su Trispesa!</div>
+	</div>
 
 	<!-- Content -->
 	<div class="container">
@@ -103,24 +191,24 @@
 						}
 					</script>
 
-					<div class="container my-4">
-						<hr>
-						<ul class="list-group list-group-flush">
+					<!-- 					<div class="container my-4"> -->
+					<!-- 						<hr> -->
+					<!-- 						<ul class="list-group list-group-flush"> -->
 
-							<!-- TODO: Deve diventare un menù a tendina, checkbox non hanno senso -->
-							<c:forEach items="${listaCategorieFoglia}" var="categoria">
-								<li class="list-group-item">
-									<!-- Default checked -->
-									<div class="custom-control custom-checkbox">
-										<input name="${categoria.name}" type="checkbox"
-											class="custom-control-input" id="${categoria.name}">
-										<label class="custom-control-label" for="${categoria.name}">${categoria.name}</label>
-									</div>
-								</li>
-							</c:forEach>
-						</ul>
+					<!-- 							TODO: Deve diventare un menù a tendina, checkbox non hanno senso -->
+					<%-- 							<c:forEach items="${listaCategorieFoglia}" var="categoria"> --%>
+					<!-- 								<li class="list-group-item"> -->
+					<!-- 									Default checked -->
+					<!-- 									<div class="custom-control custom-checkbox"> -->
+					<%-- 										<input name="${categoria.name}" type="checkbox" --%>
+					<%-- 											class="custom-control-input" id="${categoria.name}"> --%>
+					<%-- 										<label class="custom-control-label" for="${categoria.name}">${categoria.name}</label> --%>
+					<!-- 									</div> -->
+					<!-- 								</li> -->
+					<%-- 							</c:forEach> --%>
+					<!-- 						</ul> -->
 
-					</div>
+					<!-- 					</div> -->
 					<input class="btn btn-success" value="Cerca" type="submit" />
 					<div class="input-group-append">
 						<!-- 
@@ -229,9 +317,6 @@
 	<!-- Bootstrap core JavaScript -->
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-
-
 </body>
 
 </html>

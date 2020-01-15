@@ -1,20 +1,20 @@
-function updateNavbarDOM(operation, toggleDelay) {
+function updateNavbarDOM(operation, animDelay) {
 	if (operation == "login") {
-		$("#buttonLogin").toggle(toggleDelay);
-		$("#buttonLogout").toggle(toggleDelay);
-		$("#dieta").toggle(toggleDelay);
-		$("#ordini").toggle(toggleDelay);
-		$("#profilo").toggle(toggleDelay);
+		$("#loginDropdown").hide(animDelay);
+		$("#logoutButton").show(animDelay);
+		$("#dieta").show(animDelay);
+		$("#ordini").show(animDelay);
+		$("#profilo").show(animDelay);
 	} else {
-		$("#buttonLogout").toggle(toggleDelay);
-		$("#dieta").toggle(toggleDelay);
-		$("#ordini").toggle(toggleDelay);
-		$("#profilo").toggle(toggleDelay);
-		$("#buttonLogin").toggle(toggleDelay);
+		$("#logoutButton").hide(animDelay);
+		$("#dieta").hide(animDelay);
+		$("#ordini").hide(animDelay);
+		$("#profilo").hide(animDelay);
+		$("#loginDropdown").show(animDelay);
 	}
 }
 
-function ajaxLog(operation, toggleDelay) {
+function ajaxLog(operation, animDelay) {
 
 	$.ajax({
 		type : "POST",
@@ -23,35 +23,31 @@ function ajaxLog(operation, toggleDelay) {
 		data : JSON.stringify([ $("#inputUsername").val(),
 				$("#inputPassword").val(), operation ]),
 		success : function(response) {
-
 			if (response.redirect) {
 				window.location.href = response.redirect_url;
 			} else {
 				if (operation == "login") {
-					// Chiusura menu di login
-					$("#iduno").removeClass("dropdown show");
-					$("#iddue").removeClass("dropdown-menu show");
-					$("#iduno").addClass("dropdown");
-					$("#iddue").addClass("dropdown-menu");
-					$("#toastMessage").html(
-							"Bentornato in trispesa, "
-									+ $("#inputUsername").val());
+					$("#toastMessage").html("Bentornato in trispesa, " + $("#inputUsername").val());
 				} else {
-					$("#toastMessage").html(
-							"A presto " + $("#inputUsername").val());
+					$("#toastMessage").html("A presto " + $("#inputUsername").val());
 				}
 				$('#welcomeToast').toast('show');
-				updateNavbarDOM(operation, toggleDelay);
+				updateNavbarDOM(operation, animDelay);
+				$('#credenzialiErrate').hide();
 			}
 
 		},
 		error : function(httpObj, textStatus) {
 			if (httpObj.status == 401) {
 				if ($("#credenzialiErrate").css('display') == 'none') {
-					$("#credenzialiErrate").toggle(toggleDelay);
+					$("#credenzialiErrate").toggle(animDelay);
 				} else {
-					$("#credenzialiErrate").animate({opacity : 0}, 200, "linear", function() {
-						$(this).animate({opacity : 1}, 200);
+					$("#credenzialiErrate").animate({
+						opacity : 0
+					}, 200, "linear", function() {
+						$(this).animate({
+							opacity : 1
+						}, 200);
 					});
 				}
 			}

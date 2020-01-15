@@ -35,8 +35,6 @@ public class Login extends HttpServlet {
 		Gson gson = new Gson();
 	    Type arrayListType = new TypeToken<ArrayList<String>>(){}.getType();
 	    ArrayList<String> credentials = gson.fromJson(jsonReceived.toString(), arrayListType);
-
-	    System.out.println(credentials.get(2));
 	    
 	    if (credentials.get(2).equals("login")) {
 	    	Customer customer = DBManager.getInstance().checkIfCustomerExists(credentials.get(0), credentials.get(1));

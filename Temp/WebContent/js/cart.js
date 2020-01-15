@@ -90,7 +90,6 @@ function Cart() {
 		alert(prezzo);
 		this.updatePrice(prezzo);
 		updateCartDOM();
-		//alert(2.0+(-1.1));
 	}
 }
 

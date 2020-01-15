@@ -134,8 +134,39 @@ public class ProductDaoJdbc implements ProductDao {
 
 	@Override
 	public ArrayList<Product> retrieveByName(String name) {
-		// TODO Implementarlo giorgio
-		return null;
+		Connection connection = null;
+		ArrayList<Product> products = new ArrayList<Product>();
+		try {
+			connection = this.dataSource.getConnection();
+			String query = "select * from product where name~*?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, name);
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				products.add(new Product(resultSet.getLong("id"), resultSet.getLong("barcode"),
+						resultSet.getString("name"), resultSet.getString("brand"), resultSet.getDouble("weight"),
+						new SuperMarketDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("supermarket")),
+						new CategoryDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("category")),
+						resultSet.getBoolean("offbrand"), resultSet.getDouble("price"), resultSet.getLong("quantity"),
+						resultSet.getDouble("discount"), resultSet.getString("image_path"),
+						resultSet.getBoolean("deleted")));
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
+		}
+		return products;
 	}
 
 	@Override
@@ -182,39 +213,4 @@ public class ProductDaoJdbc implements ProductDao {
 		// codice!
 	}
 
-	public ArrayList<Product> retrieveProductsByName(String name) {
-		Connection connection = null;
-		ArrayList<Product> products = new ArrayList<Product>();
-		try {
-			connection = this.dataSource.getConnection();
-			String query = "select * from product where name~*?";
-			PreparedStatement statement = connection.prepareStatement(query);
-			statement.setString(1, name);
-			ResultSet resultSet = statement.executeQuery();
-			if (resultSet.next()) {
-				products.add(new Product(resultSet.getLong("id"), resultSet.getLong("barcode"),
-						resultSet.getString("name"), resultSet.getString("brand"), resultSet.getDouble("weight"),
-						new SuperMarketDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("supermarket")),
-						new CategoryDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("category")),
-						resultSet.getBoolean("offbrand"), resultSet.getDouble("price"), resultSet.getLong("quantity"),
-						resultSet.getDouble("discount"), resultSet.getString("image_path"),
-						resultSet.getBoolean("deleted")));
-			}
-		} catch (SQLException e) {
-			if (connection != null) {
-				try {
-					connection.rollback();
-				} catch (SQLException excep) {
-					throw new RuntimeException(e.getMessage());
-				}
-			}
-		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
-		}
-		return products;
-	}
 }

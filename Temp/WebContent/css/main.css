@@ -1,14 +1,41 @@
+/* Parte index */
 body {
 	padding-top: 56px;
 }
 
-.login {
+.color-scheme {
+	color: white !important;
+	background-color: cornflowerblue !important;
+}
+
+.login-button {
 	background-color: cornflowerblue !important;
 	border: none;
+	margin-top: 2px;
+}
+
+.login-dependent {
+	display: none;
+}
+
+.login-dropdown {
+	margin-top: 12px;
+	width: 250px !important;
+}
+
+.notification-toast {
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+	width: 300px !important;
 }
 
 #nav {
 	background-color: cornflowerblue !important;
+}
+
+#navCategories {
+	margin-top: 3px;
 }
 
 #search-bar {
@@ -16,6 +43,23 @@ body {
 	width: 75%;
 }
 
+div.scrollmenu {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+div.scrollmenu a {
+  display: inline-block;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+  background-color: white;
+}
+
+/* Parte amministrazione */
 #addSuperMarket {
 	margin: 10px !important;
 }

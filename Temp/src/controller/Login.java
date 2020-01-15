@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import model.Administrator;
 import model.Customer;
@@ -30,30 +33,36 @@ public class Login extends HttpServlet {
 		}
 
 		Gson gson = new Gson();
-		Customer temp = gson.fromJson(jsonReceived.toString(), Customer.class);
-		System.out.println(temp.getUsername());
-		System.out.println(temp.getPassword());
+	    Type arrayListType = new TypeToken<ArrayList<String>>(){}.getType();
+	    ArrayList<String> credentials = gson.fromJson(jsonReceived.toString(), arrayListType);
 
-		// TODO: Ripulire questo pezzo di servlet senza usare customer.class
-		Customer customer = DBManager.getInstance().checkIfCustomerExists(temp.getUsername(), temp.getPassword());
-		Administrator administrator = DBManager.getInstance().checkIfAdministratorExists(temp.getUsername(), temp.getPassword());
+	    System.out.println(credentials.get(2));
+	    
+	    if (credentials.get(2).equals("login")) {
+	    	Customer customer = DBManager.getInstance().checkIfCustomerExists(credentials.get(0), credentials.get(1));
+	    	Administrator administrator = DBManager.getInstance().checkIfAdministratorExists(credentials.get(0), credentials.get(1));
+	    	
+	    	String response = null;
+	    	
+	    	if (customer != null) {
+	    		req.getSession().setAttribute("customer", customer);
+	    		response = "{\"redirect\":false}";
+	    	} else if (administrator != null) {
+	    		req.getSession().setAttribute("administrator", administrator);
+	    		response = "{\"redirect\":true,\"redirect_url\":\"administration\"}";
+	    	} else {
+	    		resp.sendError(401);
+	    	}
+	    	PrintWriter out = resp.getWriter();
+	    	resp.setContentType("application/json");
+	    	resp.setCharacterEncoding("UTF-8");
+	    	out.print(response);
+	    	out.flush();
+	    }
+	    else {
+	    	req.getSession().removeAttribute("customer");
+	    }
 
-		String response = "{\"redirect\":false}";
-		
-		if (customer != null) {
-			req.getSession().setAttribute("customer", customer);
-		} else if (administrator != null) {
-			req.getSession().setAttribute("administrator", administrator);
-			response = "{\"redirect\":true,\"redirect_url\":\"administration\"}"; 
-		} else {
-			resp.sendError(401);
-		}
-		
-		PrintWriter out = resp.getWriter();
-		resp.setContentType("application/json");
-		resp.setCharacterEncoding("UTF-8");
-		out.print(response);
-		out.flush();
 	}
 
 }

@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
-
+<html>
 <head>
 
 <meta charset="utf-8">
@@ -19,14 +19,15 @@
 <link href="css/main.css" rel="stylesheet">
 
 <script src="js/login.js"></script>
-
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </head>
 
 
 <body>
 
-	<!-- Navigation NON TOCCARE!!! -->
+	<!-- Navigation  -->
 	<nav id="nav"
 		class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container">
@@ -43,37 +44,47 @@
 					<li class="nav-item"><a class="nav-link" href="#"><img
 							src="images/cart.png" width="30" /></a></li>
 					<!-- Menu form login -->
-					<div class="dropdown" id="iduno">
-						<a class="btn btn-secondary dropdown-toggle login" href="#"
-							role="button" id="buttonLogin" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false">Login</a>
+					<li>
+						<div class="dropdown" id="iduno">
+							<a class="btn btn-secondary dropdown-toggle login" href="#"
+								role="button" id="buttonLogin" data-toggle="dropdown"
+								aria-haspopup="true" aria-expanded="false">Login</a>
 
-						<div class="dropdown-menu" id="iddue">
-							<form class="px-4 py-3">
-								<div class="form-group">
-									<label for="exampleDropdownFormEmail1">Nome utente</label> <input
-										type="text" class="form-control" id="inputUsername"
-										placeholder="Inserisci nome utente">
-								</div>
-								<div class="form-group">
-									<label for="inputPassword">Password</label> <input
-										type="password" class="form-control" id="inputPassword"
-										placeholder="Password">
-								</div>
-								<!-- 
+							<div class="dropdown-menu" id="iddue">
+								<form class="px-4 py-3">
+									<div class="form-group">
+										<label for="exampleDropdownFormEmail1">Nome utente</label> <input
+											type="text" class="form-control" id="inputUsername"
+											placeholder="Inserisci nome utente">
+									</div>
+									<div class="form-group">
+										<label for="inputPassword">Password</label> <input
+											type="password" class="form-control" id="inputPassword"
+											placeholder="Password">
+									</div>
+									<!-- 
 								<button type="submit" id="submitButton"
 									class="btn btn-primary">Autenticati</button>
 								 -->
-								<input type="button" class="btn btn-primary" value="Autenticati"
-									onclick="effettuaLogin()">
+									<input type="button" class="btn btn-primary"
+										value="Autenticati" onclick="ajaxLog('login', 500)">
 
-							</form>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#" data-toggle="modal"
-								data-target="#modalLogin">Effettua registrazione</a> <a
-								class="dropdown-item" href="#">Password dimenticata?</a>
-						</div>
-					</div>
+								</form>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#" data-toggle="modal"
+									data-target="#modalLogin">Effettua registrazione</a> <a
+									class="dropdown-item" href="#">Password dimenticata?</a>
+							</div>
+						</div> <li class="nav-item" style="display: none;" id="ordini">
+					<a class="nav-link" href="#">Ordini</a>
+					</li><li class="nav-item" style="display: none;" id="profilo"><a
+						class="nav-link" href="user?page=profile">Profilo</a></li>
+					<li class="nav-item" style="display: none;" id="dieta"><a
+						class="nav-link" href="#">Dieta</a></li>
+					<li><input type="button" id="buttonLogout"
+						class="btn btn-primary" style="display: none;" value="Logout"
+						onclick="ajaxLog('logout', 500)"></li>
+
 					<!--Chiusura Menu form login -->
 					<li class="nav-item"><a class="nav-link" href="administration">Parte
 							admin (NON TOCCARE!)</a></li>
@@ -103,29 +114,29 @@
 						<div class="form-row mb-4">
 							<div class="col">
 								<!-- First name -->
-								<input type="text" name="firstName"
-									class="form-control" placeholder="Nome">
+								<input type="text" name="firstName" class="form-control"
+									placeholder="Nome">
 							</div>
 							<div class="col">
 								<!-- Last name -->
-								<input type="text" name="lastName"
-									class="form-control" placeholder="Cognome">
+								<input type="text" name="lastName" class="form-control"
+									placeholder="Cognome">
 							</div>
 						</div>
 
 						<!-- E-mail -->
-						<input type="email" name="email"
-							class="form-control mb-4" placeholder="E-mail">
+						<input type="email" name="email" class="form-control mb-4"
+							placeholder="E-mail">
 
 						<div class="col">
 							<!-- Username -->
-							<input type="text" name="username"
-								class="form-control" placeholder="Username">
+							<input type="text" name="username" class="form-control"
+								placeholder="Username">
 						</div>
 
 						<!-- Password -->
-						<input type="password" name="password"
-							class="form-control" placeholder="Password"
+						<input type="password" name="password" class="form-control"
+							placeholder="Password"
 							aria-describedby="defaultRegisterFormPasswordHelpBlock">
 						<small id="defaultRegisterFormPasswordHelpBlock"
 							class="form-text text-muted mb-4"> Almeno 8 caratteri e
@@ -134,8 +145,8 @@
 
 
 						<!-- Date birth -->
-						<input type="date" name="birthDate"
-							class="form-control" placeholder="Data di nascita"
+						<input type="date" name="birthDate" class="form-control"
+							placeholder="Data di nascita"
 							aria-describedby="defaultRegisterFormPhoneHelpBlock">
 
 
@@ -158,14 +169,14 @@
 	<div id="welcomeToast" class="toast" role="alert" aria-live="assertive"
 		aria-atomic="true" data-delay="5000">
 		<div class="toast-header">
-			<img src="..." class="rounded mr-2" alt="..."> <strong
-				class="mr-auto">Trispesa staff</strong> <small>Proprio ora</small>
+			<img src="" class="rounded mr-2" alt=""> <strong
+				class="mr-auto">Trispesa staff</strong> <small>ora</small>
 			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
 				aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
-		<div class="toast-body">Bentornato su Trispesa!</div>
+		<div class="toast-body" id="toastMessage">Bentornato su Trispesa!</div>
 	</div>
 
 	<!-- Content -->
@@ -302,7 +313,6 @@
 	</div>
 	<!-- /.row -->
 
-	</div>
 	<!-- /.container -->
 
 	<!-- Footer -->
@@ -311,12 +321,15 @@
 			<p class="m-0 text-center text-white">Copyright &copy; Trispesa
 				2020</p>
 		</div>
-		<!-- /.container -->
 	</footer>
 
-	<!-- Bootstrap core JavaScript -->
-	<script src="vendor/jquery/jquery.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+	<c:if test="${customer != null}">
+		<script type="text/javascript">
+			updateNavbarDOM('login', 0);
+		</script>
+	</c:if>
+
 </body>
 
 </html>

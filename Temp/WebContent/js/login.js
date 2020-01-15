@@ -1,50 +1,53 @@
-function effettuaLogin() {
-
-	var cliente = {
-		username : $("#inputUsername").val(),
-		password : $("#inputPassword").val()
-	};
-
-	$
-			.ajax({
-				type : "POST",
-				url : "user/effettuaLogin",
-				datatype : "JSON",
-				data : JSON.stringify(cliente),
-				success : function(response) {
-
-					if (response.redirect) {
-						window.location.href = response.redirect_url;
-					} else {
-						$("#buttonLogin").remove();
-						var ordini = $('<li class="nav-item"><a class="nav-link" href="#">Ordini</a></li>\n');
-						var profilo = $('<li class="nav-item"><a class="nav-link" href="user?page=profile">Profilo</a></li>\n');
-						var dieta = $('<li class="nav-item"><a class="nav-link" href="#">Dieta</a></li>\n');
-						$("#ulNavBar").append(dieta);
-						$("#ulNavBar").append(ordini);
-						$("#ulNavBar").append(profilo);
-						$("#buttonLogin").attr("aria-expanded", "false");
-
-						// E' grezzo, riguardalo dopo
-						$("#iduno").removeClass("dropdown show");
-						$("#iddue").removeClass("dropdown-menu show");
-						$("#iduno").addClass("dropdown");
-						$("#iddue").addClass("dropdown-menu");
-						$('#welcomeToast').toast('show');
-					}
-
-				},
-				error : function(httpObj, textStatus) {
-					if (httpObj.status == 401) {
-						alert("No!");
-					}
-				}
-			});
-
+function updateNavbarDOM(operation, toggleDelay) {
+	if (operation == "login") {
+		$("#buttonLogin").toggle(toggleDelay);
+		$("#buttonLogout").toggle(toggleDelay);
+		$("#dieta").toggle(toggleDelay);
+		$("#ordini").toggle(toggleDelay);
+		$("#profilo").toggle(toggleDelay);
+	} else {
+		$("#buttonLogout").toggle(toggleDelay);
+		$("#dieta").toggle(toggleDelay);
+		$("#ordini").toggle(toggleDelay);
+		$("#profilo").toggle(toggleDelay);
+		$("#buttonLogin").toggle(toggleDelay);
+	}
 }
 
-// $('#submitButton').on('submit', function(e) { // use on if jQuery 1.7+
-// alert("ciaooo");
-// effettuaLogin();
-// e.preventDefault();
-// });
+function ajaxLog(operation, toggleDelay) {
+
+	$.ajax({
+		type : "POST",
+		url : "user/effettuaLogin",
+		datatype : "JSON",
+		data : JSON.stringify([ $("#inputUsername").val(),
+				$("#inputPassword").val(), operation ]),
+		success : function(response) {
+
+			if (response.redirect) {
+				window.location.href = response.redirect_url;
+			} else {
+				if (operation == "login") {
+					// Chiusura menu di login
+					$("#iduno").removeClass("dropdown show");
+					$("#iddue").removeClass("dropdown-menu show");
+					$("#iduno").addClass("dropdown");
+					$("#iddue").addClass("dropdown-menu");
+					$("#toastMessage").html("Bentornato in trispesa, " + $("#inputUsername").val());
+				}
+				else {
+					$("#toastMessage").html("Arrivederci, " + $("#inputUsername").val());
+				}
+				$('#welcomeToast').toast('show');
+				updateNavbarDOM(operation, toggleDelay);
+			}
+
+		},
+		error : function(httpObj, textStatus) {
+			if (httpObj.status == 401) {
+				alert("No!");
+			}
+		}
+	});
+
+}

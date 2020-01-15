@@ -33,10 +33,12 @@ function ajaxLog(operation, toggleDelay) {
 					$("#iddue").removeClass("dropdown-menu show");
 					$("#iduno").addClass("dropdown");
 					$("#iddue").addClass("dropdown-menu");
-					$("#toastMessage").html("Bentornato in trispesa, " + $("#inputUsername").val());
-				}
-				else {
-					$("#toastMessage").html("Arrivederci, " + $("#inputUsername").val());
+					$("#toastMessage").html(
+							"Bentornato in trispesa, "
+									+ $("#inputUsername").val());
+				} else {
+					$("#toastMessage").html(
+							"A presto " + $("#inputUsername").val());
 				}
 				$('#welcomeToast').toast('show');
 				updateNavbarDOM(operation, toggleDelay);
@@ -45,9 +47,14 @@ function ajaxLog(operation, toggleDelay) {
 		},
 		error : function(httpObj, textStatus) {
 			if (httpObj.status == 401) {
-				alert("No!");
+				if ($("#credenzialiErrate").css('display') == 'none') {
+					$("#credenzialiErrate").toggle(toggleDelay);
+				} else {
+					$("#credenzialiErrate").animate({opacity : 0}, 200, "linear", function() {
+						$(this).animate({opacity : 1}, 200);
+					});
+				}
 			}
 		}
 	});
-
 }

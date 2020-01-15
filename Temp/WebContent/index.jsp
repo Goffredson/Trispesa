@@ -70,6 +70,7 @@
 										value="Autenticati" onclick="ajaxLog('login', 500)">
 
 								</form>
+								<div class="dropdown-item" id="credenzialiErrate" style="color:red; display:none; ">Username o password errati.</div>
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="#" data-toggle="modal"
 									data-target="#modalLogin">Effettua registrazione</a> <a

@@ -25,13 +25,13 @@ public class ManageProduct extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//doPost(req, resp);
+		doPost(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		try {
-//			switch (req.getParameter("action")) {
+		try {
+			switch (req.getParameter("action")) {
 //			case "add": {
 //				req.getSession().setAttribute("op", "Aggiungi prodotto");
 //
@@ -146,28 +146,24 @@ public class ManageProduct extends HttpServlet {
 //			}
 //				break;
 //
-//			case "del": {
-//				req.getSession().setAttribute("op", "Elimina prodotto");
-//
-//				int barcode = Integer.parseInt(req.getParameter("barcode"));
-//				String superMarketString = (String) req.getParameter("superMarket");
-//				SuperMarket superMarket = DBManager.getInstance().getSuperMarketByID(superMarketString);
-//				Product product = DBManager.getInstance().getProductByID(barcode, superMarket);
-//
-//				DBManager.getInstance().removeProductByID(barcode, superMarket);
-//
-//				req.getSession().setAttribute("result", true);
-//				req.getSession().setAttribute("object", product.toString());
-//				resp.sendRedirect("../product");
-//			}
-//				break;
-//
-//			}
-//		} catch (DBOperationException e) {
-//			req.getSession().setAttribute("result", false);
-//			req.getSession().setAttribute("exception", e);
-//			resp.sendRedirect("../product");
-//		}
+			case "del": {
+				req.getSession().setAttribute("op", "Elimina prodotto");
+
+				long id = Long.parseLong(req.getParameter("id"));
+
+				DBManager.getInstance().removeProductById(id);
+
+				req.getSession().setAttribute("result", true);
+				req.getSession().setAttribute("object", DBManager.getInstance().getProductById(id).toString());
+				resp.sendRedirect("../product");
+			}
+				break;
+			}
+		} catch (DBOperationException e) {
+			req.getSession().setAttribute("result", false);
+			req.getSession().setAttribute("exception", e);
+			resp.sendRedirect("../product");
+		}
 	}
 
 }

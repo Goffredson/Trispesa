@@ -179,9 +179,6 @@ public class DBManager {
 
 	public void removeProductById(long id) throws DBOperationException {
 		Product product = getProductDao().retrieveByPrimaryKey(id);
-		if (product == null) {
-			throw new DBOperationException("Il prodotto con id " + id + " non � stato trovato", id + "");
-		}
 		product.setDeleted(true);
 		getProductDao().update(product);
 	}
@@ -296,6 +293,14 @@ public class DBManager {
 		return getProductDao().retrieveAll();
 	}
 
+	public ArrayList<Product> getNotDeletedProducts() {
+		ArrayList<Product> products = new ArrayList<Product>();
+		for (Product product : getProductDao().retrieveAll()) {
+			products.add(product);
+		}
+		return products;
+	}
+
 	public ArrayList<Category> getCategories() {
 		return getCategoryDao().retrieveAll();
 	}
@@ -375,7 +380,8 @@ public class DBManager {
 			}
 		}
 	}
-	public ArrayList<Product> getProductsByCategory(long id){
+
+	public ArrayList<Product> getProductsByCategory(long id) {
 		return getProductDao().retrieveByCategory(id);
 	}
 

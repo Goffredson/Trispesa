@@ -37,4 +37,9 @@ public class Category {
 		this.parent = parent;
 	}
 
+	@Override
+	public String toString() {
+		return this.name;
+	}
+
 }

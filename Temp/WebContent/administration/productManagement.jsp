@@ -73,12 +73,14 @@
 			<tr>
 				<th>Codice a barre</th>
 				<th>Nome</th>
+				<th>Marca</th>
 				<th>Peso</th>
 				<th>Supermercato</th>
-				<th>Di marca</th>
 				<th>Categoria</th>
+				<th>Di marca</th>
 				<th>Prezzo</th>
 				<th>Quantita</th>
+				<th>Sconto</th>
 				<th></th>
 				<th></th>
 			</tr>
@@ -86,22 +88,24 @@
 				<tr>
 					<td>${product.barcode}</td>
 					<td>${product.name}</td>
+					<td>${product.brand}</td>
 					<td>${product.weight}g</td>
 					<td>${product.superMarket}</td>
+					<td>${product.category.name}</td>
 					<c:if test="${product.offBrand == true}">
 						<td id="product-offbrand">NO</td>
 					</c:if>
 					<c:if test="${product.offBrand == false}">
 						<td id="product-not-offbrand">SI</td>
 					</c:if>
-					<td>${product.category.familyName}</td>
-					<td>${product.price}&euro;</td>
+					<td>&euro; ${product.price}</td>
 					<td>${product.quantity}pz.</td>
+					<td>&euro; ${product.discount}</td>
 					<td width="10%"><a
 						href="product/manageProductForm?action=mod&barcode=${product.barcode}&superMarket=(${product.superMarket.name},${product.superMarket.city},${product.superMarket.address})"
 						class="btn btn-info" role="button">modifica</a></td>
 					<td width="10%"><a
-						href="product/manage?action=del&barcode=${product.barcode}&superMarket=(${product.superMarket.name},${product.superMarket.city},${product.superMarket.address})"
+						href="product/manage?action=del&id=${product.id}"
 						class="btn btn-danger" role="button">elimina</a></td>
 				</tr>
 			</c:forEach>

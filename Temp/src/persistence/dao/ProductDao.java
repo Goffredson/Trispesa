@@ -18,8 +18,7 @@ public interface ProductDao {
 	public ArrayList<Product> retrieveByName(String name);
 	
 	public ArrayList<Product> retrieveByCategory(long category);
-
-
+	
 	// UPDATE
 	public void update(Product product);
 

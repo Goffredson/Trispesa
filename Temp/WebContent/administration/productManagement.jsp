@@ -102,7 +102,7 @@
 					<td>${product.quantity}pz.</td>
 					<td>&euro; ${product.discount}</td>
 					<td width="10%"><a
-						href="product/manageProductForm?action=mod&barcode=${product.barcode}&superMarket=(${product.superMarket.name},${product.superMarket.city},${product.superMarket.address})"
+						href="product/manageProductForm?action=mod&id=${product.id}"
 						class="btn btn-info" role="button">modifica</a></td>
 					<td width="10%"><a
 						href="product/manage?action=del&id=${product.id}"

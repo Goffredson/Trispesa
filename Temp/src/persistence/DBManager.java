@@ -213,10 +213,6 @@ public class DBManager {
 //	}
 
 	public void modifyProduct(Product product) throws DBOperationException {
-		if (getProductDao().retrieveByPrimaryKey(product.getId()) == null) {
-			throw new DBOperationException("Il prodotto con id " + product.getId() + " non � stato trovato",
-					product.getId() + "");
-		}
 		getProductDao().update(product);
 	}
 
@@ -264,15 +260,19 @@ public class DBManager {
 //		temp.setAffiliate(true);
 //	}
 
-	// TODO da vedere alfredo e ciccio (FORSE FUNZIONA)
+	// TODO da vedere alfredo e ciccio (FUNZIONA)
 	public void modifySuperMarket(SuperMarket superMarket) throws DBOperationException {
 		getSuperMarketDao().update(superMarket);
 	}
-//
-//	// TODO nuova funzione nel dao che torna solo gli affiliati alfredo
-//	public ArrayList<SuperMarket> getAffiliateSuperMarkets() {
-//		return getSuperMarketDao().retrieveAll();
-//	}
+
+	// TODO nuova funzione nel dao che torna solo gli affiliati, alfredo
+	public ArrayList<SuperMarket> getAffiliateSuperMarkets() {
+		ArrayList<SuperMarket> superMarkets = new ArrayList<SuperMarket>();
+		for (SuperMarket superMarket : getSuperMarketDao().retrieveAll()) {
+			superMarkets.add(superMarket);
+		}
+		return superMarkets;
+	}
 //
 //	// TODO va fatto il metodo nel dao giorgio
 //	public ArrayList<Product> getProductsByCategory(String category) {
@@ -307,6 +307,10 @@ public class DBManager {
 
 	public ArrayList<Category> getMacroCategories() {
 		return getCategoryDao().retrieveMacroCategories();
+	}
+
+	public Category getCategoryById(long id) {
+		return getCategoryDao().retrieveByPrimaryKey(id);
 	}
 
 //	public ArrayList<Category> getLeafCategories() {

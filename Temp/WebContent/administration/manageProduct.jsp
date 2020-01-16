@@ -55,7 +55,7 @@
 	<div class="container">
 
 		<form id="add-product-form" method="post"
-			action="../product/manage?action=${action}" class="needs-validation"
+			action="../product/manage?action=${action}&old=${product.id}" class="needs-validation"
 			novalidate autocomplete="on" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="barcode">Codice a barre:</label>
@@ -87,6 +87,20 @@
 				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
 			</div>
 			<div class="form-group">
+				<label for="name">Marca:</label>
+				<c:if test="${action == 'add'}">
+					<input type="text" class="form-control" id="brand"
+						placeholder="Marca" name="brand" required autocomplete="off">
+				</c:if>
+				<c:if test="${action == 'mod'}">
+					<input type="text" value="${product.brand}" readonly
+						class="form-control" id="brand" placeholder="Marca" name="brand"
+						required autocomplete="off">
+				</c:if>
+				<div class="valid-feedback">Valido.</div>
+				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
+			</div>
+			<div class="form-group">
 				<label for="weight">Peso in grammi:</label>
 				<c:if test="${action == 'add'}">
 					<input type="number" min="1" class="form-control" id="weight"
@@ -107,8 +121,7 @@
 					<select name="superMarket" required class="form-control"
 						id="superMarket">
 						<c:forEach items="${superMarkets}" var="supermarket">
-							<option
-								value="(${supermarket.name},${supermarket.city},${supermarket.address})">${supermarket}</option>
+							<option value="${supermarket.id}">${supermarket}</option>
 						</c:forEach>
 					</select>
 				</c:if>
@@ -116,23 +129,16 @@
 					<select name="superMarket-select" disabled required
 						class="form-control" id="superMarket">
 						<c:forEach items="${superMarkets}" var="supermarket">
-							<c:set var="s1"
-								value="(${supermarket.name},${supermarket.city},${supermarket.address})"></c:set>
-							<c:set var="s2"
-								value="(${product.superMarket.name},${product.superMarket.city},${product.superMarket.address})"></c:set>
-							<c:if test="${s1 eq s2}">
-								<option selected
-									value="(${supermarket.name},${supermarket.city},${supermarket.address})">${supermarket}</option>
+							<c:if test="${superMarket.id == supermarket.id}">
+								<option selected value="${supermarket.id}">${supermarket}</option>
 							</c:if>
-							<c:if test="${s1 ne s2}">
-								<option
-									value="(${supermarket.name},${supermarket.city},${supermarket.address})">${supermarket.name}-${supermarket.city}-
-									${supermarket.address}</option>
+							<c:if test="${superMarket.id != supermarket.id}">
+								<option value="${supermarket.id}">${supermarket}</option>
 							</c:if>
 						</c:forEach>
 					</select>
 					<input type="hidden" name="superMarket"
-						value="(${product.superMarket.name},${product.superMarket.city},${product.superMarket.address})">
+						value="${product.superMarket.id}">
 				</c:if>
 				<div class="valid-feedback">Valido.</div>
 				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
@@ -142,7 +148,7 @@
 				<c:if test="${action == 'add'}">
 					<select name="category" class="form-control" id="category" required>
 						<c:forEach items="${categories}" var="category">
-							<option value="${category.familyName}">${category.familyName}</option>
+							<option value="${category.id}">${category}</option>
 						</c:forEach>
 					</select>
 				</c:if>
@@ -151,17 +157,17 @@
 						class="form-control" id="category">
 						<c:forEach items="${categories}" var="category">
 							<c:if
-								test="${product.category.familyName eq category.familyName}">
-								<option selected value="${category.familyName}">${category.familyName}</option>
+								test="${product.category.id == category.id}">
+								<option selected value="${category.id}">${category}</option>
 							</c:if>
 							<c:if
-								test="${product.category.familyName ne category.familyName}">
-								<option value="${category.familyName}">${category.familyName}</option>
+								test="${product.category.id != category.id}">
+								<option value="${category.id}">${category}</option>
 							</c:if>
 						</c:forEach>
 					</select>
 					<input type="hidden" name="category"
-						value="${product.category.familyName}">
+						value="${product.category.id}">
 				</c:if>
 				<div class="valid-feedback">Valido.</div>
 				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
@@ -191,6 +197,21 @@
 					<input type="number" value="${product.quantity}" min="1"
 						class="form-control" id="quantity" placeholder="Quantità"
 						name="quantity" required autocomplete="off">
+				</c:if>
+				<div class="valid-feedback">Valido.</div>
+				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
+			</div>
+			<div class="form-group">
+				<label for="price">Sconto:</label>
+				<c:if test="${action == 'add'}">
+					<input type="number" step="0.01" min="0.00" class="form-control"
+						id="discount" placeholder="Sconto" name="discount" required
+						autocomplete="off">
+				</c:if>
+				<c:if test="${action == 'mod'}">
+					<input type="number" value="${product.discount}" step="0.01"
+						min="0.00" class="form-control" id="discount" placeholder="Discount"
+						name="discount" required autocomplete="off">
 				</c:if>
 				<div class="valid-feedback">Valido.</div>
 				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>

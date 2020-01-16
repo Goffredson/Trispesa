@@ -32,120 +32,120 @@ public class ManageProduct extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			switch (req.getParameter("action")) {
-//			case "add": {
-//				req.getSession().setAttribute("op", "Aggiungi prodotto");
-//
-//				// gets absolute path of the web application
-//				String applicationPath = req.getServletContext().getRealPath("");
-//				// constructs path of the directory to save uploaded file
-//				String uploadFilePath = applicationPath + UPLOAD_DIR;
-//
-//				// creates the save directory if it does not exists
-//				File fileSaveDir = new File(uploadFilePath);
-//				if (!fileSaveDir.exists()) {
-//					fileSaveDir.mkdirs();
-//				}
-//				String fileName = null;
-//				String imagePath = null;
-//				// Get all the parts from request and write it to the file on server
-//				for (Part part : req.getParts()) {
-//					if (part.getContentType() != null && Pattern.matches("image/.+", part.getContentType())) {
-//						String ext = part.getContentType().substring(6);
-//						fileName = req.getParameter("barcode") + "." + ext;
-//						imagePath = uploadFilePath + File.separator + fileName;
-//						part.write(imagePath);
-//					}
-//				}
-//				if (fileName == null) {
-//					fileName = "imageNotFound.png";
-//					imagePath = uploadFilePath + File.separator + fileName;
-//				}
-//
-//				Product product;
-//				int barcode = Integer.parseInt(req.getParameter("barcode"));
-//				String name = (String) req.getParameter("name");
-//				double weight = Double.parseDouble(req.getParameter("weight"));
-//				double price = Double.parseDouble(req.getParameter("price"));
-//				int quantity = Integer.parseInt(req.getParameter("quantity"));
-//				String superMarketString = (String) req.getParameter("superMarket");
-//				SuperMarket superMarket = DBManager.getInstance().getSuperMarketByID(superMarketString);
-//				String categoryString = (String) req.getParameter("category");
-//				Category category = DBManager.getInstance().getCategoryByFamilyName(categoryString);
-//				String offbrand = (String) req.getParameter("offbrand");
-//				if (offbrand.equals("yes"))
-//					product = new Product(barcode, name, price, weight, superMarket, true, category, quantity,
-//							fileName);
-//				else
-//					product = new Product(barcode, name, price, weight, superMarket, false, category, quantity,
-//							fileName);
-//
-//				DBManager.getInstance().addProduct(product);
-//
-//				req.getSession().setAttribute("result", true);
-//				req.getSession().setAttribute("object", product.toString());
-//				resp.sendRedirect("../product");
-//			}
-//				break;
-//
-//			case "mod": {
-//				req.getSession().setAttribute("op", "Modifica prodotto");
-//
-//				// gets absolute path of the web application
-//				String applicationPath = req.getServletContext().getRealPath("");
-//				// constructs path of the directory to save uploaded file
-//				String uploadFilePath = applicationPath + UPLOAD_DIR;
-//
-//				// creates the save directory if it does not exists
-//				File fileSaveDir = new File(uploadFilePath);
-//				if (!fileSaveDir.exists()) {
-//					fileSaveDir.mkdirs();
-//				}
-//				String fileName = null;
-//				String imagePath = null;
-//				// Get all the parts from request and write it to the file on server
-//				for (Part part : req.getParts()) {
-//					if (part.getContentType() != null && Pattern.matches("image/.+", part.getContentType())) {
-//						String ext = part.getContentType().substring(6);
-//						fileName = req.getParameter("barcode") + "." + ext;
-//						imagePath = uploadFilePath + File.separator + fileName;
-//						part.write(imagePath);
-//					}
-//				}
-//				int barcode = Integer.parseInt(req.getParameter("barcode"));
-//				String superMarketString = (String) req.getParameter("superMarket");
-//				SuperMarket superMarket = DBManager.getInstance().getSuperMarketByID(superMarketString);
-//				Product oldProduct = DBManager.getInstance().getProductByID(barcode, superMarket);
-//				if (fileName == null) {
-//					if (oldProduct != null) {
-//						fileName = oldProduct.getImagePath().substring(16);
-//					} else {
-//						fileName = null;
-//					}
-//				}
-//
-//				Product product;
-//				String name = (String) req.getParameter("name");
-//				double weight = Double.parseDouble(req.getParameter("weight"));
-//				double price = Double.parseDouble(req.getParameter("price"));
-//				int quantity = Integer.parseInt(req.getParameter("quantity"));
-//				String categoryString = (String) req.getParameter("category");
-//				Category category = DBManager.getInstance().getCategoryByFamilyName(categoryString);
-//				String offbrand = (String) req.getParameter("offbrand");
-//				if (offbrand.equals("yes"))
-//					product = new Product(barcode, name, price, weight, superMarket, true, category, quantity,
-//							fileName);
-//				else
-//					product = new Product(barcode, name, price, weight, superMarket, false, category, quantity,
-//							fileName);
-//
-//				DBManager.getInstance().modifyProduct(product);
-//
-//				req.getSession().setAttribute("result", true);
-//				req.getSession().setAttribute("object", product.toString());
-//				resp.sendRedirect("../product");
-//			}
-//				break;
-//
+			case "add": {
+				req.getSession().setAttribute("op", "Aggiungi prodotto");
+
+				// gets absolute path of the web application
+				String applicationPath = req.getServletContext().getRealPath("");
+				// constructs path of the directory to save uploaded file
+				String uploadFilePath = applicationPath + UPLOAD_DIR;
+
+				// creates the save directory if it does not exists
+				File fileSaveDir = new File(uploadFilePath);
+				if (!fileSaveDir.exists()) {
+					fileSaveDir.mkdirs();
+				}
+				String fileName = null;
+				String imagePath = null;
+				// Get all the parts from request and write it to the file on server
+				for (Part part : req.getParts()) {
+					if (part.getContentType() != null && Pattern.matches("image/.+", part.getContentType())) {
+						String ext = part.getContentType().substring(6);
+						fileName = req.getParameter("barcode") + "." + ext;
+						imagePath = uploadFilePath + File.separator + fileName;
+						part.write(imagePath);
+					}
+				}
+				if (fileName == null) {
+					fileName = "imageNotFound.png";
+					imagePath = uploadFilePath + File.separator + fileName;
+				}
+
+				Product product;
+				long barcode = Long.parseLong(req.getParameter("barcode"));
+				String name = (String) req.getParameter("name");
+				String brand = (String) req.getParameter("brand");
+				double weight = Double.parseDouble(req.getParameter("weight"));
+				SuperMarket superMarket = DBManager.getInstance()
+						.getSupermarketById(Long.parseLong(req.getParameter("superMarket")));
+				Category category = DBManager.getInstance()
+						.getCategoryById(Long.parseLong(req.getParameter("category")));
+				double price = Double.parseDouble(req.getParameter("price"));
+				double discount = Double.parseDouble(req.getParameter("discount"));
+				long quantity = Integer.parseInt(req.getParameter("quantity"));
+				String offbrand = (String) req.getParameter("offbrand");
+				if (offbrand.equals("yes"))
+					product = new Product(0, barcode, name, brand, weight, superMarket, category, true, price,
+							quantity, discount, imagePath, false);
+				else
+					product = new Product(0, barcode, name, brand, weight, superMarket, category, false, price,
+							quantity, discount, imagePath, false);
+
+				DBManager.getInstance().addProduct(product);
+
+				req.getSession().setAttribute("result", true);
+				req.getSession().setAttribute("object", product.toString());
+				resp.sendRedirect("../product");
+			}
+				break;
+
+			case "mod": {
+				req.getSession().setAttribute("op", "Modifica prodotto");
+
+				// gets absolute path of the web application
+				String applicationPath = req.getServletContext().getRealPath("");
+				// constructs path of the directory to save uploaded file
+				String uploadFilePath = applicationPath + UPLOAD_DIR;
+
+				// creates the save directory if it does not exists
+				File fileSaveDir = new File(uploadFilePath);
+				if (!fileSaveDir.exists()) {
+					fileSaveDir.mkdirs();
+				}
+				String fileName = null;
+				String imagePath = null;
+				// Get all the parts from request and write it to the file on server
+				for (Part part : req.getParts()) {
+					if (part.getContentType() != null && Pattern.matches("image/.+", part.getContentType())) {
+						String ext = part.getContentType().substring(6);
+						fileName = req.getParameter("barcode") + "." + ext;
+						imagePath = uploadFilePath + File.separator + fileName;
+						part.write(imagePath);
+					}
+				}
+
+				long id = Long.parseLong(req.getParameter("old"));
+				Product product = DBManager.getInstance().getProductById(id);
+				if (fileName == null) {
+					fileName = product.getImagePath().substring(16);
+				}
+				long barcode = Long.parseLong(req.getParameter("barcode"));
+				String name = (String) req.getParameter("name");
+				String brand = (String) req.getParameter("brand");
+				double weight = Double.parseDouble(req.getParameter("weight"));
+				SuperMarket superMarket = DBManager.getInstance()
+						.getSupermarketById(Long.parseLong(req.getParameter("superMarket")));
+				Category category = DBManager.getInstance()
+						.getCategoryById(Long.parseLong(req.getParameter("category")));
+				double price = Double.parseDouble(req.getParameter("price"));
+				double discount = Double.parseDouble(req.getParameter("discount"));
+				long quantity = Integer.parseInt(req.getParameter("quantity"));
+				String offbrand = (String) req.getParameter("offbrand");
+				if (offbrand.equals("yes"))
+					product = new Product(id, barcode, name, brand, weight, superMarket, category, true, price,
+							quantity, discount, imagePath, false);
+				else
+					product = new Product(id, barcode, name, brand, weight, superMarket, category, false, price,
+							quantity, discount, imagePath, false);
+
+				DBManager.getInstance().modifyProduct(product);
+
+				req.getSession().setAttribute("result", true);
+				req.getSession().setAttribute("object", product.toString());
+				resp.sendRedirect("../product");
+			}
+				break;
+
 			case "del": {
 				req.getSession().setAttribute("op", "Elimina prodotto");
 

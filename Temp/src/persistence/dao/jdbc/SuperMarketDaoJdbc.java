@@ -129,11 +129,11 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 			PreparedStatement statement = connection.prepareStatement(update);
 			statement.setString(1, supermarket.getName());
 			statement.setString(2, supermarket.getCountry());
-			statement.setString(2, supermarket.getCity());
-			statement.setString(2, supermarket.getAddress());
-			statement.setDouble(2, supermarket.getLatitude());
-			statement.setDouble(2, supermarket.getLongitude());
-			statement.setBoolean(2, supermarket.isAffiliate());
+			statement.setString(3, supermarket.getCity());
+			statement.setString(4, supermarket.getAddress());
+			statement.setDouble(5, supermarket.getLatitude());
+			statement.setDouble(6, supermarket.getLongitude());
+			statement.setBoolean(7, supermarket.isAffiliate());
 			statement.setLong(8, supermarket.getId());
 			statement.executeUpdate();
 		} catch (SQLException e) {

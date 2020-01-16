@@ -141,7 +141,8 @@ public class DBManager {
 	public void addSupermarket(SuperMarket superMarket) throws DBOperationException {
 		for (SuperMarket temp : getSuperMarketDao().retrieveAll()) {
 			if (temp.getId() == superMarket.getId()) {
-				throw new DBOperationException("Il supermercato � gi� presente nel database", superMarket.toString());
+				throw new DBOperationException("Il supermercato � gi� presente nel database",
+						superMarket.toString());
 			}
 		}
 		getSuperMarketDao().insert(superMarket);
@@ -266,18 +267,10 @@ public class DBManager {
 //		temp.setAffiliate(true);
 //	}
 
-	// TODO da vedere alfredo e ciccio
-//	public void modifySuperMarket(String oldSuperMarketString, SuperMarket superMarket) throws DBOperationException {
-//		SuperMarket temp = getSuperMarketByID(oldSuperMarketString);
-//		if (temp == null) {
-//			throw new DBOperationException("Il supermercato da modificare non � stato trovato", "null");
-//		}
-//		temp.setName(superMarket.getName());
-//		temp.setCity(superMarket.getCity());
-//		temp.setAddress(superMarket.getAddress());
-//		temp.setLatitude(superMarket.getLatitude());
-//		temp.setLongitude(superMarket.getLongitude());
-//	}
+	// TODO da vedere alfredo e ciccio (FORSE FUNZIONA)
+	public void modifySuperMarket(SuperMarket superMarket) throws DBOperationException {
+		getSuperMarketDao().update(superMarket);
+	}
 //
 //	// TODO nuova funzione nel dao che torna solo gli affiliati alfredo
 //	public ArrayList<SuperMarket> getAffiliateSuperMarkets() {
@@ -381,7 +374,6 @@ public class DBManager {
 				iter.remove();
 			}
 		}
-
 	}
 
 }

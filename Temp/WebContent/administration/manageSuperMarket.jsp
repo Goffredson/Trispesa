@@ -89,7 +89,7 @@
 
 		<!-- form -->
 		<form id="add-supermarket-form" method="post"
-			action="../supermarket/manage?action=${action}&old=(${superMarket.name},${superMarket.city},${superMarket.address})"
+			action="../supermarket/manage?action=${action}&old=${superMarket.id}"
 			class="needs-validation" novalidate autocomplete="on">
 			<div class="form-group">
 				<label for="name">Nome:</label>
@@ -106,7 +106,21 @@
 				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
 			</div>
 			<div class="form-group">
-				<label for="city">Città :</label>
+				<label for="city">Nazione:</label>
+				<c:if test="${action == 'add'}">
+					<input type="text" class="form-control" id="country"
+						placeholder="Nazione" name="country" required autocomplete="off">
+				</c:if>
+				<c:if test="${action == 'mod'}">
+					<input type="text" value="${superMarket.country}"
+						class="form-control" id="country" placeholder="Nazione"
+						name="country" required autocomplete="off">
+				</c:if>
+				<div class="valid-feedback">Valido.</div>
+				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
+			</div>
+			<div class="form-group">
+				<label for="city">Città:</label>
 				<c:if test="${action == 'add'}">
 					<input type="text" class="form-control" id="town"
 						placeholder="Città " name="city" required autocomplete="off">
@@ -176,6 +190,34 @@
 					<label class="form-check-label"> <input type="radio"
 						class="form-check-input" name="affiliate" value="no" checked>NO
 					</label>
+				</div>
+			</c:if>
+			<c:if test="${action == 'mod'}">
+			Affiliato:
+			<div class="form-check">
+					<c:if test="${superMarket.affiliate == true}">
+						<label class="form-check-label"> <input type="radio"
+							class="form-check-input" name="affiliate" value="yes" checked>
+							SI
+						</label>
+					</c:if>
+					<c:if test="${superMarket.affiliate == false}">
+						<label class="form-check-label"> <input type="radio"
+							class="form-check-input" name="affiliate" value="yes"> SI
+						</label>
+					</c:if>
+				</div>
+				<div class="form-check">
+					<c:if test="${superMarket.affiliate == true}">
+						<label class="form-check-label"> <input type="radio"
+							class="form-check-input" name="affiliate" value="no">NO
+						</label>
+					</c:if>
+					<c:if test="${superMarket.affiliate == false}">
+						<label class="form-check-label"> <input type="radio"
+							class="form-check-input" name="affiliate" value="no" checked>NO
+						</label>
+					</c:if>
 				</div>
 			</c:if>
 			<c:if test="${action == 'add'}">

@@ -71,6 +71,7 @@
 		<table class="table table-hover table-responsive">
 			<tr>
 				<th>Nome</th>
+				<th>Nazione</th>
 				<th>Città</th>
 				<th>Indirizzo</th>
 				<th>Affiliato</th>
@@ -81,6 +82,7 @@
 			<c:forEach items="${superMarkets}" var="superMarket">
 				<tr>
 					<td>${superMarket.name}</td>
+					<td>${superMarket.country}</td>
 					<td>${superMarket.city}</td>
 					<td>${superMarket.address}</td>
 					<c:if test="${superMarket.affiliate == true}">
@@ -90,15 +92,14 @@
 						<td id="supermarket-not-affiliate">NO</td>
 					</c:if>
 					<td width="10%"><a
-						href="supermarket/manageSuperMarketForm?action=mod&superMarket=(${superMarket.name},${superMarket.city},${superMarket.address})"
+						href="supermarket/manageSuperMarketForm?action=mod&id=${superMarket.id}"
 						class="btn btn-info" role="button">modifica</a></td>
 					<td width="10%"><c:if test="${superMarket.affiliate == true}">
 							<a href="" data-toggle="modal"
 								data-target="#delete-modal-${cont}" class="btn btn-danger"
 								role="button">rimuovi</a>
 						</c:if> <c:if test="${superMarket.affiliate == false}">
-							<a
-								href="supermarket/manage?action=aff&superMarket=(${superMarket.name},${superMarket.city},${superMarket.address})"
+							<a href="supermarket/manage?action=aff&id=${superMarket.id}"
 								class="btn btn-success" role="button">affilia</a>
 						</c:if> <!-- The Modal -->
 						<div class="modal" id="delete-modal-${cont}">
@@ -117,8 +118,7 @@
 									</div>
 									<!-- Modal footer -->
 									<div class="modal-footer">
-										<a
-											href="supermarket/manage?action=del&superMarket=(${superMarket.name},${superMarket.city},${superMarket.address})"
+										<a href="supermarket/manage?action=del&id=${superMarket.id}"
 											type="button" class="btn btn-danger">Rimuovi affilizione</a>
 										<a href="" type="button" class="btn btn-secondary"
 											data-dismiss="modal">Annulla</a>

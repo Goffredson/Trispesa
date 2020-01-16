@@ -251,4 +251,35 @@ public class ProductDaoJdbc implements ProductDao {
 		return products;
 	}
 
+	@Override
+	public Long retrieveAvailableQuantity(Long productId) {
+		Connection connection = null;
+		long availableQuantity = 0;
+		try {
+			connection = this.dataSource.getConnection();
+			String query = "select quantity from product where id=?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setLong(1, productId);
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				availableQuantity = resultSet.getLong("quantity");
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
+		}
+		return availableQuantity;
+	}
+
 }

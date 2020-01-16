@@ -47,8 +47,8 @@
 							src="images/cart.png" width="30" /></a></li>
 					<!-- Menu form login -->
 					<li>
-					<button type="button" class="btn btn-primary" data-toggle="modal"
-						data-target="#modalCart">Carrello</button>
+						<button type="button" class="btn btn-primary" data-toggle="modal"
+							data-target="#modalCart">Carrello</button>
 					</li>
 					<li>
 						<div class="dropdown" id="iduno">
@@ -214,9 +214,10 @@
 										<a href="#">${prodotto.name}</a>
 									</h4>
 									<input type="button"
-										onclick="c.addProduct(${prodotto.id},'${prodotto.name}', '${prodotto.superMarket.name}', ${prodotto.quantity}, ${prodotto.price})"
+										onclick="c.addProduct(${prodotto.id}, '${prodotto.name}', '${prodotto.superMarket.name}', ${prodotto.price})"
 										value="Aggiungi Al Carrello">
 									<h5>${prodotto.price}</h5>
+									<h5>${prodotto.superMarket.name}</h5>
 								</div>
 								<div class="card-footer">Le stelline</div>
 							</div>

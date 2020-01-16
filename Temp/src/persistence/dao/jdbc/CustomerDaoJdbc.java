@@ -19,6 +19,7 @@ public class CustomerDaoJdbc implements CustomerDao {
 
 	private DataSource dataSource;
 	private final String sequenceName = "customer_sequence";
+	private final String cartSequenceName = "cart_sequence";
 
 	public CustomerDaoJdbc(DataSource dataSource) {
 		this.dataSource = dataSource;
@@ -228,7 +229,7 @@ public class CustomerDaoJdbc implements CustomerDao {
 	@Override
 	public Customer checkIfExists(String username, String password) {
 		Connection connection = null;
-		Customer customer=null;
+		Customer customer = null;
 		try {
 			connection = this.dataSource.getConnection();
 			String exists = "select * from customer where username=? and password=?";
@@ -237,9 +238,9 @@ public class CustomerDaoJdbc implements CustomerDao {
 			statement.setString(2, password);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				customer=retrieveByPrimaryKey(resultSet.getLong("id"));
+				customer = retrieveByPrimaryKey(resultSet.getLong("id"));
 			}
-			
+
 		} catch (SQLException e) {
 			if (connection != null) {
 				try {
@@ -257,5 +258,37 @@ public class CustomerDaoJdbc implements CustomerDao {
 		}
 		return customer;
 	}
-	
+
+	@Override
+	public void insertProductIntoCart(Product product, long idCustomer) {
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			Long idCart = IdBroker.getId(connection, cartSequenceName);
+			//customer.setId(id);
+			String insert = "insert into cart(id, customer, product, amount) values (?, ?, ?, ?)";
+			PreparedStatement statement = connection.prepareStatement(insert);
+			statement.setLong(1, idCart);
+			statement.setLong(2, idCustomer);
+			statement.setLong(3, product.getId());
+			statement.setLong(4, 1);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
+		}
+
+	}
+
 }

@@ -3,6 +3,7 @@ package persistence.dao;
 import java.util.ArrayList;
 
 import model.Customer;
+import model.Product;
 
 public interface CustomerDao {
 
@@ -20,5 +21,9 @@ public interface CustomerDao {
 
 	// DELETE
 	public void delete(Customer customer);
+	
+	
+	public void insertProductIntoCart(Product product, long idCustomer);
+
 
 }

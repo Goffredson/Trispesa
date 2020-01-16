@@ -19,11 +19,14 @@ public interface ProductDao {
 	
 	public ArrayList<Product> retrieveByCategory(long category);
 	
+	public Long retrieveAvailableQuantity(Long productId);
+	
 	// UPDATE
 	public void update(Product product);
 
 	// DELETE
 	public void delete(Product product);
+
 
 
 }

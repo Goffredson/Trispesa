@@ -17,6 +17,7 @@ public class Customer {
 	private LocalDate registrationDate;
 	private ArrayList<DeliveryAddress> deliveryAddresses;
 	private ArrayList<PaymentMethod> paymentMethods;
+	// TODO: Probabilmente è da rimuovere
 	private ArrayList<Pair<Product, Long>> cart;
 	//Per costruire dal db
 	public Customer(long id, String username, String password, String name, String surname, String email,

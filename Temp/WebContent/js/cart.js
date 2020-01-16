@@ -1,22 +1,28 @@
-function Product(id, name, supermercato, quantita, prezzo) {
-	this.id = id
+
+function Product(id, name, supermercato, prezzo) {
+	this.id = id;
 	this.name = name;
 	this.supermercato = supermercato;
-	this.quantita = quantita;
 	this.prezzo = prezzo;
 	this.quantityInTheCart = 0;
+	this.availableQuantity = 0;
+
+	this.updateAvailableQuantity = function() {
+		$.get("addToCart", {productId : this.id}, function(data) {
+			this.availableQuantity = data;
+			alert(this.availableQuantity);
+		});
+		//async: false
+	}
 }
 function updateCartDOM() {
-	// var inner = document.getElementById("listaProdottiCarrello");
-	// inner.innerHTML = "";
 
 	$("#listaProdottiCarrello").empty();
 	for (var i = 0; i < c.products.length; i += 1) {
 
 		$("#listaProdottiCarrello")
 				.append(
-						// Math.round(c.products[i].prezzo*c.products[i].quantita);
-						'<tr>\n <th scope="row" id="quantita">'
+						'<tr>\n <th scope="row" id="">'
 								+ c.products[i].quantityInTheCart
 								+ '</th>\n'
 								+ '<td id="'
@@ -54,12 +60,15 @@ function Cart() {
 			}
 		}
 	}
-	this.addProduct = function(id, name, supermercato, quantita, prezzo) {
+	this.addProduct = function(id, name, supermercato, prezzo) {
 		if (this.giaContenuto(id) == false) {
-			var p = new Product(id, name, supermercato, quantita, prezzo);
+			var p = new Product(id, name, supermercato, prezzo);
+			p.updateAvailableQuantity();
+			alert(p.availableQuantity);
 			this.products.push(p);
 			this.updateQuantity(id);
 		} else {
+			// this.updateAvailableQuantity();
 			this.updateQuantity(id);
 		}
 		this.updatePrice(prezzo);
@@ -92,3 +101,4 @@ function Cart() {
 }
 
 c = new Cart();
+

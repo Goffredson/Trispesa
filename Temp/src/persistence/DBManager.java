@@ -194,11 +194,11 @@ public class DBManager {
 //		throw new DBOperationException("Il prodotto da eliminare non � stato trovato", "null");
 //	}
 
-	public Product getProductById(long id) throws DBOperationException {
+	public Product getProductById(long id) /*throws DBOperationException */ {
 		Product product = getProductDao().retrieveByPrimaryKey(id);
-		if (product == null) {
-			throw new DBOperationException("Il prodotto con id " + id + " non � stato trovato", id + "");
-		}
+//		if (product == null) {
+//			throw new DBOperationException("Il prodotto con id " + id + " non � stato trovato", id + "");
+//		}
 		return product;
 	}
 
@@ -388,5 +388,15 @@ public class DBManager {
 	public ArrayList<Product> getProductsByCategory(long id) {
 		return getProductDao().retrieveByCategory(id);
 	}
+	
+	public Long getQuantityOfProduct(Long productId) {
+		return getProductDao().retrieveAvailableQuantity(productId);
+	}
+
+	public void insertProductIntoCart(Product product, long idCustomer) {
+		getCustomerDao().insertProductIntoCart(product, idCustomer);
+		
+	}
+
 
 }

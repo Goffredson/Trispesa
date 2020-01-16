@@ -179,7 +179,7 @@
 				<div class="scrollmenu color-scheme rounded">
 					<c:forEach items="${listaMacroCategorie}" var="categoria">
 						<a class="color-scheme"
-							href="user/showProducts?categoria=${categoria.name}"
+							href="user/showProducts?categoria=${categoria.id}"
 							class="list-group-item">${categoria.name}</a>
 					</c:forEach>
 				</div>

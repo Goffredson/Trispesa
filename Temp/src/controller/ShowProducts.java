@@ -16,9 +16,11 @@ import persistence.DBManager;
 public class ShowProducts extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		RequestDispatcher rd = req.getRequestDispatcher("showProducts.jsp");
-//		String categoryName = req.getParameter("categoria");
-//		ArrayList<Product> prodotti = DBManager.getInstance().getProductsByCategory(categoryName);
+		RequestDispatcher rd = req.getRequestDispatcher("showProducts.jsp");
+		long categoryId =Long.parseLong(req.getParameter("categoria"));
+		ArrayList<Product> prodotti = DBManager.getInstance().getProductsByCategory(categoryId);
+		req.setAttribute("listaProdotti",prodotti);
+		rd.forward(req, resp);
 //		req.setAttribute("listaProdotti", prodotti);
 //		System.out.println(prodotti.get(0).getImagePath());
 //		rd.forward(req, resp);
@@ -26,23 +28,11 @@ public class ShowProducts extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		ArrayList<String> parametri = Collections.list(req.getParameterNames());
-//		parametri.remove(0); // Tolgo 
-//		ArrayList<Product> prodotti = null;
-//		String nomeProdotto = req.getParameter("nomeProdotto");
-//		// Se non ci sono categorie per cui filtrare
-//		prodotti = DBManager.getInstance().getProductsByName(nomeProdotto);
-//		RequestDispatcher rd = req.getRequestDispatcher("showProducts.jsp");
-//		if (parametri.isEmpty()) {
-//		}
-//		else {
-//			for (String categoria : parametri) {
-//				DBManager.getInstance().escludiProdotti(categoria, prodotti);
-//			}
-//		}
-//		req.setAttribute("listaProdotti", prodotti);
-//		rd.forward(req, resp);
-//		
+		RequestDispatcher rd = req.getRequestDispatcher("showProducts.jsp");
+		String nomeProdotto=req.getParameter("nomeProdotto");
+		ArrayList<Product> prodotti=DBManager.getInstance().getProductsByName(nomeProdotto);
+		req.setAttribute("listaProdotti",prodotti);
+		rd.forward(req, resp);
 
 	}
 }

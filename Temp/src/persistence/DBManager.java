@@ -375,5 +375,8 @@ public class DBManager {
 			}
 		}
 	}
+	public ArrayList<Product> getProductsByCategory(long id){
+		return getProductDao().retrieveByCategory(id);
+	}
 
 }

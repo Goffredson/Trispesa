@@ -16,6 +16,8 @@ public interface ProductDao {
 	public Product retrieveByPrimaryKey(Long id);
 	
 	public ArrayList<Product> retrieveByName(String name);
+	
+	public ArrayList<Product> retrieveByCategory(long category);
 
 
 	// UPDATE

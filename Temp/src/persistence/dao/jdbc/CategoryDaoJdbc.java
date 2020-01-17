@@ -51,11 +51,11 @@ public class CategoryDaoJdbc implements CategoryDao {
 				}
 			}
 		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
 		}
 		return categories;
 	}
@@ -88,11 +88,11 @@ public class CategoryDaoJdbc implements CategoryDao {
 				}
 			}
 		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
 		}
 		return category;
 	}
@@ -126,11 +126,11 @@ public class CategoryDaoJdbc implements CategoryDao {
 				}
 			}
 		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
 		}
 		return categories;
 	}

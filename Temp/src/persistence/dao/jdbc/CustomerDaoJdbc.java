@@ -52,11 +52,11 @@ public class CustomerDaoJdbc implements CustomerDao {
 				}
 			}
 		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
 		}
 	}
 
@@ -115,11 +115,11 @@ public class CustomerDaoJdbc implements CustomerDao {
 				}
 			}
 		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
 		}
 		return customers;
 	}
@@ -180,11 +180,11 @@ public class CustomerDaoJdbc implements CustomerDao {
 				}
 			}
 		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
 		}
 		return customer;
 	}
@@ -214,11 +214,11 @@ public class CustomerDaoJdbc implements CustomerDao {
 				}
 			}
 		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
 		}
 	}
 
@@ -250,11 +250,11 @@ public class CustomerDaoJdbc implements CustomerDao {
 				}
 			}
 		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
 		}
 		return customer;
 	}
@@ -282,11 +282,11 @@ public class CustomerDaoJdbc implements CustomerDao {
 				}
 			}
 		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
 		}
 
 	}

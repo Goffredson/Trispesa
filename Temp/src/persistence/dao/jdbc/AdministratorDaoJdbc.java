@@ -46,11 +46,11 @@ public class AdministratorDaoJdbc implements AdministratorDao {
 				}
 			}
 		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
 		}
 		return administrators;
 	}
@@ -78,11 +78,11 @@ public class AdministratorDaoJdbc implements AdministratorDao {
 				}
 			}
 		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
 		}
 		return administrator;
 	}
@@ -123,11 +123,11 @@ public class AdministratorDaoJdbc implements AdministratorDao {
 				}
 			}
 		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
 		}
 		return admin;
 	}

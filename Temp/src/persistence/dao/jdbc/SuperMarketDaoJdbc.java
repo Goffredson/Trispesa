@@ -45,11 +45,11 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 				}
 			}
 		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
 		}
 	}
 
@@ -77,11 +77,11 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 				}
 			}
 		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
 		}
 		return supermarkets;
 	}
@@ -111,11 +111,11 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 				}
 			}
 		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
 		}
 		return supermarket;
 	}
@@ -145,11 +145,11 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 				}
 			}
 		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
 		}
 	}
 

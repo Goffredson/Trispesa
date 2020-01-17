@@ -48,11 +48,11 @@ public class OrderDaoJdbc implements OrderDao {
 				}
 			}
 		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
 		}
 	}
 
@@ -93,11 +93,11 @@ public class OrderDaoJdbc implements OrderDao {
 				}
 			}
 		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
 		}
 		return orders;
 	}
@@ -140,11 +140,11 @@ public class OrderDaoJdbc implements OrderDao {
 				}
 			}
 		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
 		}
 		return order;
 	}
@@ -172,11 +172,11 @@ public class OrderDaoJdbc implements OrderDao {
 				}
 			}
 		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e.getMessage());
-			}
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
 		}
 	}
 

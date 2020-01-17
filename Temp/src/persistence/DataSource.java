@@ -9,25 +9,18 @@ public class DataSource {
 	private String username;
 	private String password;
 	private Connection connection;
-	
+
 	public DataSource(String uri, String username, String password) {
 		this.uri = uri;
 		this.username = username;
 		this.password = password;
-		this.connection=null;
+		this.connection = null;
 	}
-	
 
 	public Connection getConnection() throws SQLException {
-		//System.out.println("IIII");
-		if(connection==null) {
+		// System.out.println("IIII");
+		if (connection == null || connection.isClosed()) 
 			connection = DriverManager.getConnection(uri, username, password);
-			System.out.println("Sono stato creato la prima volta");
-		}
-		if(connection.isClosed()) {
-			connection = DriverManager.getConnection(uri, username, password);
-			System.out.println("Sono stato creato la prima volta");
-		}
 		return connection;
 	}
 }

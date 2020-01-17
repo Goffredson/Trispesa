@@ -111,6 +111,22 @@
 		</script>
 		</c:if>
 	</nav>
+
+	<!-- Toast di notifica -->
+	<div id="loginToast" class="toast notification-toast" role="alert"
+		aria-live="assertive" aria-atomic="true" data-delay="5000">
+		<div class="toast-header error-color-scheme">
+			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
+			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="toast-body" id="toastMessage">Devi fare il login
+			prima di poter completare l'ordine.</div>
+	</div>
+	<!-- Chiusura toast di notifica -->
+
 	<!-- Content -->
 	<div class="container">
 
@@ -199,7 +215,15 @@
 						<div class="modal-footer">
 							<button type="button" class="btn btn-outline-primary"
 								data-dismiss="modal">Chiudi</button>
-							<button class="btn btn-primary">Conferma ordine</button>
+							<c:if test="${customer != null}">
+								<a href="makeOrder"><button class="btn btn-primary">Conferma
+										ordine</button></a>
+							</c:if>
+							<c:if test="${customer == null}">
+								<button
+									onclick="$('#modalCart').modal('hide'); $('#loginToast').toast('show');"
+									class="btn btn-primary">Conferma ordine</button>
+							</c:if>
 						</div>
 					</div>
 				</div>

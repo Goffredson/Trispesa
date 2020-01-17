@@ -8,6 +8,12 @@ body {
 	background-color: cornflowerblue !important;
 }
 
+.error-color-scheme {
+	color: white !important;
+	background-color: #cc0000 !important;
+}
+
+
 .login-button {
 	background-color: cornflowerblue !important;
 	border: none;

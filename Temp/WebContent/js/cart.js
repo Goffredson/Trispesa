@@ -1,20 +1,17 @@
-
-function Product(id, name, supermercato, prezzo) {
-	this.id = id;
-	this.name = name;
-	this.supermercato = supermercato;
-	this.prezzo = prezzo;
-	this.quantityInTheCart = 0;
-	this.availableQuantity = 0;
-
-	this.updateAvailableQuantity = function() {
-		$.get("addToCart", {productId : this.id}, function(data) {
-			this.availableQuantity = data;
-			alert(this.availableQuantity);
-		});
-		//async: false
-	}
+updateAvailableQuantity = function(p) {
+	$.ajax({
+		type : "GET",
+		url : "addToCart",
+		async : false,
+		data : {
+			productId : p.id
+		},
+		success : function(response) {
+			p.availableQuantity = response;
+		}
+	});
 }
+
 function updateCartDOM() {
 
 	$("#listaProdottiCarrello").empty();
@@ -62,14 +59,25 @@ function Cart() {
 	}
 	this.addProduct = function(id, name, supermercato, prezzo) {
 		if (this.giaContenuto(id) == false) {
-			var p = new Product(id, name, supermercato, prezzo);
-			p.updateAvailableQuantity();
-			alert(p.availableQuantity);
-			this.products.push(p);
-			this.updateQuantity(id);
+			var p = {
+				id : id,
+				name : name,
+				supermercato : supermercato,
+				prezzo : prezzo,
+				availableQuantity : 0,
+				quantityInTheCart : 0
+			}
+			updateAvailableQuantity(p);
+			// alert(p.availableQuantity);
+			if (p.availableQuantity > 0) {
+				this.products.push(p);
+				this.updateQuantity(id);
+
+			}
 		} else {
 			// this.updateAvailableQuantity();
-			this.updateQuantity(id);
+			if (this.getProduct(id).availableQuantity > 0)
+				this.updateQuantity(id);
 		}
 		this.updatePrice(prezzo);
 		updateCartDOM();
@@ -82,6 +90,16 @@ function Cart() {
 		}
 		return false;
 	}
+
+	this.getProduct = function(id) {
+		for (var i = 0; i < c.products.length; i += 1) {
+			if (c.products[i].id == id) {
+				return c.products[i];
+			}
+		}
+
+	}
+
 	this.removeProduct = function(id) {
 		for (var i = 0; i < c.products.length; i += 1) {
 			if (c.products[i].id == id) {
@@ -101,4 +119,3 @@ function Cart() {
 }
 
 c = new Cart();
-

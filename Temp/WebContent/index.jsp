@@ -14,6 +14,7 @@
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- Script -->
+<script src="js/cart.js"></script>
 <script src="js/login.js"></script>
 
 <!-- CSS -->

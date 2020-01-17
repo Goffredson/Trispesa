@@ -17,6 +17,10 @@
 
 <!-- css -->
 <link href="../css/main.css" rel="stylesheet">
+<!-- Bootstrap core JavaScript -->
+<script src="../vendor/jquery/jquery.min.js"></script>
+
+<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <script src="../js/cart.js"></script>
 <script src="../js/login.js"></script>
@@ -245,10 +249,6 @@
 		<!-- /.container -->
 	</footer>
 
-	<!-- Bootstrap core JavaScript -->
-	<script src="../vendor/jquery/jquery.min.js"></script>
-
-	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
 

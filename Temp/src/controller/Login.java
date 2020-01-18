@@ -15,8 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import javafx.util.Pair;
 import model.Administrator;
 import model.Customer;
+import model.Product;
 import persistence.DBManager;
 
 public class Login extends HttpServlet {
@@ -45,6 +47,15 @@ public class Login extends HttpServlet {
 	    	if (customer != null) {
 	    		req.getSession().setAttribute("customer", customer);
 	    		response = "{\"redirect\":false}";
+	    		
+	    		if (req.getSession().getAttribute("anonymousCart") != null) {
+	    			ArrayList<Pair<Product, Long>> anonymousCart = (ArrayList<Pair<Product, Long>>) req.getSession().getAttribute("anonymousCart");
+	    			customer.setCart(anonymousCart);
+	    			DBManager.getInstance().fillCartFromAnonymous(customer, anonymousCart);
+	    			req.getSession().removeAttribute("anonymousCart");
+	    		}
+	    		
+	    		
 	    	} else if (administrator != null) {
 	    		req.getSession().setAttribute("administrator", administrator);
 	    		response = "{\"redirect\":true,\"redirect_url\":\"administration\"}";

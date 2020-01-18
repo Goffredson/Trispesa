@@ -223,6 +223,20 @@
 										</tr>
 
 									</c:forEach>
+									<c:forEach items="${anonymousCart}" var="product">
+										<c:set var="totalCartPrice" scope="request"
+											value="${totalCartPrice + product.key.price*product.value}" />
+
+										<tr id="product${product.key.id}">
+											<th scope="row" id="productQuantity">${product.value}</th>
+											<td id="productName">${product.key.name}</td>
+											<td id="productPrice">${product.key.price}</td>
+											<td><a><i class="fas fa-times"></i></a></td>
+											<td><button type="button"
+													onclick="updateCart(${product.key.id}, ${product.key.name}, ${product.key.price}, ${product.key.superMarket.name}, 'remove');"
+													class="btn btn-danger">Rimuovi</button></td>
+										</tr>
+									</c:forEach>
 
 								</tbody>
 

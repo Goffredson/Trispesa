@@ -160,7 +160,7 @@ public class CustomerDaoJdbc implements CustomerDao {
 					paymentMethods.add(new PaymentMethodDaoJdbc(dataSource)
 							.retrieveByPrimaryKey(paymentMethodsResultSet.getLong("payment_method")));
 				}
-				
+
 				// retrieve the cart
 				String cartQuery = "select product, amount from cart where customer=?";
 				PreparedStatement cartStatement = connection.prepareStatement(cartQuery);
@@ -169,7 +169,7 @@ public class CustomerDaoJdbc implements CustomerDao {
 				while (cartResultSet.next()) {
 					cart.add(new Pair<Product, Long>(
 							new ProductDaoJdbc(dataSource).retrieveByPrimaryKey(cartResultSet.getLong("product")),
-						cartResultSet.getLong("amount")));
+							cartResultSet.getLong("amount")));
 				}
 			}
 		} catch (SQLException e) {
@@ -328,5 +328,18 @@ public class CustomerDaoJdbc implements CustomerDao {
 		}
 
 	}
+
+	@Override
+	public void fillCartFromAnonymous(Customer customer, long productId, Long value) {
+		for (Pair<Product, Long> p : customer.getCart()) {
+			if (p.getKey().getId() == productId) {
+				updateCartProductAmount(customer.getId(), productId, true);
+				return;
+			}
+		}
+		insertProductIntoCart(productId, customer.getId());
+	}
+
+
 
 }

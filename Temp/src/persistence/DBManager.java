@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 
 import exceptions.DBOperationException;
+import javafx.util.Pair;
 import model.Administrator;
 import model.Category;
 import model.Customer;
@@ -410,6 +411,12 @@ public class DBManager {
 			getCustomerDao().deleteProductFromCart(loggedCustomer.getId(), product.getId());			
 		else 
 			getCustomerDao().updateCartProductAmount(product.getId(), loggedCustomer.getId(), false);
+	}
+
+	public void fillCartFromAnonymous(Customer customer, ArrayList<Pair<Product, Long>> anonymousCart) {
+		for (Pair<Product, Long> p : anonymousCart)
+			getCustomerDao().fillCartFromAnonymous(customer, p.getKey().getId(), p.getValue());
+		
 	}
 
 }

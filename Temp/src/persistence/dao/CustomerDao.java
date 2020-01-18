@@ -10,6 +10,7 @@ public interface CustomerDao {
 	// CREATE
 	public void insert(Customer customer);
 	void insertProductIntoCart(long idCustomer, long idProduct);
+	public void fillCartFromAnonymous(Customer customer, long id, Long value);
 
 	// RETRIEVE
 	public ArrayList<Customer> retrieveAll();

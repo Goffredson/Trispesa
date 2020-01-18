@@ -2,7 +2,6 @@ package model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.ListIterator;
 
 import javafx.util.Pair;
 

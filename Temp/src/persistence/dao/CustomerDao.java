@@ -9,21 +9,27 @@ public interface CustomerDao {
 
 	// CREATE
 	public void insert(Customer customer);
+	void insertProductIntoCart(long idCustomer, long idProduct);
 
 	// RETRIEVE
 	public ArrayList<Customer> retrieveAll();
 	public Customer checkIfExists(String username,String password);
-
 	public Customer retrieveByPrimaryKey(Long id);
 
 	// UPDATE
 	public void update(Customer customer);
+	public void updateCartProductAmount(long idCustomer, long idProduct, boolean increase);
 
 	// DELETE
 	public void delete(Customer customer);
+	public void deleteProductFromCart(long idCustomer, long idProduct);
 	
 	
-	public void insertProductIntoCart(Product product, long idCustomer);
+
+
+
+
+
 
 
 }

@@ -45,12 +45,12 @@
 
 
 	<servlet-mapping>
-		<servlet-name>CartServlet</servlet-name>
-		<url-pattern>/user/addToCart</url-pattern>
+		<servlet-name>ManageCart</servlet-name>
+		<url-pattern>/user/manageCart</url-pattern>
 	</servlet-mapping>
 	<servlet>
-		<servlet-name>CartServlet</servlet-name>
-		<servlet-class>controller.CartServlet</servlet-class>
+		<servlet-name>ManageCart</servlet-name>
+		<servlet-class>controller.ManageCart</servlet-class>
 	</servlet>
 
 	<servlet-mapping>

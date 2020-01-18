@@ -160,6 +160,7 @@ public class CustomerDaoJdbc implements CustomerDao {
 					paymentMethods.add(new PaymentMethodDaoJdbc(dataSource)
 							.retrieveByPrimaryKey(paymentMethodsResultSet.getLong("payment_method")));
 				}
+				
 				// retrieve the cart
 				String cartQuery = "select product, amount from cart where customer=?";
 				PreparedStatement cartStatement = connection.prepareStatement(cartQuery);
@@ -167,8 +168,8 @@ public class CustomerDaoJdbc implements CustomerDao {
 				ResultSet cartResultSet = cartStatement.executeQuery();
 				while (cartResultSet.next()) {
 					cart.add(new Pair<Product, Long>(
-							new ProductDaoJdbc(dataSource).retrieveByPrimaryKey(cartResultSet.getLong("id")),
-							cartResultSet.getLong("amount")));
+							new ProductDaoJdbc(dataSource).retrieveByPrimaryKey(cartResultSet.getLong("product")),
+						cartResultSet.getLong("amount")));
 				}
 			}
 		} catch (SQLException e) {
@@ -260,18 +261,55 @@ public class CustomerDaoJdbc implements CustomerDao {
 	}
 
 	@Override
-	public void insertProductIntoCart(Product product, long idCustomer) {
+	public void insertProductIntoCart(long idProduct, long idCustomer) {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
 			Long idCart = IdBroker.getId(connection, cartSequenceName);
-			//customer.setId(id);
 			String insert = "insert into cart(id, customer, product, amount) values (?, ?, ?, ?)";
 			PreparedStatement statement = connection.prepareStatement(insert);
 			statement.setLong(1, idCart);
 			statement.setLong(2, idCustomer);
-			statement.setLong(3, product.getId());
+			statement.setLong(3, idProduct);
 			statement.setLong(4, 1);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
+		}
+
+	}
+
+	@Override
+	public void deleteProductFromCart(long idCustomer, long idProduct) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void updateCartProductAmount(long idCustomer, long idProduct, boolean increase) {
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			String insert;
+			if (increase)
+				insert = "update cart set amount = amount+1 where customer=? and product=?";
+			else
+				insert = "update cart set amount = amount-1 where customer=? and product=?";
+			PreparedStatement statement = connection.prepareStatement(insert);
+			statement.setLong(1, idCustomer);
+			statement.setLong(2, idProduct);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			if (connection != null) {

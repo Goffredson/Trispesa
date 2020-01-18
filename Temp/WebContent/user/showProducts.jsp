@@ -203,12 +203,33 @@
 										<th>Nome prodotto</th>
 										<th>Prezzo</th>
 										<th></th>
+
 									</tr>
 								</thead>
 								<tbody id="listaProdottiCarrello">
+									<c:set var="totalCartPrice" scope="request" value="${0}" />
+									<c:forEach items="${customer.cart}" var="product">
+										<c:set var="totalCartPrice" scope="request"
+											value="${totalCartPrice + product.key.price*product.value}" />
+
+										<tr id="product${product.key.id}">
+											<th scope="row" id="productQuantity">${product.value}</th>
+											<td id="productName">${product.key.name}</td>
+											<td id="productPrice">${product.key.price}</td>
+											<td><a><i class="fas fa-times"></i></a></td>
+											<td><button type="button"
+													onclick="updateCart(${product.key.id}, ${product.key.name}, ${product.key.price}, ${product.key.superMarket.name}, 'remove');"
+													class="btn btn-danger">Rimuovi</button></td>
+										</tr>
+
+									</c:forEach>
 
 								</tbody>
+
+
+
 							</table>
+							<h2 id="totalCartPrice" class="hidden-xs text-center">${totalCartPrice}</h2>
 
 						</div>
 						<!--Footer-->
@@ -221,7 +242,7 @@
 							</c:if>
 							<c:if test="${customer == null}">
 								<button
-									onclick="$('#modalCart').modal('hide'); $('#loginToast').toast('show');"
+									onclick="$('#modalCart').modal('hide'); $('.modal-backdrop').hide(); $('#loginToast').toast('show');"
 									class="btn btn-primary">Conferma ordine</button>
 							</c:if>
 						</div>
@@ -242,7 +263,7 @@
 										<a href="#">${prodotto.name}</a>
 									</h4>
 									<input type="button"
-										onclick="c.addProduct(${prodotto.id}, '${prodotto.name}', '${prodotto.superMarket.name}', ${prodotto.price})"
+										onclick="updateCart(${prodotto.id}, '${prodotto.name}', '${prodotto.superMarket.name}', ${prodotto.price}, 'add')"
 										value="Aggiungi Al Carrello">
 									<h5>${prodotto.price}</h5>
 									<h5>${prodotto.superMarket.name}</h5>

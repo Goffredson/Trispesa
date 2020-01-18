@@ -141,8 +141,7 @@ public class DBManager {
 	public void addSupermarket(SuperMarket superMarket) throws DBOperationException {
 		for (SuperMarket temp : getSuperMarketDao().retrieveAll()) {
 			if (temp.getId() == superMarket.getId()) {
-				throw new DBOperationException("Il supermercato � gi� presente nel database",
-						superMarket.toString());
+				throw new DBOperationException("Il supermercato � gi� presente nel database", superMarket.toString());
 			}
 		}
 		getSuperMarketDao().insert(superMarket);
@@ -194,7 +193,7 @@ public class DBManager {
 //		throw new DBOperationException("Il prodotto da eliminare non � stato trovato", "null");
 //	}
 
-	public Product getProductById(long id) /*throws DBOperationException */ {
+	public Product getProductById(long id) /* throws DBOperationException */ {
 		Product product = getProductDao().retrieveByPrimaryKey(id);
 //		if (product == null) {
 //			throw new DBOperationException("Il prodotto con id " + id + " non � stato trovato", id + "");
@@ -388,15 +387,29 @@ public class DBManager {
 	public ArrayList<Product> getProductsByCategory(long id) {
 		return getProductDao().retrieveByCategory(id);
 	}
-	
+
 	public Long getQuantityOfProduct(Long productId) {
 		return getProductDao().retrieveAvailableQuantity(productId);
 	}
 
-	public void insertProductIntoCart(Product product, long idCustomer) {
-		getCustomerDao().insertProductIntoCart(product, idCustomer);
-		
+	public boolean insertProductIntoCart(Product product, Customer loggedCustomer) {
+		if (getQuantityOfProduct(product.getId()) == 0)
+			return false;
+
+		boolean giaPresente = loggedCustomer.addProductToCart(product);
+		if (giaPresente)
+			getCustomerDao().updateCartProductAmount(product.getId(), loggedCustomer.getId(), true);
+		else
+			getCustomerDao().insertProductIntoCart(product.getId(), loggedCustomer.getId());
+		return true;
 	}
 
+	public void removeProductFromCart(Product product, Customer loggedCustomer) {
+		boolean ultimoPezzo = loggedCustomer.removeProductFromCart(product);
+		if (ultimoPezzo) 
+			getCustomerDao().deleteProductFromCart(loggedCustomer.getId(), product.getId());			
+		else 
+			getCustomerDao().updateCartProductAmount(product.getId(), loggedCustomer.getId(), false);
+	}
 
 }

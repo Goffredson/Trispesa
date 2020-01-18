@@ -2,6 +2,7 @@ package model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 import javafx.util.Pair;
 
@@ -19,7 +20,8 @@ public class Customer {
 	private ArrayList<PaymentMethod> paymentMethods;
 	// TODO: Probabilmente è da rimuovere
 	private ArrayList<Pair<Product, Long>> cart;
-	//Per costruire dal db
+
+	// Per costruire dal db
 	public Customer(long id, String username, String password, String name, String surname, String email,
 			LocalDate birthDate, LocalDate registrationDate, ArrayList<DeliveryAddress> deliveryAddresses,
 			ArrayList<PaymentMethod> paymentMethods, ArrayList<Pair<Product, Long>> cart) {
@@ -36,21 +38,21 @@ public class Customer {
 		this.paymentMethods = paymentMethods;
 		this.cart = cart;
 	}
-	//Per costruire dall'inizio
-	public Customer(String username, String password, String name, String surname, String email,
-			LocalDate birthDate) {
+
+	// Per costruire dall'inizio
+	public Customer(String username, String password, String name, String surname, String email, LocalDate birthDate) {
 		this.username = username;
 		this.password = password;
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
 		this.birthDate = birthDate;
-		this.registrationDate =LocalDate.now();
-		this.deliveryAddresses =new ArrayList<DeliveryAddress>();
-		this.paymentMethods =new ArrayList<PaymentMethod>();
-		this.cart =new ArrayList<Pair<Product,Long>>();
+		this.registrationDate = LocalDate.now();
+		this.deliveryAddresses = new ArrayList<DeliveryAddress>();
+		this.paymentMethods = new ArrayList<PaymentMethod>();
+		this.cart = new ArrayList<Pair<Product, Long>>();
 	}
-	
+
 	public long getId() {
 		return id;
 	}
@@ -139,4 +141,38 @@ public class Customer {
 		this.cart = cart;
 	}
 
+	public boolean addProductToCart(Product product) {
+		for (Pair<Product, Long> p : this.cart) {
+			if (p.getKey().getId() == product.getId()) {
+				long newQuantity = p.getValue() + 1;
+				// Per forza va fatta la new perchè i pair sono immutabili
+				p = new Pair<Product, Long>(product, newQuantity);
+				return true;
+			}
+		}
+		this.cart.add(new Pair<Product, Long>(product, 1L));
+		return false;
+	}
+
+	public boolean removeProductFromCart(Product product) {
+		boolean ultimoPezzo = false;
+		for (Pair<Product, Long> p : this.cart) {
+
+			if (p.getKey().getId() == product.getId()) {
+				// Decremento o rimuovo del tutto
+
+				if (p.getValue() == 1) {
+					this.cart.remove(p);
+					ultimoPezzo = true;
+					break;
+				} else {
+					long newQuantity = p.getValue() - 1;
+					p = new Pair<Product, Long>(product, newQuantity);
+					ultimoPezzo = false;
+					break;
+				}
+			}
+		}
+		return ultimoPezzo;
+	}
 }

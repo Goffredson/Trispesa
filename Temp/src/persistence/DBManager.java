@@ -1,15 +1,14 @@
 package persistence;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ListIterator;
+import java.util.Map;
 
 import exceptions.DBOperationException;
-import javafx.util.Pair;
 import model.Administrator;
 import model.Category;
 import model.Customer;
-import model.DeliveryAddress;
-import model.PaymentMethod;
 import model.Product;
 import model.SuperMarket;
 import persistence.dao.AdministratorDao;
@@ -47,13 +46,6 @@ public class DBManager {
 	}
 
 	private DBManager() {
-		try {
-			Class.forName("org.postgresql.Driver").newInstance();
-			dataSource = new DataSource("jdbc:postgresql://rogue.db.elephantsql.com:5432/zqnyocaq", "zqnyocaq",
-					"DJ8nD9eyeT4VjZAvTnAvUDcc-ExoZTN_");
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-			e.printStackTrace();
-		}
 
 //		// cazzate sul db
 //		superMarkets = new ArrayList<SuperMarket>();
@@ -105,6 +97,13 @@ public class DBManager {
 //		customer.addPaymentMethod(new PaymentMethod(123345, "Boh", 11, 20221, 950));
 //		customers = new ArrayList<Customer>();
 //		customers.add(customer);
+		try {
+			Class.forName("org.postgresql.Driver").newInstance();
+			dataSource = new DataSource("jdbc:postgresql://rogue.db.elephantsql.com:5432/zqnyocaq", "zqnyocaq",
+					"DJ8nD9eyeT4VjZAvTnAvUDcc-ExoZTN_");
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public AdministratorDao getAdministratorDao() {
@@ -313,23 +312,6 @@ public class DBManager {
 		return getCategoryDao().retrieveByPrimaryKey(id);
 	}
 
-//	public ArrayList<Category> getLeafCategories() {
-//		ArrayList<Category> leafCategories = new ArrayList<Category>();
-//		for (Category category : getCategoryDao().retrieveAll()) {
-//			boolean isLeaf = true;
-//			for (Category temp : getCategoryDao().retrieveAll()) {
-//				if (temp.getParent() != null && temp.getParent().getId() == category.getId()) {
-//					isLeaf = false;
-//					break;
-//				}
-//			}
-//			if (isLeaf) {
-//				leafCategories.add(category);
-//			}
-//		}
-//		return leafCategories;
-//	}
-
 	public ArrayList<SuperMarket> getSuperMarkets() {
 		return getSuperMarketDao().retrieveAll();
 	}
@@ -394,29 +376,40 @@ public class DBManager {
 	}
 
 	public boolean insertProductIntoCart(Product product, Customer loggedCustomer) {
+
 		if (getQuantityOfProduct(product.getId()) == 0)
 			return false;
 
-		boolean giaPresente = loggedCustomer.addProductToCart(product);
-		if (giaPresente)
+		boolean giaPresente = loggedCustomer.addProductToCart(product, 1L);
+		if (giaPresente) {
+			System.out.println("Gia presente");
 			getCustomerDao().updateCartProductAmount(product.getId(), loggedCustomer.getId(), true);
-		else
-			getCustomerDao().insertProductIntoCart(product.getId(), loggedCustomer.getId());
+
+		} else {
+			System.out.println("Non gia presente");
+			getCustomerDao().insertProductIntoCart(product.getId(), loggedCustomer.getId(), 1);
+		}
 		return true;
 	}
 
 	public void removeProductFromCart(Product product, Customer loggedCustomer) {
 		boolean ultimoPezzo = loggedCustomer.removeProductFromCart(product);
-		if (ultimoPezzo) 
-			getCustomerDao().deleteProductFromCart(loggedCustomer.getId(), product.getId());			
-		else 
+		if (ultimoPezzo)
+			getCustomerDao().deleteProductFromCart(product.getId(), loggedCustomer.getId());
+		else
 			getCustomerDao().updateCartProductAmount(product.getId(), loggedCustomer.getId(), false);
 	}
 
-	public void fillCartFromAnonymous(Customer customer, ArrayList<Pair<Product, Long>> anonymousCart) {
-		for (Pair<Product, Long> p : anonymousCart)
-			getCustomerDao().fillCartFromAnonymous(customer, p.getKey().getId(), p.getValue());
-		
+	public void fillCartFromAnonymous(Customer customer, HashMap<Product, Long> anonymousCart) {
+		for (Map.Entry<Product, Long> p : anonymousCart.entrySet()) {
+			if (customer.addProductToCart(p.getKey(), p.getValue())) {
+				getCustomerDao().updateCartProductAmount(p.getKey().getId(), customer.getId(), true);
+			} else {
+				getCustomerDao().insertProductIntoCart(p.getKey().getId(), customer.getId(), p.getValue());
+			}
+			// getCustomerDao().fillCartFromAnonymous(customer, p.getKey().getId(),
+			// p.getValue());
+		}
 	}
 
 }

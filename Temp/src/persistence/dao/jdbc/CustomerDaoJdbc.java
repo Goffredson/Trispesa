@@ -5,9 +5,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import javafx.util.Pair;
 import model.Customer;
 import model.DeliveryAddress;
 import model.PaymentMethod;
@@ -72,7 +73,7 @@ public class CustomerDaoJdbc implements CustomerDao {
 			while (resultSet.next()) {
 				ArrayList<DeliveryAddress> deliveryAddresses = new ArrayList<DeliveryAddress>();
 				ArrayList<PaymentMethod> paymentMethods = new ArrayList<PaymentMethod>();
-				ArrayList<Pair<Product, Long>> cart = new ArrayList<Pair<Product, Long>>();
+				HashMap<Product, Long> cart = new HashMap<Product, Long>();
 				Customer customer = new Customer(resultSet.getLong("id"), resultSet.getString("username"),
 						resultSet.getString("password"), resultSet.getString("name"), resultSet.getString("surname"),
 						resultSet.getString("email"), resultSet.getDate("birth_date").toLocalDate(),
@@ -101,9 +102,9 @@ public class CustomerDaoJdbc implements CustomerDao {
 				cartStatement.setLong(1, customer.getId());
 				ResultSet cartResultSet = statement.executeQuery();
 				while (cartResultSet.next()) {
-					cart.add(new Pair<Product, Long>(
-							new ProductDaoJdbc(dataSource).retrieveByPrimaryKey(cartResultSet.getLong("id")),
-							cartResultSet.getLong("amount")));
+					cart.put(new ProductDaoJdbc(dataSource).retrieveByPrimaryKey(cartResultSet.getLong("id")),
+							cartResultSet.getLong("amount"));
+
 				}
 			}
 		} catch (SQLException e) {
@@ -137,7 +138,7 @@ public class CustomerDaoJdbc implements CustomerDao {
 			if (resultSet.next()) {
 				ArrayList<DeliveryAddress> deliveryAddresses = new ArrayList<DeliveryAddress>();
 				ArrayList<PaymentMethod> paymentMethods = new ArrayList<PaymentMethod>();
-				ArrayList<Pair<Product, Long>> cart = new ArrayList<Pair<Product, Long>>();
+				HashMap<Product, Long> cart = new HashMap<Product, Long>();
 				customer = new Customer(resultSet.getLong("id"), resultSet.getString("username"),
 						resultSet.getString("password"), resultSet.getString("name"), resultSet.getString("surname"),
 						resultSet.getString("email"), resultSet.getDate("birth_date").toLocalDate(),
@@ -167,9 +168,8 @@ public class CustomerDaoJdbc implements CustomerDao {
 				cartStatement.setLong(1, customer.getId());
 				ResultSet cartResultSet = cartStatement.executeQuery();
 				while (cartResultSet.next()) {
-					cart.add(new Pair<Product, Long>(
-							new ProductDaoJdbc(dataSource).retrieveByPrimaryKey(cartResultSet.getLong("product")),
-							cartResultSet.getLong("amount")));
+					cart.put(new ProductDaoJdbc(dataSource).retrieveByPrimaryKey(cartResultSet.getLong("product")),
+							cartResultSet.getLong("amount"));
 				}
 			}
 		} catch (SQLException e) {
@@ -261,9 +261,10 @@ public class CustomerDaoJdbc implements CustomerDao {
 	}
 
 	@Override
-	public void insertProductIntoCart(long idProduct, long idCustomer) {
+	public void insertProductIntoCart(long idProduct, long idCustomer, long quantity) {
 		Connection connection = null;
 		try {
+			System.out.println("DB: Inserisco pID: " + idProduct + " cID: " + idCustomer);
 			connection = this.dataSource.getConnection();
 			Long idCart = IdBroker.getId(connection, cartSequenceName);
 			String insert = "insert into cart(id, customer, product, amount) values (?, ?, ?, ?)";
@@ -271,7 +272,7 @@ public class CustomerDaoJdbc implements CustomerDao {
 			statement.setLong(1, idCart);
 			statement.setLong(2, idCustomer);
 			statement.setLong(3, idProduct);
-			statement.setLong(4, 1);
+			statement.setLong(4, quantity);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -292,25 +293,52 @@ public class CustomerDaoJdbc implements CustomerDao {
 	}
 
 	@Override
-	public void deleteProductFromCart(long idCustomer, long idProduct) {
-		// TODO Auto-generated method stub
-
+	public void deleteProductFromCart(long idProduct, long idCustomer) {
+		Connection connection = null;
+		try {
+			System.out.println("DB: Rimuovo pID: " + idProduct + " cID: " + idCustomer);
+			connection = this.dataSource.getConnection();
+			String insert = "delete from cart where product = ? and customer = ?";
+			PreparedStatement statement = connection.prepareStatement(insert);
+			statement.setLong(1, idProduct);
+			statement.setLong(2, idCustomer);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
+		}
 	}
 
 	@Override
-	public void updateCartProductAmount(long idCustomer, long idProduct, boolean increase) {
+	public void updateCartProductAmount(long idProduct, long idCustomer, boolean increase) {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
 			String insert;
-			if (increase)
-				insert = "update cart set amount = amount+1 where customer=? and product=?";
-			else
-				insert = "update cart set amount = amount-1 where customer=? and product=?";
+			if (increase) {
+				System.out.println("DB: Incremento, cId:" + idCustomer + ", pID: " + idProduct);
+				insert = "update cart set amount = amount+1 where customer=? and product=?;";
+			}
+			else {
+				System.out.println("DB: Decremento, cId:" + idCustomer + ", pID: " + idProduct);
+				insert = "update cart set amount = amount-1 where customer=? and product=?;";
+			}
 			PreparedStatement statement = connection.prepareStatement(insert);
 			statement.setLong(1, idCustomer);
 			statement.setLong(2, idProduct);
 			statement.executeUpdate();
+			System.out.println("DB: Query eseguita");
 		} catch (SQLException e) {
 			if (connection != null) {
 				try {
@@ -329,16 +357,7 @@ public class CustomerDaoJdbc implements CustomerDao {
 
 	}
 
-	@Override
-	public void fillCartFromAnonymous(Customer customer, long productId, Long value) {
-		for (Pair<Product, Long> p : customer.getCart()) {
-			if (p.getKey().getId() == productId) {
-				updateCartProductAmount(customer.getId(), productId, true);
-				return;
-			}
-		}
-		insertProductIntoCart(productId, customer.getId());
-	}
+
 
 
 

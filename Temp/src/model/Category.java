@@ -42,4 +42,23 @@ public class Category {
 		return this.name;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((parent == null) ? 0 : parent.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Category) {
+			Category c = (Category) obj;
+			return this.id == c.id;
+		}
+		return false;
+	}
+
 }

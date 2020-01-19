@@ -1,9 +1,10 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import javafx.util.Pair;
 
 public class Customer {
 
@@ -17,13 +18,12 @@ public class Customer {
 	private LocalDate registrationDate;
 	private ArrayList<DeliveryAddress> deliveryAddresses;
 	private ArrayList<PaymentMethod> paymentMethods;
-	// TODO: Probabilmente è da rimuovere
-	private ArrayList<Pair<Product, Long>> cart;
+	private HashMap<Product, Long> cart;
 
 	// Per costruire dal db
 	public Customer(long id, String username, String password, String name, String surname, String email,
 			LocalDate birthDate, LocalDate registrationDate, ArrayList<DeliveryAddress> deliveryAddresses,
-			ArrayList<PaymentMethod> paymentMethods, ArrayList<Pair<Product, Long>> cart) {
+			ArrayList<PaymentMethod> paymentMethods, HashMap<Product, Long> cart) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -38,7 +38,7 @@ public class Customer {
 		this.cart = cart;
 	}
 
-	// Per costruire dall'inizio
+	// Per costruire a partire dalla registrazione
 	public Customer(String username, String password, String name, String surname, String email, LocalDate birthDate) {
 		this.username = username;
 		this.password = password;
@@ -49,7 +49,7 @@ public class Customer {
 		this.registrationDate = LocalDate.now();
 		this.deliveryAddresses = new ArrayList<DeliveryAddress>();
 		this.paymentMethods = new ArrayList<PaymentMethod>();
-		this.cart = new ArrayList<Pair<Product, Long>>();
+		this.cart = new HashMap<Product, Long>();
 	}
 
 	public long getId() {
@@ -132,46 +132,39 @@ public class Customer {
 		this.paymentMethods = paymentMethods;
 	}
 
-	public ArrayList<Pair<Product, Long>> getCart() {
+	public HashMap<Product, Long> getCart() {
 		return cart;
 	}
 
-	public void setCart(ArrayList<Pair<Product, Long>> cart) {
+	public void setCart(HashMap<Product, Long> cart) {
 		this.cart = cart;
 	}
 
-	public boolean addProductToCart(Product product) {
-		for (Pair<Product, Long> p : this.cart) {
-			if (p.getKey().getId() == product.getId()) {
-				long newQuantity = p.getValue() + 1;
-				// Per forza va fatta la new perchè i pair sono immutabili
-				p = new Pair<Product, Long>(product, newQuantity);
-				return true;
-			}
+	public boolean addProductToCart(Product product, long quantity) {
+		
+		if (cart.containsKey(product)) {
+			cart.replace(product, cart.get(product) + 1);
+			System.out.println("Incremento " + product.getId() + " nel bean");
+			return true;
 		}
-		this.cart.add(new Pair<Product, Long>(product, 1L));
-		return false;
+		else {
+			System.out.println("Aggiungo " + product.getId() + " nel bean");
+			cart.put(product, quantity);
+			return false;
+		}
 	}
 
 	public boolean removeProductFromCart(Product product) {
-		boolean ultimoPezzo = false;
-		for (Pair<Product, Long> p : this.cart) {
-
-			if (p.getKey().getId() == product.getId()) {
-				// Decremento o rimuovo del tutto
-
-				if (p.getValue() == 1) {
-					this.cart.remove(p);
-					ultimoPezzo = true;
-					break;
-				} else {
-					long newQuantity = p.getValue() - 1;
-					p = new Pair<Product, Long>(product, newQuantity);
-					ultimoPezzo = false;
-					break;
-				}
-			}
+		if (cart.get(product) == 1) {
+			cart.remove(product);
+			System.out.println("Rimuovo " + product.getId() + " nel bean");
+			return true;
 		}
-		return ultimoPezzo;
+		else {
+			System.out.println("Decremento " + product.getId() + " nel bean");
+			cart.replace(product, cart.get(product) -1);
+			return false;
+		}
+
 	}
 }

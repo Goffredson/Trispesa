@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import javafx.util.Pair;
 import model.Administrator;
 import model.Customer;
 import model.Product;
@@ -49,17 +49,20 @@ public class Login extends HttpServlet {
 	    		response = "{\"redirect\":false}";
 	    		
 	    		if (req.getSession().getAttribute("anonymousCart") != null) {
-	    			ArrayList<Pair<Product, Long>> anonymousCart = (ArrayList<Pair<Product, Long>>) req.getSession().getAttribute("anonymousCart");
-	    			customer.setCart(anonymousCart);
+	    			HashMap<Product, Long> anonymousCart = (HashMap<Product, Long>) req.getSession().getAttribute("anonymousCart");
+	    			//customer.setCart(anonymousCart);
+	    			System.out.println("Faccio il fill");
 	    			DBManager.getInstance().fillCartFromAnonymous(customer, anonymousCart);
 	    			req.getSession().removeAttribute("anonymousCart");
 	    		}
 	    		
 	    		
-	    	} else if (administrator != null) {
+	    	} 
+	    	else if (administrator != null) {
 	    		req.getSession().setAttribute("administrator", administrator);
 	    		response = "{\"redirect\":true,\"redirect_url\":\"administration\"}";
-	    	} else {
+	    	}
+	    	else {
 	    		resp.sendError(401);
 	    	}
 	    	PrintWriter out = resp.getWriter();

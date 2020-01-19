@@ -13,21 +13,18 @@
 <title>Trispesa</title>
 
 <!-- Bootstrap  -->
+<script src="../vendor/jquery/jquery.min.js"></script>
 <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- css -->
 <link href="../css/main.css" rel="stylesheet">
 <!-- Bootstrap core JavaScript -->
-<script src="../vendor/jquery/jquery.min.js"></script>
 
-<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <script src="../js/cart.js"></script>
 <script src="../js/login.js"></script>
-<!-- Bootstrap core JavaScript -->
-<script src="../vendor/jquery/jquery.min.js"></script>
 
-<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </head>
 
@@ -55,15 +52,15 @@
 							data-target="#modalCart">Carrello</button>
 					</li>
 					<li>
-						<div class="dropdown" id="iduno">
-							<a class="btn btn-secondary dropdown-toggle login" href="#"
-								role="button" id="buttonLogin" data-toggle="dropdown"
+						<!-- Div di login -->
+						<div class="dropdown" id="loginDropdown">
+							<a class="btn btn-secondary dropdown-toggle login-button" href=""
+								role="button" id="loginButton" data-toggle="dropdown"
 								aria-haspopup="true" aria-expanded="false">Login</a>
-
-							<div class="dropdown-menu" id="iddue">
+							<div class="dropdown-menu login-dropdown">
 								<form class="px-4 py-3">
 									<div class="form-group">
-										<label for="exampleDropdownFormEmail1">Nome utente</label> <input
+										<label for="inputUsername">Nome utente</label> <input
 											type="text" class="form-control" id="inputUsername"
 											placeholder="Inserisci nome utente">
 									</div>
@@ -72,11 +69,7 @@
 											type="password" class="form-control" id="inputPassword"
 											placeholder="Password">
 									</div>
-									<!-- 
-								<button type="submit" id="submitButton"
-									class="btn btn-primary">Autenticati</button>
-								 -->
-									<input type="button" class="btn btn-primary"
+									<input type="button" class="btn btn-primary color-scheme"
 										value="Autenticati" onclick="ajaxLog('login', 500)">
 
 								</form>
@@ -84,19 +77,35 @@
 									style="color: red; display: none;">Username o password
 									errati.</div>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#" data-toggle="modal"
+								<a class="dropdown-item" href="" data-toggle="modal"
 									data-target="#modalLogin">Effettua registrazione</a> <a
-									class="dropdown-item" href="#">Password dimenticata?</a>
+									class="dropdown-item" href="">Password dimenticata?</a>
 							</div>
-						</div>
+						</div> <!-- Animazione slide per il form --> <script
+							type="text/javascript">
+							$('#loginDropdown').on(
+									'show.bs.dropdown',
+									function() {
+										$(this).find('.dropdown-menu').first()
+												.stop(true, true).slideDown();
+									});
+
+							$('#loginDropdown').on(
+									'hide.bs.dropdown',
+									function() {
+										$(this).find('.dropdown-menu').first()
+												.stop(true, true).slideUp();
+									});
+						</script>
+					</li>
 					<li class="nav-item" style="display: none;" id="ordini"><a
 						class="nav-link" href="#">Ordini</a></li>
 					<li class="nav-item" style="display: none;" id="profilo"><a
 						class="nav-link" href="user?page=profile">Profilo</a></li>
 					<li class="nav-item" style="display: none;" id="dieta"><a
 						class="nav-link" href="#">Dieta</a></li>
-					<li><input type="button" id="buttonLogout"
-						class="btn btn-primary" style="display: none;" value="Logout"
+					<li><input type="button" id="logoutButton"
+						class="btn btn-primary login-dependent" value="Logout"
 						onclick="ajaxLog('logout', 500)"></li>
 
 					<!--Chiusura Menu form login -->
@@ -218,7 +227,7 @@
 											<td id="productPrice">${product.key.price}</td>
 											<td><a><i class="fas fa-times"></i></a></td>
 											<td><button type="button"
-													onclick="updateCart(${product.key.id}, ${product.key.name}, ${product.key.price}, ${product.key.superMarket.name}, 'remove');"
+													onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.price}, '${product.key.superMarket.name}', 'remove');"
 													class="btn btn-danger">Rimuovi</button></td>
 										</tr>
 
@@ -233,7 +242,7 @@
 											<td id="productPrice">${product.key.price}</td>
 											<td><a><i class="fas fa-times"></i></a></td>
 											<td><button type="button"
-													onclick="updateCart(${product.key.id}, ${product.key.name}, ${product.key.price}, ${product.key.superMarket.name}, 'remove');"
+													onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.price}, '${product.key.superMarket.name}', 'remove');"
 													class="btn btn-danger">Rimuovi</button></td>
 										</tr>
 									</c:forEach>

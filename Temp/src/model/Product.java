@@ -143,5 +143,39 @@ public class Product {
 	public String toString() {
 		return barcode + ", " + name + ", " + superMarket + ", " + category;
 	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (barcode ^ (barcode >>> 32));
+		result = prime * result + ((brand == null) ? 0 : brand.hashCode());
+		result = prime * result + ((category == null) ? 0 : category.hashCode());
+		result = prime * result + (deleted ? 1231 : 1237);
+		long temp;
+		temp = Double.doubleToLongBits(discount);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((imagePath == null) ? 0 : imagePath.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + (offBrand ? 1231 : 1237);
+		temp = Double.doubleToLongBits(price);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + (int) (quantity ^ (quantity >>> 32));
+		result = prime * result + ((superMarket == null) ? 0 : superMarket.hashCode());
+		temp = Double.doubleToLongBits(weight);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Product) {
+			Product p = (Product) obj;
+			return this.id == p.id;
+		}
+		return false;
+	}
+
+	
 }

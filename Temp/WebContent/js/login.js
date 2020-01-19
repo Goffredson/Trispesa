@@ -18,7 +18,8 @@ function ajaxLog(operation, animDelay) {
 
 	$.ajax({
 		type : "POST",
-		url : "user/effettuaLogin",
+		// TODO: rimappare da user/effettuaLogin
+		url : "effettuaLogin",
 		datatype : "JSON",
 		data : JSON.stringify([ $("#inputUsername").val(),
 				$("#inputPassword").val(), operation ]),

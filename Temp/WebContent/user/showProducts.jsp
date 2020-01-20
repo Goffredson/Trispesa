@@ -260,13 +260,13 @@
 							<button type="button" class="btn btn-outline-primary"
 								data-dismiss="modal">Chiudi</button>
 							<c:if test="${customer != null}">
-								<a href="makeOrder"><button class="btn btn-primary">Conferma
+								<a id="orderButton" href="makeOrder"><button class="btn btn-primary">Conferma
 										ordine</button></a>
 							</c:if>
 							<c:if test="${customer == null}">
-								<button
+								<a id="orderAnchor" href="" ><button id="orderButton" 
 									onclick="$('#modalCart').modal('hide'); $('.modal-backdrop').hide(); $('#loginToast').toast('show');"
-									class="btn btn-primary">Conferma ordine</button>
+									class="btn btn-primary">Conferma ordine</button></a>
 							</c:if>
 						</div>
 					</div>

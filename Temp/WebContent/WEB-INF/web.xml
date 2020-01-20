@@ -166,5 +166,16 @@
 		<servlet-name>Signup</servlet-name>
 		<url-pattern>/user/signup</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>MakeOrder</servlet-name>
+		<servlet-class>controller.MakeOrder</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>MakeOrder</servlet-name>
+		<url-pattern>/user/makeOrder</url-pattern>
+	</servlet-mapping>
+	
 
 </web-app>

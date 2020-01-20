@@ -14,19 +14,19 @@ public interface ProductDao {
 	public ArrayList<Product> retrieveAll();
 
 	public Product retrieveByPrimaryKey(Long id);
-	
+
 	public ArrayList<Product> retrieveByName(String name);
-	
+
 	public ArrayList<Product> retrieveByCategory(long category);
-	
+
 	public Long retrieveAvailableQuantity(Long productId);
-	
+
+	public ArrayList<Product> retrieveNotDeletedProducts();
+
 	// UPDATE
 	public void update(Product product);
 
 	// DELETE
 	public void delete(Product product);
-
-
 
 }

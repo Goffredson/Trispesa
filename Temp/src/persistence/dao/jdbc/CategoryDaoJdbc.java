@@ -134,7 +134,7 @@ public class CategoryDaoJdbc implements CategoryDao {
 		}
 		return categories;
 	}
-	
+
 	@Override
 	public void update(Category category) {
 		// TODO In teoria non serve a nulla, in quanto non modifichiamo niente da
@@ -145,6 +145,42 @@ public class CategoryDaoJdbc implements CategoryDao {
 	public void delete(Category category) {
 		// TODO In teoria non serve a nulla, in quanto non modifichiamo niente da
 		// codice!
+	}
+
+	@Override
+	public ArrayList<Category> retrieveLeafCategories() {
+		Connection connection = null;
+		ArrayList<Category> categories = new ArrayList<Category>();
+		try {
+			connection = this.dataSource.getConnection();
+			String query = "select * from category as C1 where not exists (select * from category as C2 where C2.parent = C1.id)";
+			PreparedStatement statement = connection.prepareStatement(query);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				long parentId = resultSet.getLong("parent");
+				if (parentId == 0) {
+					categories.add(new Category(resultSet.getLong("id"), resultSet.getString("name"), null));
+				} else {
+					categories.add(new Category(resultSet.getLong("id"), resultSet.getString("name"),
+							new CategoryDaoJdbc(dataSource).retrieveByPrimaryKey(parentId)));
+				}
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
+		}
+		return categories;
 	}
 
 }

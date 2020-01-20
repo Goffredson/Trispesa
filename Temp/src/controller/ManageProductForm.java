@@ -22,7 +22,7 @@ public class ManageProductForm extends HttpServlet {
 		ArrayList<SuperMarket> supeMarkets = DBManager.getInstance().getAffiliateSuperMarkets();
 		req.setAttribute("superMarkets", supeMarkets);
 		// TODO dovremmo importare solo le categorie foglia
-		ArrayList<Category> categories = DBManager.getInstance().getCategories();
+		ArrayList<Category> categories = DBManager.getInstance().getLeafCategories();
 		req.setAttribute("categories", categories);
 
 		switch (req.getParameter("action")) {
@@ -34,12 +34,12 @@ public class ManageProductForm extends HttpServlet {
 			req.setAttribute("action", "mod");
 			long id = Long.parseLong(req.getParameter("id"));
 			Product product;
-			try {
+//			try {
 				product = DBManager.getInstance().getProductById(id);
 				req.setAttribute("product", product);
-			} catch (DBOperationException e) {
-				e.printStackTrace();
-			}
+//			} catch (DBOperationException e) {
+//				e.printStackTrace();
+//			}
 			break;
 		}
 

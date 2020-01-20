@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import exceptions.DBOperationException;
 import model.SuperMarket;
 import persistence.DataSource;
 import persistence.dao.SuperMarketDao;
@@ -157,6 +158,46 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 	public void delete(SuperMarket supermarket) {
 		// TODO In teoria non serve a nulla, in quanto non modifichiamo niente da
 		// codice!
+	}
+
+	@Override
+	public void setAffiliate(long id, boolean affiliation) throws DBOperationException {
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			connection.setAutoCommit(false);
+			connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+
+			String query = "select * from supermarket where id=?";
+			PreparedStatement selectStatement = connection.prepareStatement(query);
+			selectStatement.setLong(1, id);
+			ResultSet resultSet = selectStatement.executeQuery();
+			if (!(resultSet.next()))
+				throw new DBOperationException("Il supermercato non è stato trovato", id + "");
+
+			String update = "update supermarket set affiliate=? where id=?";
+			PreparedStatement statement = connection.prepareStatement(update);
+			statement.setBoolean(1, affiliation);
+			statement.setLong(2, id);
+			statement.executeUpdate();
+
+			connection.commit();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+			try {
+				connection.setAutoCommit(true);
+				connection.setTransactionIsolation(Connection.TRANSACTION_NONE);
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
+		}
 	}
 
 }

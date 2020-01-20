@@ -119,7 +119,7 @@ public class SuperMarket {
 
 	@Override
 	public String toString() {
-		return name + ", " + country + ", " + city + ", " + address;
+		return address;
 	}
 
 }

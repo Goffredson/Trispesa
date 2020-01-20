@@ -13,11 +13,13 @@ public interface CategoryDao {
 	public ArrayList<Category> retrieveAll();
 	public Category retrieveByPrimaryKey(Long id);
 	ArrayList<Category> retrieveMacroCategories();
+	public ArrayList<Category> retrieveLeafCategories();
 
 	// UPDATE
 	public void update(Category category);
 
 	// DELETE
 	public void delete(Category category);
+
 
 }

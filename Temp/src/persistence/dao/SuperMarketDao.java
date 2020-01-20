@@ -2,6 +2,7 @@ package persistence.dao;
 
 import java.util.ArrayList;
 
+import exceptions.DBOperationException;
 import model.SuperMarket;
 
 public interface SuperMarketDao {
@@ -16,6 +17,8 @@ public interface SuperMarketDao {
 
 	// UPDATE
 	public void update(SuperMarket SuperMarket);
+
+	public void setAffiliate(long id, boolean b) throws DBOperationException;
 
 	// DELETE
 	public void delete(SuperMarket SuperMarket);

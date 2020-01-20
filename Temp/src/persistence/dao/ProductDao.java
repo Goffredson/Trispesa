@@ -2,13 +2,14 @@ package persistence.dao;
 
 import java.util.ArrayList;
 
+import exceptions.DBOperationException;
 import model.Category;
 import model.Product;
 
 public interface ProductDao {
 
 	// CREATE
-	public void insert(Product product);
+	public void insert(Product product) throws DBOperationException;
 
 	// RETRIEVE
 	public ArrayList<Product> retrieveAll();
@@ -24,9 +25,11 @@ public interface ProductDao {
 	public ArrayList<Product> retrieveNotDeletedProducts();
 
 	// UPDATE
-	public void update(Product product);
+	public void update(Product product) throws DBOperationException;
 
 	// DELETE
 	public void delete(Product product);
+
+	public void deleteProduct(long id) throws DBOperationException;
 
 }

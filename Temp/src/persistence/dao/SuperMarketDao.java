@@ -8,7 +8,7 @@ import model.SuperMarket;
 public interface SuperMarketDao {
 
 	// CREATE
-	public void insert(SuperMarket SuperMarket);
+	public void insert(SuperMarket SuperMarket) throws DBOperationException;
 
 	// RETRIEVE
 	public ArrayList<SuperMarket> retrieveAll();
@@ -16,7 +16,7 @@ public interface SuperMarketDao {
 	public SuperMarket retrieveByPrimaryKey(Long id);
 
 	// UPDATE
-	public void update(SuperMarket SuperMarket);
+	public void update(SuperMarket SuperMarket) throws DBOperationException;
 
 	public void setAffiliate(long id, boolean b) throws DBOperationException;
 

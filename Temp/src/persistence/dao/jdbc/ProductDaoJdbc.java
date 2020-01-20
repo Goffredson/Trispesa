@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import exceptions.DBOperationException;
 import model.Category;
 import model.Product;
 import persistence.DataSource;
@@ -20,28 +21,60 @@ public class ProductDaoJdbc implements ProductDao {
 		this.dataSource = dataSource;
 	}
 
-	public void insert(Product product) {
+	public void insert(Product product) throws DBOperationException {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
-			Long id = IdBroker.getId(connection, sequenceName);
-			product.setId(id);
-			String insert = "insert into product(id, barcode, name, brand, weight, supermarket, category, offbrand, price, quantity, discount, image_path, deleted) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-			PreparedStatement statement = connection.prepareStatement(insert);
-			statement.setLong(1, product.getId());
-			statement.setLong(2, product.getBarcode());
-			statement.setString(3, product.getName());
-			statement.setString(4, product.getBrand());
-			statement.setDouble(5, product.getWeight());
-			statement.setLong(6, product.getSuperMarket().getId());
-			statement.setLong(7, product.getCategory().getId());
-			statement.setBoolean(8, product.isOffBrand());
-			statement.setDouble(9, product.getPrice());
-			statement.setLong(10, product.getQuantity());
-			statement.setDouble(11, product.getDiscount());
-			statement.setString(12, product.getImagePath());
-			statement.setBoolean(13, product.isDeleted());
-			statement.executeUpdate();
+			connection.setAutoCommit(false);
+			connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+
+			// Cerca se esistono prodotti UGUALI E ATTIVI
+			String query = "select * from product where barcode=? and supermarket=? and deleted=false";
+			PreparedStatement selectStatement = connection.prepareStatement(query);
+			selectStatement.setLong(1, product.getBarcode());
+			selectStatement.setLong(2, product.getSuperMarket().getId());
+			ResultSet resultSet = selectStatement.executeQuery();
+			if (resultSet.next())
+				throw new DBOperationException("Il prodotto è già venduto dal supermercato", product.toString());
+
+			// se il prodotto esiste ma è eliminato allora lo mette non eliminato
+			String query2 = "select * from product where barcode=? and supermarket=? and deleted=true";
+			PreparedStatement selectStatement2 = connection.prepareStatement(query2);
+			selectStatement2.setLong(1, product.getBarcode());
+			selectStatement2.setLong(2, product.getSuperMarket().getId());
+			ResultSet resultSet2 = selectStatement2.executeQuery();
+			if (resultSet2.next()) {
+				String update = "update product set offbrand=?, price=?, quantity=?, discount=?, image_path=?, deleted=false where id=?";
+				PreparedStatement statement = connection.prepareStatement(update);
+				statement.setBoolean(1, product.isOffBrand());
+				statement.setDouble(2, product.getPrice());
+				statement.setLong(3, product.getQuantity());
+				statement.setDouble(4, product.getDiscount());
+				statement.setString(5, product.getImagePath());
+				statement.setLong(6, resultSet2.getLong("id"));
+				statement.executeUpdate();
+			} else {
+				Long id = IdBroker.getId(connection, sequenceName);
+				product.setId(id);
+				String insert = "insert into product(id, barcode, name, brand, weight, supermarket, category, offbrand, price, quantity, discount, image_path, deleted) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				PreparedStatement statement = connection.prepareStatement(insert);
+				statement.setLong(1, product.getId());
+				statement.setLong(2, product.getBarcode());
+				statement.setString(3, product.getName());
+				statement.setString(4, product.getBrand());
+				statement.setDouble(5, product.getWeight());
+				statement.setLong(6, product.getSuperMarket().getId());
+				statement.setLong(7, product.getCategory().getId());
+				statement.setBoolean(8, product.isOffBrand());
+				statement.setDouble(9, product.getPrice());
+				statement.setLong(10, product.getQuantity());
+				statement.setDouble(11, product.getDiscount());
+				statement.setString(12, product.getImagePath());
+				statement.setBoolean(13, product.isDeleted());
+				statement.executeUpdate();
+			}
+
+			connection.commit();
 		} catch (SQLException e) {
 			if (connection != null) {
 				try {
@@ -51,11 +84,11 @@ public class ProductDaoJdbc implements ProductDao {
 				}
 			}
 		} finally {
-//			try {
-//				connection.close();
-//			} catch (SQLException e) {
-//				throw new RuntimeException(e.getMessage());
-//			}
+			try {
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
 		}
 	}
 
@@ -170,10 +203,20 @@ public class ProductDaoJdbc implements ProductDao {
 	}
 
 	@Override
-	public void update(Product product) {
+	public void update(Product product) throws DBOperationException {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
+			connection.setAutoCommit(false);
+			connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+
+			String query = "select * from product where id=?";
+			PreparedStatement selectStatement = connection.prepareStatement(query);
+			selectStatement.setLong(1, product.getId());
+			ResultSet resultSet = selectStatement.executeQuery();
+			if (!(resultSet.next()))
+				throw new DBOperationException("Il prodotto non è stato trovato", product.getId() + "");
+
 			String update = "update product set barcode=?, name=?, brand=?, weight=?, supermarket=?, category=?, offbrand=?, price=?, quantity=?, discount=?, image_path=?, deleted=? where id=?";
 			PreparedStatement statement = connection.prepareStatement(update);
 			statement.setLong(1, product.getBarcode());
@@ -190,6 +233,8 @@ public class ProductDaoJdbc implements ProductDao {
 			statement.setBoolean(12, product.isDeleted());
 			statement.setLong(13, product.getId());
 			statement.executeUpdate();
+
+			connection.commit();
 		} catch (SQLException e) {
 			if (connection != null) {
 				try {
@@ -199,11 +244,11 @@ public class ProductDaoJdbc implements ProductDao {
 				}
 			}
 		} finally {
-//			try {
-//				connection.close();
-//			} catch (SQLException e) {
-//				throw new RuntimeException(e.getMessage());
-//			}
+			try {
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
 		}
 	}
 
@@ -316,6 +361,44 @@ public class ProductDaoJdbc implements ProductDao {
 //			}
 		}
 		return products;
+	}
+
+	@Override
+	public void deleteProduct(long id) throws DBOperationException {
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			connection.setAutoCommit(false);
+			connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+
+			String query = "select * from product where id=?";
+			PreparedStatement selectStatement = connection.prepareStatement(query);
+			selectStatement.setLong(1, id);
+			ResultSet resultSet = selectStatement.executeQuery();
+			if (!(resultSet.next()))
+				throw new DBOperationException("Il prodotto non è stato trovato", id + "");
+
+			String update = "update product set deleted=true where id=?";
+			PreparedStatement statement = connection.prepareStatement(update);
+			statement.setLong(1, id);
+			statement.executeUpdate();
+
+			connection.commit();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+			try {
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
+		}
 	}
 
 }

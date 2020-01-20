@@ -20,10 +20,23 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 		this.dataSource = dataSource;
 	}
 
-	public void insert(SuperMarket supermarket) {
+	public void insert(SuperMarket supermarket) throws DBOperationException {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
+			connection.setAutoCommit(false);
+			connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+
+			String query = "select * from supermarket where name=? and country=? and city=? and address=?";
+			PreparedStatement selectStatement = connection.prepareStatement(query);
+			selectStatement.setString(1, supermarket.getName());
+			selectStatement.setString(2, supermarket.getCountry());
+			selectStatement.setString(3, supermarket.getCity());
+			selectStatement.setString(4, supermarket.getAddress());
+			ResultSet resultSet = selectStatement.executeQuery();
+			if (resultSet.next())
+				throw new DBOperationException("Il supermercato è già presente", supermarket.toString());
+
 			Long id = IdBroker.getId(connection, sequenceName);
 			supermarket.setId(id);
 			String insert = "insert into supermarket(id, name, country, city, address, latitude, longitude, affiliate) values (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -37,6 +50,8 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 			statement.setDouble(7, supermarket.getLongitude());
 			statement.setBoolean(8, supermarket.isAffiliate());
 			statement.executeUpdate();
+
+			connection.commit();
 		} catch (SQLException e) {
 			if (connection != null) {
 				try {
@@ -46,11 +61,11 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 				}
 			}
 		} finally {
-//			try {
-//				connection.close();
-//			} catch (SQLException e) {
-//				throw new RuntimeException(e.getMessage());
-//			}
+			try {
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
 		}
 	}
 
@@ -122,10 +137,20 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 	}
 
 	@Override
-	public void update(SuperMarket supermarket) {
+	public void update(SuperMarket supermarket) throws DBOperationException {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
+			connection.setAutoCommit(false);
+			connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+
+			String query = "select * from supermarket where id=?";
+			PreparedStatement selectStatement = connection.prepareStatement(query);
+			selectStatement.setLong(1, supermarket.getId());
+			ResultSet resultSet = selectStatement.executeQuery();
+			if (!(resultSet.next()))
+				throw new DBOperationException("Il supermercato non è stato trovato", supermarket.getId() + "");
+
 			String update = "update supermarket set name=?, country=?, city=?, address=?, latitude=?, longitude=?, affiliate=? where id=?";
 			PreparedStatement statement = connection.prepareStatement(update);
 			statement.setString(1, supermarket.getName());
@@ -137,6 +162,8 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 			statement.setBoolean(7, supermarket.isAffiliate());
 			statement.setLong(8, supermarket.getId());
 			statement.executeUpdate();
+
+			connection.commit();
 		} catch (SQLException e) {
 			if (connection != null) {
 				try {
@@ -146,11 +173,11 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 				}
 			}
 		} finally {
-//			try {
-//				connection.close();
-//			} catch (SQLException e) {
-//				throw new RuntimeException(e.getMessage());
-//			}
+			try {
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
 		}
 	}
 
@@ -181,6 +208,13 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 			statement.setLong(2, id);
 			statement.executeUpdate();
 
+			if (affiliation == false) {
+				String updateProduct = "update product set deleted=true where supermarket=?";
+				PreparedStatement updateStatement = connection.prepareStatement(updateProduct);
+				updateStatement.setLong(1, id);
+				statement.executeUpdate();
+			}
+
 			connection.commit();
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -193,7 +227,6 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 		} finally {
 			try {
 				connection.setAutoCommit(true);
-				connection.setTransactionIsolation(Connection.TRANSACTION_NONE);
 			} catch (SQLException e) {
 				throw new RuntimeException(e.getMessage());
 			}

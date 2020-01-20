@@ -88,21 +88,10 @@ public class DBManager {
 	}
 
 	public void addSupermarket(SuperMarket superMarket) throws DBOperationException {
-		for (SuperMarket temp : getSuperMarketDao().retrieveAll()) {
-			if (temp.getId() == superMarket.getId()) {
-				throw new DBOperationException("Il supermercato � gi� presente nel database",
-						superMarket.toString());
-			}
-		}
 		getSuperMarketDao().insert(superMarket);
 	}
 
 	public void addProduct(Product product) throws DBOperationException {
-		for (Product temp : getProductDao().retrieveAll()) {
-			if (temp.getId() == product.getId()) {
-				throw new DBOperationException("Il prodotto � gi� presente nel database", product.toString());
-			}
-		}
 		getProductDao().insert(product);
 	}
 
@@ -115,9 +104,7 @@ public class DBManager {
 	}
 
 	public void removeProductById(long id) throws DBOperationException {
-		Product product = getProductDao().retrieveByPrimaryKey(id);
-		product.setDeleted(true);
-		getProductDao().update(product);
+		getProductDao().deleteProduct(id);
 	}
 
 	public Product getProductById(long id) /* throws DBOperationException */ {

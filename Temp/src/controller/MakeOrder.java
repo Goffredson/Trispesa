@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 public class MakeOrder extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		RequestDispatcher rd=req.getRequestDispatcher("user/makeOrde.jsp");
+		RequestDispatcher rd=req.getRequestDispatcher("makeOrder.jsp");
+		rd.forward(req,resp);
 	}
 }

@@ -5,16 +5,16 @@ function updateNavbarDOM(operation, animDelay) {
 		$("#dieta").show(animDelay);
 		$("#ordini").show(animDelay);
 		$("#profilo").show(animDelay);
-		//$("#orderButton").prop("onclick",null).off("click");
-		//$("#orderAnchor").attr("href","makeOrder");
+		$("#orderButton").prop("onclick",null).off("click");
+		$("#orderAnchor").attr("href","makeOrder");
 	} else {
 		$("#logoutButton").hide(animDelay);
 		$("#dieta").hide(animDelay);
 		$("#ordini").hide(animDelay);
 		$("#profilo").hide(animDelay);
 		$("#loginDropdown").show(animDelay);
-		//$("#orderButton").prop("onclick",null).on("click");
-		//$("#orderAnchor").attr("href","#");
+		$("#orderButton").prop("onclick",null).on("click");
+		$("#orderAnchor").attr("href","");
 	}
 }
 

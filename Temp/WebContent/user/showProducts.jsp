@@ -100,7 +100,7 @@
 					</li>
 					<li class="nav-item" style="display: none;" id="ordini"><a
 						class="nav-link" href="#">Ordini</a></li>
-					<li class="nav-item" style="display: none;" id="profilo"><a
+					<li class="nav-item"  style="display: none;" id="profilo"><a
 						class="nav-link" href="user?page=profile">Profilo</a></li>
 					<li class="nav-item" style="display: none;" id="dieta"><a
 						class="nav-link" href="#">Dieta</a></li>

@@ -11,7 +11,7 @@ import persistence.DataSource;
 import persistence.dao.DeliveryAddressDao;
 
 public class DeliveryAddressDaoJdbc implements DeliveryAddressDao {
-	
+
 	private DataSource dataSource;
 	private final String sequenceName = "delivery_address_sequence";
 
@@ -26,13 +26,15 @@ public class DeliveryAddressDaoJdbc implements DeliveryAddressDao {
 			connection = this.dataSource.getConnection();
 			Long id = IdBroker.getId(connection, sequenceName);
 			deliveryAddress.setId(id);
-			String insert = "insert into delivery_address(id, country, city, address, deleted) values (?, ?, ?, ?, ?)";
+			String insert = "insert into delivery_address(id, provincia, comune, address, deleted,recipient,cap) values (?, ?, ?, ?, ?,?,?)";
 			PreparedStatement statement = connection.prepareStatement(insert);
 			statement.setLong(1, deliveryAddress.getId());
-			statement.setString(2, deliveryAddress.getCountry());
-			statement.setString(3, deliveryAddress.getCity());
+			statement.setString(2, deliveryAddress.getProvincia());
+			statement.setString(3, deliveryAddress.getComune());
 			statement.setString(4, deliveryAddress.getAddress());
 			statement.setBoolean(5, deliveryAddress.isDeleted());
+			statement.setString(6, deliveryAddress.getRecipient());
+			statement.setString(6,deliveryAddress.getCap());
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -61,8 +63,8 @@ public class DeliveryAddressDaoJdbc implements DeliveryAddressDao {
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				deliveryAddresses.add(new DeliveryAddress(resultSet.getLong("id"), resultSet.getString("country"),
-						resultSet.getString("city"), resultSet.getString("address"), resultSet.getBoolean("deleted")));
+				deliveryAddresses.add(new DeliveryAddress(resultSet.getLong("id"), resultSet.getString("provincia"),
+						resultSet.getString("comune"), resultSet.getString("address"), resultSet.getBoolean("deleted"),resultSet.getString("recipient"),resultSet.getString("cap")));
 			}
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -93,8 +95,9 @@ public class DeliveryAddressDaoJdbc implements DeliveryAddressDao {
 			statement.setLong(1, id);
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
-				deliveryAddress = new DeliveryAddress(resultSet.getLong("id"), resultSet.getString("country"),
-						resultSet.getString("city"), resultSet.getString("address"), resultSet.getBoolean("deleted"));
+				deliveryAddress = new DeliveryAddress(resultSet.getLong("id"), resultSet.getString("provincia"),
+						resultSet.getString("comune"
+								+ ""), resultSet.getString("address"), resultSet.getBoolean("deleted"),resultSet.getString("recipient"),resultSet.getString("zipcode"));
 			}
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -119,13 +122,15 @@ public class DeliveryAddressDaoJdbc implements DeliveryAddressDao {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
-			String update = "update delivery_address set country=?, city=?, address=?, deleted=? where id=?";
+			String update = "update delivery_address set provincia=?, comune=?, address=?, deleted=?,recipient=?,cap=? where id=?";
 			PreparedStatement statement = connection.prepareStatement(update);
-			statement.setString(1, deliveryAddress.getCountry());
-			statement.setString(2, deliveryAddress.getCity());
+			statement.setString(1, deliveryAddress.getProvincia());
+			statement.setString(2, deliveryAddress.getComune());
 			statement.setString(3, deliveryAddress.getAddress());
 			statement.setBoolean(4, deliveryAddress.isDeleted());
 			statement.setLong(5, deliveryAddress.getId());
+			statement.setString(6,deliveryAddress.getRecipient());
+			statement.setString(7,deliveryAddress.getCap());
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			if (connection != null) {

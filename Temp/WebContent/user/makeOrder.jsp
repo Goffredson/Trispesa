@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -17,6 +20,8 @@
 <script src="../vendor/jquery/jquery.min.js"></script>
 <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../js/order.js"></script>
+
 
 <!-- Custom styles for this template -->
 <link href="../css/order-form.css" rel="stylesheet">
@@ -37,32 +42,23 @@
 			<div class="col-md-4 order-md-2 mb-4">
 				<h4 class="d-flex justify-content-between align-items-center mb-3">
 					<span class="text-muted">Il tuo carrello</span> <span
-						class="badge badge-secondary badge-pill">3</span>
+						class="badge badge-secondary badge-pill">${customer.cart.size()}</span>
 				</h4>
 				<ul class="list-group mb-3">
-					<li
-						class="list-group-item d-flex justify-content-between lh-condensed">
-						<div>
-							<h6 class="my-0">Nome prodotto</h6>
-							<small class="text-muted">Breve descrizione</small>
-						</div> <span class="text-muted">$12</span>
-					</li>
-					<li
-						class="list-group-item d-flex justify-content-between lh-condensed">
-						<div>
-							<h6 class="my-0">Second product</h6>
-							<small class="text-muted">Brief description</small>
-						</div> <span class="text-muted">$8</span>
-					</li>
-					<li
-						class="list-group-item d-flex justify-content-between lh-condensed">
-						<div>
-							<h6 class="my-0">Third item</h6>
-							<small class="text-muted">Brief description</small>
-						</div> <span class="text-muted">$5</span>
-					</li>
+					<c:set var="totalCartPrice" scope="request" value="${0}" />
+					<c:forEach items="${customer.cart}" var="product">
+						<c:set var="totalCartPrice" scope="request"
+							value="${totalCartPrice + product.key.price*product.value}" />
+						<li
+							class="list-group-item d-flex justify-content-between lh-condensed">
+							<div>
+								<h6 class="my-0">${product.key.name}</h6>
+								<small class="text-muted">Quantita: ${product.value}</small>
+							</div> <span class="text-muted">${product.key.price*product.value}</span>
+						</li>
+					</c:forEach>
 					<li class="list-group-item d-flex justify-content-between"><span>Totale
-							(EUR)</span> <strong>$20</strong></li>
+							(EUR)</span> <strong>${totalCartPrice}</strong></li>
 				</ul>
 			</div>
 			<div class="col-md-8 order-md-1">
@@ -71,69 +67,75 @@
 					<div class="row">
 						<div class="col-md-6 mb-3">
 							<label for="firstName">Nome</label> <input type="text"
-								class="form-control" id="firstName" placeholder="" value=""
-								required="">
+								class="form-control" id="firstName" value="${customer.name}"
+								readonly required="">
 							<div class="invalid-feedback">Attenzione,inserire il nome.
 							</div>
 						</div>
 						<div class="col-md-6 mb-3">
 							<label for="lastName">Cognome</label> <input type="text"
-								class="form-control" id="lastName" placeholder="" value=""
-								required="">
-							<div class="invalid-feedback">Attenzione,inserire il cognome.
-							</div>
+								class="form-control" id="lastName" value="${customer.surname}"
+								readonly required="">
+							<div class="invalid-feedback">Attenzione,inserire il
+								cognome.</div>
 						</div>
 					</div>
 
 					<div class="mb-3">
 						<label for="username">Username</label>
 						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="input-group-text">@</span>
-							</div>
 							<input type="text" class="form-control" id="username"
-								placeholder="Username" required="">
-							<div class="invalid-feedback" style="width: 100%;">Attenzione,inserire username.</div>
+								value="${customer.username}" readonly>
+							<div class="invalid-feedback" style="width: 100%;">Attenzione,inserire
+								username.</div>
 						</div>
 					</div>
 
 					<div class="mb-3">
 						<label for="email">Email <span class="text-muted"></span></label>
 						<input type="email" class="form-control" id="email"
-							placeholder="you@example.com">
-						<div class="invalid-feedback">Attenzione,inserire un indirizzo mail valido.</div>
+							value="${customer.email}" readonly>
+						<div class="invalid-feedback">Attenzione,inserire un
+							indirizzo mail valido.</div>
 					</div>
 
 					<div class="mb-3">
-						<label for="address">Indirizzo</label> <input type="text"
-							class="form-control" id="address" placeholder="1234 Main St"
-							required="">
-						<div class="invalid-feedback">Per favore,inserisci l'indirizzo di consegna.</div>
+						<div class="bootstrap-select-wrapper">
+							<label>Indirizzo di consegna</label> <select
+								title="Scegli un indirizzo" onchange="fillDeliveryAddressDOM('${deliveryAddress.address}','${deliveryAddress.comune}','${deliveryAddress.provincia}','${deliveryAddress.cap}')">
+								<option>Scegli il tuo indirizzo</option>
+								<c:forEach items="${customer.deliveryAddresses}"
+									var="deliveryAddress">
+									<option>${deliveryAddress}</option>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="invalid-feedback">Per favore,inserisci
+							l'indirizzo di consegna.</div>
 					</div>
 
-<!-- 					<div class="mb-3"> -->
-<!-- 						<label for="address2">Address 2 <span class="text-muted">(Optional)</span></label> -->
-<!-- 						<input type="text" class="form-control" id="address2" -->
-<!-- 							placeholder="Apartment or suite"> -->
-<!-- 					</div> -->
+					<!-- 					<div class="mb-3"> -->
+					<!-- 						<label for="address2">Address 2 <span class="text-muted">(Optional)</span></label> -->
+					<!-- 						<input type="text" class="form-control" id="address2" -->
+					<!-- 							placeholder="Apartment or suite"> -->
+					<!-- 					</div> -->
 
 					<div class="row">
 						<div class="col-md-5 mb-3">
-							<label for="country">Provincia</label> <select
-								class="custom-select d-block w-100" id="country" required="">
-								<option value="">Scegli</option>
-								<option>Italia</option>
+							<label for="country">Provincia</label> <select 
+								class="custom-select d-block w-100"  required="">
+								<option id="provincia" value="">Scegli</option>
 							</select>
-							<div class="invalid-feedback">Per favore,selezione una provincia valida.</div>
+							<div class="invalid-feedback">Per favore,selezione una
+								provincia valida.</div>
 						</div>
 						<div class="col-md-4 mb-3">
 							<label for="state">Comune</label> <select
 								class="custom-select d-block w-100" id="state" required="">
 								<option value="">Scegli</option>
-								<option>Rende</option>
 							</select>
-							<div class="invalid-feedback">Per favore,inserisci un comune valido.
-							</div>
+							<div class="invalid-feedback">Per favore,inserisci un
+								comune valido.</div>
 						</div>
 						<div class="col-md-3 mb-3">
 							<label for="zip">Cap</label> <input type="text"
@@ -150,25 +152,23 @@
 						<div class="custom-control custom-radio">
 							<input id="credit" name="paymentMethod" type="radio"
 								class="custom-control-input" checked="" required=""> <label
-								class="custom-control-label" for="credit">Carta di credito</label>
-						</div>
-						<div class="custom-control custom-radio">
-							<input id="debit" name="paymentMethod" type="radio"
-								class="custom-control-input" required=""> <label
-								class="custom-control-label" for="debit">Contrassegno</label>
+								class="custom-control-label" for="credit">Carta di
+								credito</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-6 mb-3">
 							<label for="cc-name">Nome intestatario</label> <input type="text"
 								class="form-control" id="cc-name" placeholder="" required="">
-							<div class="invalid-feedback">Attenzione,inserire il nome intestatario dela carta</div>
+							<div class="invalid-feedback">Attenzione,inserire il nome
+								intestatario dela carta</div>
 						</div>
 						<div class="col-md-6 mb-3">
 							<label for="cc-number">Numero carta di credito</label> <input
-								type="text" class="form-control" id="cc-number" placeholder="0000-0000-0000-0000"
-								required="">
-							<div class="invalid-feedback">Attenzione,inserire il numero della carta di credito</div>
+								type="text" class="form-control" id="cc-number"
+								placeholder="0000-0000-0000-0000" required="">
+							<div class="invalid-feedback">Attenzione,inserire il numero
+								della carta di credito</div>
 						</div>
 					</div>
 					<div class="row">
@@ -176,27 +176,30 @@
 							<label for="cc-expiration">Scadenza</label> <input type="date"
 								class="form-control" id="cc-expiration" placeholder=""
 								required="">
-							<div class="invalid-feedback">Attenzione,inserire la data si scadenza</div>
+							<div class="invalid-feedback">Attenzione,inserire la data
+								si scadenza</div>
 						</div>
 						<div class="col-md-3 mb-3">
 							<label for="cc-expiration">CVV</label> <input type="text"
 								class="form-control" id="cc-cvv" placeholder="" required="">
-							<div class="invalid-feedback">Attenzione,inserire il codice di sicurezza</div>
+							<div class="invalid-feedback">Attenzione,inserire il codice
+								di sicurezza</div>
 						</div>
 					</div>
 					<hr class="mb-4">
-					<button class="btn btn-primary btn-lg btn-block" type="submit">Conferma ordine</button>
+					<button class="btn btn-primary btn-lg btn-block" type="submit">Conferma
+						ordine</button>
 				</form>
 			</div>
 		</div>
 
 		<footer class="py-5 bg-dark">
-		<div class="container">
-			<p class="m-0 text-center text-white">Copyright &copy; Trispesa
-				2020</p>
-		</div>
-		<!-- /.container -->
-	</footer>
+			<div class="container">
+				<p class="m-0 text-center text-white">Copyright &copy; Trispesa
+					2020</p>
+			</div>
+			<!-- /.container -->
+		</footer>
 	</div>
 
 	<!-- Bootstrap core JavaScript

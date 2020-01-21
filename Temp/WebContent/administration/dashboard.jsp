@@ -97,7 +97,7 @@
 			</div>
 
 			<div class="col-lg-6 col-md-6 mb-4">
-				<a href="administration/map">
+				<a href="#">
 					<div class="card d-flex">
 						<img class="card-img-top" src="images/administration/maps.jpg"
 							height="250" alt="" />

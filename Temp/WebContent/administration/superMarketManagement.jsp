@@ -18,6 +18,15 @@
 <!-- css -->
 <link href="../css/main.css" rel="stylesheet">
 
+<!-- Maps -->
+<link rel="stylesheet"
+	href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+	integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+	crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+	integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+	crossorigin=""></script>
+
 </head>
 <body>
 
@@ -63,7 +72,7 @@
 			</div>
 			<!-- Aggiungi supermercato -->
 			<div id="addSuperMarket" class="">
-				<a href="supermarket/manageSuperMarketForm?action=add"
+				<a href="" data-toggle="modal" data-target="#add-supermarket-modal"
 					class="btn btn-success" role="button"> + Aggiungi supermercato</a>
 			</div>
 		</div>
@@ -185,6 +194,123 @@
 		</div>
 	</div>
 
+	<div class="modal" id="add-supermarket-modal">
+		<div class="modal-dialog" style="max-width: 80%;">
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Aggiungi supermercato</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<!-- maps -->
+					<!-- Box esterno -->
+					<div id="main-box" class="container">
+						<!--Box ricerca + risultati-->
+						<div id="query-box" class="container">
+							<div class="input-group">
+								<input id="super-market-name" type="text" class="form-control"
+									placeholder="Cerca il supermercato">
+								<div class="input-group-append">
+									<a id="super-market-button" href="#"
+										onclick="querySuperMarkets()"><span
+										class="input-group-text"><img
+											src="../images/search.png" width="25px" /></span></a>
+								</div>
+							</div>
+							<div id="query-result" class="overflow-auto">
+								<!-- I risultati della query su Nominatim vengono inseriti qui -->
+							</div>
+						</div>
+						<!--Box mappa-->
+						<div id="map" class="container">
+							<div id="mapid"></div>
+						</div>
+					</div>
+					<!-- form -->
+					<form id="add-supermarket-form" class="needs-validation" novalidate autocomplete="on">
+						<div class="form-group">
+							<label for="name">Nome:</label>
+							<div id="input">
+								<input type="text" class="form-control" id="name"
+									placeholder="Nome" name="name" required autocomplete="off">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="city">Nazione:</label>
+							<div id="input">
+								<input type="text" class="form-control" id="country"
+									placeholder="Nazione" name="country" required
+									autocomplete="off">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="city">Città:</label>
+							<div id="input">
+								<input type="text" class="form-control" id="town"
+									placeholder="Città " name="city" required autocomplete="off">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="address">Indirizzo:</label>
+							<div id="input">
+								<input type="text" class="form-control" id="address"
+									placeholder="Indirizzo" name="address" required
+									autocomplete="off">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="address">Latitudine:</label>
+							<div id="input">
+								<input type="number" step="0.0000000000000001"
+									class="form-control" id="lat" placeholder="Latitudine"
+									name="latitude" required autocomplete="off">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="address">Longitudine:</label>
+							<div id="input">
+								<input type="number" step="0.0000000000000001"
+									class="form-control" id="lon" placeholder="Longitudine"
+									name="longitude" required autocomplete="off">
+							</div>
+						</div>
+						Affiliato:
+						<div class="form-check">
+							<label class="form-check-label"> <input type="radio"
+								class="form-check-input" name="affiliate" value="yes">SI
+							</label>
+						</div>
+						<div class="form-check">
+							<label class="form-check-label"> <input type="radio"
+								class="form-check-input" name="affiliate" value="no" checked>NO
+							</label>
+						</div>
+						<div class="form-check">
+							<c:if test="${superMarket.affiliate == true}">
+								<label class="form-check-label"> <input type="radio"
+									class="form-check-input" name="affiliate" value="no">NO
+								</label>
+							</c:if>
+							<c:if test="${superMarket.affiliate == false}">
+								<label class="form-check-label"> <input type="radio"
+									class="form-check-input" name="affiliate" value="no" checked>NO
+								</label>
+							</c:if>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<a href="#" onclick="addSupermarket()" type="button"
+						class="btn btn-success">Aggiungi supermercato</a> <a href="#"
+						type="button" class="btn btn-secondary" onclick="clearMapForm()">Reset</a><a
+						href="" type="button" class="btn btn-secondary"
+						data-dismiss="modal">Chiudi</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- Footer -->
 	<footer class="py-5 bg-dark">
 		<div class="container">
@@ -197,6 +323,9 @@
 	<!-- Bootstrap core JavaScript -->
 	<script src="../vendor/jquery/jquery.min.js"></script>
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../js/manageSuperMarket.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
 
 	<script>
 		$(document).ready( e => {

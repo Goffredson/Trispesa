@@ -55,8 +55,9 @@
 	<div class="container">
 
 		<form id="add-product-form" method="post"
-			action="../product/manage?action=${action}&old=${product.id}" class="needs-validation"
-			novalidate autocomplete="on" enctype="multipart/form-data">
+			action="../product/manage?action=${action}&old=${product.id}"
+			class="needs-validation" novalidate autocomplete="on"
+			enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="barcode">Codice a barre:</label>
 				<c:if test="${action == 'add'}">
@@ -156,18 +157,15 @@
 					<select disabled required name="category-select"
 						class="form-control" id="category">
 						<c:forEach items="${categories}" var="category">
-							<c:if
-								test="${product.category.id == category.id}">
+							<c:if test="${product.category.id == category.id}">
 								<option selected value="${category.id}">${category}</option>
 							</c:if>
-							<c:if
-								test="${product.category.id != category.id}">
+							<c:if test="${product.category.id != category.id}">
 								<option value="${category.id}">${category}</option>
 							</c:if>
 						</c:forEach>
 					</select>
-					<input type="hidden" name="category"
-						value="${product.category.id}">
+					<input type="hidden" name="category" value="${product.category.id}">
 				</c:if>
 				<div class="valid-feedback">Valido.</div>
 				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
@@ -210,8 +208,8 @@
 				</c:if>
 				<c:if test="${action == 'mod'}">
 					<input type="number" value="${product.discount}" step="0.01"
-						min="0.00" class="form-control" id="discount" placeholder="Discount"
-						name="discount" required autocomplete="off">
+						min="0.00" class="form-control" id="discount"
+						placeholder="Discount" name="discount" required autocomplete="off">
 				</c:if>
 				<div class="valid-feedback">Valido.</div>
 				<div class="invalid-feedback">Perfavore, riempi questo campo.</div>
@@ -294,50 +292,7 @@
 	<!-- Bootstrap core JavaScript -->
 	<script src="../../vendor/jquery/jquery.min.js"></script>
 	<script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-	<script>
-		// Disable form submissions if there are invalid fields
-		(function() {
-			'use strict';
-			window.addEventListener('load',
-					function() {
-						// Get the forms we want to add validation styles to
-						var forms = document
-								.getElementsByClassName('needs-validation');
-						// Loop over them and prevent submission
-						var validation = Array.prototype.filter.call(forms,
-								function(form) {
-									form.addEventListener('submit', function(
-											event) {
-										if (form.checkValidity() === false) {
-											event.preventDefault();
-											event.stopPropagation();
-										}
-										form.classList.add('was-validated');
-									}, false);
-								});
-					}, false);
-		})();
-	</script>
-
-	<script>
-		function readURL(input) {
-			if (input.files && input.files[0]) {
-				var reader = new FileReader();
-				reader.onload = function(e) {
-					$('#image').attr('src', e.target.result);
-
-				}
-				reader.readAsDataURL(input.files[0]);
-			} else {
-				$('#image').attr('src', "../../images/imageNotFound.png");
-			}
-		}
-
-		$("#image-chooser").change(function() {
-			readURL(this);
-		});
-	</script>
+	<script src="../../js/manageProduct.js"></script>
 
 </body>
 

@@ -3,47 +3,27 @@ package model;
 public class DeliveryAddress {
 
 	private long id;
-	private String provincia;
-	private String comune;
+	private String province;
+	private String city;
 	private String address;
 	private boolean deleted;
-	private String recipient;
-	private String cap;
+	private String zipcode;
 
-	public String getRecipient() {
-		return recipient;
-	}
-
-	public void setRecipient(String recipient) {
-		this.recipient = recipient;
-	}
-
-	public DeliveryAddress(long id, String country, String city, String address, boolean deleted, String recipient,String cap) {
-		super();
+	public DeliveryAddress(long id, String country, String city, String address, boolean deleted, String zipcode) {
 		this.id = id;
-		this.provincia = country;
-		this.comune = city;
+		this.province = country;
+		this.city = city;
 		this.address = address;
 		this.deleted = deleted;
-		this.recipient = recipient;
-		this.cap=cap;
+		this.zipcode = zipcode;
 	}
 
-	public String getCap() {
-		return cap;
+	public String getZipcode() {
+		return zipcode;
 	}
 
-	public void setCap(String cap) {
-		this.cap = cap;
-	}
-
-	public DeliveryAddress(long id, String country, String city, String address, boolean deleted) {
-		super();
-		this.id = id;
-		this.provincia = country;
-		this.comune = city;
-		this.address = address;
-		this.deleted = deleted;
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
 	}
 
 	public long getId() {
@@ -54,22 +34,20 @@ public class DeliveryAddress {
 		this.id = id;
 	}
 
-
-
-	public String getProvincia() {
-		return provincia;
+	public String getProvince() {
+		return province;
 	}
 
-	public void setProvincia(String provincia) {
-		this.provincia = provincia;
+	public void setProvince(String province) {
+		this.province = province;
 	}
 
-	public String getComune() {
-		return comune;
+	public void setCity(String city) {
+		this.city = city;
 	}
 
-	public void setComune(String comune) {
-		this.comune = comune;
+	public String getCity() {
+		return city;
 	}
 
 	public String getAddress() {
@@ -87,8 +65,9 @@ public class DeliveryAddress {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
+
 	public String toString() {
-		return this.address+", "+this.provincia+", "+this.comune+", "+this.cap;
+		return this.address + ", " + this.province + ", " + this.city + ", " + this.zipcode;
 	}
 
 }

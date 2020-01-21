@@ -10,7 +10,7 @@
 <meta name="author" content="">
 <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
 
-<title>Checkout example for Bootstrap</title>
+<title>Trispesa - Conferma ordine</title>
 
 <link rel="canonical"
 	href="https://getbootstrap.com/docs/4.0/examples/checkout/">
@@ -101,14 +101,15 @@
 
 					<div class="mb-3">
 						<div class="bootstrap-select-wrapper">
-							<label>Indirizzo di consegna</label> <select
-								title="Scegli un indirizzo" onchange="fillDeliveryAddressDOM('${deliveryAddress.address}','${deliveryAddress.comune}','${deliveryAddress.provincia}','${deliveryAddress.cap}')">
-								<option>Scegli il tuo indirizzo</option>
-								<c:forEach items="${customer.deliveryAddresses}"
-									var="deliveryAddress">
+							<label>Indirizzo di consegna</label>
+							<c:forEach items="${customer.deliveryAddresses}"
+								var="deliveryAddress">
+								<select id="address" title="Scegli un indirizzo"
+									onchange="fillDeliveryAddressDOM('${deliveryAddress.address}','${deliveryAddress.city}','${deliveryAddress.province}','${deliveryAddress.zipcode}')">
+									<option>Scegli il tuo indirizzo</option>
 									<option>${deliveryAddress}</option>
-								</c:forEach>
-							</select>
+								</select>
+							</c:forEach>
 						</div>
 						<div class="invalid-feedback">Per favore,inserisci
 							l'indirizzo di consegna.</div>
@@ -122,25 +123,21 @@
 
 					<div class="row">
 						<div class="col-md-5 mb-3">
-							<label for="country">Provincia</label> <select 
-								class="custom-select d-block w-100"  required="">
-								<option id="provincia" value="">Scegli</option>
-							</select>
+							<label for="country">Provincia</label> <input type="text"
+								class="form-control" id="provincia" value="" readonly>
 							<div class="invalid-feedback">Per favore,selezione una
 								provincia valida.</div>
 						</div>
 						<div class="col-md-4 mb-3">
-							<label for="state">Comune</label> <select
-								class="custom-select d-block w-100" id="state" required="">
-								<option value="">Scegli</option>
-							</select>
+							<label for="state">Comune</label> <input type="text"
+								class="form-control" id="comune" value="" readonly>
 							<div class="invalid-feedback">Per favore,inserisci un
 								comune valido.</div>
 						</div>
 						<div class="col-md-3 mb-3">
 							<label for="zip">Cap</label> <input type="text"
-								class="form-control" id="zip" placeholder="" required="">
-							<div class="invalid-feedback">Attenzione,inserire il cap.</div>
+								class="form-control" id="zipcode" value="" readonly>
+							<div class="invalid-feedback">Attenzione,inserire il CAP.</div>
 						</div>
 					</div>
 					<hr class="mb-4">
@@ -150,42 +147,63 @@
 
 					<div class="d-block my-3">
 						<div class="custom-control custom-radio">
-							<input id="credit" name="paymentMethod" type="radio"
+							<input id="myMethod" name="paymentMethod" type="radio"
 								class="custom-control-input" checked="" required=""> <label
-								class="custom-control-label" for="credit">Carta di
-								credito</label>
+								class="custom-control-label" for="myMethod">Esistente</label>
 						</div>
+						<div class="custom-control custom-radio">
+							<input id="newMethod" name="paymentMethod" type="radio"
+								class="custom-control-input" required=""> <label
+								class="custom-control-label" for="newMethod">Altro</label>
+						</div>
+
 					</div>
-					<div class="row">
-						<div class="col-md-6 mb-3">
-							<label for="cc-name">Nome intestatario</label> <input type="text"
-								class="form-control" id="cc-name" placeholder="" required="">
-							<div class="invalid-feedback">Attenzione,inserire il nome
-								intestatario dela carta</div>
+					
+					<div class="mb-3">
+						<div class="bootstrap-select-wrapper">
+							<label>Metodo di pagamento</label>
+							<c:forEach items="${customer.paymentMethods}"
+								var="paymentMethod">
+								<select id="method" title="Scegli un metodo di pagamento">
+									<option>Scegli il tuo metodo di pagamento</option>
+									<option>${paymentMethod}</option>
+								</select>
+							</c:forEach>
 						</div>
-						<div class="col-md-6 mb-3">
-							<label for="cc-number">Numero carta di credito</label> <input
-								type="text" class="form-control" id="cc-number"
-								placeholder="0000-0000-0000-0000" required="">
-							<div class="invalid-feedback">Attenzione,inserire il numero
-								della carta di credito</div>
-						</div>
+						<div class="invalid-feedback">Per favore,inserisci
+							l'indirizzo di consegna.</div>
 					</div>
-					<div class="row">
-						<div class="col-md-3 mb-3">
-							<label for="cc-expiration">Scadenza</label> <input type="date"
-								class="form-control" id="cc-expiration" placeholder=""
-								required="">
-							<div class="invalid-feedback">Attenzione,inserire la data
-								si scadenza</div>
-						</div>
-						<div class="col-md-3 mb-3">
-							<label for="cc-expiration">CVV</label> <input type="text"
-								class="form-control" id="cc-cvv" placeholder="" required="">
-							<div class="invalid-feedback">Attenzione,inserire il codice
-								di sicurezza</div>
-						</div>
-					</div>
+					
+<!-- 					<div class="row"> -->
+<!-- 						<div class="col-md-6 mb-3"> -->
+<!-- 							<label for="cc-name">Nome intestatario</label> <input type="text" -->
+<!-- 								class="form-control" id="cc-name" placeholder="" required=""> -->
+<!-- 							<div class="invalid-feedback">Attenzione,inserire il nome -->
+<!-- 								intestatario dela carta</div> -->
+<!-- 						</div> -->
+<!-- 						<div class="col-md-6 mb-3"> -->
+<!-- 							<label for="cc-number">Numero carta di credito</label> <input -->
+<!-- 								type="text" class="form-control" id="cc-number" -->
+<!-- 								placeholder="0000-0000-0000-0000" required=""> -->
+<!-- 							<div class="invalid-feedback">Attenzione,inserire il numero -->
+<!-- 								della carta di credito</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="row"> -->
+<!-- 						<div class="col-md-3 mb-3"> -->
+<!-- 							<label for="cc-expiration">Scadenza</label> <input type="date" -->
+<!-- 								class="form-control" id="cc-expiration" placeholder="" -->
+<!-- 								required=""> -->
+<!-- 							<div class="invalid-feedback">Attenzione,inserire la data -->
+<!-- 								si scadenza</div> -->
+<!-- 						</div> -->
+<!-- 						<div class="col-md-3 mb-3"> -->
+<!-- 							<label for="cc-expiration">CVV</label> <input type="text" -->
+<!-- 								class="form-control" id="cc-cvv" placeholder="" required=""> -->
+<!-- 							<div class="invalid-feedback">Attenzione,inserire il codice -->
+<!-- 								di sicurezza</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
 					<hr class="mb-4">
 					<button class="btn btn-primary btn-lg btn-block" type="submit">Conferma
 						ordine</button>
@@ -220,6 +238,7 @@
 	<script>
 		// Example starter JavaScript for disabling form submissions if there are invalid fields
 						(
+
 								function() {
 									'use strict';
 
@@ -243,7 +262,9 @@
 																							function(
 																									event) {
 																								if (form
-																										.checkValidity() === false) {
+																										.checkValidity() === false
+																										|| document
+																												.getElementById("address").html === "Scegli il tuo indirizzo") {
 																									event
 																											.preventDefault();
 																									event

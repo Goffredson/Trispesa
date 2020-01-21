@@ -10,9 +10,10 @@ public class PaymentMethod {
 	private LocalDate expirationDate;
 	private int securityCode;
 	private boolean deleted;
+	private String company;
 
 	public PaymentMethod(long id, String cardNumber, String owner, LocalDate expirationDate, int securityCode,
-			boolean deleted) {
+			boolean deleted, String company) {
 		super();
 		this.id = id;
 		this.cardNumber = cardNumber;
@@ -20,8 +21,17 @@ public class PaymentMethod {
 		this.expirationDate = expirationDate;
 		this.securityCode = securityCode;
 		this.deleted = deleted;
+		this.company = company;
 	}
 
+	public String getCompany() {
+		return company;
+	}
+	
+	public void setCompany(String company) {
+		this.company = company;
+	}
+	
 	public long getId() {
 		return id;
 	}
@@ -60,6 +70,12 @@ public class PaymentMethod {
 
 	public void setSecurityCode(int securityCode) {
 		this.securityCode = securityCode;
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
 	}
 
 	public boolean isDeleted() {

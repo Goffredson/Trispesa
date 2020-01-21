@@ -1,5 +1,6 @@
-function fillDeliveryAddressDOM(address,comune,provincia,cap){
+function fillDeliveryAddressDOM(address,city,province,zipcode){
 	
-	window.alert("Ciao");
-	$('#provincia').val(provincia);
+	$('#provincia').val(province);
+	$('#comune').val(city);
+	$('#zipcode').val(zipcode);
 };

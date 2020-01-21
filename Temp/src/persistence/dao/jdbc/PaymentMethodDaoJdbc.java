@@ -27,7 +27,7 @@ public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 			connection = this.dataSource.getConnection();
 			Long id = IdBroker.getId(connection, sequenceName);
 			paymentMethod.setId(id);
-			String insert = "insert into payment_method(id, card_number, owner, expiration_date, security_code, deleted) values (?, ?, ?, ?, ?, ?)";
+			String insert = "insert into payment_method(id, card_number, owner, expiration_date, security_code, deleted, company) values (?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement statement = connection.prepareStatement(insert);
 			statement.setLong(1, paymentMethod.getId());
 			statement.setString(2, paymentMethod.getCardNumber());
@@ -35,6 +35,7 @@ public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 			statement.setDate(4, Date.valueOf(paymentMethod.getExpirationDate()));
 			statement.setInt(5, paymentMethod.getSecurityCode());
 			statement.setBoolean(6, paymentMethod.isDeleted());
+			statement.setString(7, paymentMethod.getCompany());
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -65,7 +66,7 @@ public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 			while (resultSet.next()) {
 				paymentMethods.add(new PaymentMethod(resultSet.getLong("id"), resultSet.getString("card_number"),
 						resultSet.getString("owner"), resultSet.getDate("expiration_date").toLocalDate(),
-						resultSet.getInt("security_code"), resultSet.getBoolean("deleted")));
+						resultSet.getInt("security_code"), resultSet.getBoolean("deleted"),  resultSet.getString("company")));
 			}
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -98,7 +99,7 @@ public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 			if (resultSet.next()) {
 				paymentMethod = new PaymentMethod(resultSet.getLong("id"), resultSet.getString("card_number"),
 						resultSet.getString("owner"), resultSet.getDate("expiration_date").toLocalDate(),
-						resultSet.getInt("security_code"), resultSet.getBoolean("deleted"));
+						resultSet.getInt("security_code"), resultSet.getBoolean("deleted"), resultSet.getString("company"));
 			}
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -123,7 +124,7 @@ public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
-			String update = "update payment_method set card_number=?, owner=?, expiration_date=?, security_code=?, deleted=? where id=?";
+			String update = "update payment_method set card_number=?, owner=?, expiration_date=?, security_code=?, deleted=?, company=? where id=?";
 			PreparedStatement statement = connection.prepareStatement(update);
 			statement.setString(1, paymentMethod.getCardNumber());
 			statement.setString(2, paymentMethod.getOwner());
@@ -131,6 +132,7 @@ public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 			statement.setInt(4, paymentMethod.getSecurityCode());
 			statement.setBoolean(5, paymentMethod.isDeleted());
 			statement.setLong(6, paymentMethod.getId());
+			statement.setString(7, paymentMethod.getCompany());
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			if (connection != null) {

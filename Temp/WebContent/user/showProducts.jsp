@@ -260,7 +260,7 @@
 							<button type="button" class="btn btn-outline-primary"
 								data-dismiss="modal">Chiudi</button>
 							<c:if test="${customer != null}">
-								<a id="orderButton" href="makeOrder"><button class="btn btn-primary">Conferma
+								<a id="orderButton" href="manageOrder"><button class="btn btn-primary">Conferma
 										ordine</button></a>
 							</c:if>
 							<c:if test="${customer == null}">

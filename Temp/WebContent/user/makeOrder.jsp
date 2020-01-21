@@ -1,35 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<html lang="en">
+
 <head>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-<link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
 
 <title>Trispesa - Conferma ordine</title>
 
-<link rel="canonical"
-	href="https://getbootstrap.com/docs/4.0/examples/checkout/">
-
-<!-- Bootstrap core CSS -->
-<link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Inclusioni (Bootstrap, JQuery) -->
 <script src="../vendor/jquery/jquery.min.js"></script>
 <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Script -->
 <script src="../js/order.js"></script>
 
-
-<!-- Custom styles for this template -->
+<!-- CSS -->
 <link href="../css/order-form.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
 
+	<!-- Container principale -->
 	<div class="container">
+		<!-- Div logo -->
 		<div class="py-5 text-center">
 			<img class="d-block mx-auto mb-4"
 				src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg"
@@ -38,6 +33,7 @@
 			<p class="lead"></p>
 		</div>
 
+		<!-- Div carrello (manca thumbnail del prodotto) -->
 		<div class="row">
 			<div class="col-md-4 order-md-2 mb-4">
 				<h4 class="d-flex justify-content-between align-items-center mb-3">
@@ -54,158 +50,82 @@
 							<div>
 								<h6 class="my-0">${product.key.name}</h6>
 								<small class="text-muted">Quantita: ${product.value}</small>
-							</div> <span class="text-muted">${product.key.price*product.value}</span>
+							</div> <span class="text-muted">${product.key.price*product.value}&euro;</span>
 						</li>
 					</c:forEach>
 					<li class="list-group-item d-flex justify-content-between"><span>Totale
-							(EUR)</span> <strong>${totalCartPrice}</strong></li>
+					</span> <strong>${totalCartPrice}&euro;</strong></li>
 				</ul>
 			</div>
+			<!-- Div dati account -->
 			<div class="col-md-8 order-md-1">
-				<h4 class="mb-3">Inserisci i tuoi dati per confermare l'ordine</h4>
-				<form class="needs-validation" novalidate="">
-					<div class="row">
-						<div class="col-md-6 mb-3">
-							<label for="firstName">Nome</label> <input type="text"
-								class="form-control" id="firstName" value="${customer.name}"
-								readonly required="">
-							<div class="invalid-feedback">Attenzione,inserire il nome.
-							</div>
-						</div>
-						<div class="col-md-6 mb-3">
-							<label for="lastName">Cognome</label> <input type="text"
-								class="form-control" id="lastName" value="${customer.surname}"
-								readonly required="">
-							<div class="invalid-feedback">Attenzione,inserire il
-								cognome.</div>
-						</div>
+				<h4 class="mb-3">Consegna</h4>
+				<div class="row">
+					<div class="col-md-6 mb-3">
+						<label for="firstName">Nome</label> <input type="text"
+							class="form-control" id="firstName" value="${customer.name}"
+							readonly>
 					</div>
+					<div class="col-md-6 mb-3">
+						<label for="lastName">Cognome</label> <input type="text"
+							class="form-control" id="lastName" value="${customer.surname}"
+							readonly>
+					</div>
+				</div>
+				<div class="mb-3">
+					<label for="email">Email <span class="text-muted"></span></label> <input
+						type="email" class="form-control" id="email"
+						value="${customer.email}" readonly>
+				</div>
 
+				<!-- Form indirizzo e metodo di pagamento -->
+				<form method="POST" id="orderForm" action="makeOrder">
 					<div class="mb-3">
-						<label for="username">Username</label>
-						<div class="input-group">
-							<input type="text" class="form-control" id="username"
-								value="${customer.username}" readonly>
-							<div class="invalid-feedback" style="width: 100%;">Attenzione,inserire
-								username.</div>
+						<div class="form-group">
+							<label>Indirizzo di consegna</label> <select name="deliveryAddressId" id="selectAddress"
+								class="form-control" form="orderForm">
+								<option>Seleziona un indirizzo</option>
+								<c:forEach items="${customer.deliveryAddresses}"
+									var="deliveryAddress">
+									<option value="${deliveryAddress.id}"
+										data-address="${deliveryAddress.address}"
+										data-address-city="${deliveryAddress.city}"
+										data-address-province="${deliveryAddress.province}"
+										data-address-zipcode="${deliveryAddress.zipcode}">${deliveryAddress}</option>
+								</c:forEach>
+							</select>
 						</div>
 					</div>
-
-					<div class="mb-3">
-						<label for="email">Email <span class="text-muted"></span></label>
-						<input type="email" class="form-control" id="email"
-							value="${customer.email}" readonly>
-						<div class="invalid-feedback">Attenzione,inserire un
-							indirizzo mail valido.</div>
-					</div>
-
-					<div class="mb-3">
-						<div class="bootstrap-select-wrapper">
-							<label>Indirizzo di consegna</label>
-							<c:forEach items="${customer.deliveryAddresses}"
-								var="deliveryAddress">
-								<select id="address" title="Scegli un indirizzo"
-									onchange="fillDeliveryAddressDOM('${deliveryAddress.address}','${deliveryAddress.city}','${deliveryAddress.province}','${deliveryAddress.zipcode}'); $('#confirmOrder').attr('data-address', ${deliveryAddress.id});">
-									<option>Scegli il tuo indirizzo</option>
-									<option>${deliveryAddress}</option>
-								</select>
-							</c:forEach>
-						</div>
-						<div class="invalid-feedback">Per favore,inserisci
-							l'indirizzo di consegna.</div>
-					</div>
-
-					<!-- 					<div class="mb-3"> -->
-					<!-- 						<label for="address2">Address 2 <span class="text-muted">(Optional)</span></label> -->
-					<!-- 						<input type="text" class="form-control" id="address2" -->
-					<!-- 							placeholder="Apartment or suite"> -->
-					<!-- 					</div> -->
-
+					<!-- Caselle da riempire con jQuery -->
 					<div class="row">
 						<div class="col-md-5 mb-3">
-							<label for="country">Provincia</label> <input type="text"
-								class="form-control" id="provincia" value="" readonly>
-							<div class="invalid-feedback">Per favore,selezione una
-								provincia valida.</div>
+							<label for="province">Provincia</label> <input type="text"
+								class="form-control" id="provinceField" value="" readonly>
 						</div>
 						<div class="col-md-4 mb-3">
-							<label for="state">Comune</label> <input type="text"
-								class="form-control" id="comune" value="" readonly>
-							<div class="invalid-feedback">Per favore,inserisci un
-								comune valido.</div>
+							<label for="city">Comune</label> <input type="text"
+								class="form-control" id="cityField" value="" readonly>
 						</div>
 						<div class="col-md-3 mb-3">
-							<label for="zip">Cap</label> <input type="text"
-								class="form-control" id="zipcode" value="" readonly>
-							<div class="invalid-feedback">Attenzione,inserire il CAP.</div>
+							<label for="zipcode">CAP</label> <input type="text"
+								class="form-control" id="zipcodeField" value="" readonly>
 						</div>
 					</div>
-					<hr class="mb-4">
 					<hr class="mb-4">
 
 					<h4 class="mb-3">Pagamento</h4>
-
-					<!-- 					<div class="d-block my-3"> -->
-					<!-- 						<div class="custom-control custom-radio"> -->
-					<!-- 							<input id="myMethod" name="paymentMethod" type="radio" -->
-					<!-- 								class="custom-control-input" checked="" required=""> <label -->
-					<!-- 								class="custom-control-label" for="myMethod">Esistente</label> -->
-					<!-- 						</div> -->
-					<!-- 						<div class="custom-control custom-radio"> -->
-					<!-- 							<input id="newMethod" name="paymentMethod" type="radio" -->
-					<!-- 								class="custom-control-input" required=""> <label -->
-					<!-- 								class="custom-control-label" for="newMethod">Altro</label> -->
-					<!-- 						</div> -->
-
-					<!-- 					</div> -->
-
 					<div class="mb-3">
-						<div class="bootstrap-select-wrapper">
-							<label>Metodo di pagamento</label>
-							<c:forEach items="${customer.paymentMethods}" var="paymentMethod">
-								<select id="method" title="Scegli un metodo di pagamento">
-									<option>Scegli il tuo metodo di pagamento</option>
-									<option id="payment_${paymentMethod.id}">${paymentMethod}</option>
-								</select>
-							</c:forEach>
+						<div class="form-group">
+							<label>Metodo di pagamento</label> <select name="paymentId" id="selectPayment"
+								class="form-control" form="orderForm">
+								<option>Seleziona un metodo di pagamento</option>
+								<c:forEach items="${customer.paymentMethods}"
+									var="paymentMethod">
+									<option value="${paymentMethod.id}">${paymentMethod}</option>
+								</c:forEach>
+							</select>
 						</div>
-						<div class="invalid-feedback">Per favore,inserisci
-							l'indirizzo di consegna.</div>
 					</div>
-
-					<script>
-					$('#method').on('change', function (e) {
-					    var optionSelected = $("option:selected", this);
-					    var valueSelected = this.value;
-					    var id = optionSelected.attr("id").split("_")[1];
-					    
-					    
-					    alert(id);
-					    
-					    var cvv = prompt("Inserisci cvv");
-					    var scadenza = prompt("Inserisci scadenza coi trattini")
-					    
-					    $.ajax({
-					    	type: "GET",
-					    	url: "makeOrder",
-					    	data: {
-					    		paymentId: id, 
-					    		securityCode: cvv,
-					    		expirationDate: scadenza,
-					    		operation: "check"
-					    	},
-					    	success: function() {
-					    		alert("Dati corretti");
-					    		$("#confirmOrder").attr("data-payment", id);
-					    		var href = $("#confirmOrder").attr("href");
-					    		href.replace("paymentId", ("&paymentId=" + id + "&"));
-					    	},
-					    	error: function() {
-					    		alert("Dati sbagliati");
-					    	}
-					    });
-					});
-					</script>
 
 					<!-- 					<div class="row"> -->
 					<!-- 						<div class="col-md-6 mb-3"> -->
@@ -238,8 +158,8 @@
 					<!-- 						</div> -->
 					<!-- 					</div> -->
 					<hr class="mb-4">
-					<a id="confirmOrder" data-payment="" data-address="" href="makeOrder?customerId=${customer.id}&paymentId=_&addressId=_" class="btn btn-primary btn-lg btn-block"> Conferma Ordine </a>
-					
+					<input type="submit" class="btn btn-primary btn-lg btn-block" value="Conferma Ordine"> 
+
 				</form>
 			</div>
 		</div>
@@ -249,67 +169,10 @@
 				<p class="m-0 text-center text-white">Copyright &copy; Trispesa
 					2020</p>
 			</div>
-			<!-- /.container -->
 		</footer>
 	</div>
 
-	<!-- Bootstrap core JavaScript
-    ================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-
-	<script>
-		window.jQuery
-				|| document
-						.write(
-								'<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
-	</script>
-	<script src="../../assets/js/vendor/popper.min.js"></script>
-	<script src="../../dist/js/bootstrap.min.js"></script>
-	<script src="../../assets/js/vendor/holder.min.js"></script>
-	<script>
-		// Example starter JavaScript for disabling form submissions if there are invalid fields
-						(
-
-								function() {
-									'use strict';
-
-									window
-											.addEventListener(
-													'load',
-													function() {
-														// Fetch all the forms we want to apply custom Bootstrap validation styles to
-														var forms = document
-																.getElementsByClassName('needs-validation');
-
-														// Loop over them and prevent submission
-														var validation = Array.prototype.filter
-																.call(
-																		forms,
-																		function(
-																				form) {
-																			form
-																					.addEventListener(
-																							'submit',
-																							function(
-																									event) {
-																								if (form
-																										.checkValidity() === false
-																										|| document
-																												.getElementById("address").html === "Scegli il tuo indirizzo") {
-																									event
-																											.preventDefault();
-																									event
-																											.stopPropagation();
-																								}
-																								form.classList
-																										.add('was-validated');
-																							},
-																							false);
-																		});
-													}, false);
-								})();
-	</script>
-
+	<!-- Check validità form (da mettere) -->
 
 </body>
 </html>

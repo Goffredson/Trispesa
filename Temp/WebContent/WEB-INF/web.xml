@@ -168,13 +168,13 @@
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>MakeOrder</servlet-name>
-		<servlet-class>controller.MakeOrder</servlet-class>
+		<servlet-name>ManageOrder</servlet-name>
+		<servlet-class>controller.ManageOrder</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>MakeOrder</servlet-name>
-		<url-pattern>/user/makeOrder</url-pattern>
+		<servlet-name>ManageOrder</servlet-name>
+		<url-pattern>/user/manageOrder</url-pattern>
 	</servlet-mapping>
 	
 

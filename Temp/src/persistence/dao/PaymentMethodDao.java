@@ -20,4 +20,6 @@ public interface PaymentMethodDao {
 	// DELETE
 	public void delete(PaymentMethod paymentMethod);
 
+	public boolean checkPaymentData(Long paymentId, String expirationDate, Long securityCode);
+
 }

@@ -105,7 +105,7 @@
 							<c:forEach items="${customer.deliveryAddresses}"
 								var="deliveryAddress">
 								<select id="address" title="Scegli un indirizzo"
-									onchange="fillDeliveryAddressDOM('${deliveryAddress.address}','${deliveryAddress.city}','${deliveryAddress.province}','${deliveryAddress.zipcode}')">
+									onchange="fillDeliveryAddressDOM('${deliveryAddress.address}','${deliveryAddress.city}','${deliveryAddress.province}','${deliveryAddress.zipcode}'); $('#confirmOrder').attr('data-address', ${deliveryAddress.id});">
 									<option>Scegli il tuo indirizzo</option>
 									<option>${deliveryAddress}</option>
 								</select>
@@ -145,68 +145,101 @@
 
 					<h4 class="mb-3">Pagamento</h4>
 
-					<div class="d-block my-3">
-						<div class="custom-control custom-radio">
-							<input id="myMethod" name="paymentMethod" type="radio"
-								class="custom-control-input" checked="" required=""> <label
-								class="custom-control-label" for="myMethod">Esistente</label>
-						</div>
-						<div class="custom-control custom-radio">
-							<input id="newMethod" name="paymentMethod" type="radio"
-								class="custom-control-input" required=""> <label
-								class="custom-control-label" for="newMethod">Altro</label>
-						</div>
+					<!-- 					<div class="d-block my-3"> -->
+					<!-- 						<div class="custom-control custom-radio"> -->
+					<!-- 							<input id="myMethod" name="paymentMethod" type="radio" -->
+					<!-- 								class="custom-control-input" checked="" required=""> <label -->
+					<!-- 								class="custom-control-label" for="myMethod">Esistente</label> -->
+					<!-- 						</div> -->
+					<!-- 						<div class="custom-control custom-radio"> -->
+					<!-- 							<input id="newMethod" name="paymentMethod" type="radio" -->
+					<!-- 								class="custom-control-input" required=""> <label -->
+					<!-- 								class="custom-control-label" for="newMethod">Altro</label> -->
+					<!-- 						</div> -->
 
-					</div>
-					
+					<!-- 					</div> -->
+
 					<div class="mb-3">
 						<div class="bootstrap-select-wrapper">
 							<label>Metodo di pagamento</label>
-							<c:forEach items="${customer.paymentMethods}"
-								var="paymentMethod">
+							<c:forEach items="${customer.paymentMethods}" var="paymentMethod">
 								<select id="method" title="Scegli un metodo di pagamento">
 									<option>Scegli il tuo metodo di pagamento</option>
-									<option>${paymentMethod}</option>
+									<option id="payment_${paymentMethod.id}">${paymentMethod}</option>
 								</select>
 							</c:forEach>
 						</div>
 						<div class="invalid-feedback">Per favore,inserisci
 							l'indirizzo di consegna.</div>
 					</div>
-					
-<!-- 					<div class="row"> -->
-<!-- 						<div class="col-md-6 mb-3"> -->
-<!-- 							<label for="cc-name">Nome intestatario</label> <input type="text" -->
-<!-- 								class="form-control" id="cc-name" placeholder="" required=""> -->
-<!-- 							<div class="invalid-feedback">Attenzione,inserire il nome -->
-<!-- 								intestatario dela carta</div> -->
-<!-- 						</div> -->
-<!-- 						<div class="col-md-6 mb-3"> -->
-<!-- 							<label for="cc-number">Numero carta di credito</label> <input -->
-<!-- 								type="text" class="form-control" id="cc-number" -->
-<!-- 								placeholder="0000-0000-0000-0000" required=""> -->
-<!-- 							<div class="invalid-feedback">Attenzione,inserire il numero -->
-<!-- 								della carta di credito</div> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 					<div class="row"> -->
-<!-- 						<div class="col-md-3 mb-3"> -->
-<!-- 							<label for="cc-expiration">Scadenza</label> <input type="date" -->
-<!-- 								class="form-control" id="cc-expiration" placeholder="" -->
-<!-- 								required=""> -->
-<!-- 							<div class="invalid-feedback">Attenzione,inserire la data -->
-<!-- 								si scadenza</div> -->
-<!-- 						</div> -->
-<!-- 						<div class="col-md-3 mb-3"> -->
-<!-- 							<label for="cc-expiration">CVV</label> <input type="text" -->
-<!-- 								class="form-control" id="cc-cvv" placeholder="" required=""> -->
-<!-- 							<div class="invalid-feedback">Attenzione,inserire il codice -->
-<!-- 								di sicurezza</div> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
+
+					<script>
+					$('#method').on('change', function (e) {
+					    var optionSelected = $("option:selected", this);
+					    var valueSelected = this.value;
+					    var id = optionSelected.attr("id").split("_")[1];
+					    
+					    
+					    alert(id);
+					    
+					    var cvv = prompt("Inserisci cvv");
+					    var scadenza = prompt("Inserisci scadenza coi trattini")
+					    
+					    $.ajax({
+					    	type: "GET",
+					    	url: "makeOrder",
+					    	data: {
+					    		paymentId: id, 
+					    		securityCode: cvv,
+					    		expirationDate: scadenza,
+					    		operation: "check"
+					    	},
+					    	success: function() {
+					    		alert("Dati corretti");
+					    		$("#confirmOrder").attr("data-payment", id);
+					    		var href = $("#confirmOrder").attr("href");
+					    		href.replace("paymentId", ("&paymentId=" + id + "&"));
+					    	},
+					    	error: function() {
+					    		alert("Dati sbagliati");
+					    	}
+					    });
+					});
+					</script>
+
+					<!-- 					<div class="row"> -->
+					<!-- 						<div class="col-md-6 mb-3"> -->
+					<!-- 							<label for="cc-name">Nome intestatario</label> <input type="text" -->
+					<!-- 								class="form-control" id="cc-name" placeholder="" required=""> -->
+					<!-- 							<div class="invalid-feedback">Attenzione,inserire il nome -->
+					<!-- 								intestatario dela carta</div> -->
+					<!-- 						</div> -->
+					<!-- 						<div class="col-md-6 mb-3"> -->
+					<!-- 							<label for="cc-number">Numero carta di credito</label> <input -->
+					<!-- 								type="text" class="form-control" id="cc-number" -->
+					<!-- 								placeholder="0000-0000-0000-0000" required=""> -->
+					<!-- 							<div class="invalid-feedback">Attenzione,inserire il numero -->
+					<!-- 								della carta di credito</div> -->
+					<!-- 						</div> -->
+					<!-- 					</div> -->
+					<!-- 					<div class="row"> -->
+					<!-- 						<div class="col-md-3 mb-3"> -->
+					<!-- 							<label for="cc-expiration">Scadenza</label> <input type="date" -->
+					<!-- 								class="form-control" id="cc-expiration" placeholder="" -->
+					<!-- 								required=""> -->
+					<!-- 							<div class="invalid-feedback">Attenzione,inserire la data -->
+					<!-- 								si scadenza</div> -->
+					<!-- 						</div> -->
+					<!-- 						<div class="col-md-3 mb-3"> -->
+					<!-- 							<label for="cc-expiration">CVV</label> <input type="text" -->
+					<!-- 								class="form-control" id="cc-cvv" placeholder="" required=""> -->
+					<!-- 							<div class="invalid-feedback">Attenzione,inserire il codice -->
+					<!-- 								di sicurezza</div> -->
+					<!-- 						</div> -->
+					<!-- 					</div> -->
 					<hr class="mb-4">
-					<button class="btn btn-primary btn-lg btn-block" type="submit">Conferma
-						ordine</button>
+					<a id="confirmOrder" data-payment="" data-address="" href="makeOrder?customerId=${customer.id}&paymentId=_&addressId=_" class="btn btn-primary btn-lg btn-block"> Conferma Ordine </a>
+					
 				</form>
 			</div>
 		</div>
@@ -223,9 +256,7 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-		crossorigin="anonymous"></script>
+
 	<script>
 		window.jQuery
 				|| document

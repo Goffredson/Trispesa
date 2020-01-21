@@ -256,4 +256,9 @@ public class DBManager {
 		return getCategoryDao().retrieveLeafCategories();
 	}
 
+	public boolean checkPaymentData(Long paymentId, String expirationDate, Long securityCode) {
+		return getPaymentMethodDao().checkPaymentData(paymentId, expirationDate, securityCode);
+		
+	}
+
 }

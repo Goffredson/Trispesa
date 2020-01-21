@@ -1,18 +1,16 @@
 package model;
 
-import java.time.LocalDate;
-
 public class PaymentMethod {
 
 	private long id;
 	private String cardNumber;
 	private String owner;
-	private LocalDate expirationDate;
+	private String expirationDate;
 	private int securityCode;
 	private boolean deleted;
 	private String company;
 
-	public PaymentMethod(long id, String cardNumber, String owner, LocalDate expirationDate, int securityCode,
+	public PaymentMethod(long id, String cardNumber, String owner, String expirationDate, int securityCode,
 			boolean deleted, String company) {
 		super();
 		this.id = id;
@@ -56,11 +54,11 @@ public class PaymentMethod {
 		this.owner = owner;
 	}
 
-	public LocalDate getExpirationDate() {
+	public String getExpirationDate() {
 		return expirationDate;
 	}
-
-	public void setExpirationDate(LocalDate expirationDate) {
+	
+	public void setExpirationDate(String expirationDate) {
 		this.expirationDate = expirationDate;
 	}
 
@@ -74,8 +72,7 @@ public class PaymentMethod {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		return company + " x-" + cardNumber.substring(12, 16);
 	}
 
 	public boolean isDeleted() {

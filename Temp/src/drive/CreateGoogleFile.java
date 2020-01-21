@@ -11,6 +11,7 @@ import com.google.api.client.http.FileContent;
 import com.google.api.client.http.InputStreamContent;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
+import com.google.api.services.drive.model.Permission;
 
 public class CreateGoogleFile {
 
@@ -29,6 +30,9 @@ public class CreateGoogleFile {
 		File file = driveService.files().create(fileMetadata, uploadStreamContent)
 				.setFields("id, webContentLink, webViewLink, parents").execute();
 
+		Permission permission = new Permission().setType("anyone").setRole("reader");
+		driveService.permissions().create(file.getId(), permission).setFields("id").execute();
+		
 		return file;
 	}
 
@@ -61,20 +65,20 @@ public class CreateGoogleFile {
 		return _createGoogleFile(googleFolderIdParent, contentType, customFileName, uploadStreamContent);
 	}
 
-	public static void main(String[] args) throws IOException {
-
-		java.io.File uploadFile = new java.io.File("src/drive/statistics.jpg");
-
-		// Create Google File:
-
-		File googleFile = createGoogleFile(null, "images/jpeg", "statistics.jpg", uploadFile);
-
-		System.out.println("Created Google file!");
-		System.out.println("WebContentLink: " + googleFile.getWebContentLink());
-		System.out.println("WebViewLink: " + googleFile.getWebViewLink());
-		System.out.println(googleFile.getId());
-
-		System.out.println("Done!");
-	}
+//	public static void main(String[] args) throws IOException {
+//
+//		java.io.File uploadFile = new java.io.File("src/drive/statistics.jpg");
+//
+//		// Create Google File:
+//
+//		File googleFile = createGoogleFile(null, "images/jpeg", "statistics.jpg", uploadFile);
+//
+//		System.out.println("Created Google file!");
+//		System.out.println("WebContentLink: " + googleFile.getWebContentLink());
+//		System.out.println("WebViewLink: " + googleFile.getWebViewLink());
+//		System.out.println(googleFile.getId());
+//
+//		System.out.println("Done!");
+//	}
 
 }

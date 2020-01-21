@@ -50,7 +50,7 @@ public class ProductDaoJdbc implements ProductDao {
 				statement.setDouble(2, product.getPrice());
 				statement.setLong(3, product.getQuantity());
 				statement.setDouble(4, product.getDiscount());
-				statement.setString(5, product.getImagePath());
+				statement.setString(5, product.getImageId());
 				statement.setLong(6, resultSet2.getLong("id"));
 				statement.executeUpdate();
 			} else {
@@ -69,7 +69,7 @@ public class ProductDaoJdbc implements ProductDao {
 				statement.setDouble(9, product.getPrice());
 				statement.setLong(10, product.getQuantity());
 				statement.setDouble(11, product.getDiscount());
-				statement.setString(12, product.getImagePath());
+				statement.setString(12, product.getImageId());
 				statement.setBoolean(13, product.isDeleted());
 				statement.executeUpdate();
 			}
@@ -229,7 +229,7 @@ public class ProductDaoJdbc implements ProductDao {
 			statement.setDouble(8, product.getPrice());
 			statement.setLong(9, product.getQuantity());
 			statement.setDouble(10, product.getDiscount());
-			statement.setString(11, product.getImagePath());
+			statement.setString(11, product.getImageId());
 			statement.setBoolean(12, product.isDeleted());
 			statement.setLong(13, product.getId());
 			statement.executeUpdate();

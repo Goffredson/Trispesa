@@ -13,11 +13,11 @@ public class Product {
 	private double price;
 	private long quantity;
 	private double discount;
-	private String imagePath;
+	private String imageId;
 	private boolean deleted;
 
 	public Product(long id, long barcode, String name, String brand, double weight, SuperMarket superMarket,
-			Category category, boolean offBrand, double price, long quantity, double discount, String imagePath,
+			Category category, boolean offBrand, double price, long quantity, double discount, String imageId,
 			boolean deleted) {
 		super();
 		this.id = id;
@@ -31,7 +31,7 @@ public class Product {
 		this.price = price;
 		this.quantity = quantity;
 		this.discount = discount;
-		this.imagePath = "images/products/" + imagePath;
+		this.imageId = imageId;
 		this.deleted = deleted;
 	}
 
@@ -60,11 +60,11 @@ public class Product {
 	}
 
 	public String getImagePath() {
-		return imagePath;
+		return "https://drive.google.com/uc?export=view&id=" + imageId;
 	}
 
 	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
+		this.imageId = imagePath;
 	}
 
 	public double getDiscount() {
@@ -143,7 +143,7 @@ public class Product {
 	public String toString() {
 		return barcode + ", " + name + ", " + superMarket + ", " + category;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -156,7 +156,7 @@ public class Product {
 		temp = Double.doubleToLongBits(discount);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((imagePath == null) ? 0 : imagePath.hashCode());
+		result = prime * result + ((imageId == null) ? 0 : imageId.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + (offBrand ? 1231 : 1237);
 		temp = Double.doubleToLongBits(price);
@@ -177,5 +177,12 @@ public class Product {
 		return false;
 	}
 
-	
+	public String getImageId() {
+		return imageId;
+	}
+
+	public void setImageId(String imageId) {
+		this.imageId = imageId;
+	}
+
 }

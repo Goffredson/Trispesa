@@ -220,14 +220,14 @@
 				<label for="image">Immagine:</label><br />
 				<c:if test="${action == 'add'}">
 					<img id="image" name="image" height="200px" alt="immagine"
-						src="../../images/imageNotFound.png" />
+						src="https://drive.google.com/uc?export=view&id=1DbMKHR-mObaG56QAVDqGHoO4XoXStC2M" />
 					<br />
 					<input type="file" name="image-chooser" id="image-chooser"
 						class="file" accept="image/*">
 				</c:if>
 				<c:if test="${action == 'mod'}">
 					<img id="image" name="image" height="200px" alt="immagine"
-						src="../../${product.imagePath}" />
+						src="${product.imagePath}" />
 					<br />
 					<input type="file" name="image-chooser" id="image-chooser"
 						class="file" accept="image/*">

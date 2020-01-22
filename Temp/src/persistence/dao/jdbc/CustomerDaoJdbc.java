@@ -357,6 +357,33 @@ public class CustomerDaoJdbc implements CustomerDao {
 
 	}
 
+	@Override
+	public void clearCart(long customerId) {
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			String insert = "delete from cart where customer = ?";
+			PreparedStatement statement = connection.prepareStatement(insert);
+			statement.setLong(1, customerId);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
+		}
+		
+	}
+
 
 
 

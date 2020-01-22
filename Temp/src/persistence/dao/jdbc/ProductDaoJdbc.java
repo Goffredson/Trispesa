@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import exceptions.DBOperationException;
-import model.Category;
 import model.Product;
 import persistence.DataSource;
 import persistence.dao.ProductDao;
@@ -35,9 +34,9 @@ public class ProductDaoJdbc implements ProductDao {
 			selectStatement.setLong(2, product.getSuperMarket().getId());
 			ResultSet resultSet = selectStatement.executeQuery();
 			if (resultSet.next())
-				throw new DBOperationException("Il prodotto è già venduto dal supermercato", product.toString());
+				throw new DBOperationException("Il prodotto ï¿½ giï¿½ venduto dal supermercato", product.toString());
 
-			// se il prodotto esiste ma è eliminato allora lo mette non eliminato
+			// se il prodotto esiste ma ï¿½ eliminato allora lo mette non eliminato
 			String query2 = "select * from product where barcode=? and supermarket=? and deleted=true";
 			PreparedStatement selectStatement2 = connection.prepareStatement(query2);
 			selectStatement2.setLong(1, product.getBarcode());
@@ -215,7 +214,7 @@ public class ProductDaoJdbc implements ProductDao {
 			selectStatement.setLong(1, product.getId());
 			ResultSet resultSet = selectStatement.executeQuery();
 			if (!(resultSet.next()))
-				throw new DBOperationException("Il prodotto non è stato trovato", product.getId() + "");
+				throw new DBOperationException("Il prodotto non ï¿½ stato trovato", product.getId() + "");
 
 			String update = "update product set barcode=?, name=?, brand=?, weight=?, supermarket=?, category=?, offbrand=?, price=?, quantity=?, discount=?, image_path=?, deleted=? where id=?";
 			PreparedStatement statement = connection.prepareStatement(update);
@@ -376,7 +375,7 @@ public class ProductDaoJdbc implements ProductDao {
 			selectStatement.setLong(1, id);
 			ResultSet resultSet = selectStatement.executeQuery();
 			if (!(resultSet.next()))
-				throw new DBOperationException("Il prodotto non è stato trovato", id + "");
+				throw new DBOperationException("Il prodotto non ï¿½ stato trovato", id + "");
 
 			String update = "update product set deleted=true where id=?";
 			PreparedStatement statement = connection.prepareStatement(update);
@@ -400,5 +399,29 @@ public class ProductDaoJdbc implements ProductDao {
 			}
 		}
 	}
+
+	@Override
+	public void decreaseQuantity(Product product, long quantity) {
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			String update = "update cart set amount=? where id=?";
+			PreparedStatement statement = connection.prepareStatement(update);
+			statement.setLong(1, product.getQuantity() - quantity);
+			statement.setLong(2, product.getId());
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} 
+	}
+
+	
 
 }

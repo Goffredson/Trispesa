@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.Customer;
 import persistence.DBManager;
 
 public class ManageOrder extends HttpServlet {
@@ -30,6 +31,11 @@ public class ManageOrder extends HttpServlet {
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("Hey!");
+		Customer customer = (Customer) req.getSession().getAttribute("customer");
+		String paymentId = req.getParameter("paymentId");
+		String deliveryAddressId = req.getParameter("deliveryAddressId");
+		
+		DBManager.getInstance().createOrder(customer, paymentId, deliveryAddressId);
+		
 	}
 }

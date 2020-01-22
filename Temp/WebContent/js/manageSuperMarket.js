@@ -17,10 +17,25 @@
 	}, false);
 })();
 
-var mymap = L.map('mapid').setView([41.458, 12.706], 6);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(mymap);
+var mymap = null;
+$('#add-supermarket-modal').on('show.bs.modal', function(event) {
+	if (mymap == null) {
+		setTimeout(function() {
+			mymap = L.map('mapid').setView([41.458, 12.706], 6);
+			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+			}).addTo(mymap);
+		}, 200);
+	}
+});
+
+// var mymap = L.map('mapid').setView([41.458, 12.706], 6);
+// L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+// attribution: '&copy; <a
+// href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>
+// contributors'
+// }).addTo(mymap);
+
 var marker = null;
 
 $('#super-market-name').keyup(event => {
@@ -132,26 +147,41 @@ function addSupermarket() {
 		$('#add-supermarket-form').addClass("was-validated").removeClass("needs-validation");
 		return;
 	}
-	
-	var supermarket = {
-			id : 0,
+	$.ajax({
+		type : "POST",
+		url : "supermarket/manage?action=add",
+		dataType : "json",
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify({
+			id : '0',
 			name : $('#name').val(),
 			country : $('#country').val(),
 			city : $('#town').val(),
 			address : $('#address').val(),
-			latitude : $('#latitude').val(),
-			longitude : $('#longitude').val(),
-			affiliate : $('#affiliate').val()
-	};
-	$.ajax({
-		type : "POST",
-		url : "supermarket/manage?action=add",
-		data : supermarket,
+			latitude : $('#lat').val(),
+			longitude : $('#lon').val(),
+			affiliate : $('input[type=radio][name=affiliate]:checked').val(),
+		}),
 		success : function(data) {
-			// boh
+			$('#add-supermarket-modal').modal('hide');
+			if (data.result == true) {
+				$('#result-modal-title').html('Operazione eseguita con successo');
+				$('#result-modal-body').addClass('success-message');
+			} else {
+				$('#result-modal-title').html('Operazione annullata');
+				$('#result-modal-body').addClass('error-message');
+			}
+			$('#result-modal-type').html(data.type);
+			$('#result-modal-object').html(data.object);
+			$('#result-modal-state').html(data.state);
+			$('#result-modal').modal('show');
 		}
 	});
 }
+
+$('#result-modal').on('hide.bs.modal', function(event) {
+	location.reload();
+});
 
 $( document ).ready( function () {
 	$('#add-supermarket-form').validate({

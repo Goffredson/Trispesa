@@ -98,12 +98,12 @@ div.scrollmenu a:hover {
 	color: red;
 }
 
-#error-message {
+.error-message {
 	background-color: rgba(255, 0, 0, 0.40);
 	margin: 10px !important;
 }
 
-#success-message {
+.success-message {
 	background-color: rgba(0, 255, 0, 0.40);
 	margin: 10px !important;
 }

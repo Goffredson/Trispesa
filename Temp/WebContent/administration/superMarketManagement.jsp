@@ -143,48 +143,27 @@
 	</div>
 
 	<!-- MODALE -->
-	<div class="modal" id="modal">
+	<div class="modal" id="result-modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<c:if test="${sessionScope.result == true}">
-						<h4 class="modal-title">Operazione eseguita con successo</h4>
-					</c:if>
-					<c:if test="${sessionScope.result == false}">
-						<h4 class="modal-title">Operazione annullata</h4>
-					</c:if>
+					<h4 id="result-modal-title" class="modal-title"></h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<!-- Modal body -->
 				<div class="modal-body">
-					<c:if test="${sessionScope.result == true}">
-						<div id="success-message" class="jumbotron">
-							<p>
-								<b>Tipo: </b>${sessionScope.op}
-							</p>
-							<p>
-								<b>Oggetto: </b>${sessionScope.object}
-							</p>
-							<p>
-								<b>Stato: </b>COMPLETATO
-							</p>
-						</div>
-					</c:if>
-
-					<c:if test="${sessionScope.result == false}">
-						<div id="error-message" class="jumbotron">
-							<p>
-								<b>Tipo: </b>${sessionScope.op}
-							</p>
-							<p>
-								<b>Oggetto: </b>${sessionScope.exception.object}
-							</p>
-							<p>
-								<b>Stato: </b>${sessionScope.exception.message}
-							</p>
-						</div>
-					</c:if>
+					<div id="result-modal-body" class="jumbotron">
+						<p>
+							<b>Tipo: </b><span id="result-modal-type"></span>
+						</p>
+						<p>
+							<b>Oggetto: </b><span id="result-modal-object"></span>
+						</p>
+						<p>
+							<b>Stato: </b><span id="result-modal-state"></span>
+						</p>
+					</div>
 				</div>
 				<!-- Modal footer -->
 				<div class="modal-footer">
@@ -228,7 +207,8 @@
 						</div>
 					</div>
 					<!-- form -->
-					<form id="add-supermarket-form" class="needs-validation" novalidate autocomplete="on">
+					<form id="add-supermarket-form" class="needs-validation" novalidate
+						autocomplete="on">
 						<div class="form-group">
 							<label for="name">Nome:</label>
 							<div id="input">
@@ -262,50 +242,39 @@
 						<div class="form-group">
 							<label for="address">Latitudine:</label>
 							<div id="input">
-								<input type="number" step="0.0000000000000001"
-									class="form-control" id="lat" placeholder="Latitudine"
-									name="latitude" required autocomplete="off">
+								<input type="number" class="form-control" id="lat"
+									placeholder="Latitudine" name="latitude" required
+									autocomplete="off">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="address">Longitudine:</label>
 							<div id="input">
-								<input type="number" step="0.0000000000000001"
-									class="form-control" id="lon" placeholder="Longitudine"
-									name="longitude" required autocomplete="off">
+								<input type="number" class="form-control" id="lon"
+									placeholder="Longitudine" name="longitude" required
+									autocomplete="off">
 							</div>
 						</div>
 						Affiliato:
 						<div class="form-check">
 							<label class="form-check-label"> <input type="radio"
-								class="form-check-input" name="affiliate" value="yes">SI
+								class="form-check-input" name="affiliate" value="true">SI
 							</label>
 						</div>
 						<div class="form-check">
 							<label class="form-check-label"> <input type="radio"
-								class="form-check-input" name="affiliate" value="no" checked>NO
+								class="form-check-input" name="affiliate" value="false" checked>NO
 							</label>
-						</div>
-						<div class="form-check">
-							<c:if test="${superMarket.affiliate == true}">
-								<label class="form-check-label"> <input type="radio"
-									class="form-check-input" name="affiliate" value="no">NO
-								</label>
-							</c:if>
-							<c:if test="${superMarket.affiliate == false}">
-								<label class="form-check-label"> <input type="radio"
-									class="form-check-input" name="affiliate" value="no" checked>NO
-								</label>
-							</c:if>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
-					<a href="#" onclick="addSupermarket()" type="button"
-						class="btn btn-success">Aggiungi supermercato</a> <a href="#"
-						type="button" class="btn btn-secondary" onclick="clearMapForm()">Reset</a><a
-						href="" type="button" class="btn btn-secondary"
-						data-dismiss="modal">Chiudi</a>
+					<button onclick="addSupermarket()" type="button"
+						class="btn btn-success">Aggiungi supermercato</button>
+					<button type="button" class="btn btn-secondary"
+						onclick="clearMapForm()">Reset</button>
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Chiudi</button>
 				</div>
 			</div>
 		</div>
@@ -326,24 +295,6 @@
 	<script src="../js/manageSuperMarket.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
-
-	<script>
-		$(document).ready( e => {
-			if (${sessionScope.result != null}) {
-				$('#modal').modal('show');
-			}
-		});
-	</script>
-
-	<%
-		if (session.getAttribute("result") != null && (boolean) session.getAttribute("result")) {
-			session.removeAttribute("object");
-		} else {
-			session.removeAttribute("exception");
-		}
-		session.removeAttribute("result");
-		session.removeAttribute("op");
-	%>
 
 </body>
 </html>

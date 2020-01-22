@@ -405,7 +405,7 @@ public class ProductDaoJdbc implements ProductDao {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
-			String update = "update cart set amount=? where id=?";
+			String update = "update product set quantity=? where id=?";
 			PreparedStatement statement = connection.prepareStatement(update);
 			statement.setLong(1, product.getQuantity() - quantity);
 			statement.setLong(2, product.getId());

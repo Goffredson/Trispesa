@@ -79,11 +79,12 @@
 				</div>
 
 				<!-- Form indirizzo e metodo di pagamento -->
-				<form method="POST" id="orderForm" action="manageOrder">
+				<form method="POST" id="orderForm" action="orderConfirmed.jsp">
 					<div class="mb-3">
 						<div class="form-group">
-							<label>Indirizzo di consegna</label> <select name="deliveryAddressId" id="selectAddress"
-								class="form-control" form="orderForm">
+							<label>Indirizzo di consegna</label> <select
+								name="deliveryAddressId" id="selectAddress" class="form-control"
+								form="orderForm">
 								<option>Seleziona un indirizzo</option>
 								<c:forEach items="${customer.deliveryAddresses}"
 									var="deliveryAddress">
@@ -116,8 +117,8 @@
 					<h4 class="mb-3">Pagamento</h4>
 					<div class="mb-3">
 						<div class="form-group">
-							<label>Metodo di pagamento</label> <select name="paymentId" id="selectPayment"
-								class="form-control" form="orderForm">
+							<label>Metodo di pagamento</label> <select name="paymentId"
+								id="selectPayment" class="form-control" form="orderForm">
 								<option>Seleziona un metodo di pagamento</option>
 								<c:forEach items="${customer.paymentMethods}"
 									var="paymentMethod">
@@ -126,6 +127,54 @@
 							</select>
 						</div>
 					</div>
+
+					<div class="modal" id="paymentModal" style="display: none"
+						tabindex="-1" role="dialog">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Conferma dati carta</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div class="col-md-3 mb-3" id="divSecurityCode">
+										<label for="securityCode">CVV</label> <input type="text"
+											class="form-control" id="securityCode" placeholder="CVV">
+										<div class="invalid-feedback">CVV necessario</div>
+									</div>
+									<div class="col-md-3 mb-3" id="divExpirationDate">
+										<label for="expirationDate">Data di scadenza</label> <input
+											type="text" class="form-control" id="expirationDate"
+											placeholder="MM-YY">
+										<div class="invalid-feedback">Scadenza necessaria</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">Chiudi</button>
+									<button type="button" class="btn btn-primary"
+										onclick="verifyPayment()">Conferma</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="paymentToast" class="toast notification-toast" role="alert"
+						aria-live="assertive" aria-atomic="true" data-delay="5000">
+						<div class="toast-header success-color-scheme">
+							<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
+							<button type="button" class="ml-2 mb-1 close"
+								data-dismiss="toast" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="toast-body" id="toastMessage">Dati OK</div>
+					</div>
+
+
 
 					<!-- 					<div class="row"> -->
 					<!-- 						<div class="col-md-6 mb-3"> -->
@@ -158,7 +207,8 @@
 					<!-- 						</div> -->
 					<!-- 					</div> -->
 					<hr class="mb-4">
-					<input type="submit" class="btn btn-primary btn-lg btn-block" value="Conferma Ordine"> 
+					<input type="submit" class="btn btn-primary btn-lg btn-block"
+						value="Conferma Ordine">
 
 				</form>
 			</div>

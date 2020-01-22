@@ -1,3 +1,29 @@
+function verifyPayment() {
+
+	var cvv = $("#securityCode").val();
+	var expiration = $("#expirationDate").val();
+	var id = $("#selectPayment").find("option:selected").val();
+
+	$.ajax({
+		type : "GET",
+		url : "manageOrder",
+		data : {
+			paymentId : id,
+			securityCode : cvv,
+			expirationDate : expiration,
+			operation : "check"
+		},
+		success : function() {
+			$("#paymentModal").modal("hide");
+			$('#paymentToast').toast("show");
+		},
+		error : function() {
+			$("#securityCode").addClass("error");
+			$("#expirationDate").addClass("error");
+		}
+	});
+}
+
 $(document).ready(function() {
 	$('#selectAddress').on('change', function(e) {
 		var optionSelected = $("#selectAddress").find("option:selected");
@@ -14,27 +40,7 @@ $(document).ready(function() {
 $(document).ready(function() {
 	$('#selectPayment').on('change', function(e) {
 		var optionSelected = $("#selectPayment").find("option:selected");
-		alert(optionSelected);
 		var id = optionSelected.val();
-		
-		var cvv = prompt("Inserisci cvv");
-		var expiration = prompt("Inserisci scadenza coi trattini")
-	
-		$.ajax({
-			type : "GET",
-			url : "manageOrder",
-			data : {
-				paymentId : id,
-				securityCode : cvv,
-				expirationDate : expiration,
-				operation : "check" // Forse da togliere, non serve?
-			},
-			success : function() {
-				alert("Dati corretti");
-			},
-			error : function() {
-				alert("Dati sbagliati");
-			}
-		});
+		$("#paymentModal").modal("show");
 	});
 });

@@ -13,6 +13,11 @@ body {
 	background-color: #cc0000 !important;
 }
 
+.success-color-scheme {
+	color: white !important;
+	background-color: green !important;
+}
+
 
 .login-button {
 	background-color: cornflowerblue !important;

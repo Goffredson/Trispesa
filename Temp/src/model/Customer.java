@@ -1,10 +1,10 @@
 package model;
 
 import java.time.LocalDate;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.Iterator;
+import java.util.Map;
 
 public class Customer {
 
@@ -50,6 +50,14 @@ public class Customer {
 		this.deliveryAddresses = new ArrayList<DeliveryAddress>();
 		this.paymentMethods = new ArrayList<PaymentMethod>();
 		this.cart = new HashMap<Product, Long>();
+	}
+
+	public long getCartTotalPrice() {
+		long totalPrice = 0;
+		for (Map.Entry<Product, Long> entry : cart.entrySet()) {
+			totalPrice += entry.getKey().getQuantity() * entry.getValue();
+		}
+		return totalPrice;
 	}
 
 	public long getId() {
@@ -141,13 +149,12 @@ public class Customer {
 	}
 
 	public boolean addProductToCart(Product product, long quantity) {
-		
+
 		if (cart.containsKey(product)) {
 			cart.replace(product, cart.get(product) + 1);
 			System.out.println("Incremento " + product.getId() + " nel bean");
 			return true;
-		}
-		else {
+		} else {
 			System.out.println("Aggiungo " + product.getId() + " nel bean");
 			cart.put(product, quantity);
 			return false;
@@ -159,10 +166,9 @@ public class Customer {
 			cart.remove(product);
 			System.out.println("Rimuovo " + product.getId() + " nel bean");
 			return true;
-		}
-		else {
+		} else {
 			System.out.println("Decremento " + product.getId() + " nel bean");
-			cart.replace(product, cart.get(product) -1);
+			cart.replace(product, cart.get(product) - 1);
 			return false;
 		}
 

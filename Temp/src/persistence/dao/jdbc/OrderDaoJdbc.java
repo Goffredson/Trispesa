@@ -5,8 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-import javafx.util.Pair;
 import model.CurrentState;
 import model.Order;
 import model.Product;
@@ -16,7 +17,8 @@ import persistence.dao.OrderDao;
 public class OrderDaoJdbc implements OrderDao {
 
 	private DataSource dataSource;
-	private final String sequenceName = "order_sequence";
+	private final String sequenceName = "orders_sequence";
+	private final String associationSequenceName = "order_contains_product_sequence";
 
 	public OrderDaoJdbc(DataSource dataSource) {
 		this.dataSource = dataSource;
@@ -26,11 +28,10 @@ public class OrderDaoJdbc implements OrderDao {
 	public void insert(Order order) {
 		Connection connection = null;
 		try {
-			// TODO svuotare carrello con trigger
 			connection = this.dataSource.getConnection();
-			Long id = IdBroker.getId(connection, sequenceName);
-			order.setId(id);
-			String insert = "insert into order(id, total_price, customer, delivery_address, payment_method, current_state) values (?, ?, ?, ?, ?, ?)";
+			Long orderId = IdBroker.getId(connection, sequenceName);
+			order.setId(orderId);
+			String insert = "insert into orders(id, total_price, customer, delivery_address, payment_method, current_state) values (?, ?, ?, ?, ?, ?)";
 			PreparedStatement statement = connection.prepareStatement(insert);
 			statement.setLong(1, order.getId());
 			statement.setDouble(2, order.getTotalPrice());
@@ -38,7 +39,22 @@ public class OrderDaoJdbc implements OrderDao {
 			statement.setLong(4, order.getDeliveryAddress().getId());
 			statement.setLong(5, order.getPaymentMethod().getId());
 			statement.setString(6, order.getCurrentState().toString());
+			System.out.println("Prima di update");
 			statement.executeUpdate();
+			System.out.println("Dopo update");
+			
+			for (Map.Entry<Product, Long> entry : order.getProducts().entrySet()) {
+				String associationInsert = "insert into order_contains_product(id, orders, product, amount) values (?, ?, ?, ?)";
+				long associationId = IdBroker.getId(connection, associationSequenceName);
+				PreparedStatement associationStatement = connection.prepareStatement(associationInsert);
+				associationStatement.setLong(1, associationId);
+				associationStatement.setLong(2, order.getId());
+				associationStatement.setLong(3, entry.getKey().getId());
+				associationStatement.setLong(4, entry.getValue());
+				associationStatement.executeUpdate();
+			}
+			
+			
 		} catch (SQLException e) {
 			if (connection != null) {
 				try {
@@ -62,11 +78,11 @@ public class OrderDaoJdbc implements OrderDao {
 		ArrayList<Order> orders = new ArrayList<Order>();
 		try {
 			connection = this.dataSource.getConnection();
-			String query = "select * from order";
+			String query = "select * from orders";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				ArrayList<Pair<Product, Long>> products = new ArrayList<Pair<Product, Long>>();
+				HashMap<Product, Long> products = new HashMap<Product, Long>();
 				Order order = new Order(resultSet.getLong("id"), resultSet.getDouble("total_price"),
 						new CustomerDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("customer")),
 						new DeliveryAddressDaoJdbc(dataSource)
@@ -79,9 +95,8 @@ public class OrderDaoJdbc implements OrderDao {
 				productsStatement.setLong(1, order.getId());
 				ResultSet productsResultSet = statement.executeQuery();
 				while (productsResultSet.next()) {
-					products.add(new Pair<Product, Long>(
-							new ProductDaoJdbc(dataSource).retrieveByPrimaryKey(productsResultSet.getLong("id")),
-							productsResultSet.getLong("amount")));
+					products.put(new ProductDaoJdbc(dataSource).retrieveByPrimaryKey(productsResultSet.getLong("id")),
+							productsResultSet.getLong("amount"));
 				}
 			}
 		} catch (SQLException e) {
@@ -108,12 +123,12 @@ public class OrderDaoJdbc implements OrderDao {
 		Order order = null;
 		try {
 			connection = this.dataSource.getConnection();
-			String query = "select * from order where id=?";
+			String query = "select * from orders where id=?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setLong(1, id);
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
-				ArrayList<Pair<Product, Long>> products = new ArrayList<Pair<Product, Long>>();
+				HashMap<Product, Long> products = new HashMap<Product, Long>();
 				order = new Order(resultSet.getLong("id"), resultSet.getDouble("total_price"),
 						new CustomerDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("customer")),
 						new DeliveryAddressDaoJdbc(dataSource)
@@ -126,9 +141,8 @@ public class OrderDaoJdbc implements OrderDao {
 				productsStatement.setLong(1, order.getId());
 				ResultSet productsResultSet = statement.executeQuery();
 				while (productsResultSet.next()) {
-					products.add(new Pair<Product, Long>(
-							new ProductDaoJdbc(dataSource).retrieveByPrimaryKey(productsResultSet.getLong("id")),
-							productsResultSet.getLong("amount")));
+					products.put(new ProductDaoJdbc(dataSource).retrieveByPrimaryKey(productsResultSet.getLong("id")),
+							productsResultSet.getLong("amount"));
 				}
 			}
 		} catch (SQLException e) {
@@ -154,7 +168,7 @@ public class OrderDaoJdbc implements OrderDao {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
-			String update = "update order set total_price=?, customer=?, delivery_address=?, payment_method=?, current_state=? where id=?";
+			String update = "update orders set total_price=?, customer=?, delivery_address=?, payment_method=?, current_state=? where id=?";
 			PreparedStatement statement = connection.prepareStatement(update);
 			statement.setDouble(1, order.getTotalPrice());
 			statement.setLong(2, order.getCustomer().getId());

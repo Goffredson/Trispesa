@@ -3,7 +3,6 @@ package persistence.dao;
 import java.util.ArrayList;
 
 import exceptions.DBOperationException;
-import model.Category;
 import model.Product;
 
 public interface ProductDao {
@@ -31,5 +30,7 @@ public interface ProductDao {
 	public void delete(Product product);
 
 	public void deleteProduct(long id) throws DBOperationException;
+
+	public void decreaseQuantity(Product product, long quantity);
 
 }

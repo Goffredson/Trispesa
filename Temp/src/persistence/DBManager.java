@@ -9,6 +9,9 @@ import exceptions.DBOperationException;
 import model.Administrator;
 import model.Category;
 import model.Customer;
+import model.DeliveryAddress;
+import model.Order;
+import model.PaymentMethod;
 import model.Product;
 import model.SuperMarket;
 import persistence.dao.AdministratorDao;
@@ -258,7 +261,21 @@ public class DBManager {
 
 	public boolean checkPaymentData(Long paymentId, String expirationDate, Long securityCode) {
 		return getPaymentMethodDao().checkPaymentData(paymentId, expirationDate, securityCode);
-		
+	}
+
+	public void createOrder(Customer customer, String paymentId, String deliveryAddressId) {
+		long totalPrice = customer.getCartTotalPrice();
+		DeliveryAddress deliveryAddress = getDeliveryAddressDao()
+				.retrieveByPrimaryKey(Long.parseLong(deliveryAddressId));
+		PaymentMethod paymentMethod = getPaymentMethodDao().retrieveByPrimaryKey(Long.parseLong(paymentId));
+		Order order = new Order(totalPrice, customer, deliveryAddress, paymentMethod, customer.getCart());
+		getOrderDao().insert(order);
+		for (Map.Entry<Product, Long> product : customer.getCart().entrySet()) {
+			getProductDao().decreaseQuantity(product.getKey(), product.getValue());
+		}
+		customer.getCart().clear();
+		getCustomerDao().clearCart(customer.getId());
+
 	}
 
 }

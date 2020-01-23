@@ -1,8 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-
-import javafx.util.Pair;
+import java.util.HashMap;
 
 public class Order {
 
@@ -12,10 +10,10 @@ public class Order {
 	private DeliveryAddress deliveryAddress;
 	private PaymentMethod paymentMethod;
 	private CurrentState currentState;
-	private ArrayList<Pair<Product, Long>> products;
+	private HashMap<Product, Long> products;
 
 	public Order(long id, double totalPrice, Customer customer, DeliveryAddress deliveryAddress,
-			PaymentMethod paymentMethod, CurrentState currentState, ArrayList<Pair<Product, Long>> products) {
+			PaymentMethod paymentMethod, CurrentState currentState, HashMap<Product, Long> products) {
 		super();
 		this.id = id;
 		this.totalPrice = totalPrice;
@@ -25,6 +23,18 @@ public class Order {
 		this.currentState = currentState;
 		this.products = products;
 	}
+	
+	public Order(double totalPrice, Customer customer, DeliveryAddress deliveryAddress,
+			PaymentMethod paymentMethod, HashMap<Product, Long> products) {
+		super();
+		this.totalPrice = totalPrice;
+		this.customer = customer;
+		this.deliveryAddress = deliveryAddress;
+		this.paymentMethod = paymentMethod;
+		this.products = products;
+		this.currentState = CurrentState.ORDERED;
+	}
+
 
 	public long getId() {
 		return id;
@@ -74,11 +84,11 @@ public class Order {
 		this.currentState = currentState;
 	}
 
-	public ArrayList<Pair<Product, Long>> getProducts() {
+	public HashMap<Product, Long> getProducts() {
 		return products;
 	}
 
-	public void setProducts(ArrayList<Pair<Product, Long>> products) {
+	public void setProducts(HashMap<Product, Long> products) {
 		this.products = products;
 	}
 

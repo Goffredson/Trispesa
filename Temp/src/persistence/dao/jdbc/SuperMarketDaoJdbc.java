@@ -25,7 +25,6 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 		try {
 			connection = this.dataSource.getConnection();
 			connection.setAutoCommit(false);
-			connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 
 			String query = "select * from supermarket where name=? and country=? and city=? and address=?";
 			PreparedStatement selectStatement = connection.prepareStatement(query);
@@ -142,7 +141,6 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 		try {
 			connection = this.dataSource.getConnection();
 			connection.setAutoCommit(false);
-			connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 
 			String query = "select * from supermarket where id=?";
 			PreparedStatement selectStatement = connection.prepareStatement(query);
@@ -193,7 +191,6 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 		try {
 			connection = this.dataSource.getConnection();
 			connection.setAutoCommit(false);
-			connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 
 			String query = "select * from supermarket where id=?";
 			PreparedStatement selectStatement = connection.prepareStatement(query);

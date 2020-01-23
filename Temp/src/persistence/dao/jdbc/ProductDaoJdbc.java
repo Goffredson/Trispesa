@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import exceptions.DBOperationException;
-import model.Category;
 import model.Product;
 import persistence.DataSource;
 import persistence.dao.ProductDao;
@@ -26,7 +25,6 @@ public class ProductDaoJdbc implements ProductDao {
 		try {
 			connection = this.dataSource.getConnection();
 			connection.setAutoCommit(false);
-			connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 
 			// Cerca se esistono prodotti UGUALI E ATTIVI
 			String query = "select * from product where barcode=? and supermarket=? and deleted=false";
@@ -208,7 +206,6 @@ public class ProductDaoJdbc implements ProductDao {
 		try {
 			connection = this.dataSource.getConnection();
 			connection.setAutoCommit(false);
-			connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 
 			String query = "select * from product where id=?";
 			PreparedStatement selectStatement = connection.prepareStatement(query);
@@ -369,7 +366,6 @@ public class ProductDaoJdbc implements ProductDao {
 		try {
 			connection = this.dataSource.getConnection();
 			connection.setAutoCommit(false);
-			connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 
 			String query = "select * from product where id=?";
 			PreparedStatement selectStatement = connection.prepareStatement(query);

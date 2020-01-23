@@ -71,9 +71,10 @@
 				</div>
 			</div>
 			<!-- Aggiungi supermercato -->
-			<div id="addSuperMarket" class="">
-				<a href="" data-toggle="modal" data-target="#add-supermarket-modal"
-					class="btn btn-success" role="button"> + Aggiungi supermercato</a>
+			<div>
+				<button id="addSuperMarket" onclick="prepareAddSupermarket()"
+					class="btn btn-success" role="button">+ Aggiungi
+					supermercato</button>
 			</div>
 		</div>
 
@@ -100,16 +101,17 @@
 					<c:if test="${superMarket.affiliate == false}">
 						<td id="supermarket-not-affiliate">NO</td>
 					</c:if>
-					<td width="10%"><a
-						href="supermarket/manageSuperMarketForm?action=mod&id=${superMarket.id}"
-						class="btn btn-info" role="button">modifica</a></td>
+					<td width="10%"><button
+							onclick="prepareModSupermarket(${superMarket.id})"
+							class="btn btn-info" role="button">Modifica supermercato</button></td>
 					<td width="10%"><c:if test="${superMarket.affiliate == true}">
-							<a href="" data-toggle="modal"
-								data-target="#delete-modal-${cont}" class="btn btn-danger"
-								role="button">rimuovi</a>
+							<button data-toggle="modal" data-target="#delete-modal-${cont}"
+								class="btn btn-danger" role="button">Rimuovi
+								affiliazione</button>
 						</c:if> <c:if test="${superMarket.affiliate == false}">
-							<a href="supermarket/manage?action=aff&id=${superMarket.id}"
-								class="btn btn-success" role="button">affilia</a>
+							<button onclick="affiliateSupermarket(${superMarket.id})"
+								class="btn btn-success" role="button">Aggiungi
+								affiliazione</button>
 						</c:if> <!-- The Modal -->
 						<div class="modal" id="delete-modal-${cont}">
 							<div class="modal-dialog">
@@ -127,10 +129,12 @@
 									</div>
 									<!-- Modal footer -->
 									<div class="modal-footer">
-										<a href="supermarket/manage?action=del&id=${superMarket.id}"
-											type="button" class="btn btn-danger">Rimuovi affilizione</a>
-										<a href="" type="button" class="btn btn-secondary"
-											data-dismiss="modal">Annulla</a>
+										<button
+											onclick="deleteSupermarket(${superMarket.id}, ${cont})"
+											type="button" class="btn btn-danger">Rimuovi
+											affilizione</button>
+										<button type="button" class="btn btn-secondary"
+											data-dismiss="modal">Annulla</button>
 									</div>
 
 								</div>
@@ -173,12 +177,12 @@
 		</div>
 	</div>
 
-	<div class="modal" id="add-supermarket-modal">
+	<div class="modal" id="manage-supermarket-modal">
 		<div class="modal-dialog" style="max-width: 80%;">
 			<div class="modal-content">
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">Aggiungi supermercato</h4>
+					<h4 id="manage-supermarket-modal-title" class="modal-title"></h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body">
@@ -207,8 +211,8 @@
 						</div>
 					</div>
 					<!-- form -->
-					<form id="add-supermarket-form" class="needs-validation" novalidate
-						autocomplete="on">
+					<form id="manage-supermarket-form" class="needs-validation"
+						novalidate autocomplete="on">
 						<div class="form-group">
 							<label for="name">Nome:</label>
 							<div id="input">
@@ -255,22 +259,11 @@
 									autocomplete="off">
 							</div>
 						</div>
-						Affiliato:
-						<div class="form-check">
-							<label class="form-check-label"> <input type="radio"
-								class="form-check-input" name="affiliate" value="true">SI
-							</label>
-						</div>
-						<div class="form-check">
-							<label class="form-check-label"> <input type="radio"
-								class="form-check-input" name="affiliate" value="false" checked>NO
-							</label>
-						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button onclick="addSupermarket()" type="button"
-						class="btn btn-success">Aggiungi supermercato</button>
+					<button id="manage-supermarket-button" type="button"
+						class="btn btn-success"></button>
 					<button type="button" class="btn btn-secondary"
 						onclick="clearMapForm()">Reset</button>
 					<button type="button" class="btn btn-secondary"

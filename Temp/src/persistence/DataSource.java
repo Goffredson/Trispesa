@@ -19,8 +19,10 @@ public class DataSource {
 
 	public Connection getConnection() throws SQLException {
 		// System.out.println("IIII");
-		if (connection == null || connection.isClosed())
+		if (connection == null || connection.isClosed()) {
 			connection = DriverManager.getConnection(uri, username, password);
+			connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+		}
 		return connection;
 	}
 }

@@ -79,7 +79,7 @@
 				</div>
 
 				<!-- Form indirizzo e metodo di pagamento -->
-				<form method="POST" id="orderForm" action="orderConfirmed.jsp">
+				<form method="POST" id="orderForm" action="manageOrder">
 					<div class="mb-3">
 						<div class="form-group">
 							<label>Indirizzo di consegna</label> <select

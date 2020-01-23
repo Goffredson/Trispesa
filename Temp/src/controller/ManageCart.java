@@ -27,6 +27,7 @@ public class ManageCart extends HttpServlet {
 			Customer loggedCustomer = (Customer) req.getSession().getAttribute("customer");
 
 			if (operation.equals("add")) {
+				
 				boolean success = DBManager.getInstance().insertProductIntoCart(product, loggedCustomer);
 				if (!success) 
 					resp.setStatus(400);

@@ -225,11 +225,11 @@ public class DBManager {
 
 		boolean giaPresente = loggedCustomer.addProductToCart(product, 1L);
 		if (giaPresente) {
-			System.out.println("Gia presente");
+			//System.out.println("Gia presente");
 			getCustomerDao().updateCartProductAmount(product.getId(), loggedCustomer.getId(), true);
 
 		} else {
-			System.out.println("Non gia presente");
+			//System.out.println("Non gia presente");
 			getCustomerDao().insertProductIntoCart(product.getId(), loggedCustomer.getId(), 1);
 		}
 		return true;

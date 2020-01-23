@@ -1,5 +1,6 @@
 package persistence.dao.jdbc;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -402,13 +403,13 @@ public class ProductDaoJdbc implements ProductDao {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
-			String update = "update product set quantity=? where id=?";
-			PreparedStatement statement = connection.prepareStatement(update);
-			statement.setLong(1, product.getQuantity() - quantity);
-			statement.setLong(2, product.getId());
-			statement.executeUpdate();
-
+			PreparedStatement pstmt = connection.prepareStatement("call decrease_product_quantity(?,?)");
+			pstmt.setLong(1,product.getId());
+			pstmt.setLong(2,quantity);
+			pstmt.execute();
 		} catch (SQLException e) {
+			System.out.println("Non ci sono prodotti disponibili");
+			System.out.println(e.getMessage());
 			if (connection != null) {
 				try {
 					connection.rollback();

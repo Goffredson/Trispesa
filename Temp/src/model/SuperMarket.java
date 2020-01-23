@@ -1,9 +1,15 @@
 package model;
 
-public class SuperMarket {
+import java.io.Serializable;
+
+public class SuperMarket implements Serializable {
 
 	// TODO La classe potrebbe contenere un DeliveryAddress, anzich� tre campi privati?
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5506040753356135679L;
 	private long id;
 	private String name;
 	private String country;
@@ -110,11 +116,42 @@ public class SuperMarket {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof SuperMarket) {
-			SuperMarket superMarket = (SuperMarket) obj;
-			return this.id == superMarket.id;
-		}
-		return false;
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SuperMarket other = (SuperMarket) obj;
+		if (address == null) {
+			if (other.address != null)
+				return false;
+		} else if (!address.equals(other.address))
+			return false;
+		if (affiliate != other.affiliate)
+			return false;
+		if (city == null) {
+			if (other.city != null)
+				return false;
+		} else if (!city.equals(other.city))
+			return false;
+		if (country == null) {
+			if (other.country != null)
+				return false;
+		} else if (!country.equals(other.country))
+			return false;
+		if (id != other.id)
+			return false;
+		if (Double.doubleToLongBits(latitude) != Double.doubleToLongBits(other.latitude))
+			return false;
+		if (Double.doubleToLongBits(longitude) != Double.doubleToLongBits(other.longitude))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
 	}
 
 	@Override

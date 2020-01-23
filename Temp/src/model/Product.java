@@ -1,7 +1,13 @@
 package model;
 
-public class Product {
+import java.io.Serializable;
 
+public class Product implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 319582886521525933L;
 	private long id;
 	private long barcode;
 	private String name;
@@ -170,11 +176,55 @@ public class Product {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Product) {
-			Product p = (Product) obj;
-			return this.id == p.id;
-		}
-		return false;
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		if (barcode != other.barcode)
+			return false;
+		if (brand == null) {
+			if (other.brand != null)
+				return false;
+		} else if (!brand.equals(other.brand))
+			return false;
+		if (category == null) {
+			if (other.category != null)
+				return false;
+		} else if (!category.equals(other.category))
+			return false;
+		if (deleted != other.deleted)
+			return false;
+		if (Double.doubleToLongBits(discount) != Double.doubleToLongBits(other.discount))
+			return false;
+		if (id != other.id)
+			return false;
+		if (imageId == null) {
+			if (other.imageId != null)
+				return false;
+		} else if (!imageId.equals(other.imageId))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (offBrand != other.offBrand)
+			return false;
+		if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price))
+			return false;
+		if (quantity != other.quantity)
+			return false;
+		if (superMarket == null) {
+			if (other.superMarket != null)
+				return false;
+		} else if (!superMarket.equals(other.superMarket))
+			return false;
+		if (Double.doubleToLongBits(weight) != Double.doubleToLongBits(other.weight))
+			return false;
+		return true;
 	}
 
 	public String getImageId() {

@@ -399,12 +399,12 @@ public class ProductDaoJdbc implements ProductDao {
 	}
 
 	@Override
-	public void decreaseQuantity(Product product, long quantity) {
+	public void decreaseQuantity(Long product, long quantity) {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
 			PreparedStatement pstmt = connection.prepareStatement("call decrease_product_quantity(?,?)");
-			pstmt.setLong(1,product.getId());
+			pstmt.setLong(1,product);
 			pstmt.setLong(2,quantity);
 			pstmt.execute();
 		} catch (SQLException e) {
@@ -418,6 +418,28 @@ public class ProductDaoJdbc implements ProductDao {
 				}
 			}
 		} 
+	}
+
+	@Override
+	public void increaseQuantity(Long product, long l) {
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			String update="update product set quantity=quantity+? where id=?";
+			PreparedStatement pstmt = connection.prepareStatement(update);
+			pstmt.setLong(1,l);
+			pstmt.setLong(2, product);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} 
+		
 	}
 
 	

@@ -18,6 +18,12 @@
 
 <!-- CSS -->
 <link href="../css/order-form.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body class="bg-light">
@@ -162,8 +168,9 @@
 						</div>
 					</div>
 
-					<div id="paymentToast" class="toast notification-toast" role="alert"
-						aria-live="assertive" aria-atomic="true" data-delay="5000">
+					<div id="paymentToast" class="toast notification-toast"
+						role="alert" aria-live="assertive" aria-atomic="true"
+						data-delay="5000">
 						<div class="toast-header success-color-scheme">
 							<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
 							<button type="button" class="ml-2 mb-1 close"
@@ -211,6 +218,27 @@
 						value="Conferma Ordine">
 
 				</form>
+			</div>
+		</div>
+
+		<!-- Modal HTML -->
+		<div id="orderConfirmed" class="modal fade">
+			<div class="modal-dialog modal-confirm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<div class="icon-box">
+							<i class="material-icons">&#xE876;</i>
+						</div>
+						<h4 class="modal-title">Ordine confermato</h4>
+					</div>
+					<div class="modal-body">
+						<p class="text-center">La conferma dell'ordine è stata inviata
+							via mail. Il riepilogo è disponibile nella sezione ordini</p>
+					</div>
+					<div class="modal-footer">
+						<a href="../home" class="btn btn-success btn-block">Torna alla home</a>
+					</div>
+				</div>
 			</div>
 		</div>
 

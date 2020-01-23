@@ -34,7 +34,6 @@ public class ManageOrder extends HttpServlet {
 		Customer customer = (Customer) req.getSession().getAttribute("customer");
 		String paymentId = req.getParameter("paymentId");
 		String deliveryAddressId = req.getParameter("deliveryAddressId");
-		
 		DBManager.getInstance().createOrder(customer, paymentId, deliveryAddressId);
 		
 	}

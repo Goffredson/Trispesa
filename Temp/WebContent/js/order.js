@@ -44,3 +44,28 @@ $(document).ready(function() {
 		$("#paymentModal").modal("show");
 	});
 });
+$(document).ready(
+		function() {
+			$("#orderForm").submit(
+					function(event) {
+						var paymentSelected = $("#selectPayment").find(
+								"option:selected").val();
+						var addressSelected = $("#selectAddress").find(
+								"option:selected").val();
+						event.preventDefault();
+						$.ajax({
+							type : "POST",
+							url : "manageOrder",
+							data : {
+								paymentId : paymentSelected,
+								deliveryAddressId : addressSelected,
+							},
+							success : function() {
+								$("#orderConfirmed").modal("show");
+							},
+							error : function() {
+								alert("Errore");
+							}
+						});
+					});
+		});

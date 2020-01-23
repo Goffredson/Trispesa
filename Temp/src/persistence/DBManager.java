@@ -219,10 +219,6 @@ public class DBManager {
 	}
 
 	public boolean insertProductIntoCart(Product product, Customer loggedCustomer) {
-
-		if (getQuantityOfProduct(product.getId()) == 0)
-			return false;
-
 		boolean giaPresente = loggedCustomer.addProductToCart(product, 1L);
 		if (giaPresente) {
 			//System.out.println("Gia presente");
@@ -270,12 +266,13 @@ public class DBManager {
 		PaymentMethod paymentMethod = getPaymentMethodDao().retrieveByPrimaryKey(Long.parseLong(paymentId));
 		Order order = new Order(totalPrice, customer, deliveryAddress, paymentMethod, customer.getCart());
 		getOrderDao().insert(order);
-		for (Map.Entry<Product, Long> product : customer.getCart().entrySet()) {
-			getProductDao().decreaseQuantity(product.getKey(), product.getValue());
-		}
 		customer.getCart().clear();
 		getCustomerDao().clearCart(customer.getId());
-
 	}
-
+	public void increaseProductQuantity(Long product,Long quantity) {
+		getProductDao().increaseQuantity(product,1L);
+	}
+	public void decreaseProductQuantity(Long product,Long quantity) {
+		getProductDao().decreaseQuantity(product,1L);
+	}
 }

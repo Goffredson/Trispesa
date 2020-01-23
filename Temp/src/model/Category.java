@@ -1,7 +1,13 @@
 package model;
 
-public class Category {
+import java.io.Serializable;
 
+public class Category implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5535111069689573457L;
 	private long id;
 	private String name;
 	private Category parent;
@@ -54,11 +60,26 @@ public class Category {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Category) {
-			Category c = (Category) obj;
-			return this.id == c.id;
-		}
-		return false;
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Category other = (Category) obj;
+		if (id != other.id)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (parent == null) {
+			if (other.parent != null)
+				return false;
+		} else if (!parent.equals(other.parent))
+			return false;
+		return true;
 	}
 
 }

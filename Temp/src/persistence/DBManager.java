@@ -137,11 +137,31 @@ public class DBManager {
 
 	// TODO nuova funzione nel dao che torna solo gli affiliati, alfredo
 	public ArrayList<SuperMarket> getAffiliateSuperMarkets() {
-		ArrayList<SuperMarket> superMarkets = new ArrayList<SuperMarket>();
-		for (SuperMarket superMarket : getSuperMarketDao().retrieveAll()) {
-			superMarkets.add(superMarket);
+		return getSuperMarketDao().retrieveAffiliate();
+	}
+
+	public ArrayList<Product> getProductsContainsBarcode(long barcode) {
+		ArrayList<Product> products = new ArrayList<>();
+		for (Product product : getNotDeletedProducts()) {
+			if (Long.toString(product.getBarcode()).contains(Long.toString(barcode))) {
+				products.add(product);
+			}
 		}
-		return superMarkets;
+		return products;
+	}
+
+	public ArrayList<SuperMarket> getAffiliateSuperMarketsDontSellProduct(long barcode) {
+		return getSuperMarketDao().retrieveAffiliateDontSellProduct(barcode);
+	}
+
+	public ArrayList<Product> getProductsByBarcode(long barcode) {
+		ArrayList<Product> products = new ArrayList<>();
+		for (Product product : getNotDeletedProducts()) {
+			if (product.getBarcode() == barcode) {
+				products.add(product);
+			}
+		}
+		return products;
 	}
 
 	// TODO va fatto il metodo nel dao giorgio
@@ -221,11 +241,11 @@ public class DBManager {
 	public boolean insertProductIntoCart(Product product, Customer loggedCustomer) {
 		boolean giaPresente = loggedCustomer.addProductToCart(product, 1L);
 		if (giaPresente) {
-			//System.out.println("Gia presente");
+			// System.out.println("Gia presente");
 			getCustomerDao().updateCartProductAmount(product.getId(), loggedCustomer.getId(), true);
 
 		} else {
-			//System.out.println("Non gia presente");
+			// System.out.println("Non gia presente");
 			getCustomerDao().insertProductIntoCart(product.getId(), loggedCustomer.getId(), 1);
 		}
 		return true;
@@ -269,15 +289,17 @@ public class DBManager {
 		customer.getCart().clear();
 		getCustomerDao().clearCart(customer.getId());
 	}
-	public void increaseProductQuantity(Long product,Long quantity) {
-		getProductDao().increaseQuantity(product,1L);
+
+	public void increaseProductQuantity(Long product, Long quantity) {
+		getProductDao().increaseQuantity(product, 1L);
 	}
-	public void decreaseProductQuantity(Long product,Long quantity) {
-		getProductDao().decreaseQuantity(product,1L);
+
+	public void decreaseProductQuantity(Long product, Long quantity) {
+		getProductDao().decreaseQuantity(product, 1L);
 	}
 
 	public void emptyCustomerCart(long idCustomer) {
 		getCustomerDao().clearCart(idCustomer);
-		
+
 	}
 }

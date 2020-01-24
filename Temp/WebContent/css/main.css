@@ -2,7 +2,10 @@
 body {
 	padding-top: 56px;
 }
-
+.ui-autocomplete-loading {
+	background: white url("../images/spinner.gif") no-repeat;
+	background-size: 30px 30px;
+	background-position: 95%;
 .color-scheme {
 	color: white !important;
 	background-color: cornflowerblue !important;

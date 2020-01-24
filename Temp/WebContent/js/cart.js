@@ -26,17 +26,16 @@ function startTimer(duration, display) {
 		if (--timer < 0) {
 			sessionStorage.removeItem("remainingTime");
 			clearInterval(intervalId);
-			var productsInCart={};
-			$("#listaProdottiCarrello").children().each(function(node){
-				var productId=$(this).attr("id").split("_")[1];
-				//alert(productId);
-				var amount=$(this).find("#productQuantity").html();
-				productsInCart[productId]=amount;
+			var productsInCart = {};
+			$("#listaProdottiCarrello").children().each(function() {
+				var productId = $(this).attr("id").split("_")[1];
+				var amount = $(this).find("#productQuantity").html();
+				productsInCart[productId] = amount;
 			});
 			$.ajax({
 				type : "POST",
 				url : "manageCart",
-				datatype:"JSON",
+				datatype : "JSON",
 				data : JSON.stringify(productsInCart),
 				success : function() {
 					$("#cartToast").toast("show");
@@ -49,7 +48,7 @@ function startTimer(duration, display) {
 }
 
 updateCart = function(id, name, supermarket, price, op) {
-	//alert("Entro");
+	// alert("Entro");
 
 	$
 			.ajax({

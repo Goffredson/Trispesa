@@ -7,7 +7,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -82,20 +81,24 @@ public class ManageCart extends HttpServlet {
 			line = reader.readLine();
 		}
 		Gson gson = new Gson();
-		Type hashMapType = new TypeToken<HashMap<Long,Long>>(){}.getType();
-		HashMap<Long,Long> productsInCart=gson.fromJson(jsonReceived.toString(),hashMapType);
-		for (Entry<Long, Long> p : productsInCart.entrySet()) {
-			DBManager.getInstance().increaseProductQuantity(p.getKey(),p.getValue());
+		Type hashMapType = new TypeToken<HashMap<Long, Long>>() {
+		}.getType();
+		HashMap<Long, Long> productsInCart = gson.fromJson(jsonReceived.toString(), hashMapType);
+
+		for (Map.Entry<Long, Long> p : productsInCart.entrySet()) {
+			DBManager.getInstance().increaseProductQuantity(p.getKey(), p.getValue());
 		}
-		if(req.getSession().getAttribute("anonymousCart")!=null) {
-			HashMap<Product,Long> anonymousCart=(HashMap<Product, Long>) req.getSession().getAttribute("anonymousCart");
+		
+		if (req.getSession().getAttribute("anonymousCart") != null) {
+			HashMap<Product, Long> anonymousCart = (HashMap<Product, Long>) req.getSession().getAttribute("anonymousCart");
 			anonymousCart.clear();
 		}
 		else {
-			Customer c=(Customer) req.getSession().getAttribute("customer");
-			c.getCart().clear();
-			DBManager.getInstance().emptyCustomerCart(c.getId());
-			
+			Customer customer = (Customer) req.getSession().getAttribute("customer");
+			customer.getCart().clear();
+			DBManager.getInstance().emptyCustomerCart(customer.getId());
 		}
+		
+		
 	}
 }

@@ -235,7 +235,7 @@
 										<c:set var="totalCartPrice" scope="request"
 											value="${totalCartPrice + product.key.price*product.value}" />
 
-										<tr id="product${product.key.id}">
+										<tr id="product_${product.key.id}">
 											<th scope="row" id="productQuantity">${product.value}</th>
 											<td id="productName">${product.key.name}</td>
 											<td id="productPrice">${product.key.price}</td>
@@ -250,7 +250,7 @@
 										<c:set var="totalCartPrice" scope="request"
 											value="${totalCartPrice + product.key.price*product.value}" />
 
-										<tr id="product${product.key.id}">
+										<tr id="product_${product.key.id}">
 											<th scope="row" id="productQuantity">${product.value}</th>
 											<td id="productName">${product.key.name}</td>
 											<td id="productPrice">${product.key.price}</td>

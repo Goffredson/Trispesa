@@ -11,6 +11,10 @@
 <title>Trispesa</title>
 <!-- Inclusioni (bootstrap, JQuery)  -->
 <script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/jquery/jquery-ui.js"></script>
+
+<link href="vendor/jquery/jquery-ui.css" rel="stylesheet">
+
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- Script -->
@@ -18,6 +22,11 @@
 <script src="js/login.js"></script>
 
 <!-- CSS -->
+<style>
+.dropdown-menu>li.checkbox {
+	padding: 3px 20px;
+}
+</style>
 <link href="css/main.css" rel="stylesheet">
 </head>
 
@@ -189,81 +198,172 @@
 	</nav>
 
 	<!-- Corpo della pagina: carousel e ricerca -->
+	<!-- 	<div class="container"> -->
+	<!-- 		<div class="row"> -->
+	<!-- Barra di ricerca -->
+	<!-- 			<form id="searchProduct" method="post" action="user/showProducts"> -->
+	<!-- 				<div class="input-group"> -->
+	<!-- 					<input id="nomeProdotto" name="nomeProdotto" type="text" -->
+	<!-- 						class="form-control" placeholder="Prodotto"> -->
+	<!-- 					<script type="text/javascript"> -->
+	<!-- // 						$("#searchProduct").submit(function(e) { -->
+
+	<!-- // 							var nomeProdotto = $("#nomeProdotto").val(); -->
+	<!-- // 							if (nomeProdotto == "") { -->
+	<!-- // 								window.alert("Inserisci un prodotto"); -->
+	<!-- // 								e.preventDefault(); -->
+	<!-- // 							} -->
+	<!-- // 						}); -->
+	<!-- 					</script> -->
+	<!-- 					<input class="btn btn-success" value="Cerca" type="submit" /> -->
+	<!-- 					<div class="input-group-append"></div> -->
+	<!-- 				</div> -->
+	<!-- 			</form> -->
+	<!-- 		</div> -->
 	<div class="container">
 		<div class="row">
-			<!-- Barra di ricerca -->
-			<form id="searchProduct" method="post" action="user/showProducts">
-				<div class="input-group">
-					<input id="nomeProdotto" name="nomeProdotto" type="text"
-						class="form-control" placeholder="Prodotto">
-					<script type="text/javascript">
-						$("#searchProduct").submit(function(e) {
-
-							var nomeProdotto = $("#nomeProdotto").val();
-							if (nomeProdotto == "") {
-								window.alert("Inserisci un prodotto");
-								e.preventDefault();
-							}
-						});
-					</script>
-					<input class="btn btn-success" value="Cerca" type="submit" />
-					<div class="input-group-append"></div>
+			<div class="col-md-12">
+				<div class="input-group" id="boot-search-box">
+					<input type="text" class="form-control"
+						placeholder="Type a search term like: mobile phone" />
+					<div class="input-group-btn">
+						<div class="btn-group" role="group">
+							<div class="dropdown dropdown-lg">
+								<button type="button" class="btn btn-default dropdown-toggle"
+									data-toggle="dropdown" aria-expanded="false">
+									<span class="caret"></span>
+								</button>
+								<div class="dropdown-menu dropdown-menu-right" role="menu">
+									<!-- 									<form class="form-horizontal" role="form"> -->
+									<p>
+										<label for="amount">Price range:</label> <input type="text"
+											id="amount" readonly
+											style="border: 0; color: #f6931f; font-weight: bold;">
+									</p>
+									<div id="slider-range"></div>
+									<script type="text/javascript">
+										$("#slider-range")
+												.slider(
+														{
+															range : true,
+															min : 0,
+															max : 500,
+															values : [ 75, 300 ],
+															slide : function(
+																	event, ui) {
+																$("#amount")
+																		.val(
+																				"$"
+																						+ ui.values[0]
+																						+ " - $"
+																						+ ui.values[1]);
+															}
+														});
+										$("#amount")
+												.val(
+														"$"
+																+ $(
+																		"#slider-range")
+																		.slider(
+																				"values",
+																				0)
+																+ " - $"
+																+ $(
+																		"#slider-range")
+																		.slider(
+																				"values",
+																				1));
+									</script>
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input"
+											id="exampleCheck1"> <label class="form-check-label"
+											for="exampleCheck1">Di marca</label>
+									</div>
+									<div>
+										<span class="dropdown-submenu"> <span
+											class="glyphicon glyphicon-filter dropdown-toggle"
+											data-toggle="dropdown-submenu" aria-expanded="true"></span> <!-- modal -->
+											<ul class="dropdown-menu">
+												<li class="checkbox keep-open"><label><input
+														type="checkbox">option 1</label></li>
+												<li class="checkbox keep-open"><label><input
+														type="checkbox">option 2</label></li>
+												<li class="checkbox keep-open"><label><input
+														type="checkbox">option 3</label></li>
+												<li class="checkbox keep-open"><label><input
+														type="checkbox">option 4</label></li>
+												<li><a class="btn">select</a></li>
+											</ul>
+										</span>
+									</div>
+								</div>
+								<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+								<script>
+									$('.keep-open')
+											.click(
+													function(e) {
+														if (/input|label/i
+																.test(e.target.tagName)) {
+															var parent = $(
+																	e.target)
+																	.parent();
+															if (parent
+																	.hasClass('checkbox')) {
+																var checkbox = parent
+																		.find('input[type=checkbox]');
+																checkbox
+																		.prop(
+																				"checked",
+																				!checkbox
+																						.prop("checked"));
+																return false;
+															}
+														}
+													});
+								</script>
+							</div>
+						</div>
+						<button type="button" class="btn btn-success ">
+							<small> Cerca</small>
+						</button>
+					</div>
 				</div>
-			</form>
-
-			<!-- 					<div class="container my-4"> -->
-			<!-- 						<hr> -->
-			<!-- 						<ul class="list-group list-group-flush"> -->
-
-			<!-- 							TODO: Deve diventare un menù a tendina, checkbox non hanno senso -->
-			<%-- 							<c:forEach items="${listaCategorieFoglia}" var="categoria"> --%>
-			<!-- 								<li class="list-group-item"> -->
-			<!-- 									Default checked -->
-			<!-- 									<div class="custom-control custom-checkbox"> -->
-			<%-- 										<input name="${categoria.name}" type="checkbox" --%>
-			<%-- 											class="custom-control-input" id="${categoria.name}"> --%>
-			<%-- 										<label class="custom-control-label" for="${categoria.name}">${categoria.name}</label> --%>
-			<!-- 									</div> -->
-			<!-- 								</li> -->
-			<%-- 							</c:forEach> --%>
-			<!-- 						</ul> -->
-
-			<!-- 					</div> -->
-
-			<!-- Carosello prodotti -->
-			<div class="carousel slide my-4  mx-auto" data-ride="carousel">
-				<ol class="carousel-indicators">
-					<li data-target="#carouselExampleIndicators" data-slide-to="0"
-						class="active"></li>
-					<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-					<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-				</ol>
-				<div class="carousel-inner" role="listbox">
-					<div class="carousel-item active">
-						<img class="d-block img-fluid" src="http://placehold.it/900x350"
-							alt="First slide">
-					</div>
-					<div class="carousel-item">
-						<img class="d-block img-fluid" src="http://placehold.it/900x350"
-							alt="Second slide">
-					</div>
-					<div class="carousel-item">
-						<img class="d-block img-fluid" src="http://placehold.it/900x350"
-							alt="Third slide">
-					</div>
-				</div>
-				<a class="carousel-control-prev" href="#carouselExampleIndicators"
-					role="button" data-slide="prev"> <span
-					class="carousel-control-prev-icon" aria-hidden="true"></span> <span
-					class="sr-only">Previous</span>
-				</a> <a class="carousel-control-next" href="#carouselExampleIndicators"
-					role="button" data-slide="next"> <span
-					class="carousel-control-next-icon" aria-hidden="true"></span> <span
-					class="sr-only">Next</span>
-				</a>
 			</div>
 		</div>
 	</div>
+
+	<div class="carousel slide my-4  mx-auto" data-ride="carousel">
+		<ol class="carousel-indicators">
+			<li data-target="#carouselExampleIndicators" data-slide-to="0"
+				class="active"></li>
+			<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+			<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+		</ol>
+		<div class="carousel-inner" role="listbox">
+			<div class="carousel-item active">
+				<img class="d-block img-fluid" src="http://placehold.it/900x350"
+					alt="First slide">
+			</div>
+			<div class="carousel-item">ul class="dropdown-submenu" role="menu">
+				<img class="d-block img-fluid" src="http://placehold.it/900x350"
+					alt="Second slide">
+			</div>
+			<div class="carousel-item">
+				<img class="d-block img-fluid" src="http://placehold.it/900x350"
+					alt="Third slide">
+			</div>
+		</div>
+		<a class="carousel-control-prev" href="#carouselExampleIndicators"
+			role="button" data-slide="prev"> <span
+			class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+			class="sr-only">Previous</span>
+		</a> <a class="carousel-control-next" href="#carouselExampleIndicators"
+			role="button" data-slide="next"> <span
+			class="carousel-control-next-icon" aria-hidden="true"></span> <span
+			class="sr-only">Next</span>
+		</a>
+	</div>
+
 	<!-- Footer (da mettere: link a github e a sito unical) -->
 	<footer class="py-3 bg-dark">
 		<div class="container">

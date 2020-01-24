@@ -24,21 +24,24 @@ function startTimer(duration, display) {
 		sessionStorage.setItem("remainingTime", (minutes + ":" + seconds));
 
 		if (--timer < 0) {
+			sessionStorage.removeItem("remainingTime");
 			clearInterval(intervalId);
-			productsInCart=new Object();
-			$("#listaProdottiCarrello").each(function(node){
-				var productId=node.attr("id").split("_")[1];
-				var amount=node.fine("#productQuantity").html();
+			var productsInCart={};
+			$("#listaProdottiCarrello").children().each(function(node){
+				var productId=$(this).attr("id").split("_")[1];
+				//alert(productId);
+				var amount=$(this).find("#productQuantity").html();
 				productsInCart[productId]=amount;
 			});
 			$.ajax({
 				type : "POST",
-				url : "manageOrder",
+				url : "manageCart",
 				datatype:"JSON",
 				data : JSON.stringify(productsInCart),
 				success : function() {
 					$("#cartToast").toast("show");
 					$("#listaProdottiCarrello").empty();
+					$("#totalCartPrice").html("0");
 				},
 			});
 		}
@@ -57,7 +60,7 @@ updateCart = function(id, name, supermarket, price, op) {
 					operation : op
 				},
 				success : function() {
-					startTimer(60 * 30, $("#timer"));
+					startTimer(10, $("#timer"));
 					var idTag = 'product_' + id;
 					if (op === "add") {
 						// Se il prodotto esiste già aggiorno la quantità

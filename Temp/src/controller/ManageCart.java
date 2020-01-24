@@ -1,13 +1,19 @@
 package controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import model.Customer;
 import model.Product;
@@ -21,23 +27,22 @@ public class ManageCart extends HttpServlet {
 		Long productId = Long.parseLong(req.getParameter("productId"));
 		String operation = req.getParameter("operation");
 		Product product = DBManager.getInstance().getProductById(productId);
-		//System.out.println(product.hashCode());
 		HashMap<Product, Long> anonymousCart = null;
 
 		// Se c'è qualcuno loggato
 		if (req.getSession().getAttribute("customer") != null) {
 			Customer loggedCustomer = (Customer) req.getSession().getAttribute("customer");
+
 			if (operation.equals("add")) {
-				DBManager.getInstance().decreaseProductQuantity(product.getId(), 1L);
-				if (anonymousCart.containsKey(product))
-					anonymousCart.replace(product, anonymousCart.get(product) + 1);
-				else
-					anonymousCart.put(product, 1L);
+				DBManager.getInstance().decreaseProductQuantity(productId, 1L);
+				boolean success = DBManager.getInstance().insertProductIntoCart(product, loggedCustomer);
+				if (!success)
+					resp.setStatus(400);
+			} else if (operation.equals("remove")) {
+				DBManager.getInstance().increaseProductQuantity(productId, 1L);
+				DBManager.getInstance().removeProductFromCart(product, loggedCustomer);
 			}
-			else {
-				DBManager.getInstance().increaseProductQuantity(product.getId(), 1L);
-				anonymousCart.remove(product);
-			}
+
 		} else {
 			if (req.getSession().getAttribute("anonymousCart") == null) {
 				anonymousCart = new HashMap<>();
@@ -49,7 +54,7 @@ public class ManageCart extends HttpServlet {
 			if (operation.equals("add")) {
 				DBManager.getInstance().decreaseProductQuantity(productId, 1L);
 				if (anonymousCart.containsKey(product))
-					anonymousCart.replace(product, anonymousCart.get(product) + 1L);
+					anonymousCart.replace(product, anonymousCart.get(product) + 1);
 				else
 					anonymousCart.put(product, 1L);
 
@@ -57,14 +62,26 @@ public class ManageCart extends HttpServlet {
 			// Rimozione
 			else if (operation.equals("remove")) {
 				DBManager.getInstance().increaseProductQuantity(productId, 1L);
-				System.out.println(product.hashCode());
-				for (Map.Entry<Product, Long> p : anonymousCart.entrySet())
-					System.out.println(p.getKey().hashCode());
-				if (anonymousCart.get(product) == 1) {
+				if (anonymousCart.get(product) == 1)
 					anonymousCart.remove(product);
-				} else
+				else
 					anonymousCart.replace(product, anonymousCart.get(product) - 1);
 			}
 		}
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		StringBuffer jsonReceived = new StringBuffer();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(req.getInputStream()));
+		String line = reader.readLine();
+		while (line != null) {
+			jsonReceived.append(line);
+			line = reader.readLine();
+		}
+		Gson gson = new Gson();
+		Type hashMapType = new TypeToken<HashMap<Long,Long>>(){}.getType();
+		HashMap<Long,Long> productsInCart=gson.fromJson(jsonReceived.toString(),hashMapType);
+		
 	}
 }

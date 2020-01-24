@@ -100,7 +100,7 @@
 					</li>
 					<li class="nav-item" style="display: none;" id="ordini"><a
 						class="nav-link" href="#">Ordini</a></li>
-					<li class="nav-item"  style="display: none;" id="profilo"><a
+					<li class="nav-item" style="display: none;" id="profilo"><a
 						class="nav-link" href="user?page=profile">Profilo</a></li>
 					<li class="nav-item" style="display: none;" id="dieta"><a
 						class="nav-link" href="#">Dieta</a></li>
@@ -133,6 +133,17 @@
 		</div>
 		<div class="toast-body" id="toastMessage">Devi fare il login
 			prima di poter completare l'ordine.</div>
+	</div>
+		<div id="cartToast" class="toast notification-toast" role="alert"
+		aria-live="assertive" aria-atomic="true" data-delay="5000">
+		<div class="toast-header error-color-scheme">
+			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
+			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="toast-body" id="toastMessage">Hai esaurito il tempo a disposizione,il tuo carrello verrà svuotato</div>
 	</div>
 	<!-- Chiusura toast di notifica -->
 
@@ -204,7 +215,10 @@
 						</div>
 						<!--Body-->
 						<div class="modal-body">
-
+							<div class="count">
+								<h3><small>Tempo rimanente</small></h3>
+								<div id="timer"></div>
+							</div>
 							<table class="table">
 								<thead>
 									<tr>
@@ -260,13 +274,13 @@
 							<button type="button" class="btn btn-outline-primary"
 								data-dismiss="modal">Chiudi</button>
 							<c:if test="${customer != null}">
-								<a id="orderButton" href="manageOrder"><button class="btn btn-primary">Conferma
-										ordine</button></a>
+								<a id="orderButton" href="manageOrder"><button
+										class="btn btn-primary">Conferma ordine</button></a>
 							</c:if>
 							<c:if test="${customer == null}">
-								<a id="orderAnchor" href="" ><button id="orderButton" 
-									onclick="$('#modalCart').modal('hide'); $('.modal-backdrop').hide(); $('#loginToast').toast('show');"
-									class="btn btn-primary">Conferma ordine</button></a>
+								<a id="orderAnchor" href=""><button id="orderButton"
+										onclick="$('#modalCart').modal('hide'); $('.modal-backdrop').hide(); $('#loginToast').toast('show');"
+										class="btn btn-primary">Conferma ordine</button></a>
 							</c:if>
 						</div>
 					</div>

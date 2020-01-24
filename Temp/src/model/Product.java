@@ -2,7 +2,7 @@ package model;
 
 import java.io.Serializable;
 
-public class Product implements Serializable{
+public class Product implements Serializable {
 
 	/**
 	 * 
@@ -156,23 +156,7 @@ public class Product implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (barcode ^ (barcode >>> 32));
-		result = prime * result + ((brand == null) ? 0 : brand.hashCode());
-		result = prime * result + ((category == null) ? 0 : category.hashCode());
-		result = prime * result + (deleted ? 1231 : 1237);
-		long temp;
-		temp = Double.doubleToLongBits(discount);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((imageId == null) ? 0 : imageId.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + (offBrand ? 1231 : 1237);
-		temp = Double.doubleToLongBits(price);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + (int) (quantity ^ (quantity >>> 32));
-		result = prime * result + ((superMarket == null) ? 0 : superMarket.hashCode());
-		temp = Double.doubleToLongBits(weight);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 
@@ -185,46 +169,7 @@ public class Product implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Product other = (Product) obj;
-		if (barcode != other.barcode)
-			return false;
-		if (brand == null) {
-			if (other.brand != null)
-				return false;
-		} else if (!brand.equals(other.brand))
-			return false;
-		if (category == null) {
-			if (other.category != null)
-				return false;
-		} else if (!category.equals(other.category))
-			return false;
-		if (deleted != other.deleted)
-			return false;
-		if (Double.doubleToLongBits(discount) != Double.doubleToLongBits(other.discount))
-			return false;
 		if (id != other.id)
-			return false;
-		if (imageId == null) {
-			if (other.imageId != null)
-				return false;
-		} else if (!imageId.equals(other.imageId))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (offBrand != other.offBrand)
-			return false;
-		if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price))
-			return false;
-		if (quantity != other.quantity)
-			return false;
-		if (superMarket == null) {
-			if (other.superMarket != null)
-				return false;
-		} else if (!superMarket.equals(other.superMarket))
-			return false;
-		if (Double.doubleToLongBits(weight) != Double.doubleToLongBits(other.weight))
 			return false;
 		return true;
 	}

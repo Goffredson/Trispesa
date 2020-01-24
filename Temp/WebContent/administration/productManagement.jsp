@@ -16,10 +16,9 @@
 <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- css -->
+<link rel="stylesheet" href="../css/jquery-ui.css">
 <link href="../css/main.css" rel="stylesheet">
 
-<link rel="stylesheet"
-	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body>
 
@@ -158,6 +157,7 @@
 					<form id="manage-product-form" class="needs-validation" novalidate
 						autocomplete="on" enctype="multipart/form-data">
 						<div id="product-id" class="hidden"></div>
+						<div id="product-image" class="hidden"></div>
 						<div class="form-group">
 							<label for="barcode">Codice a barre:</label> <input type="number"
 								class="form-control" id="barcode" placeholder="Codice a barre"

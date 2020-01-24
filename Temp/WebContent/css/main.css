@@ -18,7 +18,6 @@ body {
 	background-color: green !important;
 }
 
-
 .login-button {
 	background-color: cornflowerblue !important;
 	border: none;
@@ -55,19 +54,19 @@ body {
 }
 
 div.scrollmenu {
-  overflow: hidden;
-  white-space: nowrap;
+	overflow: hidden;
+	white-space: nowrap;
 }
 
 div.scrollmenu a {
-  display: inline-block;
-  text-align: center;
-  padding: 14px;
-  text-decoration: none;
+	display: inline-block;
+	text-align: center;
+	padding: 14px;
+	text-decoration: none;
 }
 
 div.scrollmenu a:hover {
-  background-color: white;
+	background-color: white;
 }
 
 /* Parte amministrazione */
@@ -152,4 +151,10 @@ div.scrollmenu a:hover {
 
 #colonna {
 	margin: 20px !important;
+}
+
+.ui-autocomplete-loading {
+	background: white url("../images/spinner.gif") no-repeat;
+	background-size: 30px 30px;
+	background-position: 95%;
 }

@@ -73,7 +73,9 @@ public class ManageProduct extends HttpServlet {
 					}
 				}
 				if (imageId == null) {
-					imageId = "1DbMKHR-mObaG56QAVDqGHoO4XoXStC2M";
+					imageId = req.getParameter("product-image");
+					if (imageId == null)
+						imageId = "1DbMKHR-mObaG56QAVDqGHoO4XoXStC2M";
 				}
 
 				Product product;

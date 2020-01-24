@@ -209,7 +209,7 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 				String updateProduct = "update product set deleted=true where supermarket=?";
 				PreparedStatement updateStatement = connection.prepareStatement(updateProduct);
 				updateStatement.setLong(1, id);
-				statement.executeUpdate();
+				System.out.println(updateStatement.executeUpdate());
 			}
 
 			connection.commit();
@@ -228,6 +228,73 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 				throw new RuntimeException(e.getMessage());
 			}
 		}
+	}
+
+	@Override
+	public ArrayList<SuperMarket> retrieveAffiliate() {
+		Connection connection = null;
+		ArrayList<SuperMarket> supermarkets = new ArrayList<SuperMarket>();
+		try {
+			connection = this.dataSource.getConnection();
+			String query = "select * from supermarket where affiliate=true";
+			PreparedStatement statement = connection.prepareStatement(query);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				supermarkets.add(new SuperMarket(resultSet.getLong("id"), resultSet.getString("name"),
+						resultSet.getString("country"), resultSet.getString("city"), resultSet.getString("address"),
+						resultSet.getDouble("latitude"), resultSet.getDouble("longitude"),
+						resultSet.getBoolean("affiliate")));
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
+		}
+		return supermarkets;
+	}
+
+	@Override
+	public ArrayList<SuperMarket> retrieveAffiliateDontSellProduct(long barcode) {
+		Connection connection = null;
+		ArrayList<SuperMarket> supermarkets = new ArrayList<SuperMarket>();
+		try {
+			connection = this.dataSource.getConnection();
+			String query = "select * from supermarket as s where affiliate=true and not exists(select * from product where barcode=? and supermarket=s.id and deleted=false)";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setLong(1, barcode);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				supermarkets.add(new SuperMarket(resultSet.getLong("id"), resultSet.getString("name"),
+						resultSet.getString("country"), resultSet.getString("city"), resultSet.getString("address"),
+						resultSet.getDouble("latitude"), resultSet.getDouble("longitude"),
+						resultSet.getBoolean("affiliate")));
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
+		}
+		return supermarkets;
 	}
 
 }

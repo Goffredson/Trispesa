@@ -23,4 +23,8 @@ public interface SuperMarketDao {
 	// DELETE
 	public void delete(SuperMarket SuperMarket);
 
+	public ArrayList<SuperMarket> retrieveAffiliate();
+
+	public ArrayList<SuperMarket> retrieveAffiliateDontSellProduct(long barcode);
+
 }

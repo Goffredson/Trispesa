@@ -18,6 +18,7 @@ $("#image-chooser").change(function() {
 });
 
 $(document).ready(function() {
+	// validazione form
 	$('#manage-product-form').validate({
 		rules : {
 			barcode : {
@@ -86,7 +87,116 @@ $(document).ready(function() {
 			$(element).addClass("is-valid").removeClass("is-invalid");
 		}
 	});
+
+	// autocomplete barcode
+	$('#barcode').autocomplete({
+		source : function(req, resp) {
+			$.ajax({
+				type : "GET",
+				url : 'product/manageProductForm?action=prod',
+				dataType : "json",
+				contentType : "application/json; charset=UTF-8",
+				data : {
+					term : req.term
+				},
+				success : function(data) {
+					if (data.length == 0) {
+						var barcode = $('#barcode').val();
+						clearForm();
+						$('#barcode').val(barcode);
+					}
+					resp(data);
+				}
+			});
+		},
+		minLength : 2,
+		select : function(e, ui) {
+			fillForm(ui.item.id);
+		}
+	});
 });
+
+$('#barcode').focusout(function(e) {
+	$.ajax({
+		type : "GET",
+		url : 'product/manageProductForm?action=eq',
+		dataType : "json",
+		contentType : "application/json; charset=UTF-8",
+		data : {
+			term : $('#barcode').val()
+		},
+		success : function(data) {
+			if (data.length == 0) {
+			} else {
+				var barcode = $('#barcode').val();
+				$('#barcode').val(barcode);
+				clearForm();
+				fillForm(data[0].id);
+			}
+		}
+	});
+});
+
+function fillForm(id) {
+	$.ajax({
+		type : "POST",
+		url : "product/manageProductForm?action=fill",
+		dataType : "json",
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify({
+			product : id
+		}),
+		success : function(data) {
+			if (data.result.result === false) {
+				$('#result-modal-title').html('Operazione annullata');
+				$('#result-modal-body').addClass('error-message');
+				$('#result-modal-type').html(data.result.type);
+				$('#result-modal-object').html(data.result.object);
+				$('#result-modal-state').html(data.result.state);
+				$('#result-modal').modal('show');
+				$('#manage-product-modal').modal('hide');
+				success = false;
+			} else {
+				$('#barcode').val(data.product.barcode);
+				$('#name').val(data.product.name);
+				$('#name').prop('readonly', true);
+				$('#brand').val(data.product.brand);
+				$('#brand').prop('readonly', true);
+				$('#weight').val(data.product.weight);
+				$('#weight').prop('readonly', true);
+				$('#superMarket').empty();
+				for (i in data.supermarkets) {
+					$('#superMarket').append(
+							'<option value="' + data.supermarkets[i].id + '">'
+									+ data.supermarkets[i].address
+									+ '</option>');
+				}
+				$('#category').append(
+						'<option value="' + data.product.category.id + '">'
+								+ data.product.category.name + '</option>');
+				$('#category').prop('disabled', true);
+				$('#category-select').append(
+						'<input type="hidden" name="category" value="'
+								+ data.product.category.id + '">');
+				if (data.product.offBrand) {
+					$('#offbrand-false').prop('checked', false);
+					$('#offbrand-true').prop('checked', true);
+				} else {
+					$('#offbrand-false').prop('checked', true);
+					$('#offbrand-true').prop('checked', false);
+				}
+				$('#image').attr('src', data.product.imagePath);
+				$('#product-id').html(
+						'<input type="hidden" name="id" value="'
+								+ data.product.id + '">');
+				$('#product-image').html(
+						'<input type="hidden" name="product-image" value="'
+								+ data.product.imageId + '">');
+				success = true;
+			}
+		}
+	});
+}
 
 function clearForm() {
 	$('#barcode').val('');
@@ -96,8 +206,6 @@ function clearForm() {
 	$('#price').val('');
 	$('#quantity').val('');
 	$('#discount').val('');
-	$('#superMarket').empty();
-	$('#category').empty();
 	$('select').prop('disabled', false);
 	$('input').prop('readonly', false);
 	$('#image')
@@ -109,14 +217,14 @@ $('#result-modal').on('hide.bs.modal', function(event) {
 	location.reload();
 });
 
-// TODO Autocomplete form
-
 function prepareAddProduct() {
 	$('#add-product')
 			.html(
 					'<span class="spinner-border spinner-border-sm"></span> Caricamento');
 	$('.btn').prop('disabled', true);
 	clearForm();
+	$('#superMarket').empty();
+	$('#category').empty();
 	manageAddProduct();
 	$('#manage-product-modal-title').html('Aggiungi prodotto');
 	$('#manage-product-button').html("Aggiungi prodotto");
@@ -131,6 +239,8 @@ function prepareModProduct(id) {
 					'<span class="spinner-border spinner-border-sm"></span> Caricamento');
 	$('.btn').prop('disabled', true);
 	clearForm();
+	$('#superMarket').empty();
+	$('#category').empty();
 	manageModProduct(id);
 	$('#manage-product-modal-title').html('Modifica prodotto');
 	$('#manage-product-button').html("Modifica prodotto");

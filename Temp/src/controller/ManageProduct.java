@@ -1,7 +1,11 @@
 package controller;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
@@ -11,9 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import drive.CreateGoogleFile;
 import exceptions.DBOperationException;
 import model.Category;
+import model.OperationResult;
 import model.Product;
 import model.SuperMarket;
 import persistence.DBManager;
@@ -30,10 +38,12 @@ public class ManageProduct extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		OperationResult operationResult = new OperationResult();
+		Gson gson = new Gson();
 		try {
 			switch (req.getParameter("action")) {
 			case "add": {
-				req.getSession().setAttribute("op", "Aggiungi prodotto");
+				operationResult.setType("Aggiungi prodotto");
 
 				// gets absolute path of the web application
 				String applicationPath = req.getServletContext().getRealPath("");
@@ -65,7 +75,6 @@ public class ManageProduct extends HttpServlet {
 				if (imageId == null) {
 					imageId = "1DbMKHR-mObaG56QAVDqGHoO4XoXStC2M";
 				}
-				
 
 				Product product;
 				long barcode = Long.parseLong(req.getParameter("barcode"));
@@ -89,14 +98,14 @@ public class ManageProduct extends HttpServlet {
 
 				DBManager.getInstance().addProduct(product);
 
-				req.getSession().setAttribute("result", true);
-				req.getSession().setAttribute("object", product.toString());
-				resp.sendRedirect("../product");
+				operationResult.setResult(true);
+				operationResult.setObject(product.toString());
+				operationResult.setState("Completato");
 			}
 				break;
 
 			case "mod": {
-				req.getSession().setAttribute("op", "Modifica prodotto");
+				operationResult.setType("Modifica prodotto");
 
 				// gets absolute path of the web application
 				String applicationPath = req.getServletContext().getRealPath("");
@@ -126,7 +135,7 @@ public class ManageProduct extends HttpServlet {
 					}
 				}
 
-				long id = Long.parseLong(req.getParameter("old"));
+				long id = Long.parseLong(req.getParameter("id"));
 				Product product = DBManager.getInstance().getProductById(id);
 				if (imageId == null) {
 					imageId = product.getImagePath().substring(43);
@@ -152,29 +161,45 @@ public class ManageProduct extends HttpServlet {
 
 				DBManager.getInstance().modifyProduct(product);
 
-				req.getSession().setAttribute("result", true);
-				req.getSession().setAttribute("object", product.toString());
-				resp.sendRedirect("../product");
+				operationResult.setResult(true);
+				operationResult.setObject(product.toString());
+				operationResult.setState("Completato");
 			}
 				break;
 
 			case "del": {
-				req.getSession().setAttribute("op", "Elimina prodotto");
+				operationResult.setType("Rimuovi prodotto");
 
-				long id = Long.parseLong(req.getParameter("id"));
+				StringBuffer stringBuffer = new StringBuffer();
+				BufferedReader bufferedReader = new BufferedReader(
+						new InputStreamReader(req.getInputStream(), StandardCharsets.UTF_8));
+				String line = bufferedReader.readLine();
+				while (line != null) {
+					stringBuffer.append(line);
+					line = bufferedReader.readLine();
+				}
+				long id = gson.fromJson(stringBuffer.toString(), JsonObject.class).get("product").getAsLong();
 
 				DBManager.getInstance().removeProductById(id);
 
-				req.getSession().setAttribute("result", true);
-				req.getSession().setAttribute("object", DBManager.getInstance().getProductById(id).toString());
-				resp.sendRedirect("../product");
+				Product product = DBManager.getInstance().getProductById(id);
+
+				operationResult.setResult(true);
+				operationResult.setObject(product.toString());
+				operationResult.setState("Completato");
 			}
 				break;
 			}
 		} catch (DBOperationException e) {
-			req.getSession().setAttribute("result", false);
-			req.getSession().setAttribute("exception", e);
-			resp.sendRedirect("../product");
+			operationResult.setResult(false);
+			operationResult.setObject(e.getMessage());
+			operationResult.setState("Annullato");
+		} finally {
+			PrintWriter writer = resp.getWriter();
+			resp.setContentType("application/json");
+			resp.setCharacterEncoding("UTF-8");
+			writer.println(gson.toJson(operationResult));
+			writer.flush();
 		}
 	}
 

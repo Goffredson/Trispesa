@@ -18,6 +18,8 @@
 <!-- css -->
 <link href="../css/main.css" rel="stylesheet">
 
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body>
 
@@ -64,8 +66,8 @@
 			</div>
 			<!-- Aggiungi supermercato -->
 			<div id="addProduct" class="">
-				<button id="addProductButton" onclick="prepareAddProduct()" class="btn btn-success"
-					role="button">+ Aggiungi prodotto</button>
+				<button id="add-product" onclick="prepareAddProduct()"
+					class="btn btn-success" role="button">+ Aggiungi prodotto</button>
 			</div>
 		</div>
 
@@ -101,11 +103,12 @@
 					<td>&euro; ${product.price}</td>
 					<td>${product.quantity}pz.</td>
 					<td>&euro; ${product.discount}</td>
-					<td width="10%"><button
+					<td width="10%"><button id="modify-product-${product.id}"
 							onclick="prepareModProduct(${product.id})" class="btn btn-info"
 							role="button">Modifica prodotto</button></td>
-					<td width="10%"><button onclick="deleteProduct(${product.id})"
-							class="btn btn-danger" role="button">Elimina prodotto</button></td>
+					<td width="10%"><button id="delete-product-${product.id}"
+							onclick="deleteProduct(${product.id})" class="btn btn-danger"
+							role="button">Elimina prodotto</button></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -154,6 +157,7 @@
 					<!-- form -->
 					<form id="manage-product-form" class="needs-validation" novalidate
 						autocomplete="on" enctype="multipart/form-data">
+						<div id="product-id" class="hidden"></div>
 						<div class="form-group">
 							<label for="barcode">Codice a barre:</label> <input type="number"
 								class="form-control" id="barcode" placeholder="Codice a barre"
@@ -174,13 +178,13 @@
 								min="1" class="form-control" id="weight" placeholder="Peso"
 								name="weight" required autocomplete="off">
 						</div>
-						<div class="form-group">
+						<div id="supermarket-select" class="form-group">
 							<label for="superMarket">Supermercato:</label> <select
 								name="superMarket" required class="form-control"
 								id="superMarket">
 							</select>
 						</div>
-						<div class="form-group">
+						<div id="category-select" class="form-group">
 							<label for="category">Categoria:</label> <select name="category"
 								class="form-control" id="category" required>
 							</select>
@@ -210,13 +214,15 @@
 						</div>
 						Di marca:
 						<div class="form-check">
-							<label class="form-check-label"> <input type="radio"
-								class="form-check-input" name="offbrand" value="no">SI
+							<label class="form-check-label"> <input
+								id="offbrand-false" type="radio" class="form-check-input"
+								name="offbrand" value="false">SI
 							</label>
 						</div>
 						<div class="form-check">
-							<label class="form-check-label"> <input type="radio"
-								class="form-check-input" name="offbrand" value="yes" checked>NO
+							<label class="form-check-label"> <input
+								id="offbrand-true" type="radio" class="form-check-input"
+								name="offbrand" value="true" checked>NO
 							</label>
 						</div>
 					</form>
@@ -224,7 +230,7 @@
 				<div class="modal-footer">
 					<button id="manage-product-button" type="button"
 						class="btn btn-success"></button>
-					<button type="button" class="btn btn-secondary"
+					<button id="reset-button" type="button" class="btn btn-secondary"
 						onclick="clearForm()">Reset</button>
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">Chiudi</button>
@@ -248,6 +254,7 @@
 	<script src="../js/manageProduct.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 </body>
 </html>

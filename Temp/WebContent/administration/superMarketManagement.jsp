@@ -102,6 +102,7 @@
 						<td id="supermarket-not-affiliate">NO</td>
 					</c:if>
 					<td width="10%"><button
+							id="modify-supermarket-${superMarket.id}"
 							onclick="prepareModSupermarket(${superMarket.id})"
 							class="btn btn-info" role="button">Modifica supermercato</button></td>
 					<td width="10%"><c:if test="${superMarket.affiliate == true}">

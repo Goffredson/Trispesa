@@ -20,6 +20,7 @@ public class Product implements Serializable{
 	private long quantity;
 	private double discount;
 	private String imageId;
+	private String imagePath;
 	private boolean deleted;
 
 	public Product(long id, long barcode, String name, String brand, double weight, SuperMarket superMarket,
@@ -38,6 +39,7 @@ public class Product implements Serializable{
 		this.quantity = quantity;
 		this.discount = discount;
 		this.imageId = imageId;
+		this.imagePath = "https://drive.google.com/uc?export=view&id=" + imageId;
 		this.deleted = deleted;
 	}
 
@@ -66,7 +68,7 @@ public class Product implements Serializable{
 	}
 
 	public String getImagePath() {
-		return "https://drive.google.com/uc?export=view&id=" + imageId;
+		return imagePath;
 	}
 
 	public void setImagePath(String imagePath) {

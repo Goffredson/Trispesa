@@ -1,7 +1,10 @@
 package controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -12,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import exceptions.DBOperationException;
 import model.Category;
@@ -44,11 +48,19 @@ public class ManageProductForm extends HttpServlet {
 				break;
 
 			case "mod": {
-				req.setAttribute("action", "mod");
-				long id = Long.parseLong(req.getParameter("id"));
-//				Product product;
+				StringBuffer stringBuffer = new StringBuffer();
+				BufferedReader bufferedReader = new BufferedReader(
+						new InputStreamReader(req.getInputStream(), StandardCharsets.UTF_8));
+				String line = bufferedReader.readLine();
+				while (line != null) {
+					stringBuffer.append(line);
+					line = bufferedReader.readLine();
+				}
+				long id = gson.fromJson(stringBuffer.toString(), JsonObject.class).get("product").getAsLong();
+
 				product = DBManager.getInstance().getProductById(id);
-				req.setAttribute("product", product);
+				
+				operationResult.setResult(true);
 			}
 				break;
 			}

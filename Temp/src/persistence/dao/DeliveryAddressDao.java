@@ -20,4 +20,6 @@ public interface DeliveryAddressDao {
 	// DELETE
 	public void delete(DeliveryAddress deliveryAddress);
 
+	public void dereferCustomerDeliveryAddress(long id, long deliveryAddressId);
+
 }

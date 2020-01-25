@@ -3,7 +3,7 @@ package model;
 public class DeliveryAddress {
 
 	private long id;
-	private String province;
+	private String country;
 	private String city;
 	private String address;
 	private boolean deleted;
@@ -11,7 +11,7 @@ public class DeliveryAddress {
 
 	public DeliveryAddress(long id, String country, String city, String address, boolean deleted, String zipcode) {
 		this.id = id;
-		this.province = country;
+		this.country = country;
 		this.city = city;
 		this.address = address;
 		this.deleted = deleted;
@@ -34,12 +34,12 @@ public class DeliveryAddress {
 		this.id = id;
 	}
 
-	public String getProvince() {
-		return province;
+	public String getCountry() {
+		return country;
 	}
 
-	public void setProvince(String province) {
-		this.province = province;
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
 	public void setCity(String city) {
@@ -67,7 +67,16 @@ public class DeliveryAddress {
 	}
 
 	public String toString() {
-		return this.address + ", " + this.province + ", " + this.city + ", " + this.zipcode;
+		return this.address + ", " + this.country + ", " + this.city + ", " + this.zipcode;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof DeliveryAddress) {
+			DeliveryAddress deliveryAddress = (DeliveryAddress) obj;
+			return this.id == deliveryAddress.id;
+		}
+		return false;
 	}
 
 }

@@ -24,6 +24,8 @@ public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
+			connection.setAutoCommit(false);
+
 			Long id = IdBroker.getId(connection, sequenceName);
 			paymentMethod.setId(id);
 			String insert = "insert into payment_method(id, card_number, owner, expiration_date, security_code, deleted, company) values (?, ?, ?, ?, ?, ?, ?)";
@@ -36,6 +38,8 @@ public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 			statement.setBoolean(6, paymentMethod.isDeleted());
 			statement.setString(7, paymentMethod.getCompany());
 			statement.executeUpdate();
+
+			connection.commit();
 		} catch (SQLException e) {
 			if (connection != null) {
 				try {
@@ -45,11 +49,11 @@ public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 				}
 			}
 		} finally {
-//			try {
-//				connection.close();
-//			} catch (SQLException e) {
-//				throw new RuntimeException(e.getMessage());
-//			}
+			try {
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
 		}
 	}
 
@@ -125,6 +129,8 @@ public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
+			connection.setAutoCommit(false);
+
 			String update = "update payment_method set card_number=?, owner=?, expiration_date=?, security_code=?, deleted=?, company=? where id=?";
 			PreparedStatement statement = connection.prepareStatement(update);
 			statement.setString(1, paymentMethod.getCardNumber());
@@ -135,6 +141,8 @@ public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 			statement.setLong(6, paymentMethod.getId());
 			statement.setString(7, paymentMethod.getCompany());
 			statement.executeUpdate();
+
+			connection.commit();
 		} catch (SQLException e) {
 			if (connection != null) {
 				try {
@@ -144,11 +152,11 @@ public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 				}
 			}
 		} finally {
-//			try {
-//				connection.close();
-//			} catch (SQLException e) {
-//				throw new RuntimeException(e.getMessage());
-//			}
+			try {
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
 		}
 	}
 
@@ -185,6 +193,37 @@ public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 //			}
 		}
 		return false;
+	}
+
+	@Override
+	public void dereferCustomerPaymentMethod(long customerId, long paymentMethodId) {
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			connection.setAutoCommit(false);
+
+			String delete = "delete from payment_method_refers_to_customer where payment_method=? and customer=?";
+			PreparedStatement statement = connection.prepareStatement(delete);
+			statement.setLong(1, paymentMethodId);
+			statement.setLong(2, customerId);
+			statement.executeUpdate();
+
+			connection.commit();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+			try {
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
+		}
 	}
 
 }

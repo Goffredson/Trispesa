@@ -24,17 +24,21 @@ public class DeliveryAddressDaoJdbc implements DeliveryAddressDao {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
+			connection.setAutoCommit(false);
+
 			Long id = IdBroker.getId(connection, sequenceName);
 			deliveryAddress.setId(id);
 			String insert = "insert into delivery_address(id, province, city, address, deleted ,zipcode) values (?, ?, ?, ?, ?, ?)";
 			PreparedStatement statement = connection.prepareStatement(insert);
 			statement.setLong(1, deliveryAddress.getId());
-			statement.setString(2, deliveryAddress.getProvince());
+			statement.setString(2, deliveryAddress.getCountry());
 			statement.setString(3, deliveryAddress.getCity());
 			statement.setString(4, deliveryAddress.getAddress());
 			statement.setBoolean(5, deliveryAddress.isDeleted());
 			statement.setString(6, deliveryAddress.getZipcode());
 			statement.executeUpdate();
+
+			connection.commit();
 		} catch (SQLException e) {
 			if (connection != null) {
 				try {
@@ -44,11 +48,11 @@ public class DeliveryAddressDaoJdbc implements DeliveryAddressDao {
 				}
 			}
 		} finally {
-//			try {
-//				connection.close();
-//			} catch (SQLException e) {
-//				throw new RuntimeException(e.getMessage());
-//			}
+			try {
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
 		}
 	}
 
@@ -122,15 +126,19 @@ public class DeliveryAddressDaoJdbc implements DeliveryAddressDao {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
+			connection.setAutoCommit(false);
+
 			String update = "update delivery_address set province=?, city=?, address=?, deleted=?,recipient=?,zipcode=? where id=?";
 			PreparedStatement statement = connection.prepareStatement(update);
-			statement.setString(1, deliveryAddress.getProvince());
+			statement.setString(1, deliveryAddress.getCountry());
 			statement.setString(2, deliveryAddress.getCity());
 			statement.setString(3, deliveryAddress.getAddress());
 			statement.setBoolean(4, deliveryAddress.isDeleted());
 			statement.setLong(5, deliveryAddress.getId());
 			statement.setString(6, deliveryAddress.getZipcode());
 			statement.executeUpdate();
+
+			connection.commit();
 		} catch (SQLException e) {
 			if (connection != null) {
 				try {
@@ -140,11 +148,11 @@ public class DeliveryAddressDaoJdbc implements DeliveryAddressDao {
 				}
 			}
 		} finally {
-//			try {
-//				connection.close();
-//			} catch (SQLException e) {
-//				throw new RuntimeException(e.getMessage());
-//			}
+			try {
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
 		}
 	}
 
@@ -152,6 +160,37 @@ public class DeliveryAddressDaoJdbc implements DeliveryAddressDao {
 	public void delete(DeliveryAddress deliveryAddress) {
 		// TODO In teoria non serve a nulla, in quanto non modifichiamo niente da
 		// codice!
+	}
+
+	@Override
+	public void dereferCustomerDeliveryAddress(long customerId, long deliveryAddressId) {
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			connection.setAutoCommit(false);
+
+			String delete = "delete from delivery_address_refers_to_customer where delivery_address=? and customer=?";
+			PreparedStatement statement = connection.prepareStatement(delete);
+			statement.setLong(1, deliveryAddressId);
+			statement.setLong(2, customerId);
+			statement.executeUpdate();
+
+			connection.commit();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+			try {
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
+		}
 	}
 
 }

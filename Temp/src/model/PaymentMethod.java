@@ -82,5 +82,14 @@ public class PaymentMethod {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof PaymentMethod) {
+			PaymentMethod paymentMethod = (PaymentMethod) obj;
+			return this.id == paymentMethod.id;
+		}
+		return false;
+	}
 
 }

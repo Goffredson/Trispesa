@@ -18,21 +18,18 @@ public class UserManagement extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		switch (req.getParameter("page")) {
-//		case "profile": {
-//			Customer customer = DBManager.getInstance().getCustomerByID("Goffredson");
-//			req.getSession().setAttribute("customer", customer);
-//			RequestDispatcher rd = req.getRequestDispatcher("user/profile.jsp");
-//			rd.forward(req, resp);
-//		}
-//			break;
-//		}
-
+		switch (req.getParameter("page")) {
+		case "profile": {
+			RequestDispatcher rd = req.getRequestDispatcher("user/profile.jsp");
+			rd.forward(req, resp);
+		}
+			break;
+		}
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//doGet(req, resp);
+		doGet(req, resp);
 	}
 
 }

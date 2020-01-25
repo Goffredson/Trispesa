@@ -302,4 +302,16 @@ public class DBManager {
 		getCustomerDao().clearCart(idCustomer);
 
 	}
+
+	public void deletePaymentMethod(Customer customer, long paymentMethodId) throws DBOperationException {
+		PaymentMethod paymentMethod = getPaymentMethodDao().retrieveByPrimaryKey(paymentMethodId);
+		getPaymentMethodDao().dereferCustomerPaymentMethod(customer.getId(), paymentMethodId);
+		customer.getPaymentMethods().remove(paymentMethod);
+	}
+
+	public void deleteDeliveryAddress(Customer customer, long deliveryAddressId) {
+		DeliveryAddress deliveryAddress = getDeliveryAddressDao().retrieveByPrimaryKey(deliveryAddressId);
+		getDeliveryAddressDao().dereferCustomerDeliveryAddress(customer.getId(), deliveryAddressId);
+		customer.getDeliveryAddresses().remove(deliveryAddress);
+	}
 }

@@ -2,10 +2,7 @@
 body {
 	padding-top: 56px;
 }
-.ui-autocomplete-loading {
-	background: white url("../images/spinner.gif") no-repeat;
-	background-size: 30px 30px;
-	background-position: 95%;
+
 .color-scheme {
 	color: white !important;
 	background-color: cornflowerblue !important;
@@ -156,30 +153,8 @@ div.scrollmenu a:hover {
 	margin: 20px !important;
 }
 
-.dropdown.dropdown-lg .dropdown-menu {
-	margin-top: -1px;
-	padding: 4px 15px;
-}
-
-.btn-group .btn {
-	border-radius: 0;
-	margin-left: -1px;
-}
-
-.form-horizontal .form-group {
-	margin-left: 0;
-	margin-right: 0;
-}
-
-@media screen and (min-width: 768px) {
-	#boot-search-box {
-		width: 500px;
-		margin: 0 auto;
-	}
-	.dropdown.dropdown-lg {
-		position: static !important;
-	}
-	.dropdown.dropdown-lg .dropdown-menu {
-		min-width: 500px;
-	}
+.ui-autocomplete-loading {
+	background: white url("../images/spinner.gif") no-repeat;
+	background-size: 30px 30px;
+	background-position: 95%;
 }

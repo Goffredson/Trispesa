@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.Category;
+import model.Product;
 import persistence.DataSource;
 import persistence.dao.CategoryDao;
 
@@ -182,5 +183,8 @@ public class CategoryDaoJdbc implements CategoryDao {
 		}
 		return categories;
 	}
+
+	
+	
 
 }

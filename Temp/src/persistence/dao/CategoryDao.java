@@ -3,6 +3,7 @@ package persistence.dao;
 import java.util.ArrayList;
 
 import model.Category;
+import model.Product;
 
 public interface CategoryDao {
 
@@ -14,6 +15,7 @@ public interface CategoryDao {
 	public Category retrieveByPrimaryKey(Long id);
 	ArrayList<Category> retrieveMacroCategories();
 	public ArrayList<Category> retrieveLeafCategories();
+
 
 	// UPDATE
 	public void update(Category category);

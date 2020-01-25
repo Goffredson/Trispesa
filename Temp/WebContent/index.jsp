@@ -11,23 +11,48 @@
 <title>Trispesa</title>
 <!-- Inclusioni (bootstrap, JQuery)  -->
 <script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/jquery/jquery-ui.js"></script>
 
-<link href="vendor/jquery/jquery-ui.css" rel="stylesheet">
 
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="vendor/owl.carousel.js"></script>
 <!-- Script -->
 <script src="js/cart.js"></script>
 <script src="js/login.js"></script>
 
+<link href="css/owl.carousel.css" rel="stylesheet" />
+<link href="css/owl.theme.default.css" rel="stylesheet" />
+
+
 <!-- CSS -->
-<style>
-.dropdown-menu>li.checkbox {
-	padding: 3px 20px;
-}
-</style>
+
+<script>
+	$(document).ready(function() {
+
+		$('.owl-carousel').owlCarousel({
+			loop : true,
+			margin : 10,
+			nav : true,
+			autoplay : true,
+
+			responsive : {
+				0 : {
+					items : 1
+				},
+				600 : {
+					items : 3
+				},
+				1000 : {
+					items : 5
+				}
+			}
+		})
+
+	});
+</script>
+
 <link href="css/main.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -43,8 +68,10 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto" id="ulNavBar">
-					<li class="nav-item"><a class="nav-link" href=""><img
-							src="images/cart.png" width="30" /></a></li>
+					<li>
+						<button type="button" class="btn btn-primary" data-toggle="modal"
+							data-target="#modalCart">Carrello</button>
+					</li>
 					<li>
 						<!-- Div di login -->
 						<div class="dropdown" id="loginDropdown">
@@ -234,93 +261,16 @@
 									<span class="caret"></span>
 								</button>
 								<div class="dropdown-menu dropdown-menu-right" role="menu">
-									<!-- 									<form class="form-horizontal" role="form"> -->
-									<p>
-										<label for="amount">Price range:</label> <input type="text"
-											id="amount" readonly
-											style="border: 0; color: #f6931f; font-weight: bold;">
-									</p>
-									<div id="slider-range"></div>
-									<script type="text/javascript">
-										$("#slider-range")
-												.slider(
-														{
-															range : true,
-															min : 0,
-															max : 500,
-															values : [ 75, 300 ],
-															slide : function(
-																	event, ui) {
-																$("#amount")
-																		.val(
-																				"$"
-																						+ ui.values[0]
-																						+ " - $"
-																						+ ui.values[1]);
-															}
-														});
-										$("#amount")
-												.val(
-														"$"
-																+ $(
-																		"#slider-range")
-																		.slider(
-																				"values",
-																				0)
-																+ " - $"
-																+ $(
-																		"#slider-range")
-																		.slider(
-																				"values",
-																				1));
-									</script>
+
 									<div class="form-check">
 										<input type="checkbox" class="form-check-input"
 											id="exampleCheck1"> <label class="form-check-label"
 											for="exampleCheck1">Di marca</label>
 									</div>
-									<div>
-										<span class="dropdown-submenu"> <span
-											class="glyphicon glyphicon-filter dropdown-toggle"
-											data-toggle="dropdown-submenu" aria-expanded="true"></span> <!-- modal -->
-											<ul class="dropdown-menu">
-												<li class="checkbox keep-open"><label><input
-														type="checkbox">option 1</label></li>
-												<li class="checkbox keep-open"><label><input
-														type="checkbox">option 2</label></li>
-												<li class="checkbox keep-open"><label><input
-														type="checkbox">option 3</label></li>
-												<li class="checkbox keep-open"><label><input
-														type="checkbox">option 4</label></li>
-												<li><a class="btn">select</a></li>
-											</ul>
-										</span>
-									</div>
+
 								</div>
-								<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-								<script>
-									$('.keep-open')
-											.click(
-													function(e) {
-														if (/input|label/i
-																.test(e.target.tagName)) {
-															var parent = $(
-																	e.target)
-																	.parent();
-															if (parent
-																	.hasClass('checkbox')) {
-																var checkbox = parent
-																		.find('input[type=checkbox]');
-																checkbox
-																		.prop(
-																				"checked",
-																				!checkbox
-																						.prop("checked"));
-																return false;
-															}
-														}
-													});
-								</script>
+
+
 							</div>
 						</div>
 						<button type="button" class="btn btn-success ">
@@ -332,36 +282,143 @@
 		</div>
 	</div>
 
-	<div class="carousel slide my-4  mx-auto" data-ride="carousel">
-		<ol class="carousel-indicators">
-			<li data-target="#carouselExampleIndicators" data-slide-to="0"
-				class="active"></li>
-			<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-			<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-		</ol>
-		<div class="carousel-inner" role="listbox">
-			<div class="carousel-item active">
-				<img class="d-block img-fluid" src="http://placehold.it/900x350"
-					alt="First slide">
-			</div>
-			<div class="carousel-item">ul class="dropdown-submenu" role="menu">
-				<img class="d-block img-fluid" src="http://placehold.it/900x350"
-					alt="Second slide">
-			</div>
-			<div class="carousel-item">
-				<img class="d-block img-fluid" src="http://placehold.it/900x350"
-					alt="Third slide">
+	<div class="modal fade" id="modalCart" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<!--Header-->
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">Il tuo carrello</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true"></span>
+					</button>
+				</div>
+				<!--Body-->
+				<div class="modal-body">
+					<div class="count">
+						<h3>
+							<small>Tempo rimanente</small>
+						</h3>
+						<div id="timer"></div>
+					</div>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>N.</th>
+								<th>Nome prodotto</th>
+								<th>Prezzo</th>
+								<th></th>
+
+							</tr>
+						</thead>
+						<tbody id="listaProdottiCarrello">
+							<c:set var="totalCartPrice" scope="request" value="${0}" />
+							<c:forEach items="${customer.cart}" var="product">
+								<c:set var="totalCartPrice" scope="request"
+									value="${totalCartPrice + product.key.price*product.value}" />
+
+								<tr id="product_${product.key.id}">
+									<th scope="row" id="productQuantity">${product.value}</th>
+									<td id="productName">${product.key.name}</td>
+									<td id="productPrice">${product.key.price}</td>
+									<td><a><i class="fas fa-times"></i></a></td>
+									<td><button type="button"
+											onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.price}, '${product.key.superMarket.name}', 'remove');"
+											class="btn btn-danger">Rimuovi</button></td>
+								</tr>
+
+							</c:forEach>
+							<c:forEach items="${anonymousCart}" var="product">
+								<c:set var="totalCartPrice" scope="request"
+									value="${totalCartPrice + product.key.price*product.value}" />
+
+								<tr id="product_${product.key.id}">
+									<th scope="row" id="productQuantity">${product.value}</th>
+									<td id="productName">${product.key.name}</td>
+									<td id="productPrice">${product.key.price}</td>
+									<td><a><i class="fas fa-times"></i></a></td>
+									<td><button type="button"
+											onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.price}, '${product.key.superMarket.name}', 'remove');"
+											class="btn btn-danger">Rimuovi</button></td>
+								</tr>
+							</c:forEach>
+
+						</tbody>
+					</table>
+					<h2 id="totalCartPrice" class="hidden-xs text-center">${totalCartPrice}</h2>
+
+				</div>
+				<!--Footer-->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-primary"
+						data-dismiss="modal">Chiudi</button>
+					<c:if test="${customer != null}">
+						<a id="orderButton" href="manageOrder"><button
+								class="btn btn-primary">Conferma ordine</button></a>
+					</c:if>
+					<c:if test="${customer == null}">
+						<a id="orderAnchor" href=""><button id="orderButton"
+								onclick="$('#modalCart').modal('hide'); $('.modal-backdrop').hide(); $('#loginToast').toast('show');"
+								class="btn btn-primary">Conferma ordine</button></a>
+					</c:if>
+				</div>
 			</div>
 		</div>
-		<a class="carousel-control-prev" href="#carouselExampleIndicators"
-			role="button" data-slide="prev"> <span
-			class="carousel-control-prev-icon" aria-hidden="true"></span> <span
-			class="sr-only">Previous</span>
-		</a> <a class="carousel-control-next" href="#carouselExampleIndicators"
-			role="button" data-slide="next"> <span
-			class="carousel-control-next-icon" aria-hidden="true"></span> <span
-			class="sr-only">Next</span>
-		</a>
+	</div>
+
+	<!-- 	<div class="carousel slide my-4  mx-auto" data-ride="carousel"> -->
+	<!-- 		<ol class="carousel-indicators"> -->
+	<!-- 			<li data-target="#carouselExampleIndicators" data-slide-to="0" -->
+	<!-- 				class="active"></li> -->
+	<!-- 			<li data-target="#carouselExampleIndicators" data-slide-to="1"></li> -->
+	<!-- 			<li data-target="#carouselExampleIndicators" data-slide-to="2"></li> -->
+	<!-- 		</ol> -->
+	<!-- 		<div class="carousel-inner" role="listbox"> -->
+	<!-- 			<div class="carousel-item active"> -->
+	<!-- 				<img class="d-block img-fluid" src="http://placehold.it/900x350" -->
+	<!-- 					alt="First slide"> -->
+	<!-- 			</div> -->
+	<!-- 			<div class="carousel-item">ul class="dropdown-submenu" role="menu"> -->
+	<!-- 				<img class="d-block img-fluid" src="http://placehold.it/900x350" -->
+	<!-- 					alt="Second slide"> -->
+	<!-- 			</div> -->
+	<!-- 			<div class="carousel-item"> -->
+	<!-- 				<img class="d-block img-fluid" src="http://placehold.it/900x350" -->
+	<!-- 					alt="Third slide"> -->
+	<!-- 			</div> -->
+	<!-- 		</div> -->
+	<!-- 		<a class="carousel-control-prev" href="#carouselExampleIndicators" -->
+	<!-- 			role="button" data-slide="prev"> <span -->
+	<!-- 			class="carousel-control-prev-icon" aria-hidden="true"></span> <span -->
+	<!-- 			class="sr-only">Previous</span> -->
+	<!-- 		</a> <a class="carousel-control-next" href="#carouselExampleIndicators" -->
+	<!-- 			role="button" data-slide="next"> <span -->
+	<!-- 			class="carousel-control-next-icon" aria-hidden="true"></span> <span -->
+	<!-- 			class="sr-only">Next</span> -->
+	<!-- 		</a> -->
+	<!-- 	</div> -->
+
+	<div class="owl-carousel owl-theme">
+		<c:forEach items="${prodottiScontati}" var="prodottoScontato">
+			<div class="card" style="width: 18rem;">
+				<img width="200" height="200" style="object-fit: cover;"
+					class="card-img-top" src="${prodottoScontato.imagePath}"
+					alt="Card image cap">
+				<div class="card-body">
+					<h4 class="card-title">${prodottoScontato.name}</h4>
+					<h5>${prodottoScontato.superMarket.name}</h5>
+					<p>
+						<small>${prodottoScontato.price}</small>
+					</p>
+					<p>
+						<small style="color: red;">${prodottoScontato.discount}</small>
+					</p>
+					<a href="#" class="btn btn-primary">Aggiungi al carrello</a>
+				</div>
+			</div>
+		</c:forEach>
+
 	</div>
 
 	<!-- Footer (da mettere: link a github e a sito unical) -->

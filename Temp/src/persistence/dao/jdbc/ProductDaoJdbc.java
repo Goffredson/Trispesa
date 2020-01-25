@@ -261,7 +261,7 @@ public class ProductDaoJdbc implements ProductDao {
 		ArrayList<Product> products = new ArrayList<Product>();
 		try {
 			connection = this.dataSource.getConnection();
-			String query = "select * from product where category=? or exists (select * from category where parent=?)";
+			String query = "select * from product as prod where prod.category=? or exists (select * from category where parent=? and prod.category=id)";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setLong(1, categoryId);
 			statement.setLong(2, categoryId);
@@ -403,8 +403,8 @@ public class ProductDaoJdbc implements ProductDao {
 		try {
 			connection = this.dataSource.getConnection();
 			PreparedStatement pstmt = connection.prepareStatement("call decrease_product_quantity(?,?)");
-			pstmt.setLong(1,product);
-			pstmt.setLong(2,quantity);
+			pstmt.setLong(1, product);
+			pstmt.setLong(2, quantity);
 			pstmt.execute();
 		} catch (SQLException e) {
 			System.out.println("Non ci sono prodotti disponibili");
@@ -416,7 +416,7 @@ public class ProductDaoJdbc implements ProductDao {
 					throw new RuntimeException(e.getMessage());
 				}
 			}
-		} 
+		}
 	}
 
 	@Override
@@ -424,9 +424,9 @@ public class ProductDaoJdbc implements ProductDao {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
-			String update="update product set quantity=quantity+? where id=?";
+			String update = "update product set quantity=quantity+? where id=?";
 			PreparedStatement pstmt = connection.prepareStatement(update);
-			pstmt.setLong(1,l);
+			pstmt.setLong(1, l);
 			pstmt.setLong(2, product);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -437,10 +437,39 @@ public class ProductDaoJdbc implements ProductDao {
 					throw new RuntimeException(e.getMessage());
 				}
 			}
-		} 
-		
+		}
+
 	}
 
-	
+	@Override
+	public ArrayList<Product> getDiscountedProducts() {
+		Connection connection = null;
+		ArrayList<Product> prodotti = new ArrayList<Product>();
+		try {
+			connection = this.dataSource.getConnection();
+			String query = "select * from product where discount>?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setLong(1, 0);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				prodotti.add(new Product(resultSet.getLong("id"), resultSet.getLong("barcode"),
+						resultSet.getString("name"), resultSet.getString("brand"), resultSet.getDouble("weight"),
+						new SuperMarketDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("supermarket")),
+						new CategoryDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("category")),
+						resultSet.getBoolean("offbrand"), resultSet.getDouble("price"), resultSet.getLong("quantity"),
+						resultSet.getDouble("discount"), resultSet.getString("image_path"),
+						resultSet.getBoolean("deleted")));
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		}
+		return prodotti;
+	}
 
 }

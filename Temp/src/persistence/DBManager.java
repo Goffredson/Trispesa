@@ -314,4 +314,8 @@ public class DBManager {
 		getDeliveryAddressDao().dereferCustomerDeliveryAddress(customer.getId(), deliveryAddressId);
 		customer.getDeliveryAddresses().remove(deliveryAddress);
 	}
+	
+	public ArrayList<Product> getDiscountedProducts() {
+		return getProductDao().getDiscountedProducts();
+	}
 }

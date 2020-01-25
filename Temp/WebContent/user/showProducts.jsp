@@ -210,7 +210,7 @@
 							<h4 class="modal-title" id="myModalLabel">Il tuo carrello</h4>
 							<button type="button" class="close" data-dismiss="modal"
 								aria-label="Close">
-								<span aria-hidden="true">×</span>
+								<span aria-hidden="true"></span>
 							</button>
 						</div>
 						<!--Body-->
@@ -262,9 +262,6 @@
 									</c:forEach>
 
 								</tbody>
-
-
-
 							</table>
 							<h2 id="totalCartPrice" class="hidden-xs text-center">${totalCartPrice}</h2>
 

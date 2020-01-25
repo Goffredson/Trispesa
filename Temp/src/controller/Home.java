@@ -16,6 +16,9 @@ public class Home extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//req.setAttribute("listaCategorieFoglia", DBManager.getInstance().getLeafCategories());
 		req.setAttribute("listaMacroCategorie", DBManager.getInstance().getMacroCategories());
+		req.setAttribute("prodottiScontati", DBManager.getInstance().getDiscountedProducts());
+		
+		System.out.println(DBManager.getInstance().getDiscountedProducts());
 		RequestDispatcher rd = req.getRequestDispatcher("index.jsp");
 		rd.forward(req, resp);
 	}

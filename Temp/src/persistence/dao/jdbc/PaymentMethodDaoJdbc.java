@@ -6,9 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import exceptions.DBOperationException;
 import model.PaymentMethod;
 import persistence.DataSource;
 import persistence.dao.PaymentMethodDao;
+import sun.security.action.GetLongAction;
 
 public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 
@@ -28,15 +30,14 @@ public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 
 			Long id = IdBroker.getId(connection, sequenceName);
 			paymentMethod.setId(id);
-			String insert = "insert into payment_method(id, card_number, owner, expiration_date, security_code, deleted, company) values (?, ?, ?, ?, ?, ?, ?)";
+			String insert = "insert into payment_method(id, card_number, owner, expiration_date, security_code, company) values (?, ?, ?, ?, ?, ?)";
 			PreparedStatement statement = connection.prepareStatement(insert);
 			statement.setLong(1, paymentMethod.getId());
 			statement.setString(2, paymentMethod.getCardNumber());
 			statement.setString(3, paymentMethod.getOwner());
 			statement.setString(4, paymentMethod.getExpirationDate());
 			statement.setInt(5, paymentMethod.getSecurityCode());
-			statement.setBoolean(6, paymentMethod.isDeleted());
-			statement.setString(7, paymentMethod.getCompany());
+			statement.setString(6, paymentMethod.getCompany());
 			statement.executeUpdate();
 
 			connection.commit();
@@ -69,8 +70,7 @@ public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 			while (resultSet.next()) {
 				paymentMethods.add(new PaymentMethod(resultSet.getLong("id"), resultSet.getString("card_number"),
 						resultSet.getString("owner"), resultSet.getString("expiration_date"),
-						resultSet.getInt("security_code"), resultSet.getBoolean("deleted"),
-						resultSet.getString("company")));
+						resultSet.getInt("security_code"), resultSet.getString("company")));
 			}
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -103,8 +103,7 @@ public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 			if (resultSet.next()) {
 				paymentMethod = new PaymentMethod(resultSet.getLong("id"), resultSet.getString("card_number"),
 						resultSet.getString("owner"), resultSet.getString("expiration_date"),
-						resultSet.getInt("security_code"), resultSet.getBoolean("deleted"),
-						resultSet.getString("company"));
+						resultSet.getInt("security_code"), resultSet.getString("company"));
 			}
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -131,15 +130,14 @@ public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 			connection = this.dataSource.getConnection();
 			connection.setAutoCommit(false);
 
-			String update = "update payment_method set card_number=?, owner=?, expiration_date=?, security_code=?, deleted=?, company=? where id=?";
+			String update = "update payment_method set card_number=?, owner=?, expiration_date=?, security_code=?, company=? where id=?";
 			PreparedStatement statement = connection.prepareStatement(update);
 			statement.setString(1, paymentMethod.getCardNumber());
 			statement.setString(2, paymentMethod.getOwner());
 			statement.setString(3, paymentMethod.getExpirationDate());
 			statement.setInt(4, paymentMethod.getSecurityCode());
-			statement.setBoolean(5, paymentMethod.isDeleted());
+			statement.setString(5, paymentMethod.getCompany());
 			statement.setLong(6, paymentMethod.getId());
-			statement.setString(7, paymentMethod.getCompany());
 			statement.executeUpdate();
 
 			connection.commit();
@@ -213,6 +211,87 @@ public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 			if (connection != null) {
 				try {
 					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+			try {
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
+		}
+	}
+
+	@Override
+	public void addPaymentMethod(long customerId, PaymentMethod paymentMethod) throws DBOperationException {
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			connection.setAutoCommit(false);
+
+			String select = "select * from payment_method where card_number=? and owner=? and expiration_date=? and security_code=? and company=?";
+			PreparedStatement selectStatement = connection.prepareStatement(select);
+			selectStatement.setString(1, paymentMethod.getCardNumber());
+			selectStatement.setString(2, paymentMethod.getOwner());
+			selectStatement.setString(3, paymentMethod.getExpirationDate());
+			selectStatement.setInt(4, paymentMethod.getSecurityCode());
+			selectStatement.setString(5, paymentMethod.getCompany());
+			ResultSet selectResultSet = selectStatement.executeQuery();
+
+			if (!(selectResultSet.next())) {
+				Long id = IdBroker.getId(connection, sequenceName);
+				System.out.println(id);
+				paymentMethod.setId(id);
+				String insertPaymentMethod = "insert into payment_method(id, card_number, owner, expiration_date, security_code, company) values (?, ?, ?, ?, ?, ?)";
+				PreparedStatement insertStatement = connection.prepareStatement(insertPaymentMethod);
+				insertStatement.setLong(1, paymentMethod.getId());
+				insertStatement.setString(2, paymentMethod.getCardNumber());
+				insertStatement.setString(3, paymentMethod.getOwner());
+				insertStatement.setString(4, paymentMethod.getExpirationDate());
+				insertStatement.setInt(5, paymentMethod.getSecurityCode());
+				insertStatement.setString(6, paymentMethod.getCompany());
+				insertStatement.executeUpdate();
+
+				id = IdBroker.getId(connection, "payment_method_refers_to_customer_sequence");
+				String insertRefer = "insert into payment_method_refers_to_customer(id, payment_method, customer) values (?, ?, ?)";
+				PreparedStatement referStatement = connection.prepareStatement(insertRefer);
+				referStatement.setLong(1, id);
+				referStatement.setLong(2, paymentMethod.getId());
+				referStatement.setLong(3, customerId);
+				referStatement.executeUpdate();
+
+				connection.commit();
+			} else {
+				long id = selectResultSet.getLong("id");
+
+				String selectRefer = "select * from payment_method_refers_to_customer where payment_method=? and customer=?";
+				PreparedStatement selectReferStatement = connection.prepareStatement(selectRefer);
+				selectReferStatement.setLong(1, id);
+				selectReferStatement.setLong(2, customerId);
+				ResultSet selectReferResultSet = selectReferStatement.executeQuery();
+
+				if (!(selectReferResultSet.next())) {
+					long tableId = IdBroker.getId(connection, "payment_method_refers_to_customer_sequence");
+					String insertRefer = "insert into payment_method_refers_to_customer(id, pyment_method, customer) values (?, ?, ?)";
+					PreparedStatement referStatement = connection.prepareStatement(insertRefer);
+					referStatement.setLong(1, tableId);
+					referStatement.setLong(2, id);
+					referStatement.setLong(3, customerId);
+					referStatement.executeUpdate();
+
+					connection.commit();
+				} else {
+					throw new DBOperationException(
+							"Stai cercando di inserire un metodo di pagamento che è già presente!", "");
+				}
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+					System.out.println("rollback");
 				} catch (SQLException excep) {
 					throw new RuntimeException(e.getMessage());
 				}

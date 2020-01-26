@@ -2,6 +2,7 @@ package persistence.dao;
 
 import java.util.ArrayList;
 
+import exceptions.DBOperationException;
 import model.PaymentMethod;
 
 public interface PaymentMethodDao {
@@ -23,5 +24,7 @@ public interface PaymentMethodDao {
 	public boolean checkPaymentData(Long paymentId, String expirationDate, Long securityCode);
 
 	public void dereferCustomerPaymentMethod(long customerId, long paymentMethodId);
+
+	public void addPaymentMethod(long id, PaymentMethod paymentMethod) throws DBOperationException;
 
 }

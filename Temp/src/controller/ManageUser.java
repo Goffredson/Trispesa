@@ -47,6 +47,21 @@ public class ManageUser extends HttpServlet {
 			case "paymentMethod": {
 				switch (req.getParameter("action")) {
 				case "add": {
+					StringBuffer stringBuffer = new StringBuffer();
+					BufferedReader bufferedReader = new BufferedReader(
+							new InputStreamReader(req.getInputStream(), StandardCharsets.UTF_8));
+					String line = bufferedReader.readLine();
+					while (line != null) {
+						stringBuffer.append(line);
+						line = bufferedReader.readLine();
+					}
+					PaymentMethod paymentMethod = gson.fromJson(stringBuffer.toString(), PaymentMethod.class);
+					Customer customer = (Customer) req.getSession().getAttribute("customer");
+					
+					DBManager.getInstance().addPaymentMethod(customer, paymentMethod);
+					
+					operationResult.setResult(true);
+					operationResult.setObject("Il metodo di pagamento è stato aggiunto con successo!");
 				}
 					break;
 				case "mod": {

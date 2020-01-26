@@ -318,4 +318,9 @@ public class DBManager {
 	public ArrayList<Product> getDiscountedProducts() {
 		return getProductDao().getDiscountedProducts();
 	}
+
+	public void addPaymentMethod(Customer customer, PaymentMethod paymentMethod) throws DBOperationException {
+		getPaymentMethodDao().addPaymentMethod(customer.getId(), paymentMethod);
+		customer.getPaymentMethods().add(paymentMethod);
+	}
 }

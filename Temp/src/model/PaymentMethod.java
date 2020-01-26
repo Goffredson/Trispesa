@@ -7,29 +7,27 @@ public class PaymentMethod {
 	private String owner;
 	private String expirationDate;
 	private int securityCode;
-	private boolean deleted;
 	private String company;
 
 	public PaymentMethod(long id, String cardNumber, String owner, String expirationDate, int securityCode,
-			boolean deleted, String company) {
+			String company) {
 		super();
 		this.id = id;
 		this.cardNumber = cardNumber;
 		this.owner = owner;
 		this.expirationDate = expirationDate;
 		this.securityCode = securityCode;
-		this.deleted = deleted;
 		this.company = company;
 	}
 
 	public String getCompany() {
 		return company;
 	}
-	
+
 	public void setCompany(String company) {
 		this.company = company;
 	}
-	
+
 	public long getId() {
 		return id;
 	}
@@ -57,7 +55,7 @@ public class PaymentMethod {
 	public String getExpirationDate() {
 		return expirationDate;
 	}
-	
+
 	public void setExpirationDate(String expirationDate) {
 		this.expirationDate = expirationDate;
 	}
@@ -75,14 +73,6 @@ public class PaymentMethod {
 		return company + " x-" + cardNumber.substring(12, 16);
 	}
 
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof PaymentMethod) {

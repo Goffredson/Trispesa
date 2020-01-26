@@ -46,6 +46,7 @@ public class Login extends HttpServlet {
 	    	
 	    	if (customer != null) {
 	    		req.getSession().setAttribute("customer", customer);
+	    		req.getSession().setMaxInactiveInterval(0);
 	    		response = "{\"redirect\":false}";
 	    		
 	    		if (req.getSession().getAttribute("anonymousCart") != null) {

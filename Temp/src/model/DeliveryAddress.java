@@ -6,15 +6,13 @@ public class DeliveryAddress {
 	private String country;
 	private String city;
 	private String address;
-	private boolean deleted;
 	private String zipcode;
 
-	public DeliveryAddress(long id, String country, String city, String address, boolean deleted, String zipcode) {
+	public DeliveryAddress(long id, String country, String city, String address, String zipcode) {
 		this.id = id;
 		this.country = country;
 		this.city = city;
 		this.address = address;
-		this.deleted = deleted;
 		this.zipcode = zipcode;
 	}
 
@@ -58,18 +56,10 @@ public class DeliveryAddress {
 		this.address = address;
 	}
 
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
-
 	public String toString() {
 		return this.address + ", " + this.country + ", " + this.city + ", " + this.zipcode;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof DeliveryAddress) {

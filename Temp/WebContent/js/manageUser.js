@@ -1,6 +1,12 @@
 $(document)
 		.ready(
 				function() {
+					$.validator.addMethod("regex", function(value, element,
+							regexp) {
+						var re = new RegExp(regexp);
+						return this.optional(element) || re.test(value);
+					}, "Per favore, inserisci un numero di carta valido");
+
 					$('#manage-payment-method-form')
 							.validate(
 									{
@@ -8,32 +14,30 @@ $(document)
 											company : "required",
 											cardNumber : {
 												required : true,
-												minLength : 20,
-												maxLength : 20,
+												regex : /\d\d\d\d-\d\d\d\d-\d\d\d\d-\d\d\d\d/
 											},
 											owner : "required",
 											expirationDate : "required",
 											securityCode : {
 												required : true,
 												digits : true,
-												minLength : 3,
-												maxLength : 3,
+												minlength : 3,
+												maxlength : 3,
 											},
 										},
 										messages : {
-											company : "Perfavore, inserisca il nome del circuito di pagamento",
+											company : "Per favore, inserisca il nome del circuito di pagamento",
 											cardNumber : {
-												required : "Perfavore, inserisca il numero della carta",
-												minLength : 20,
-												maxLength : 20,
+												required : "Per favore, inserisca il numero della carta",
+												regex : "Per favore, inserisci un numero di carta valido",
 											},
-											owner : "Perfavore, inserisca il titolare della carta",
-											expirationDate : "Perfavore, inserisca mese e anno di scadenza",
+											owner : "Per favore, inserisca il titolare della carta",
+											expirationDate : "Per favore, inserisca mese e anno di scadenza",
 											securityCode : {
-												required : "Perfavore, inserisca il codice di sicurezza di 3 cifre",
-												digits : "Perfavore, inserisca il codice di sicurezza di 3 cifre",
-												minLength : "Perfavore, inserisca il codice di sicurezza di 3 cifre",
-												maxLength : "Perfavore, inserisca il codice di sicurezza di 3 cifre",
+												required : "Per favore, inserisca il codice di sicurezza di 3 cifre",
+												digits : "Per favore, inserisca il codice di sicurezza di 3 cifre",
+												minlength : "Per favore, inserisca il codice di sicurezza di 3 cifre",
+												maxlength : "Per favore, inserisca il codice di sicurezza di 3 cifre",
 											},
 										},
 										errorElement : "em",
@@ -156,10 +160,6 @@ $('#result-modal').on('hide.bs.modal', function(event) {
 });
 
 function prepareAddPaymentMethod() {
-	$('#add-payment-method')
-			.html(
-					'<span class="spinner-border spinner-border-sm"></span> Caricamento');
-	$('.btn').prop('disabled', true);
 	clearForm();
 	$('#manage-payment-method-modal-title')
 			.html('Aggiungi metodo di pagamento');
@@ -175,7 +175,39 @@ function prepareModPaymentMethod() {
 }
 
 function addPaymentMethod() {
+	if ($('#manage-payment-method-form').valid() === false) {
+		$('#manage-payment-method-form').addClass("was-validated").removeClass(
+				"needs-validation");
+		return;
+	}
 
+	$.ajax({
+		type : "POST",
+		url : "user/manage?type=paymentMethod&action=add",
+		dataType : "json",
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify({
+			id : 0,
+			cardNumber : $('#card-number').val(),
+			owner : $('#owner').val(),
+			expirationDate : $('#expiration-date').val(),
+			securityCode : $('#security-code').val(),
+			company : $('#company').val(),
+		}),
+		success : function(data) {
+			$('#manage-payment-method-modal').modal('hide');
+			if (data.result == true) {
+				$('#result-modal-title').html(
+						'Operazione eseguita con successo');
+				$('#result-modal-body').addClass('success-message');
+			} else {
+				$('#result-modal-title').html('Operazione annullata');
+				$('#result-modal-body').addClass('error-message');
+			}
+			$('#result-modal-object').html(data.object);
+			$('#result-modal').modal('show');
+		}
+	});
 }
 
 function modifyPaymentMethod(id) {

@@ -42,12 +42,11 @@ public class Login extends HttpServlet {
 	    	Customer customer = DBManager.getInstance().checkIfCustomerExists(credentials.get(0), credentials.get(1));
 	    	Administrator administrator = DBManager.getInstance().checkIfAdministratorExists(credentials.get(0), credentials.get(1));
 	    	
-	    	String response = null;
+	    	String response = "";
 	    	
 	    	if (customer != null) {
 	    		req.getSession().setAttribute("customer", customer);
 	    		req.getSession().setMaxInactiveInterval(0);
-	    		response = "{\"redirect\":false}";
 	    		
 	    		if (req.getSession().getAttribute("anonymousCart") != null) {
 	    			HashMap<Product, Long> anonymousCart = (HashMap<Product, Long>) req.getSession().getAttribute("anonymousCart");
@@ -56,12 +55,11 @@ public class Login extends HttpServlet {
 	    			DBManager.getInstance().fillCartFromAnonymous(customer, anonymousCart);
 	    			req.getSession().removeAttribute("anonymousCart");
 	    		}
-	    		
-	    		
+	    		response = gson.toJson(customer.getCart(), new TypeToken<HashMap<Product, Long>>(){}.getType());
+	    		System.out.println(response);
 	    	} 
 	    	else if (administrator != null) {
 	    		req.getSession().setAttribute("administrator", administrator);
-	    		response = "{\"redirect\":true,\"redirect_url\":\"administration\"}";
 	    	}
 	    	else {
 	    		resp.sendError(401);

@@ -81,7 +81,7 @@
 							<div class="dropdown-menu login-dropdown">
 								<form class="px-4 py-3">
 									<div class="form-group">
-										<label for="inputUsername">Nome utente</label> <input
+											<label for="inputUsername">Nome utente</label> <input
 											type="text" class="form-control" id="inputUsername"
 											placeholder="Inserisci nome utente">
 									</div>
@@ -91,7 +91,7 @@
 											placeholder="Password">
 									</div>
 									<input type="button" class="btn btn-primary color-scheme"
-										value="Autenticati" onclick="ajaxLog('login', 500)">
+										value="Autenticati" onclick="ajaxLog('login', 500, true)">
 
 								</form>
 								<div class="dropdown-item" id="credenzialiErrate"
@@ -127,7 +127,7 @@
 						class="nav-link" href="#">Dieta</a></li>
 					<li><input type="button" id="logoutButton"
 						class="btn btn-primary login-dependent" value="Logout"
-						onclick="ajaxLog('logout', 500)"></li>
+						onclick="ajaxLog('logout', 500, true)"></li>
 
 
 					<li class="nav-item"><a class="nav-link" href="administration">Parte

@@ -28,13 +28,14 @@ public class DeliveryAddressDaoJdbc implements DeliveryAddressDao {
 
 			Long id = IdBroker.getId(connection, sequenceName);
 			deliveryAddress.setId(id);
-			String insert = "insert into delivery_address(id, country, city, address ,zipcode) values (?, ?, ?, ?, ?)";
+			String insert = "insert into delivery_address(id, country, city, address ,zipcode, province) values (?, ?, ?, ?, ?, ?)";
 			PreparedStatement statement = connection.prepareStatement(insert);
 			statement.setLong(1, deliveryAddress.getId());
 			statement.setString(2, deliveryAddress.getCountry());
 			statement.setString(3, deliveryAddress.getCity());
 			statement.setString(4, deliveryAddress.getAddress());
 			statement.setString(5, deliveryAddress.getZipcode());
+			statement.setString(6, deliveryAddress.getProvince());
 			statement.executeUpdate();
 
 			connection.commit();
@@ -66,7 +67,7 @@ public class DeliveryAddressDaoJdbc implements DeliveryAddressDao {
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				deliveryAddresses.add(new DeliveryAddress(resultSet.getLong("id"), resultSet.getString(""),
-						resultSet.getString("city"), resultSet.getString("address"), resultSet.getString("zipcode")));
+						resultSet.getString("city"), resultSet.getString("address"), resultSet.getString("zipcode"), resultSet.getString("province")));
 			}
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -98,7 +99,7 @@ public class DeliveryAddressDaoJdbc implements DeliveryAddressDao {
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				deliveryAddress = new DeliveryAddress(resultSet.getLong("id"), resultSet.getString("country"),
-						resultSet.getString("city"), resultSet.getString("address"), resultSet.getString("zipcode"));
+						resultSet.getString("city"), resultSet.getString("address"), resultSet.getString("zipcode"), resultSet.getString("province"));
 			}
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -125,13 +126,14 @@ public class DeliveryAddressDaoJdbc implements DeliveryAddressDao {
 			connection = this.dataSource.getConnection();
 			connection.setAutoCommit(false);
 
-			String update = "update delivery_address set country=?, city=?, address=?, zipcode=? where id=?";
+			String update = "update delivery_address set country=?, city=?, address=?, zipcode=? province=? where id=?";
 			PreparedStatement statement = connection.prepareStatement(update);
 			statement.setString(1, deliveryAddress.getCountry());
 			statement.setString(2, deliveryAddress.getCity());
 			statement.setString(3, deliveryAddress.getAddress());
 			statement.setString(4, deliveryAddress.getZipcode());
 			statement.setLong(5, deliveryAddress.getId());
+			statement.setString(5, deliveryAddress.getProvince());
 			statement.executeUpdate();
 
 			connection.commit();

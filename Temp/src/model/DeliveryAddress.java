@@ -7,17 +7,26 @@ public class DeliveryAddress {
 	private String city;
 	private String address;
 	private String zipcode;
+	private String province;
 
-	public DeliveryAddress(long id, String country, String city, String address, String zipcode) {
+	public DeliveryAddress(long id, String country, String city, String address, String zipcode, String province) {
 		this.id = id;
 		this.country = country;
 		this.city = city;
 		this.address = address;
 		this.zipcode = zipcode;
+		this.province = province;
 	}
 
 	public String getZipcode() {
 		return zipcode;
+	}
+	
+	public String getProvince() {
+		return province;
+	}
+	public void setProvince(String province) {
+		this.province = province;
 	}
 
 	public void setZipcode(String zipcode) {

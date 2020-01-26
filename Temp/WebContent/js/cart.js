@@ -59,7 +59,7 @@ updateCart = function(id, name, supermarket, price, op) {
 					operation : op
 				},
 				success : function() {
-					startTimer(10, $("#timer"));
+					startTimer(30*60, $("#timer"));
 					var idTag = 'product_' + id;
 					if (op === "add") {
 						// Se il prodotto esiste già aggiorno la quantità

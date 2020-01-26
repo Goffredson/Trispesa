@@ -18,7 +18,7 @@ public class Home extends HttpServlet {
 		req.setAttribute("listaMacroCategorie", DBManager.getInstance().getMacroCategories());
 		req.setAttribute("prodottiScontati", DBManager.getInstance().getDiscountedProducts());
 		
-		System.out.println(DBManager.getInstance().getDiscountedProducts());
+
 		RequestDispatcher rd = req.getRequestDispatcher("index.jsp");
 		rd.forward(req, resp);
 	}

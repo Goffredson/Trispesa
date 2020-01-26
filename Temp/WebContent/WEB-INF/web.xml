@@ -177,5 +177,15 @@
 		<url-pattern>/user/manageOrder</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>ManageDiet</servlet-name>
+		<servlet-class>controller.ManageDiet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ManageDiet</servlet-name>
+		<url-pattern>/user/manageDiet</url-pattern>
+	</servlet-mapping>
+	
 
 </web-app>

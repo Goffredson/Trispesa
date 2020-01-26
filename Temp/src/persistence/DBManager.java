@@ -36,11 +36,7 @@ public class DBManager {
 	private static DBManager istance = null;
 	private static DataSource dataSource = null;
 
-//	private ArrayList<Customer> customers;
-//	private ArrayList<Product> products;
-//	private ArrayList<SuperMarket> superMarkets;
-//	private ArrayList<Category> categories;
-//	private ArrayList<Category> macroCategories;
+
 
 	public static DBManager getInstance() {
 		if (istance == null)
@@ -194,6 +190,7 @@ public class DBManager {
 	public ArrayList<Category> getMacroCategories() {
 		return getCategoryDao().retrieveMacroCategories();
 	}
+	
 
 	public Category getCategoryById(long id) {
 		return getCategoryDao().retrieveByPrimaryKey(id);
@@ -322,5 +319,13 @@ public class DBManager {
 	public void addPaymentMethod(Customer customer, PaymentMethod paymentMethod) throws DBOperationException {
 		getPaymentMethodDao().addPaymentMethod(customer.getId(), paymentMethod);
 		customer.getPaymentMethods().add(paymentMethod);
+	}
+
+	public ArrayList<Product> getProductsByCategoryAndWeight(Long idCategory,Long weight) {
+		return getProductDao().retrieveByCategoryAndWeight(idCategory,weight);
+	}
+
+	public ArrayList<Category> getLeafCategoriesForDiet() {
+		return getCategoryDao().retrieveLeafCategoriesForDiet();
 	}
 }

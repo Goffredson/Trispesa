@@ -283,12 +283,6 @@ public class ProductDaoJdbc implements ProductDao {
 					throw new RuntimeException(e.getMessage());
 				}
 			}
-		} finally {
-//			try {
-//				connection.close();
-//			} catch (SQLException e) {
-//				throw new RuntimeException(e.getMessage());
-//			}
 		}
 		return products;
 	}
@@ -470,6 +464,40 @@ public class ProductDaoJdbc implements ProductDao {
 			}
 		}
 		return prodotti;
+	}
+
+	@Override
+	public ArrayList<Product> retrieveByCategoryAndWeight(Long categoryId,Long weight) {
+		Connection connection = null;
+		ArrayList<Product> products = new ArrayList<Product>();
+		try {
+			connection = this.dataSource.getConnection();
+			String query = "select * from product as prod where prod.category=39 and prod.weight>=500 or exists (select * from category as cat where cat.id=39 and cat.parent=prod.category and prod.weight>=500)";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setLong(1, categoryId);
+			statement.setLong(2,weight);
+			statement.setLong(3, categoryId);
+			statement.setLong(4,weight);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				products.add(new Product(resultSet.getLong("id"), resultSet.getLong("barcode"),
+						resultSet.getString("name"), resultSet.getString("brand"), resultSet.getDouble("weight"),
+						new SuperMarketDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("supermarket")),
+						new CategoryDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("category")),
+						resultSet.getBoolean("offbrand"), resultSet.getDouble("price"), resultSet.getLong("quantity"),
+						resultSet.getDouble("discount"), resultSet.getString("image_path"),
+						resultSet.getBoolean("deleted")));
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		}
+		return products;
 	}
 
 }

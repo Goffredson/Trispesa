@@ -37,5 +37,7 @@ public interface ProductDao {
 	
 	public ArrayList<Product> getDiscountedProducts();
 
+	public ArrayList<Product> retrieveByCategoryAndWeight(Long idCategory,Long weight);
+
 
 }

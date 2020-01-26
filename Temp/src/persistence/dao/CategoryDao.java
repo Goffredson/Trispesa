@@ -23,5 +23,7 @@ public interface CategoryDao {
 	// DELETE
 	public void delete(Category category);
 
+	public ArrayList<Category> retrieveLeafCategoriesForDiet();
+
 
 }

@@ -174,17 +174,39 @@ public class CategoryDaoJdbc implements CategoryDao {
 					throw new RuntimeException(e.getMessage());
 				}
 			}
-		} finally {
-//			try {
-//				connection.close();
-//			} catch (SQLException e) {
-//				throw new RuntimeException(e.getMessage());
-//			}
+		}
+		return categories;
+
+	}
+
+	@Override
+	public ArrayList<Category> retrieveLeafCategoriesForDiet() {
+		Connection connection = null;
+		ArrayList<Category> categories = new ArrayList<Category>();
+		try {
+			connection = this.dataSource.getConnection();
+			String query = "select * from category as C1 where not exists (select * from category as C2 where C2.parent = C1.id) and exists(select * from category as C3,category as C2 where C2.id=C1.parent and C2.parent=C3.id and C3.name='Alimentare')";
+			PreparedStatement statement = connection.prepareStatement(query);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				long parentId = resultSet.getLong("parent");
+				if (parentId == 0) {
+					categories.add(new Category(resultSet.getLong("id"), resultSet.getString("name"), null));
+				} else {
+					categories.add(new Category(resultSet.getLong("id"), resultSet.getString("name"),
+							new CategoryDaoJdbc(dataSource).retrieveByPrimaryKey(parentId)));
+				}
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
 		}
 		return categories;
 	}
-
-	
-	
 
 }

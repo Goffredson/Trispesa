@@ -123,7 +123,7 @@
 						class="nav-link" href="#">Ordini</a></li>
 					<li class="nav-item login-dependent" id="profilo"><a
 						class="nav-link" href="user?page=profile">Profilo</a></li>
-					<li class="nav-item login-dependent" id="dieta"><a
+					<li class="nav-item login-dependent" id="dieta"><a href="user/manageDiet"
 						class="nav-link" href="#">Dieta</a></li>
 					<li><input type="button" id="logoutButton"
 						class="btn btn-primary login-dependent" value="Logout"

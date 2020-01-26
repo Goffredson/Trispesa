@@ -295,7 +295,7 @@
 					</button>
 				</div>
 				<!--Body-->
-				<div class="modal-body">
+				<div class="modal-body" id="modalTemp">
 					<div class="count">
 						<h3>
 							<small>Tempo rimanente</small>

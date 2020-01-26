@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import model.Administrator;
@@ -34,7 +35,7 @@ public class Login extends HttpServlet {
 			line = reader.readLine();
 		}
 
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create();
 	    Type arrayListType = new TypeToken<ArrayList<String>>(){}.getType();
 	    ArrayList<String> credentials = gson.fromJson(jsonReceived.toString(), arrayListType);
 	    
@@ -56,7 +57,6 @@ public class Login extends HttpServlet {
 	    			req.getSession().removeAttribute("anonymousCart");
 	    		}
 	    		response = gson.toJson(customer.getCart(), new TypeToken<HashMap<Product, Long>>(){}.getType());
-	    		System.out.println(response);
 	    	} 
 	    	else if (administrator != null) {
 	    		req.getSession().setAttribute("administrator", administrator);

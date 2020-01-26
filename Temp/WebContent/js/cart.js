@@ -48,7 +48,6 @@ function startTimer(duration, display) {
 }
 
 updateCart = function(id, name, supermarket, price, op) {
-	// alert("Entro");
 
 	$
 			.ajax({

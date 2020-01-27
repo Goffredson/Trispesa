@@ -36,8 +36,6 @@ public class DBManager {
 	private static DBManager istance = null;
 	private static DataSource dataSource = null;
 
-
-
 	public static DBManager getInstance() {
 		if (istance == null)
 			istance = new DBManager();
@@ -190,7 +188,6 @@ public class DBManager {
 	public ArrayList<Category> getMacroCategories() {
 		return getCategoryDao().retrieveMacroCategories();
 	}
-	
 
 	public Category getCategoryById(long id) {
 		return getCategoryDao().retrieveByPrimaryKey(id);
@@ -311,7 +308,7 @@ public class DBManager {
 		getDeliveryAddressDao().dereferCustomerDeliveryAddress(customer.getId(), deliveryAddressId);
 		customer.getDeliveryAddresses().remove(deliveryAddress);
 	}
-	
+
 	public ArrayList<Product> getDiscountedProducts() {
 		return getProductDao().getDiscountedProducts();
 	}
@@ -321,11 +318,60 @@ public class DBManager {
 		customer.getPaymentMethods().add(paymentMethod);
 	}
 
-	public ArrayList<Product> getProductsByCategoryAndWeight(Long idCategory,Long weight) {
-		return getProductDao().retrieveByCategoryAndWeight(idCategory,weight);
+	public ArrayList<Product> getProductsByCategoryAndWeight(Long idCategory, Long weight) {
+		return getProductDao().retrieveByCategoryAndWeight(idCategory, weight);
 	}
 
 	public ArrayList<Category> getLeafCategoriesForDiet() {
 		return getCategoryDao().retrieveLeafCategoriesForDiet();
+	}
+
+	public void modPaymentMethod(Customer customer, PaymentMethod paymentMethod) throws DBOperationException {
+		getPaymentMethodDao().modPaymentMethod(paymentMethod);
+		for (PaymentMethod p : customer.getPaymentMethods()) {
+			if (p.equals(paymentMethod)) {
+				p.setCardNumber(paymentMethod.getCardNumber());
+				p.setOwner(paymentMethod.getOwner());
+				p.setExpirationDate(paymentMethod.getExpirationDate());
+				p.setSecurityCode(paymentMethod.getSecurityCode());
+				p.setCompany(paymentMethod.getCompany());
+				return;
+			}
+		}
+	}
+
+	public PaymentMethod getPaymentMethodById(long id) throws DBOperationException {
+		PaymentMethod paymentMethod = getPaymentMethodDao().retrieveByPrimaryKey(id);
+		if (paymentMethod == null) {
+			throw new DBOperationException("Il metodo di pagamento non è stato trovato", "");
+		}
+		return paymentMethod;
+	}
+
+	public void addDeliveryAddress(Customer customer, DeliveryAddress deliveryAddress) throws DBOperationException {
+		getDeliveryAddressDao().addDeliveryAddress(customer.getId(), deliveryAddress);
+		customer.getDeliveryAddresses().add(deliveryAddress);
+	}
+
+	public DeliveryAddress getdeliveryAddressById(long id) throws DBOperationException {
+		DeliveryAddress deliveryAddress = getDeliveryAddressDao().retrieveByPrimaryKey(id);
+		if (deliveryAddress == null) {
+			throw new DBOperationException("L'indirizzo di consegna non è stato trovato", "");
+		}
+		return deliveryAddress;
+	}
+
+	public void modDeliveryAddress(Customer customer, DeliveryAddress deliveryAddress) throws DBOperationException {
+		getDeliveryAddressDao().modDeliveryAddress(deliveryAddress);
+		for (DeliveryAddress d : customer.getDeliveryAddresses()) {
+			if (d.equals(deliveryAddress)) {
+				d.setCountry(deliveryAddress.getCountry());
+				d.setCity(deliveryAddress.getCity());
+				d.setAddress(deliveryAddress.getCity());
+				d.setZipcode(deliveryAddress.getZipcode());
+				d.setProvince(deliveryAddress.getZipcode());
+				return;
+			}
+		}
 	}
 }

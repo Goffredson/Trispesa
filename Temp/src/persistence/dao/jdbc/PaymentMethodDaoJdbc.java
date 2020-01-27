@@ -305,4 +305,49 @@ public class PaymentMethodDaoJdbc implements PaymentMethodDao {
 		}
 	}
 
+	@Override
+	public void modPaymentMethod(PaymentMethod paymentMethod) throws DBOperationException {
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			connection.setAutoCommit(false);
+
+			String select = "select * from payment_method where id=?";
+			PreparedStatement selectStatement = connection.prepareStatement(select);
+			selectStatement.setLong(1, paymentMethod.getId());
+			ResultSet selectResultSet = selectStatement.executeQuery();
+
+			if (!(selectResultSet.next())) {
+				throw new DBOperationException("Il metodo di pagamento non è stato trovato", "");
+			} else {
+				String update = "update payment_method set card_number=?, owner=?, expiration_date=?, security_code=?, company=? where id=?";
+				PreparedStatement updateStatement = connection.prepareStatement(update);
+				updateStatement.setString(1, paymentMethod.getCardNumber());
+				updateStatement.setString(2, paymentMethod.getOwner());
+				updateStatement.setString(3, paymentMethod.getExpirationDate());
+				updateStatement.setInt(4, paymentMethod.getSecurityCode());
+				updateStatement.setString(5, paymentMethod.getCompany());
+				updateStatement.setLong(6, paymentMethod.getId());
+				updateStatement.executeUpdate();
+			}
+		} catch (
+
+		SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+					System.out.println("rollback");
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+			try {
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
+		}
+	}
+
 }

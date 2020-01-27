@@ -129,7 +129,7 @@ function prepareAddSupermarket() {
 }
 
 function prepareModSupermarket(id) {
-	$('#modify-product-' + id.toString()).html(
+	$('#modify-supermarket-' + id.toString()).html(
 			'<span class="spinner-border spinner-border-sm"></span> Caricamento');
 	$('.btn').prop('disabled', true);
 	clearMapForm();
@@ -317,7 +317,7 @@ function manageModSupermarket(id) {
 					addMarkerOnMap($('#lat').val(), $('#lon').val())
 				}, 200);
 			}
-			$('#modify-supermarket-' + id.toString()).html('+ Aggiungi prodotto');
+			$('#modify-supermarket-' + id.toString()).html('Modifica supermercato');
 			$('.btn').prop('disabled', false);
 		}
 	});

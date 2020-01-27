@@ -263,6 +263,70 @@
 		</div>
 	</div>
 
+	<div class="modal" id="manage-delivery-address-modal">
+		<div class="modal-dialog" style="max-width: 80%;">
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 id="manage-delivery-address-modal-title" class="modal-title"></h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<!-- form -->
+					<form id="manage-delivery-address-form" class="needs-validation"
+						novalidate autocomplete="on">
+						<div class="form-group">
+							<label for="country">Nazione:</label>
+							<div id="input">
+								<input type="text" class="form-control" id="country"
+									placeholder="Nazione" name="country" required
+									autocomplete="off">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="province">Provincia:</label>
+							<div id="input">
+								<input type="text" class="form-control" id="province"
+									placeholder="Provincia" name="province" required
+									autocomplete="off">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="city">Città:</label>
+							<div id="input">
+								<input type="text" class="form-control" id="city"
+									placeholder="Città" name="city" required autocomplete="off">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="zipcode">CAP:</label>
+							<div id="input">
+								<input type="text" class="form-control" id="zipcode"
+									placeholder="CAP" name="zipcode" required autocomplete="off">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="address">Indirizzo:</label>
+							<div id="input">
+								<input type="text" class="form-control" id="address"
+									placeholder="Indirizzo" name="address" required
+									autocomplete="off">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button id="manage-delivery-address-button" type="button"
+						class="btn btn-success"></button>
+					<button type="button" class="btn btn-secondary"
+						onclick="clearForm()">Reset</button>
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Chiudi</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- Footer -->
 	<footer class="py-5 bg-dark">
 		<div class="container">

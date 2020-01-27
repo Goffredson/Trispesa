@@ -187,5 +187,14 @@
 		<url-pattern>/user/manageDiet</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>ManageUserForm</servlet-name>
+		<servlet-class>controller.ManageUserForm</servlet-class>
+	</servlet>
 
+	<servlet-mapping>
+		<servlet-name>ManageUserForm</servlet-name>
+		<url-pattern>/user/manageUserForm</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

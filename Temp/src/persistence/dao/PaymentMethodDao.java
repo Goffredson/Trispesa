@@ -25,6 +25,8 @@ public interface PaymentMethodDao {
 
 	public void dereferCustomerPaymentMethod(long customerId, long paymentMethodId);
 
-	public void addPaymentMethod(long id, PaymentMethod paymentMethod) throws DBOperationException;
+	public void addPaymentMethod(long customerId, PaymentMethod paymentMethod) throws DBOperationException;
+
+	public void modPaymentMethod(PaymentMethod paymentMethod) throws DBOperationException;
 
 }

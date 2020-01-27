@@ -66,84 +66,49 @@ $(document)
 													.removeClass("is-invalid");
 										}
 									});
-					// validazione form DA AGGIUSTARE
-					$('#manage-delivery-address-form')
-							.validate(
-									{
-										rules : {
-											barcode : {
-												required : true,
-												digits : true
-											},
-											name : "required",
-											brand : "required",
-											weight : {
-												required : true,
-												number : true
-											},
-											price : {
-												required : true,
-												number : true
-											},
-											quantity : {
-												required : true,
-												digits : true
-											},
-											discount : {
-												required : true,
-												number : true
-											},
-										},
-										messages : {
-											barcode : {
-												required : "Inserisci codice a barre",
-												digits : "Il codice a barre deve contenere solo numeri"
-											},
-											name : "Inserisci il nome",
-											brand : "Inserisci la marca",
-											weight : {
-												required : "Inserisci il peso",
-												number : "Il peso deve contenere solo numeri"
-											},
-											price : {
-												required : "Inserisci il peso",
-												number : "Il prezzo deve contenere solo numeri"
-											},
-											quantity : {
-												required : "Inserisci il peso",
-												number : "La quantità deve contenere solo numeri"
-											},
-											discount : {
-												required : "Inserisci il peso",
-												number : "Lo sconto deve contenere solo numeri"
-											},
-										},
-										errorElement : "em",
-										errorPlacement : function(error,
-												element) {
-											// Add the `help-block` class to the
-											// error element
-											error.addClass("help-block");
-											error.addClass("invalid-feedback");
 
-											if (element.prop("type") === "checkbox") {
-												error.insertAfter(element
-														.parent("label"));
-											} else {
-												error.insertAfter(element);
-											}
-										},
-										highlight : function(element,
-												errorClass, validClass) {
-											$(element).addClass("is-invalid")
-													.removeClass("is-valid");
-										},
-										unhighlight : function(element,
-												errorClass, validClass) {
-											$(element).addClass("is-valid")
-													.removeClass("is-invalid");
-										}
-									});
+					// validazione form DA AGGIUSTARE
+					$('#manage-delivery-address-form').validate(
+							{
+								rules : {
+									country : "required",
+									city : "required",
+									address : "required",
+									zipcode : "required",
+									province : "required",
+								},
+								messages : {
+									country : "Per favore, inserisca la nazione",
+									city : "Per favore, inserisca la città",
+									address : "Per favore, inserisca l'indirizzo",
+									zipcode : "Per favore, inserisca il codice di avviamento postale",
+									province : "Per favore, inserisca la provincia",
+								},
+								errorElement : "em",
+								errorPlacement : function(error, element) {
+									// Add the `help-block` class to the
+									// error element
+									error.addClass("help-block");
+									error.addClass("invalid-feedback");
+
+									if (element.prop("type") === "checkbox") {
+										error.insertAfter(element
+												.parent("label"));
+									} else {
+										error.insertAfter(element);
+									}
+								},
+								highlight : function(element, errorClass,
+										validClass) {
+									$(element).addClass("is-invalid")
+											.removeClass("is-valid");
+								},
+								unhighlight : function(element, errorClass,
+										validClass) {
+									$(element).addClass("is-valid")
+											.removeClass("is-invalid");
+								}
+							});
 				});
 
 // va aggiustata
@@ -153,6 +118,11 @@ function clearForm() {
 	$('#owner').val('');
 	$('#expiration-date').val('');
 	$('#security-code').val('');
+	$('#country').val('');
+	$('#city').val('');
+	$('#address').val('');
+	$('#zipcode').val('');
+	$('#province').val('');
 }
 
 $('#result-modal').on('hide.bs.modal', function(event) {
@@ -170,8 +140,57 @@ function prepareAddPaymentMethod() {
 	$('#manage-payment-method-modal').modal('show');
 }
 
-function prepareModPaymentMethod() {
+function prepareModPaymentMethod(id) {
+	$('#modify-payment-method-' + id.toString())
+			.html(
+					'<span class="spinner-border spinner-border-sm"></span> Caricamento');
+	$('.btn').prop('disabled', true);
 
+	clearForm();
+	manageModPaymentMethod(id);
+
+	$('#manage-payment-method-modal-title')
+			.html('Modifica metodo di pagamento');
+	$('#manage-payment-method-button').html("Modifica metodo di pagamento");
+	$('#manage-payment-method-button').click(function(e) {
+		modPaymentMethod(id)
+	});
+}
+
+function manageModPaymentMethod(id) {
+	$.ajax({
+		type : "POST",
+		url : "user/manageUserForm?type=payment",
+		dataType : "json",
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify({
+			payment : id
+		}),
+		success : function(data) {
+			if (data.result.result === false) {
+				$('#result-modal-title').html('Operazione annullata');
+				$('#result-modal-body').addClass('error-message');
+				$('#result-modal-object').html(data.result.object);
+				$('#result-modal').modal('show');
+				success = false;
+			} else {
+				$('#company').val(data.payment.company);
+				$('#card-number').val(data.payment.cardNumber);
+				$('#owner').val(data.payment.owner);
+				$('#expiration-date').val(data.payment.expirationDate);
+				$('#security-code').val(data.payment.securityCode);
+				success = true;
+			}
+		},
+		complete : function() {
+			if (success) {
+				$('#manage-payment-method-modal').modal('show');
+			}
+			$('#modify-payment-method-' + id.toString()).html(
+					'Modifica metodo di pagamento');
+			$('.btn').prop('disabled', false);
+		}
+	});
 }
 
 function addPaymentMethod() {
@@ -210,8 +229,40 @@ function addPaymentMethod() {
 	});
 }
 
-function modifyPaymentMethod(id) {
+function modPaymentMethod(payment) {
+	if ($('#manage-payment-method-form').valid() === false) {
+		$('#manage-payment-method-form').addClass("was-validated").removeClass(
+				"needs-validation");
+		return;
+	}
 
+	$.ajax({
+		type : "POST",
+		url : "user/manage?type=paymentMethod&action=mod",
+		dataType : "json",
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify({
+			id : payment,
+			cardNumber : $('#card-number').val(),
+			owner : $('#owner').val(),
+			expirationDate : $('#expiration-date').val(),
+			securityCode : $('#security-code').val(),
+			company : $('#company').val(),
+		}),
+		success : function(data) {
+			$('#manage-payment-method-modal').modal('hide');
+			if (data.result == true) {
+				$('#result-modal-title').html(
+						'Operazione eseguita con successo');
+				$('#result-modal-body').addClass('success-message');
+			} else {
+				$('#result-modal-title').html('Operazione annullata');
+				$('#result-modal-body').addClass('error-message');
+			}
+			$('#result-modal-object').html(data.object);
+			$('#result-modal').modal('show');
+		}
+	});
 }
 
 function deletePaymentMethod(id) {
@@ -256,19 +307,139 @@ function deletePaymentMethod(id) {
 }
 
 function prepareAddDeliveryAddress() {
-
+	clearForm();
+	$('#manage-delivery-address-modal-title').html(
+			'Aggiungi indirizzo di consegna');
+	$('#manage-delivery-address-button').html("Aggiungi indirizzo di consegna");
+	$('#manage-delivery-address-button').click(function(e) {
+		addDeliveryAddress()
+	});
+	$('#manage-delivery-address-modal').modal('show');
 }
 
-function prepareModDeliveryAddress() {
+function prepareModDeliveryAddress(id) {
+	$('#modify-delivery-address-' + id.toString())
+			.html(
+					'<span class="spinner-border spinner-border-sm"></span> Caricamento');
+	$('.btn').prop('disabled', true);
 
+	clearForm();
+	manageModDeliveryAddress(id);
+
+	$('#manage-delivery-address-modal-title').html(
+			'Modifica indirizzo di consegna');
+	$('#manage-delivery-address-button').html("Modifica indirizzo di consegna");
+	$('#manage-delivery-address-button').click(function(e) {
+		modDeliveryAddress(id)
+	});
+}
+
+function manageModDeliveryAddress(id) {
+	$.ajax({
+		type : "POST",
+		url : "user/manageUserForm?type=delivery",
+		dataType : "json",
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify({
+			delivery : id
+		}),
+		success : function(data) {
+			if (data.result.result === false) {
+				$('#result-modal-title').html('Operazione annullata');
+				$('#result-modal-body').addClass('error-message');
+				$('#result-modal-object').html(data.result.object);
+				$('#result-modal').modal('show');
+				success = false;
+			} else {
+				$('#country').val(data.delivery.country);
+				$('#city').val(data.delivery.city);
+				$('#address').val(data.delivery.address);
+				$('#zipcode').val(data.delivery.zipcode);
+				$('#province').val(data.delivery.province);
+				success = true;
+			}
+		},
+		complete : function() {
+			if (success) {
+				$('#manage-delivery-address-modal').modal('show');
+			}
+			$('#modify-delivery-address-' + id.toString()).html(
+					'Modifica indirizzo di consegna');
+			$('.btn').prop('disabled', false);
+		}
+	});
 }
 
 function addDeliveryAddress() {
+	if ($('#manage-delivery-address-form').valid() === false) {
+		$('#manage-delivery-address-form').addClass("was-validated")
+				.removeClass("needs-validation");
+		return;
+	}
 
+	$.ajax({
+		type : "POST",
+		url : "user/manage?type=deliveryAddress&action=add",
+		dataType : "json",
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify({
+			id : 0,
+			country : $('#country').val(),
+			city : $('#city').val(),
+			address : $('#address').val(),
+			zipcode : $('#zipcode').val(),
+			province : $('#province').val(),
+		}),
+		success : function(data) {
+			$('#manage-delivery-address-modal').modal('hide');
+			if (data.result == true) {
+				$('#result-modal-title').html(
+						'Operazione eseguita con successo');
+				$('#result-modal-body').addClass('success-message');
+			} else {
+				$('#result-modal-title').html('Operazione annullata');
+				$('#result-modal-body').addClass('error-message');
+			}
+			$('#result-modal-object').html(data.object);
+			$('#result-modal').modal('show');
+		}
+	});
 }
 
-function modifyDeliveryAddress(id) {
+function modDeliveryAddress(delivery) {
+	if ($('#manage-delivery-address-form').valid() === false) {
+		$('#manage-delivery-address-form').addClass("was-validated")
+				.removeClass("needs-validation");
+		return;
+	}
 
+	$.ajax({
+		type : "POST",
+		url : "user/manage?type=deliveryAddress&action=mod",
+		dataType : "json",
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify({
+			id : delivery,
+			country : $('#country').val(),
+			city : $('#city').val(),
+			address : $('#address').val(),
+			zipcode : $('#zipcode').val(),
+			province : $('#province').val(),
+		}),
+		success : function(data) {
+			$('#manage-delivery-address-modal').modal('hide');
+			if (data.result == true) {
+				$('#result-modal-title').html(
+						'Operazione eseguita con successo');
+				$('#result-modal-body').addClass('success-message');
+			} else {
+				$('#result-modal-title').html('Operazione annullata');
+				$('#result-modal-body').addClass('error-message');
+			}
+			$('#result-modal-object').html(data.object);
+			$('#result-modal').modal('show');
+		}
+	});
 }
 
 function deleteDeliveryAddress(id) {

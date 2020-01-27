@@ -57,14 +57,29 @@ public class ManageUser extends HttpServlet {
 					}
 					PaymentMethod paymentMethod = gson.fromJson(stringBuffer.toString(), PaymentMethod.class);
 					Customer customer = (Customer) req.getSession().getAttribute("customer");
-					
+
 					DBManager.getInstance().addPaymentMethod(customer, paymentMethod);
-					
+
 					operationResult.setResult(true);
 					operationResult.setObject("Il metodo di pagamento è stato aggiunto con successo!");
 				}
 					break;
 				case "mod": {
+					StringBuffer stringBuffer = new StringBuffer();
+					BufferedReader bufferedReader = new BufferedReader(
+							new InputStreamReader(req.getInputStream(), StandardCharsets.UTF_8));
+					String line = bufferedReader.readLine();
+					while (line != null) {
+						stringBuffer.append(line);
+						line = bufferedReader.readLine();
+					}
+					PaymentMethod paymentMethod = gson.fromJson(stringBuffer.toString(), PaymentMethod.class);
+					Customer customer = (Customer) req.getSession().getAttribute("customer");
+
+					DBManager.getInstance().modPaymentMethod(customer, paymentMethod);
+
+					operationResult.setResult(true);
+					operationResult.setObject("Il metodo di pagamento è stato modificato con successo!");
 				}
 					break;
 				case "del": {
@@ -77,10 +92,10 @@ public class ManageUser extends HttpServlet {
 						line = bufferedReader.readLine();
 					}
 					long id = gson.fromJson(stringBuffer.toString(), JsonObject.class).get("paymentMethod").getAsLong();
-					
+
 					Customer customer = (Customer) req.getSession().getAttribute("customer");
 					DBManager.getInstance().deletePaymentMethod(customer, id);
-					
+
 					operationResult.setResult(true);
 					operationResult.setObject("Il metodo di pagamento è stato eliminato con successo!");
 				}
@@ -91,9 +106,39 @@ public class ManageUser extends HttpServlet {
 			case "deliveryAddress": {
 				switch (req.getParameter("action")) {
 				case "add": {
+					StringBuffer stringBuffer = new StringBuffer();
+					BufferedReader bufferedReader = new BufferedReader(
+							new InputStreamReader(req.getInputStream(), StandardCharsets.UTF_8));
+					String line = bufferedReader.readLine();
+					while (line != null) {
+						stringBuffer.append(line);
+						line = bufferedReader.readLine();
+					}
+					DeliveryAddress deliveryAddress = gson.fromJson(stringBuffer.toString(), DeliveryAddress.class);
+					Customer customer = (Customer) req.getSession().getAttribute("customer");
+
+					DBManager.getInstance().addDeliveryAddress(customer, deliveryAddress);
+
+					operationResult.setResult(true);
+					operationResult.setObject("L'indirizzo di consegna è stato aggiunto con successo!");
 				}
 					break;
 				case "mod": {
+					StringBuffer stringBuffer = new StringBuffer();
+					BufferedReader bufferedReader = new BufferedReader(
+							new InputStreamReader(req.getInputStream(), StandardCharsets.UTF_8));
+					String line = bufferedReader.readLine();
+					while (line != null) {
+						stringBuffer.append(line);
+						line = bufferedReader.readLine();
+					}
+					DeliveryAddress deliveryAddress = gson.fromJson(stringBuffer.toString(), DeliveryAddress.class);
+					Customer customer = (Customer) req.getSession().getAttribute("customer");
+
+					DBManager.getInstance().modDeliveryAddress(customer, deliveryAddress);
+
+					operationResult.setResult(true);
+					operationResult.setObject("L'indirizzo di consegna è stato modificato con successo!");
 				}
 					break;
 				case "del": {
@@ -105,11 +150,12 @@ public class ManageUser extends HttpServlet {
 						stringBuffer.append(line);
 						line = bufferedReader.readLine();
 					}
-					long id = gson.fromJson(stringBuffer.toString(), JsonObject.class).get("deliveryAddress").getAsLong();
-					
+					long id = gson.fromJson(stringBuffer.toString(), JsonObject.class).get("deliveryAddress")
+							.getAsLong();
+
 					Customer customer = (Customer) req.getSession().getAttribute("customer");
 					DBManager.getInstance().deleteDeliveryAddress(customer, id);
-					
+
 					operationResult.setResult(true);
 					operationResult.setObject("L'indirizzo di consegna è stato eliminato con successo!");
 				}

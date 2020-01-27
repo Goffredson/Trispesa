@@ -34,10 +34,9 @@ public interface ProductDao {
 	public void decreaseQuantity(Long product, long quantity);
 
 	public void increaseQuantity(Long product, long l);
-	
+
 	public ArrayList<Product> getDiscountedProducts();
 
-	public ArrayList<Product> retrieveByCategoryAndWeight(Long idCategory,Long weight);
-
+	public ArrayList<Product> retrieveByCategoryAndWeight(String categoryName, boolean offBrand, long weight);
 
 }

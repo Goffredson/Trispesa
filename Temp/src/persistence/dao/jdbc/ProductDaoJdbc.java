@@ -467,17 +467,22 @@ public class ProductDaoJdbc implements ProductDao {
 	}
 
 	@Override
-	public ArrayList<Product> retrieveByCategoryAndWeight(Long categoryId,Long weight) {
+	public ArrayList<Product> retrieveByCategoryAndWeight(String categoryName, boolean offBrand, long weight) {
 		Connection connection = null;
 		ArrayList<Product> products = new ArrayList<Product>();
 		try {
 			connection = this.dataSource.getConnection();
-			String query = "select * from product as prod where prod.category=39 and prod.weight>=500 or exists (select * from category as cat where cat.id=39 and cat.parent=prod.category and prod.weight>=500)";
+			String query = "select * "
+					+ "from product as prod, category as c "
+					+ "where prod.category=c.id and c.name=? and prod.quantity > 0 and prod.weight>=? and prod.offbrand=? or exists "
+					+ "(select * from category as cat where cat.name=? and cat.parent=prod.category and prod.weight>=? and prod.offbrand=? and prod.quantity > 0)";
 			PreparedStatement statement = connection.prepareStatement(query);
-			statement.setLong(1, categoryId);
-			statement.setLong(2,weight);
-			statement.setLong(3, categoryId);
-			statement.setLong(4,weight);
+			statement.setString(1, categoryName);
+			statement.setLong(2, weight);
+			statement.setBoolean(3, offBrand);
+			statement.setString(4, categoryName);
+			statement.setLong(5, weight);
+			statement.setBoolean(6, offBrand);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				products.add(new Product(resultSet.getLong("id"), resultSet.getLong("barcode"),

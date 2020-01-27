@@ -236,7 +236,7 @@
 							via mail. Il riepilogo è disponibile nella sezione ordini</p>
 					</div>
 					<div class="modal-footer">
-						<a href="../home" class="btn btn-success btn-block">Torna alla home</a>
+						<a href="home" class="btn btn-success btn-block">Torna alla home</a>
 					</div>
 				</div>
 			</div>

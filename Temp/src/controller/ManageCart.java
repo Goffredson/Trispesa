@@ -37,6 +37,7 @@ public class ManageCart extends HttpServlet {
 			if (operation.equals("add")) {
 				DBManager.getInstance().decreaseProductQuantity(productId, 1L);
 				boolean success = DBManager.getInstance().insertProductIntoCart(product, loggedCustomer);
+				System.out.println("Aggiungo al carrello");
 				if (!success)
 					resp.setStatus(400);
 			} else if (operation.equals("remove")) {

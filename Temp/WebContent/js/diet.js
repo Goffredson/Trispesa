@@ -1,48 +1,106 @@
-$(document).ready(
-		function() {
-			$("#dietForm").submit(
-					function(event) {
+var spesa = null;
 
-						var formData = $("#dietForm").serialize().replace(
-								/%20/g, " ").split("&");
+function removeProduct(product) {
+	$.ajax({
+		type : "GET",
+		url : "manageCart",
+		data : {
+			productId : product.id,
+			operation : "remove"
+		},
+		success : function() {},
+	});
+}
 
-						var arrayTriple = [];
-						var contTripla = 0;
-						var nome, offbrand, quantity;
+$(document)
+		.ready(
+				function() {
+					$("#dietForm")
+							.submit(
+									function(event) {
 
-						alert(formData.length);
-						for (var i = 0; i < formData.length; i++) {
-							alert("Entro con " + contTripla);
+										var formData = $("#dietForm")
+												.serialize().replace(/%20/g,
+														" ").split("&");
 
-							if (contTripla == 0) {
-								nome = formData[i].split("=")[1];
-								contTripla++;
-							} else if (contTripla == 1) {
-								offbrand = formData[i].split("=")[1];
-								contTripla++;
-							} else if (contTripla == 2) {
-								quantity = formData[i].split("=")[1];
-								var tripla = [];
-								tripla.push(nome);
-								tripla.push(offbrand);
-								tripla.push(quantity);
-								arrayTriple.push(tripla);
-								contTripla = 0;
-							}
-						}
+										var arrayTriple = [];
+										var contTripla = 0;
+										var nome, offbrand, quantity;
 
-						event.preventDefault();
-						$.ajax({
-							type : "POST",
-							url : "manageDiet",
-							datatype : "JSON",
-							data : JSON.stringify(arrayTriple),
-							success : function() {
+										for (var i = 0; i < formData.length; i++) {
 
-							},
-						});
-					});
-		});
+											if (contTripla == 0) {
+												nome = formData[i].split("=")[1];
+												contTripla++;
+											} else if (contTripla == 1) {
+												offbrand = formData[i]
+														.split("=")[1];
+												contTripla++;
+											} else if (contTripla == 2) {
+												quantity = formData[i]
+														.split("=")[1];
+												var tripla = [];
+												tripla.push(nome);
+												tripla.push(offbrand);
+												tripla.push(quantity);
+												arrayTriple.push(tripla);
+												contTripla = 0;
+											}
+										}
+
+										event.preventDefault();
+										$
+												.ajax({
+													type : "POST",
+													url : "manageDiet",
+													datatype : "JSON",
+													data : JSON
+															.stringify(arrayTriple),
+													success : function(response) {
+														spesa = response;
+														var totalPrice = 0;
+														for (var i = 0; i < response.length; i++) {
+															totalPrice += response[i].price;
+															var productName = response[i].name;
+															var productPrice = response[i].price;
+															$
+																	.ajax({
+																		type : "GET",
+																		url : "manageCart",
+																		data : {
+																			productId : response[i].id,
+																			operation : "add"
+																		},
+																		success : function() {
+																			$(
+																					"#dietCart")
+																					.show(
+																							"slow");
+																			$(
+																					"#dietCart")
+																					.prepend(
+																							'<li class="list-group-item d-flex justify-content-between lh-condensed">'
+																									+ '<div> <h6 class="my-0">'
+																									+ productName
+																									+ '</h6> <small class="text-muted">Quantita: 1</small></div> <span class="text-muted">'
+																									+ productPrice
+																									+ '&euro;</span></li>');
+
+																		},
+																		error : function() {
+																			alert("Prodotto finito");
+																		}
+																	});
+														}
+														$("#totalPrice").html(
+																totalPrice);
+													},
+													error : function(response) {
+														alert("Niente dieta");
+													}
+												});
+									});
+				});
 
 var leafCategories = {};
 var selectCount = 0;

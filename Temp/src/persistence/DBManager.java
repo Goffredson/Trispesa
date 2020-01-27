@@ -336,10 +336,6 @@ public class DBManager {
 		customer.getPaymentMethods().add(paymentMethod);
 	}
 
-	public ArrayList<Product> getProductsByCategoryAndWeight(Long idCategory, Long weight) {
-		return getProductDao().retrieveByCategoryAndWeight(idCategory, weight);
-	}
-
 	public ArrayList<Category> getLeafCategoriesForDiet() {
 		return getCategoryDao().retrieveLeafCategoriesForDiet();
 	}
@@ -361,7 +357,7 @@ public class DBManager {
 	public PaymentMethod getPaymentMethodById(long id) throws DBOperationException {
 		PaymentMethod paymentMethod = getPaymentMethodDao().retrieveByPrimaryKey(id);
 		if (paymentMethod == null) {
-			throw new DBOperationException("Il metodo di pagamento non è stato trovato", "");
+			throw new DBOperationException("Il metodo di pagamento non ï¿½ stato trovato", "");
 		}
 		return paymentMethod;
 	}
@@ -374,7 +370,7 @@ public class DBManager {
 	public DeliveryAddress getdeliveryAddressById(long id) throws DBOperationException {
 		DeliveryAddress deliveryAddress = getDeliveryAddressDao().retrieveByPrimaryKey(id);
 		if (deliveryAddress == null) {
-			throw new DBOperationException("L'indirizzo di consegna non è stato trovato", "");
+			throw new DBOperationException("L'indirizzo di consegna non ï¿½ stato trovato", "");
 		}
 		return deliveryAddress;
 	}
@@ -391,5 +387,9 @@ public class DBManager {
 				return;
 			}
 		}
+	}
+
+	public ArrayList<Product> getProductsForDiet(String categoryName, boolean offBrand, long weight) {
+		return getProductDao().retrieveByCategoryAndWeight(categoryName, offBrand, weight);
 	}
 }

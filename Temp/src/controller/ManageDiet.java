@@ -30,22 +30,31 @@ public class ManageDiet extends HttpServlet {
 			line = reader.readLine();
 		}
 		Gson gson = new Gson();
-		Type tripleType = new TypeToken<ArrayList<ArrayList<String>>>() {}.getType();
+		Type tripleType = new TypeToken<ArrayList<ArrayList<String>>>() {
+		}.getType();
 		ArrayList<Product> spesa = new ArrayList<Product>();
 		ArrayList<ArrayList<String>> productsInDiet = gson.fromJson(jsonReceived.toString(), tripleType);
 		System.out.println(productsInDiet);
-		// for (Triple<String, Boolean, Long> p : productsInDiet) {
-//			ArrayList<Product> productByLeaf = DBManager.getInstance().getProductsByCategoryAndWeight(p.getKey(),
-//					p.getValue());
-//			spesa.add(getCheapestProduct(productByLeaf));
-//		}
-		String spesaJson = gson.toJson(spesa);
-		PrintWriter out = resp.getWriter();
-		resp.setContentType("application/json");
-		resp.setCharacterEncoding("UTF-8");
-		out.print(spesaJson);
-		out.flush();
-
+		for (ArrayList<String> p : productsInDiet) {
+			ArrayList<Product> productByLeaf = DBManager.getInstance().getProductsForDiet(p.get(0),
+					Boolean.parseBoolean(p.get(1)), Long.parseLong(p.get(2)));
+			if (productByLeaf.isEmpty() == false)
+				spesa.add(getCheapestProduct(productByLeaf));
+			else {
+				resp.setStatus(401);
+				break;
+			}
+		}
+		if (resp.getStatus() != 401) {
+			String spesaJson = gson.toJson(spesa);
+			System.out.println(spesaJson);
+			PrintWriter out = resp.getWriter();
+			resp.setContentType("application/json");
+			resp.setCharacterEncoding("UTF-8");
+			out.print(spesaJson);
+			out.flush();
+			
+		}
 	}
 
 	@Override
@@ -56,7 +65,7 @@ public class ManageDiet extends HttpServlet {
 	}
 
 	public Product getCheapestProduct(ArrayList<Product> prodotti) {
-		double minPrice = 10000;
+		double minPrice = Integer.MAX_VALUE;
 		Product cheapest = null;
 		for (Product p : prodotti) {
 			if (p.getPrice() < minPrice) {

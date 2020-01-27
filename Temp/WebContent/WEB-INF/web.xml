@@ -31,13 +31,20 @@
 
 	<servlet-mapping>
 		<servlet-name>Home</servlet-name>
-		<url-pattern>/home</url-pattern>
+		<url-pattern>/user/home</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>HomeRedirect</servlet-name>
+		<servlet-class>controller.HomeRedirect</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>Home</servlet-name>
+		<servlet-name>HomeRedirect</servlet-name>
 		<url-pattern></url-pattern>
 	</servlet-mapping>
+
+	
 	<servlet>
 		<servlet-name>ShowProducts</servlet-name>
 		<servlet-class>controller.ShowProducts</servlet-class>

@@ -38,7 +38,7 @@
 
 	<button type="button" class="btn btn-info" onclick="addField()">Aggiungi
 		alimento</button>
-	<form id="dietForm" method="POST" action="">
+	<form id="dietForm" method="POST" action="ahaha">
 		<input type="submit" class="btn btn-primary btn-lg btn-block"
 			value="Conferma Ordine">
 	</form>

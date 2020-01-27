@@ -47,21 +47,17 @@ function emptyCartAfterLogout() {
 	$("#totalCartPrice").empty();
 }
 
-function ajaxLog(operation, animDelay, onIndex) {
-
-	var servletUrl = ((onIndex === true) ? "user/effettuaLogin"
-			: "effettuaLogin");
-
+function ajaxLog(operation, animDelay) {
 	$.ajax({
 		type : "POST",
 		// TODO: rimappare da user/effettuaLogin
-		url : servletUrl,
+		url : "effettuaLogin",
 		datatype : "JSON",
 		data : JSON.stringify([ $("#inputUsername").val(),
 				$("#inputPassword").val(), operation ]),
 		success : function(response) {
 			if (operation == "login") {
-				if (response === "")
+				if (response.redirect === true)
 					window.location.href = "administration";
 				else {
 					$("#toastMessage").html(

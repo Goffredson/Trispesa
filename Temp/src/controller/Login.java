@@ -43,7 +43,7 @@ public class Login extends HttpServlet {
 	    	Customer customer = DBManager.getInstance().checkIfCustomerExists(credentials.get(0), credentials.get(1));
 	    	Administrator administrator = DBManager.getInstance().checkIfAdministratorExists(credentials.get(0), credentials.get(1));
 	    	
-	    	String response = "";
+	    	String response = "{\"redirect\" : true}";
 	    	
 	    	if (customer != null) {
 	    		req.getSession().setAttribute("customer", customer);

@@ -10,18 +10,18 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Trispesa</title>
 <!-- Inclusioni (bootstrap, JQuery)  -->
-<script src="vendor/jquery/jquery.min.js"></script>
+<script src="../vendor/jquery/jquery.min.js"></script>
 
 
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<script src="vendor/owl.carousel.js"></script>
+<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="../vendor/owl.carousel.js"></script>
 <!-- Script -->
-<script src="js/cart.js"></script>
-<script src="js/login.js"></script>
+<script src="../js/cart.js"></script>
+<script src="../js/login.js"></script>
 
-<link href="css/owl.carousel.css" rel="stylesheet" />
-<link href="css/owl.theme.default.css" rel="stylesheet" />
+<link href="../css/owl.carousel.css" rel="stylesheet" />
+<link href="../css/owl.theme.default.css" rel="stylesheet" />
 
 
 <!-- CSS -->
@@ -51,7 +51,7 @@
 	});
 </script>
 
-<link href="css/main.css" rel="stylesheet">
+<link href="../css/main.css" rel="stylesheet">
 
 </head>
 
@@ -91,7 +91,7 @@
 											placeholder="Password">
 									</div>
 									<input type="button" class="btn btn-primary color-scheme"
-										value="Autenticati" onclick="ajaxLog('login', 500, true)">
+										value="Autenticati" onclick="ajaxLog('login', 500)">
 
 								</form>
 								<div class="dropdown-item" id="credenzialiErrate"
@@ -122,12 +122,12 @@
 					<li class="nav-item login-dependent" id="ordini"><a
 						class="nav-link" href="#">Ordini</a></li>
 					<li class="nav-item login-dependent" id="profilo"><a
-						class="nav-link" href="user?page=profile">Profilo</a></li>
-					<li class="nav-item login-dependent" id="dieta"><a href="user/manageDiet"
+						class="nav-link" href="../user?page=profile">Profilo</a></li>
+					<li class="nav-item login-dependent" id="dieta"><a href="manageDiet"
 						class="nav-link" href="#">Dieta</a></li>
 					<li><input type="button" id="logoutButton"
 						class="btn btn-primary login-dependent" value="Logout"
-						onclick="ajaxLog('logout', 500, true)"></li>
+						onclick="ajaxLog('logout', 500)"></li>
 
 
 					<li class="nav-item"><a class="nav-link" href="administration">Parte
@@ -216,7 +216,7 @@
 				<div class="scrollmenu color-scheme rounded">
 					<c:forEach items="${listaMacroCategorie}" var="categoria">
 						<a class="color-scheme"
-							href="user/showProducts?categoria=${categoria.id}"
+							href="showProducts?categoria=${categoria.id}"
 							class="list-group-item">${categoria.name}</a>
 					</c:forEach>
 				</div>

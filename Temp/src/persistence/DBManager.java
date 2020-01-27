@@ -1,9 +1,23 @@
 package persistence;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import com.sun.mail.smtp.SMTPTransport;
 
 import exceptions.DBOperationException;
 import model.Administrator;
@@ -35,8 +49,6 @@ public class DBManager {
 
 	private static DBManager istance = null;
 	private static DataSource dataSource = null;
-
-
 
 	public static DBManager getInstance() {
 		if (istance == null)
@@ -190,7 +202,6 @@ public class DBManager {
 	public ArrayList<Category> getMacroCategories() {
 		return getCategoryDao().retrieveMacroCategories();
 	}
-	
 
 	public Category getCategoryById(long id) {
 		return getCategoryDao().retrieveByPrimaryKey(id);
@@ -287,6 +298,10 @@ public class DBManager {
 		getCustomerDao().clearCart(customer.getId());
 	}
 
+	public void sendEmail() {
+		
+	}
+
 	public void increaseProductQuantity(Long product, Long quantity) {
 		getProductDao().increaseQuantity(product, 1L);
 	}
@@ -311,7 +326,7 @@ public class DBManager {
 		getDeliveryAddressDao().dereferCustomerDeliveryAddress(customer.getId(), deliveryAddressId);
 		customer.getDeliveryAddresses().remove(deliveryAddress);
 	}
-	
+
 	public ArrayList<Product> getDiscountedProducts() {
 		return getProductDao().getDiscountedProducts();
 	}
@@ -321,8 +336,8 @@ public class DBManager {
 		customer.getPaymentMethods().add(paymentMethod);
 	}
 
-	public ArrayList<Product> getProductsByCategoryAndWeight(Long idCategory,Long weight) {
-		return getProductDao().retrieveByCategoryAndWeight(idCategory,weight);
+	public ArrayList<Product> getProductsByCategoryAndWeight(Long idCategory, Long weight) {
+		return getProductDao().retrieveByCategoryAndWeight(idCategory, weight);
 	}
 
 	public ArrayList<Category> getLeafCategoriesForDiet() {

@@ -135,8 +135,8 @@ public class DeliveryAddressDaoJdbc implements DeliveryAddressDao {
 			statement.setString(2, deliveryAddress.getCity());
 			statement.setString(3, deliveryAddress.getAddress());
 			statement.setString(4, deliveryAddress.getZipcode());
-			statement.setLong(5, deliveryAddress.getId());
 			statement.setString(5, deliveryAddress.getProvince());
+			statement.setLong(6, deliveryAddress.getId());
 			statement.executeUpdate();
 
 			connection.commit();

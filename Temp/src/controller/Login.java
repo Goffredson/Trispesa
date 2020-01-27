@@ -48,6 +48,7 @@ public class Login extends HttpServlet {
 	    	if (customer != null) {
 	    		req.getSession().setAttribute("customer", customer);
 	    		req.getSession().setMaxInactiveInterval(-1);
+	    		System.out.println(customer.getDeliveryAddresses());
 	    		
 	    		if (req.getSession().getAttribute("anonymousCart") != null) {
 	    			HashMap<Product, Long> anonymousCart = (HashMap<Product, Long>) req.getSession().getAttribute("anonymousCart");

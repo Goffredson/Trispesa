@@ -75,43 +75,153 @@
 
 	<div class="container">
 		<div class="row">
-			<div id="colonna" class="col-sm-8 col-md-5 col-lg-5">
+			<div id="colonna" class="col-sm-8 col-md-5 col-lg-3">
 				<div>
 					<h3>Dati personali</h3>
 				</div>
 				<div>
-					<h4>Username</h4>
-					<p>${sessionScope.customer.username}</p>
+					<h4>
+						Username <img src="images/pencil.png" height="16px"
+							style="cursor: pointer;"
+							onclick="$('#mod-username-form').slideToggle('slow'); $('#username-view').slideToggle('slow'); $('#username').val('${sessionScope.customer.username}');" />
+					</h4>
+					<p id="username-view">${sessionScope.customer.username}</p>
+					<form id="mod-username-form" style="display: none;"
+						class="needs-validation" novalidate autocomplete="on">
+						<div class="form-group">
+							<div id="input">
+								<input type="text" class="form-control" id="username"
+									placeholder="Username" name="username" required
+									autocomplete="off">
+							</div>
+						</div>
+						<button id="mod-username-button" type="button"
+							onclick="modUsername()" class="btn btn-success">Modifica</button>
+					</form>
 				</div>
 				<div>
-					<h4>Password</h4>
-					<p>${sessionScope.customer.password}</p>
+					<h4>
+						Password <img src="images/pencil.png" height="16px"
+							style="cursor: pointer;"
+							onclick="$('#mod-password-form').slideToggle('slow'); $('#password-view').slideToggle('slow');" />
+					</h4>
+					<p id="password-view">${sessionScope.customer.hiddenPassword}</p>
+					<form id="mod-password-form" style="display: none;"
+						class="needs-validation" novalidate autocomplete="on">
+						<div class="form-group">
+							<div id="input">
+								<input type="password" class="form-control" id="password-old"
+									placeholder="Vecchia password" name="passwordOld" required
+									autocomplete="off">
+							</div>
+						</div>
+						<div class="form-group">
+							<div id="input">
+								<input type="password" class="form-control" id="password-new"
+									placeholder="Nuova password" name="passwordNew" required
+									autocomplete="off">
+							</div>
+						</div>
+						<div class="form-group">
+							<div id="input">
+								<input type="password" class="form-control" id="password-twice"
+									placeholder="Conferma password" name="passwordTwice" required
+									autocomplete="off">
+							</div>
+						</div>
+						<button id="mod-password-button" type="button"
+							onclick="modPassword()" class="btn btn-success">Modifica</button>
+					</form>
 				</div>
 				<div>
-					<h4>Nome</h4>
-					<p>${sessionScope.customer.name}</p>
+					<h4>
+						Nome <img src="images/pencil.png" height="16px"
+							style="cursor: pointer;"
+							onclick="$('#mod-name-form').slideToggle('slow'); $('#name-view').slideToggle('slow'); $('#name').val('${sessionScope.customer.name}');" />
+					</h4>
+					<p id="name-view">${sessionScope.customer.name}</p>
+					<form id="mod-name-form" style="display: none;"
+						class="needs-validation" novalidate autocomplete="on">
+						<div class="form-group">
+							<div id="input">
+								<input type="text" class="form-control" id="name"
+									placeholder="Nome" name="name" required autocomplete="off">
+							</div>
+						</div>
+						<button id="mod-name-button" type="button" onclick="modName()"
+							class="btn btn-success">Modifica</button>
+					</form>
 				</div>
 				<div>
-					<h4>Cognome</h4>
-					<p>${sessionScope.customer.surname}</p>
+					<h4>
+						Cognome <img src="images/pencil.png" height="16px"
+							style="cursor: pointer;"
+							onclick="$('#mod-surname-form').slideToggle('slow'); $('#surname-view').slideToggle('slow'); $('#surname').val('${sessionScope.customer.surname}');" />
+					</h4>
+					<p id="surname-view">${sessionScope.customer.surname}</p>
+					<form id="mod-surname-form" style="display: none;"
+						class="needs-validation" novalidate autocomplete="on">
+						<div class="form-group">
+							<div id="input">
+								<input type="text" class="form-control" id="surname"
+									placeholder="Cognome" name="surname" required
+									autocomplete="off">
+							</div>
+						</div>
+						<button id="mod-surname-button" type="button"
+							onclick="modSurname()" class="btn btn-success">Modifica</button>
+					</form>
 				</div>
 				<div>
-					<h4>Email</h4>
-					<p>${sessionScope.customer.email}</p>
+					<h4>
+						Email <img src="images/pencil.png" height="16px"
+							style="cursor: pointer;"
+							onclick="$('#mod-email-form').slideToggle('slow'); $('#email-view').slideToggle('slow'); $('#email').val('${sessionScope.customer.email}');" />
+					</h4>
+					<p id="email-view">${sessionScope.customer.email}</p>
+					<form id="mod-email-form" style="display: none;"
+						class="needs-validation" novalidate autocomplete="on">
+						<div class="form-group">
+							<div id="input">
+								<input type="email" class="form-control" id="email"
+									placeholder="Email" name="email" required autocomplete="off">
+							</div>
+						</div>
+						<button id="mod-email-button" type="button" onclick="modEmail()"
+							class="btn btn-success">Modifica</button>
+					</form>
 				</div>
 				<div>
-					<h4>Data di nascita</h4>
-					<p>${sessionScope.customer.birthDate}</p>
+					<h4>
+						Data di nascita <img src="images/pencil.png" height="16px"
+							style="cursor: pointer;"
+							onclick="$('#mod-birth-date-form').slideToggle('slow'); $('#birth-date-view').slideToggle('slow'); $('#birth-date').val('${sessionScope.customer.birthDate}');" />
+					</h4>
+					<p id="birth-date-view">${sessionScope.customer.birthDate}</p>
+					<form id="mod-birth-date-form" style="display: none;"
+						class="needs-validation" novalidate autocomplete="on">
+						<div class="form-group">
+							<div id="input">
+								<input type="date" class="form-control" id="birth-date"
+									placeholder="Data di nascita" name="birthDate" required
+									autocomplete="off">
+							</div>
+						</div>
+						<button id="mod-birth-date-button" type="button"
+							onclick="modBirthDate()" class="btn btn-success">Modifica</button>
+					</form>
 				</div>
 			</div>
 
-			<div id="colonna" class="col-sm-8 col-md-5 col-lg-6">
+			<div id="colonna" class="col-sm-8 col-md-5 col-lg-8">
 				<div class="row">
 					<h4>Indirizzi di consegna</h4>
 					<table class="table table-hover table-responsive">
 						<tr>
-							<th>Paese</th>
+							<th>Nazione</th>
+							<th>Provincia</th>
 							<th>Città</th>
+							<th>CAP</th>
 							<th>Indirizzo</th>
 							<th colspan="2"><button id="add-deivery-address"
 									onclick="prepareAddDeliveryAddress()" class="btn btn-success"
@@ -121,7 +231,9 @@
 							var="deliveryAddress">
 							<tr>
 								<td>${deliveryAddress.country}</td>
+								<td>${deliveryAddress.province}</td>
 								<td>${deliveryAddress.city}</td>
+								<td>${deliveryAddress.zipcode}</td>
 								<td>${deliveryAddress.address}</td>
 								<td width="10%"><button
 										id="modify-delivery-address-${deliveryAddress.id}"

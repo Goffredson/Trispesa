@@ -68,47 +68,49 @@ $(document)
 									});
 
 					// validazione form DA AGGIUSTARE
-					$('#manage-delivery-address-form').validate(
-							{
-								rules : {
-									country : "required",
-									city : "required",
-									address : "required",
-									zipcode : "required",
-									province : "required",
-								},
-								messages : {
-									country : "Per favore, inserisca la nazione",
-									city : "Per favore, inserisca la città",
-									address : "Per favore, inserisca l'indirizzo",
-									zipcode : "Per favore, inserisca il codice di avviamento postale",
-									province : "Per favore, inserisca la provincia",
-								},
-								errorElement : "em",
-								errorPlacement : function(error, element) {
-									// Add the `help-block` class to the
-									// error element
-									error.addClass("help-block");
-									error.addClass("invalid-feedback");
+					$('#manage-delivery-address-form')
+							.validate(
+									{
+										rules : {
+											country : "required",
+											city : "required",
+											address : "required",
+											zipcode : "required",
+											province : "required",
+										},
+										messages : {
+											country : "Per favore, inserisca la nazione",
+											city : "Per favore, inserisca la città",
+											address : "Per favore, inserisca l'indirizzo",
+											zipcode : "Per favore, inserisca il codice di avviamento postale",
+											province : "Per favore, inserisca la provincia",
+										},
+										errorElement : "em",
+										errorPlacement : function(error,
+												element) {
+											// Add the `help-block` class to the
+											// error element
+											error.addClass("help-block");
+											error.addClass("invalid-feedback");
 
-									if (element.prop("type") === "checkbox") {
-										error.insertAfter(element
-												.parent("label"));
-									} else {
-										error.insertAfter(element);
-									}
-								},
-								highlight : function(element, errorClass,
-										validClass) {
-									$(element).addClass("is-invalid")
-											.removeClass("is-valid");
-								},
-								unhighlight : function(element, errorClass,
-										validClass) {
-									$(element).addClass("is-valid")
-											.removeClass("is-invalid");
-								}
-							});
+											if (element.prop("type") === "checkbox") {
+												error.insertAfter(element
+														.parent("label"));
+											} else {
+												error.insertAfter(element);
+											}
+										},
+										highlight : function(element,
+												errorClass, validClass) {
+											$(element).addClass("is-invalid")
+													.removeClass("is-valid");
+										},
+										unhighlight : function(element,
+												errorClass, validClass) {
+											$(element).addClass("is-valid")
+													.removeClass("is-invalid");
+										}
+									});
 				});
 
 // va aggiustata
@@ -481,4 +483,28 @@ function deleteDeliveryAddress(id) {
 			$('.btn').prop('disabled', false);
 		}
 	});
+}
+
+function modUsername() {
+	console.log('username');
+}
+
+function modPassword() {
+	console.log('Password');
+}
+
+function modName() {
+	console.log('Name');
+}
+
+function modSurname() {
+	console.log('Surname');
+}
+
+function modEmail() {
+	console.log('Email');
+}
+
+function modBirthDate() {
+	console.log('BirthDate');
 }

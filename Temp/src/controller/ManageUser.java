@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,18 +31,15 @@ public class ManageUser extends HttpServlet {
 			switch (req.getParameter("type")) {
 			case "credentials": {
 				switch (req.getParameter("action")) {
-				case "add": {
+				case "username": {
 				}
 					break;
-				case "mod": {
-				}
-					break;
-				case "del": {
+				case "password": {
 				}
 					break;
 				}
-			}
 				break;
+			}
 			case "paymentMethod": {
 				switch (req.getParameter("action")) {
 				case "add": {

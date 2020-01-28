@@ -1,6 +1,12 @@
 package model;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3268360976993689518L;
 	private long id;
 	private long barcode;
 	private String name;

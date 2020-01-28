@@ -135,8 +135,9 @@ updateCart = function(id, name, supermarket, price, op) {
 						$("#totalCartPrice").html(currentTotalPrice);
 					}
 				},
-				error : function() {
-					alert("Prodotto finito");
+				error : function(response) {
+					$("#productToastMessage").html(response.responseText);
+					$("#productToast").toast("show");
 				}
 			});
 }

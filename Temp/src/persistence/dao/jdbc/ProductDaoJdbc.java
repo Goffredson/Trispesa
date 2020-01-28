@@ -392,7 +392,7 @@ public class ProductDaoJdbc implements ProductDao {
 	}
 
 	@Override
-	public void decreaseQuantity(Long product, long quantity) {
+	public void decreaseQuantity(Long product, long quantity) throws DBOperationException {
 		Connection connection = null;
 		try {
 			connection = this.dataSource.getConnection();
@@ -401,13 +401,11 @@ public class ProductDaoJdbc implements ProductDao {
 			pstmt.setLong(2, quantity);
 			pstmt.execute();
 		} catch (SQLException e) {
-			System.out.println("Non ci sono prodotti disponibili");
-			System.out.println(e.getMessage());
 			if (connection != null) {
 				try {
 					connection.rollback();
 				} catch (SQLException excep) {
-					throw new RuntimeException(e.getMessage());
+					throw new DBOperationException("Il seguente prodotto è terminato: ", retrieveByPrimaryKey(product).getName());
 				}
 			}
 		}

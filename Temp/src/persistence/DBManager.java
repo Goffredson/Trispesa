@@ -306,7 +306,7 @@ public class DBManager {
 		getProductDao().increaseQuantity(product, 1L);
 	}
 
-	public void decreaseProductQuantity(Long product, Long quantity) {
+	public void decreaseProductQuantity(Long product, Long quantity) throws DBOperationException {
 		getProductDao().decreaseQuantity(product, 1L);
 	}
 

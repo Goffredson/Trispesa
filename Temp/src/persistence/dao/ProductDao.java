@@ -31,7 +31,7 @@ public interface ProductDao {
 
 	public void deleteProduct(long id) throws DBOperationException;
 
-	public void decreaseQuantity(Long product, long quantity);
+	public void decreaseQuantity(Long product, long quantity) throws DBOperationException;
 
 	public void increaseQuantity(Long product, long l);
 

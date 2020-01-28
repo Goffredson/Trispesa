@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import exceptions.DBOperationException;
 import model.Customer;
 import model.Product;
 import persistence.DBManager;
@@ -35,11 +35,17 @@ public class ManageCart extends HttpServlet {
 			Customer loggedCustomer = (Customer) req.getSession().getAttribute("customer");
 
 			if (operation.equals("add")) {
-				DBManager.getInstance().decreaseProductQuantity(productId, 1L);
-				boolean success = DBManager.getInstance().insertProductIntoCart(product, loggedCustomer);
-				System.out.println("Aggiungo al carrello");
-				if (!success)
+				try {
+					DBManager.getInstance().decreaseProductQuantity(productId, 1L);
+					DBManager.getInstance().insertProductIntoCart(product, loggedCustomer);
+				} catch (DBOperationException e) {
 					resp.setStatus(400);
+					resp.setCharacterEncoding("UTF-8");
+					resp.getWriter().print(e.getMessage() + e.getObject());
+					resp.getWriter().flush();
+					return;
+				}
+
 			} else if (operation.equals("remove")) {
 				DBManager.getInstance().increaseProductQuantity(productId, 1L);
 				DBManager.getInstance().removeProductFromCart(product, loggedCustomer);
@@ -54,11 +60,18 @@ public class ManageCart extends HttpServlet {
 
 			// Aggiunta
 			if (operation.equals("add")) {
-				DBManager.getInstance().decreaseProductQuantity(productId, 1L);
-				if (anonymousCart.containsKey(product))
-					anonymousCart.replace(product, anonymousCart.get(product) + 1);
-				else
-					anonymousCart.put(product, 1L);
+				try {
+					DBManager.getInstance().decreaseProductQuantity(productId, 1L);
+					if (anonymousCart.containsKey(product))
+						anonymousCart.replace(product, anonymousCart.get(product) + 1);
+					else
+						anonymousCart.put(product, 1L);
+				} catch (DBOperationException e) {
+					resp.setStatus(400);
+					resp.setCharacterEncoding("UTF-8");
+					resp.getWriter().print(e.getMessage() + e.getObject());
+					resp.getWriter().flush();
+				}
 
 			}
 			// Rimozione

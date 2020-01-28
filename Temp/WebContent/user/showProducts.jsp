@@ -131,8 +131,19 @@
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
-		<div class="toast-body" id="toastMessage">Devi fare il login
+		<div class="toast-body" id="loginToastMessage">Devi fare il login
 			prima di poter completare l'ordine.</div>
+	</div>
+	<div id="productToast" class="toast notification-toast" role="alert"
+		aria-live="assertive" aria-atomic="true" data-delay="5000">
+		<div class="toast-header error-color-scheme">
+			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
+			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="toast-body" id="productToastMessage"></div>
 	</div>
 		<div id="cartToast" class="toast notification-toast" role="alert"
 		aria-live="assertive" aria-atomic="true" data-delay="5000">
@@ -143,7 +154,7 @@
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
-		<div class="toast-body" id="toastMessage">Hai esaurito il tempo a disposizione,il tuo carrello verrà svuotato</div>
+		<div class="toast-body" id="cartToastMessage">Hai esaurito il tempo a disposizione,il tuo carrello verrà svuotato</div>
 	</div>
 	<!-- Chiusura toast di notifica -->
 

@@ -1,6 +1,12 @@
 package model;
 
-public class SuperMarket {
+import java.io.Serializable;
+
+public class SuperMarket implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5506040753356135679L;
 	private long id;
 	private String name;
 	private String country;

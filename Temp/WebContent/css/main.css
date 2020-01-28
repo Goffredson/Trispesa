@@ -21,7 +21,42 @@ body {
 .login-button {
 	background-color: cornflowerblue !important;
 	border: none;
-	margin-top: 2px;
+	margin-top: 15px;
+}
+
+.cart-button {
+	background-color: cornflowerblue !important;
+	border: none;
+	margin-top: 15px;
+	margin-right: 5px;
+}
+.order-button {
+	background-color: cornflowerblue !important;
+	border: none;
+	margin-top: 6px;
+}
+.profile-button {
+	background-color: cornflowerblue !important;
+	border: none;
+	margin-top: 6px;
+	margin-right: 2px;
+}
+.diet-button {
+	background-color: cornflowerblue !important;
+	border: none;
+	margin-top: 6px;
+	margin-right: 10px;
+}
+.logout-button {
+	background-color: #ef2929!important;
+	border: none;
+	margin-top: 13px;
+	margin-right: 5px;
+
+}
+.title-trispesa {
+	position: absolute;
+	left: 50px;
 }
 
 .login-dependent {
@@ -40,17 +75,34 @@ body {
 	width: 300px !important;
 }
 
+.title-secondary {
+	text-transform: uppercase;
+	color: #CCC7B7;
+	margin-bottom: 22px;
+	font-family: '0swald', sans-serif;
+}
+
+h2 {
+	line-height: 1.3;
+	margin: 0 0 15px;
+	font-weight: 700;
+	font-family: "Courier New", Courier, monospace;
+	display: block;
+	margin-block-start: 0.83em;
+	margin-block-end: 0.83em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+}
+
 #nav {
-	background-color: cornflowerblue !important;
+	background-color: #0f6c17!important;
+	width: 100%;
+	height: 65px;
+	margin: 0px auto;
 }
 
 #navCategories {
 	margin-top: 3px;
-}
-
-#search-bar {
-	margin: 10px !important;
-	width: 75%;
 }
 
 div.scrollmenu {
@@ -68,7 +120,50 @@ div.scrollmenu a {
 div.scrollmenu a:hover {
 	background-color: white;
 }
+/* search bar */
+.searchbar {
+	margin-bottom: auto;
+	margin-top: auto;
+	height: 60px;
+	background-color: #eeeeec;
+	border-radius: 30px;
+	padding: 10px;
+}
 
+.search_input {
+	color: #2e3436;
+	border: 0;
+	outline: 0;
+	background: none;
+	width: 0;
+	caret-color: transparent;
+	line-height: 40px;
+	transition: width 0.8s ease-out;
+}
+
+.searchbar:hover>.search_input {
+	padding: 0 10px;
+	width: 350px;
+	caret-color: red;
+	transition: width 0.8s ease-out;
+}
+
+.searchbar:hover>.search_icon {
+	background: white;
+	color: #e74c3c;
+}
+
+.search_icon {
+	height: 40px;
+	width: 40px;
+	float: right;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	color: #6495ed;
+	text-decoration: none;
+}
 /* Parte amministrazione */
 #addSuperMarket {
 	margin: 10px !important;

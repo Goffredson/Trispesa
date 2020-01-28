@@ -22,6 +22,22 @@
 
 <link href="../css/owl.carousel.css" rel="stylesheet" />
 <link href="../css/owl.theme.default.css" rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+	integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+	crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 <!-- CSS -->
@@ -51,6 +67,8 @@
 	});
 </script>
 
+
+
 <link href="../css/main.css" rel="stylesheet">
 
 </head>
@@ -60,17 +78,26 @@
 	<nav id="nav"
 		class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="home">Trispesa</a>
+			<a class="navbar-brand title-trispesa" href="home">Trispesa</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarResponsive" aria-controls="navbarResponsive"
 				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
+			<div class="container h-100">
+				<div class="d-flex justify-content-center h-100">
+					<div class="searchbar">
+						<input class="search_input" type="text" name=""
+							placeholder="Search..."> <a href="#" class="search_icon"><i
+							class="fas fa-search"></i></a>
+					</div>
+				</div>
+			</div>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto" id="ulNavBar">
 					<li>
-						<button type="button" class="btn btn-primary" data-toggle="modal"
-							data-target="#modalCart">Carrello</button>
+						<button type="button" class="btn btn-primary cart-button"
+							data-toggle="modal" data-target="#modalCart">Carrello</button>
 					</li>
 					<li>
 						<!-- Div di login -->
@@ -81,7 +108,7 @@
 							<div class="dropdown-menu login-dropdown">
 								<form class="px-4 py-3">
 									<div class="form-group">
-											<label for="inputUsername">Nome utente</label> <input
+										<label for="inputUsername">Nome utente</label> <input
 											type="text" class="form-control" id="inputUsername"
 											placeholder="Inserisci nome utente">
 									</div>
@@ -120,14 +147,18 @@
 						</script>
 					</li>
 					<li class="nav-item login-dependent" id="ordini"><a
-						class="nav-link" href="#">Ordini</a></li>
+						class="nav-link" href="#"><button type="button"
+								class="btn btn-primary order-button" data-toggle="modal">Ordini</button></a></li>
 					<li class="nav-item login-dependent" id="profilo"><a
-						class="nav-link" href="../user?page=profile">Profilo</a></li>
-					<li class="nav-item login-dependent" id="dieta"><a href="manageDiet"
-						class="nav-link" href="#">Dieta</a></li>
+						class="nav-link" href="../user?page=profile"><button
+								type="button" class="btn btn-primary profile-button"
+								data-toggle="modal">Profilo</button></a></li>
+					<li class="nav-item login-dependent" id="dieta"><a
+						href="manageDiet" class="nav-link"><button type="button"
+								class="btn btn-primary diet-button" data-toggle="modal">Dieta</button></a></li>
 					<li><input type="button" id="logoutButton"
-						class="btn btn-primary login-dependent" value="Logout"
-						onclick="ajaxLog('logout', 500)"></li>
+						class="btn btn-primary login-dependent logout-button"
+						value="Logout" onclick="ajaxLog('logout', 500)"></li>
 
 
 					<li class="nav-item"><a class="nav-link" href="administration">Parte
@@ -223,65 +254,6 @@
 			</div>
 		</div>
 	</nav>
-
-	<!-- Corpo della pagina: carousel e ricerca -->
-	<!-- 	<div class="container"> -->
-	<!-- 		<div class="row"> -->
-	<!-- Barra di ricerca -->
-	<!-- 			<form id="searchProduct" method="post" action="user/showProducts"> -->
-	<!-- 				<div class="input-group"> -->
-	<!-- 					<input id="nomeProdotto" name="nomeProdotto" type="text" -->
-	<!-- 						class="form-control" placeholder="Prodotto"> -->
-	<!-- 					<script type="text/javascript"> -->
-	<!-- // 						$("#searchProduct").submit(function(e) { -->
-
-	<!-- // 							var nomeProdotto = $("#nomeProdotto").val(); -->
-	<!-- // 							if (nomeProdotto == "") { -->
-	<!-- // 								window.alert("Inserisci un prodotto"); -->
-	<!-- // 								e.preventDefault(); -->
-	<!-- // 							} -->
-	<!-- // 						}); -->
-	<!-- 					</script> -->
-	<!-- 					<input class="btn btn-success" value="Cerca" type="submit" /> -->
-	<!-- 					<div class="input-group-append"></div> -->
-	<!-- 				</div> -->
-	<!-- 			</form> -->
-	<!-- 		</div> -->
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="input-group" id="boot-search-box">
-					<input type="text" class="form-control"
-						placeholder="Type a search term like: mobile phone" />
-					<div class="input-group-btn">
-						<div class="btn-group" role="group">
-							<div class="dropdown dropdown-lg">
-								<button type="button" class="btn btn-default dropdown-toggle"
-									data-toggle="dropdown" aria-expanded="false">
-									<span class="caret"></span>
-								</button>
-								<div class="dropdown-menu dropdown-menu-right" role="menu">
-
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input"
-											id="exampleCheck1"> <label class="form-check-label"
-											for="exampleCheck1">Di marca</label>
-									</div>
-
-								</div>
-
-
-							</div>
-						</div>
-						<button type="button" class="btn btn-success ">
-							<small> Cerca</small>
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<div class="modal fade" id="modalCart" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
@@ -366,39 +338,7 @@
 			</div>
 		</div>
 	</div>
-
-	<!-- 	<div class="carousel slide my-4  mx-auto" data-ride="carousel"> -->
-	<!-- 		<ol class="carousel-indicators"> -->
-	<!-- 			<li data-target="#carouselExampleIndicators" data-slide-to="0" -->
-	<!-- 				class="active"></li> -->
-	<!-- 			<li data-target="#carouselExampleIndicators" data-slide-to="1"></li> -->
-	<!-- 			<li data-target="#carouselExampleIndicators" data-slide-to="2"></li> -->
-	<!-- 		</ol> -->
-	<!-- 		<div class="carousel-inner" role="listbox"> -->
-	<!-- 			<div class="carousel-item active"> -->
-	<!-- 				<img class="d-block img-fluid" src="http://placehold.it/900x350" -->
-	<!-- 					alt="First slide"> -->
-	<!-- 			</div> -->
-	<!-- 			<div class="carousel-item">ul class="dropdown-submenu" role="menu"> -->
-	<!-- 				<img class="d-block img-fluid" src="http://placehold.it/900x350" -->
-	<!-- 					alt="Second slide"> -->
-	<!-- 			</div> -->
-	<!-- 			<div class="carousel-item"> -->
-	<!-- 				<img class="d-block img-fluid" src="http://placehold.it/900x350" -->
-	<!-- 					alt="Third slide"> -->
-	<!-- 			</div> -->
-	<!-- 		</div> -->
-	<!-- 		<a class="carousel-control-prev" href="#carouselExampleIndicators" -->
-	<!-- 			role="button" data-slide="prev"> <span -->
-	<!-- 			class="carousel-control-prev-icon" aria-hidden="true"></span> <span -->
-	<!-- 			class="sr-only">Previous</span> -->
-	<!-- 		</a> <a class="carousel-control-next" href="#carouselExampleIndicators" -->
-	<!-- 			role="button" data-slide="next"> <span -->
-	<!-- 			class="carousel-control-next-icon" aria-hidden="true"></span> <span -->
-	<!-- 			class="sr-only">Next</span> -->
-	<!-- 		</a> -->
-	<!-- 	</div> -->
-
+	<h2 class="title-secondary">PRODOTTI IN OFFERTA</h2>
 	<div class="owl-carousel owl-theme">
 		<c:forEach items="${prodottiScontati}" var="prodottoScontato">
 			<div class="card" style="width: 18rem;">

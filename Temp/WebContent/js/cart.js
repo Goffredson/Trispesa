@@ -47,7 +47,7 @@ function startTimer(duration, display) {
 	}, 1000);
 }
 
-updateCart = function(id, name, supermarket, price, op) {
+updateCart = function(id, name, price, supermarket, op) {
 
 	$
 			.ajax({
@@ -95,9 +95,9 @@ updateCart = function(id, name, supermarket, price, op) {
 													+ ',\''
 													+ name
 													+ '\',\''
-													+ supermarket
-													+ '\','
 													+ price
+													+ '\','
+													+ supermarket
 													+ ',\'remove\')"'
 													+ 'class="btn btn-danger">Rimuovi</button></td>'
 													+ '</tr>');
@@ -107,9 +107,18 @@ updateCart = function(id, name, supermarket, price, op) {
 						var currentTotalPrice = parseFloat($("#totalCartPrice")
 								.html());
 						currentTotalPrice += price;
-						$("#totalCartPrice").html(currentTotalPrice);
+						$("#totalCartPrice").html(currentTotalPrice.toFixed(2));
+						
+						if ($("#timer").is("visible") == false) {
+							$("#timer").show();
+						}
+						if ($("#totalCartPrice").is("visible") == false) {
+							$("#totalCartPrice").show();
+						}
+						
 
 					} else if (op === "remove") {
+						alert("Entro in remove");
 						var currentQuantity = parseInt($('#' + idTag).find(
 								"#productQuantity").html());
 						// Se ce n'è più di uno, decremento la quantity
@@ -120,7 +129,9 @@ updateCart = function(id, name, supermarket, price, op) {
 
 							var currentPrice = parseFloat($('#' + idTag).find(
 									"#productPrice").html());
+							alert("currPrice " + currentPrice);
 							currentPrice -= price;
+							alert("price " + price);
 							$('#' + idTag).find("#productPrice").html(
 									currentPrice);
 						}
@@ -132,7 +143,16 @@ updateCart = function(id, name, supermarket, price, op) {
 						var currentTotalPrice = parseFloat($("#totalCartPrice")
 								.html());
 						currentTotalPrice -= price;
-						$("#totalCartPrice").html(currentTotalPrice);
+						alert(currentTotalPrice);
+						if (currentTotalPrice <= 0) {
+							$("#totalCartPrice").hide("slow");
+							$("#timer").hide("slow");
+							clearInterval(intervalId);
+							sessionStorage.removeItem("remainingTime");
+						}
+						else {
+							$("#totalCartPrice").html(currentTotalPrice);
+						}
 					}
 				},
 				error : function(response) {

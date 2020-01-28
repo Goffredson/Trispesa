@@ -293,7 +293,7 @@
 								<tr id="product_${product.key.id}">
 									<th scope="row" id="productQuantity">${product.value}</th>
 									<td id="productName">${product.key.name}</td>
-									<td id="productPrice">${product.key.price}</td>
+									<td id="productPrice">${product.key.price*product.value}</td>
 									<td><a><i class="fas fa-times"></i></a></td>
 									<td><button type="button"
 											onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.price}, '${product.key.superMarket.name}', 'remove');"
@@ -308,7 +308,7 @@
 								<tr id="product_${product.key.id}">
 									<th scope="row" id="productQuantity">${product.value}</th>
 									<td id="productName">${product.key.name}</td>
-									<td id="productPrice">${product.key.price}</td>
+									<td id="productPrice">${product.key.price*product.value}</td>
 									<td><a><i class="fas fa-times"></i></a></td>
 									<td><button type="button"
 											onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.price}, '${product.key.superMarket.name}', 'remove');"

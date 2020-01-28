@@ -21,7 +21,7 @@ function updateNavbarDOM(operation, animDelay) {
 function fillCartAfterLogin(cartHashMap) {
 	var totalPrice = 0;
 	for (var product in cartHashMap) {
-		totalPrice += cartHashMap[product][0].price;
+		totalPrice += cartHashMap[product][0].price*cartHashMap[product][1];
 		$("#listaProdottiCarrello").append(
 				'<tr id="product_"' + cartHashMap[product][0].id + '>'
 						+ '<th scope="row" id="productQuantity">'
@@ -29,13 +29,13 @@ function fillCartAfterLogin(cartHashMap) {
 						+ '<td id="productName">'
 						+ cartHashMap[product][0].name + '</td>'
 						+ '<td id="productPrice">'
-						+ cartHashMap[product][0].price + '</td>'
+						+ cartHashMap[product][0].price*cartHashMap[product][1] + '</td>'
 						+ '<td><a><i class="fas fa-times"></i></a></td>'
 						+ '<td><button type="button"' + 'onclick="updateCart('
 						+ cartHashMap[product][0].id + ', \''
-						+ cartHashMap[product][0].name + '\', \''
-						+ cartHashMap[product][0].superMarket.name + '\', '
-						+ cartHashMap[product][0].price + ', \'remove\');"'
+						+ cartHashMap[product][0].name + '\', '
+						+ cartHashMap[product][0].price+ ', \''
+						+ cartHashMap[product][0].superMarket.name + '\', \'remove\');"'
 						+ 'class="btn btn-danger">Rimuovi</button></td>'
 						+ '</tr>');
 	}
@@ -57,6 +57,8 @@ function ajaxLog(operation, animDelay) {
 				$("#inputPassword").val(), operation ]),
 		success : function(response) {
 			if (operation == "login") {
+				startTimer(30*60, $("#timer"));
+				sessionStorage.setItem("remainingTime", 30*60);
 				if (response.redirect === true)
 					window.location.href = "administration";
 				else {
@@ -67,6 +69,8 @@ function ajaxLog(operation, animDelay) {
 					startTimer(30*60, $("#timer"));
 				}
 			} else {
+				clearInterval(intervalId);
+				sessionStorage.removeItem("remainingTime");
 				$("#toastMessage")
 						.html("A presto " + $("#inputUsername").val());
 				emptyCartAfterLogout(response);

@@ -102,8 +102,8 @@
 						class="nav-link" href="#">Ordini</a></li>
 					<li class="nav-item" style="display: none;" id="profilo"><a
 						class="nav-link" href="../user?page=profile">Profilo</a></li>
-					<li class="nav-item" style="display: none;" id="dieta"><a href="manageDiet"
-						class="nav-link" href="#">Dieta</a></li>
+					<li class="nav-item" style="display: none;" id="dieta"><a
+						href="manageDiet" class="nav-link" href="#">Dieta</a></li>
 					<li><input type="button" id="logoutButton"
 						class="btn btn-primary login-dependent" value="Logout"
 						onclick="ajaxLog('logout', 500)"></li>
@@ -131,8 +131,8 @@
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
-		<div class="toast-body" id="loginToastMessage">Devi fare il login
-			prima di poter completare l'ordine.</div>
+		<div class="toast-body" id="loginToastMessage">Devi fare il
+			login prima di poter completare l'ordine.</div>
 	</div>
 	<div id="productToast" class="toast notification-toast" role="alert"
 		aria-live="assertive" aria-atomic="true" data-delay="5000">
@@ -145,7 +145,7 @@
 		</div>
 		<div class="toast-body" id="productToastMessage"></div>
 	</div>
-		<div id="cartToast" class="toast notification-toast" role="alert"
+	<div id="cartToast" class="toast notification-toast" role="alert"
 		aria-live="assertive" aria-atomic="true" data-delay="5000">
 		<div class="toast-header error-color-scheme">
 			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
@@ -154,7 +154,8 @@
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
-		<div class="toast-body" id="cartToastMessage">Hai esaurito il tempo a disposizione,il tuo carrello verrà svuotato</div>
+		<div class="toast-body" id="cartToastMessage">Hai esaurito il
+			tempo a disposizione,il tuo carrello verrà svuotato</div>
 	</div>
 	<!-- Chiusura toast di notifica -->
 
@@ -227,7 +228,9 @@
 						<!--Body-->
 						<div class="modal-body">
 							<div class="count">
-								<h3><small>Tempo rimanente</small></h3>
+								<h3>
+									<small>Tempo rimanente</small>
+								</h3>
 								<div id="timer"></div>
 							</div>
 							<table class="table">
@@ -249,7 +252,7 @@
 										<tr id="product_${product.key.id}">
 											<th scope="row" id="productQuantity">${product.value}</th>
 											<td id="productName">${product.key.name}</td>
-											<td id="productPrice">${product.key.price}</td>
+											<td id="productPrice">${product.key.price*product.value}</td>
 											<td><a><i class="fas fa-times"></i></a></td>
 											<td><button type="button"
 													onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.price}, '${product.key.superMarket.name}', 'remove');"
@@ -264,7 +267,7 @@
 										<tr id="product_${product.key.id}">
 											<th scope="row" id="productQuantity">${product.value}</th>
 											<td id="productName">${product.key.name}</td>
-											<td id="productPrice">${product.key.price}</td>
+											<td id="productPrice">${product.key.price*product.value}</td>
 											<td><a><i class="fas fa-times"></i></a></td>
 											<td><button type="button"
 													onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.price}, '${product.key.superMarket.name}', 'remove');"

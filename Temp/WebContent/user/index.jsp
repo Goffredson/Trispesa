@@ -21,6 +21,7 @@
 <script src="../js/login.js"></script>
 
 <link href="../css/owl.carousel.css" rel="stylesheet" />
+<link href="../css/footer.css" rel="stylesheet" />
 <link href="../css/owl.theme.default.css" rel="stylesheet" />
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -78,28 +79,22 @@
 	<nav id="nav"
 		class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container">
-			<a class="navbar-brand title-trispesa" href="home">Trispesa</a>
+			<ul style="list-style: none;">
+				<li class="nav-item py-0 title"><a
+					class="navbar-brand title-trispesa" href="home">Trispesa</a></li>
+			</ul>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarResponsive" aria-controls="navbarResponsive"
 				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			<div class="container h-100">
-				<div class="d-flex justify-content-center h-100">
-					<div class="searchbar">
-						<input class="search_input" type="text" name=""
-							placeholder="Search..."> <a href="#" class="search_icon"><i
-							class="fas fa-search"></i></a>
-					</div>
-				</div>
-			</div>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto" id="ulNavBar">
-					<li>
+					<li class="nav-item py-0">
 						<button type="button" class="btn btn-primary cart-button"
 							data-toggle="modal" data-target="#modalCart">Carrello</button>
 					</li>
-					<li>
+					<li class="nav-item py-0">
 						<!-- Div di login -->
 						<div class="dropdown" id="loginDropdown">
 							<a class="btn btn-secondary dropdown-toggle login-button" href=""
@@ -146,23 +141,24 @@
 									});
 						</script>
 					</li>
-					<li class="nav-item login-dependent" id="ordini"><a
+					<li class="nav-item py-0 login-dependent" id="ordini"><a
 						class="nav-link" href="#"><button type="button"
 								class="btn btn-primary order-button" data-toggle="modal">Ordini</button></a></li>
-					<li class="nav-item login-dependent" id="profilo"><a
+					<li class="nav-item py-0 login-dependent" id="profilo"><a
 						class="nav-link" href="../user?page=profile"><button
 								type="button" class="btn btn-primary profile-button"
 								data-toggle="modal">Profilo</button></a></li>
-					<li class="nav-item login-dependent" id="dieta"><a
+					<li class="nav-item py-0 login-dependent" id="dieta"><a
 						href="manageDiet" class="nav-link"><button type="button"
 								class="btn btn-primary diet-button" data-toggle="modal">Dieta</button></a></li>
-					<li><input type="button" id="logoutButton"
+					<li class="nav-item py-0"><input type="button"
+						id="logoutButton"
 						class="btn btn-primary login-dependent logout-button"
 						value="Logout" onclick="ajaxLog('logout', 500)"></li>
 
 
-					<li class="nav-item"><a class="nav-link" href="administration">Parte
-							admin</a></li>
+					<li class="nav-item py-0"><a class="nav-link"
+						href="administration">Parte admin</a></li>
 				</ul>
 			</div>
 		</div>
@@ -254,6 +250,18 @@
 			</div>
 		</div>
 	</nav>
+	<form id="searchProduct" action="showProducts" method="post">
+		<div class="container h-100 ">
+			<div class="d-flex justify-content-center h-100">
+				<div class="searchbar">
+					<input class="search_input" id="nomeProdotto" name="nomeProdotto"
+						type="text" placeholder="Cerca prodotto.."> <a
+						class="search_icon"><i onclick='$("#searchProduct").submit();'
+						class="fas fa-search"></i></a>
+				</div>
+			</div>
+		</div>
+	</form>
 	<div class="modal fade" id="modalCart" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
@@ -346,15 +354,18 @@
 					class="card-img-top" src="${prodottoScontato.imagePath}"
 					alt="Card image cap">
 				<div class="card-body">
-					<h4 class="card-title">${prodottoScontato.name}</h4>
+					<h4 class="card-title">${prodottoScontato.name}
+						${prodottoScontato.brand}</h4>
 					<h5>${prodottoScontato.superMarket.name}</h5>
 					<p>
-						<small>${prodottoScontato.price}</small>
+						<strike><h6>${prodottoScontato.price}&euro;</h6></strike>
 					</p>
-					<p>
-						<small style="color: red;">${prodottoScontato.discount}</small>
+					<p>${prodottoScontato.price} &euro;
 					</p>
-					<a href="#" class="btn btn-primary">Aggiungi al carrello</a>
+					
+					<a href="#" class="btn btn-primary"
+							id="addToCartProductDiscounted">Aggiungi al carrello</a>
+				
 				</div>
 			</div>
 		</c:forEach>
@@ -362,11 +373,40 @@
 	</div>
 
 	<!-- Footer (da mettere: link a github e a sito unical) -->
-	<footer class="py-3 bg-dark">
-		<div class="container">
-			<p class="m-0 text-center text-white">Copyright &copy; Trispesa
-				2020</p>
-		</div>
-	</footer>
+<footer class="footer-distributed">
+			<div class="footer-left">
+				<h3>Tri<span>Spesa</span>
+			</h3>
+				<p class="footer-company-name">Trispesa © 2020</p>
+			</div>
+			<div class="footer-center">
+				<div>
+					<i class="fa fa-map-marker"></i>
+					<p>
+					<span>Via Pietro Bucci</span>Rende,Cosenza</p>
+				</div>
+				<div>
+					<i class="fa fa-phone"></i>
+					<p>348-3218976</p>
+				</div>
+				<div>
+					<i class="fa fa-envelope"></i>
+					<p>
+					<a href="mailto:trispesaStaff@gmail.com">trispesaStaff@gmail.com</a>
+				</p>
+				</div>
+			</div>
+			<div class="footer-right">
+				<p class="footer-company-about">
+					<span>Informazioni sito:</span>
+					Questo progetto è stato creato da un gruppo di studenti dell'università della Calabria,dipartimento di matematica e informatica,
+					per l'esame di ingegneria del software!
+				</p>
+				<div class="footer-icons">
+					<a href="https://www.mat.unical.it/demacs"><img src="../images/logo_unical.png" width="24" height="24"></img></a>
+					<a href="https://github.com/Goffredson/Trispesa"><i class="fa fa-github"></i></a>
+				</div>
+			</div>
+		</footer>
 </body>
 </html>

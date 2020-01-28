@@ -31,7 +31,44 @@ public class ManageUser extends HttpServlet {
 			switch (req.getParameter("type")) {
 			case "credentials": {
 				switch (req.getParameter("action")) {
+				case "usernameCheck": {
+					StringBuffer stringBuffer = new StringBuffer();
+					BufferedReader bufferedReader = new BufferedReader(
+							new InputStreamReader(req.getInputStream(), StandardCharsets.UTF_8));
+					String line = bufferedReader.readLine();
+					while (line != null) {
+						stringBuffer.append(line);
+						line = bufferedReader.readLine();
+					}
+					String username = gson.fromJson(stringBuffer.toString(), JsonObject.class).get("username")
+							.getAsString();
+
+					if (DBManager.getInstance().checkIfUsernameExists(username)) {
+						operationResult.setResult(false);
+					} else {
+						operationResult.setResult(true);
+					}
+				}
+					break;
+
 				case "username": {
+					StringBuffer stringBuffer = new StringBuffer();
+					BufferedReader bufferedReader = new BufferedReader(
+							new InputStreamReader(req.getInputStream(), StandardCharsets.UTF_8));
+					String line = bufferedReader.readLine();
+					while (line != null) {
+						stringBuffer.append(line);
+						line = bufferedReader.readLine();
+					}
+					String username = gson.fromJson(stringBuffer.toString(), JsonObject.class).get("username")
+							.getAsString();
+
+					Customer customer = (Customer) req.getSession().getAttribute("customer");
+
+					DBManager.getInstance().modUsername(customer, username);
+
+					operationResult.setResult(true);
+					operationResult.setObject("Lo username è stato aggiornato con successo!");
 				}
 					break;
 				case "password": {

@@ -9,6 +9,7 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import exceptions.DBOperationException;
 import model.Customer;
 import model.DeliveryAddress;
 import model.PaymentMethod;
@@ -329,8 +330,7 @@ public class CustomerDaoJdbc implements CustomerDao {
 			if (increase) {
 				System.out.println("DB: Incremento, cId:" + idCustomer + ", pID: " + idProduct);
 				insert = "update cart set amount = amount+1 where customer=? and product=?;";
-			}
-			else {
+			} else {
 				System.out.println("DB: Decremento, cId:" + idCustomer + ", pID: " + idProduct);
 				insert = "update cart set amount = amount-1 where customer=? and product=?;";
 			}
@@ -381,11 +381,74 @@ public class CustomerDaoJdbc implements CustomerDao {
 //				throw new RuntimeException(e.getMessage());
 //			}
 		}
-		
+
 	}
 
+	@Override
+	public void modUsername(long customerId, String username) throws DBOperationException {
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			connection.setAutoCommit(false);
 
+			String select = "select * from customer where username=?";
+			PreparedStatement selectStatement = connection.prepareStatement(select);
+			selectStatement.setString(1, username);
+			ResultSet selectResultSet = selectStatement.executeQuery();
+			if (selectResultSet.next()) {
+				throw new DBOperationException(
+						"Attenzione, lo username che stai cercando di inserire appartiene già ad un altro cliente", "");
+			}
 
+			String update = "update customer set username=? where id=?";
+			PreparedStatement statement = connection.prepareStatement(update);
+			statement.setString(1, username);
+			statement.setLong(2, customerId);
+			statement.executeUpdate();
 
+			connection.commit();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+			try {
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
+		}
+	}
+
+	@Override
+	public boolean checkIfUsernameExists(String username) {
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+
+			String select = "select * from customer where username=?";
+			PreparedStatement selectStatement = connection.prepareStatement(select);
+			selectStatement.setString(1, username);
+			ResultSet selectResultSet = selectStatement.executeQuery();
+			if (selectResultSet.next()) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+			return false;
+		}
+	}
 
 }

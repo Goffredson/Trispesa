@@ -299,7 +299,7 @@ public class DBManager {
 	}
 
 	public void sendEmail() {
-		
+
 	}
 
 	public void increaseProductQuantity(Long product, Long quantity) {
@@ -391,5 +391,14 @@ public class DBManager {
 
 	public ArrayList<Product> getProductsForDiet(String categoryName, boolean offBrand, long weight) {
 		return getProductDao().retrieveByCategoryAndWeight(categoryName, offBrand, weight);
+	}
+
+	public void modUsername(Customer customer, String username) throws DBOperationException {
+		getCustomerDao().modUsername(customer.getId(), username);
+		customer.setUsername(username);
+	}
+
+	public boolean checkIfUsernameExists(String username) {
+		return getCustomerDao().checkIfUsernameExists(username);
 	}
 }

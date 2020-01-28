@@ -1,3 +1,6 @@
+var success;
+var ajaxRequest = null;
+
 $(document)
 		.ready(
 				function() {
@@ -67,7 +70,7 @@ $(document)
 										}
 									});
 
-					// validazione form DA AGGIUSTARE
+					// validazione
 					$('#manage-delivery-address-form')
 							.validate(
 									{
@@ -84,6 +87,200 @@ $(document)
 											address : "Per favore, inserisca l'indirizzo",
 											zipcode : "Per favore, inserisca il codice di avviamento postale",
 											province : "Per favore, inserisca la provincia",
+										},
+										errorElement : "em",
+										errorPlacement : function(error,
+												element) {
+											// Add the `help-block` class to the
+											// error element
+											error.addClass("help-block");
+											error.addClass("invalid-feedback");
+
+											if (element.prop("type") === "checkbox") {
+												error.insertAfter(element
+														.parent("label"));
+											} else {
+												error.insertAfter(element);
+											}
+										},
+										highlight : function(element,
+												errorClass, validClass) {
+											$(element).addClass("is-invalid")
+													.removeClass("is-valid");
+										},
+										unhighlight : function(element,
+												errorClass, validClass) {
+											$(element).addClass("is-valid")
+													.removeClass("is-invalid");
+										}
+									});
+
+					$('#mod-password-form')
+							.validate(
+									{
+										rules : {
+											passwordOld : "required",
+											passwordNew : "required",
+											passwordTwice : {
+												required : true,
+												equalTo : '#password-new',
+											},
+										},
+										messages : {
+											passwordOld : "Per favore, inserisca la vecchia password",
+											passwordNew : "Per favore, inserisca la nuova password",
+											passwordTwice : {
+												required : "Per favore, inserisca la di nuovo la nuova password",
+												equalTo : "Attenzione, le due password devono coincidere",
+											},
+										},
+										errorElement : "em",
+										errorPlacement : function(error,
+												element) {
+											// Add the `help-block` class to the
+											// error element
+											error.addClass("help-block");
+											error.addClass("invalid-feedback");
+
+											if (element.prop("type") === "checkbox") {
+												error.insertAfter(element
+														.parent("label"));
+											} else {
+												error.insertAfter(element);
+											}
+										},
+										highlight : function(element,
+												errorClass, validClass) {
+											$(element).addClass("is-invalid")
+													.removeClass("is-valid");
+										},
+										unhighlight : function(element,
+												errorClass, validClass) {
+											$(element).addClass("is-valid")
+													.removeClass("is-invalid");
+										}
+									});
+
+					$('#mod-name-form').validate(
+							{
+								rules : {
+									name : "required",
+								},
+								messages : {
+									name : "Per favore, inserisca il nome",
+								},
+								errorElement : "em",
+								errorPlacement : function(error, element) {
+									// Add the `help-block` class to the
+									// error element
+									error.addClass("help-block");
+									error.addClass("invalid-feedback");
+
+									if (element.prop("type") === "checkbox") {
+										error.insertAfter(element
+												.parent("label"));
+									} else {
+										error.insertAfter(element);
+									}
+								},
+								highlight : function(element, errorClass,
+										validClass) {
+									$(element).addClass("is-invalid")
+											.removeClass("is-valid");
+								},
+								unhighlight : function(element, errorClass,
+										validClass) {
+									$(element).addClass("is-valid")
+											.removeClass("is-invalid");
+								}
+							});
+
+					$('#mod-surname-form')
+							.validate(
+									{
+										rules : {
+											surname : "required",
+										},
+										messages : {
+											surname : "Per favore, inserisca il cognome",
+										},
+										errorElement : "em",
+										errorPlacement : function(error,
+												element) {
+											// Add the `help-block` class to the
+											// error element
+											error.addClass("help-block");
+											error.addClass("invalid-feedback");
+
+											if (element.prop("type") === "checkbox") {
+												error.insertAfter(element
+														.parent("label"));
+											} else {
+												error.insertAfter(element);
+											}
+										},
+										highlight : function(element,
+												errorClass, validClass) {
+											$(element).addClass("is-invalid")
+													.removeClass("is-valid");
+										},
+										unhighlight : function(element,
+												errorClass, validClass) {
+											$(element).addClass("is-valid")
+													.removeClass("is-invalid");
+										}
+									});
+
+					$('#mod-email-form')
+							.validate(
+									{
+										rules : {
+											email : {
+												required : true,
+												email : true,
+											},
+										},
+										messages : {
+											email : {
+												required : "Per favore, inserisca un indirizzo email",
+												email : "Per favore, inserisca un indirizzo email valido",
+											},
+										},
+										errorElement : "em",
+										errorPlacement : function(error,
+												element) {
+											// Add the `help-block` class to the
+											// error element
+											error.addClass("help-block");
+											error.addClass("invalid-feedback");
+
+											if (element.prop("type") === "checkbox") {
+												error.insertAfter(element
+														.parent("label"));
+											} else {
+												error.insertAfter(element);
+											}
+										},
+										highlight : function(element,
+												errorClass, validClass) {
+											$(element).addClass("is-invalid")
+													.removeClass("is-valid");
+										},
+										unhighlight : function(element,
+												errorClass, validClass) {
+											$(element).addClass("is-valid")
+													.removeClass("is-invalid");
+										}
+									});
+
+					$('#mod-birth-date-form')
+							.validate(
+									{
+										rules : {
+											birthDate : "required",
+										},
+										messages : {
+											birthDate : "Per favore, inserisca la data di nascita",
 										},
 										errorElement : "em",
 										errorPlacement : function(error,
@@ -285,17 +482,13 @@ function deletePaymentMethod(id) {
 			if (data.result === false) {
 				$('#result-modal-title').html('Operazione annullata');
 				$('#result-modal-body').addClass('error-message');
-				$('#result-modal-type').html(data.type);
 				$('#result-modal-object').html(data.object);
-				$('#result-modal-state').html(data.state);
 				$('#result-modal').modal('show');
 				success = false;
 			} else {
 				$('#result-modal-title').html('Operazione completata');
 				$('#result-modal-body').addClass('success-message');
-				$('#result-modal-type').html(data.type);
 				$('#result-modal-object').html(data.object);
-				$('#result-modal-state').html(data.state);
 				$('#result-modal').modal('show');
 				success = true;
 			}
@@ -462,17 +655,13 @@ function deleteDeliveryAddress(id) {
 			if (data.result === false) {
 				$('#result-modal-title').html('Operazione annullata');
 				$('#result-modal-body').addClass('error-message');
-				$('#result-modal-type').html(data.type);
 				$('#result-modal-object').html(data.object);
-				$('#result-modal-state').html(data.state);
 				$('#result-modal').modal('show');
 				success = false;
 			} else {
 				$('#result-modal-title').html('Operazione completata');
 				$('#result-modal-body').addClass('success-message');
-				$('#result-modal-type').html(data.type);
 				$('#result-modal-object').html(data.object);
-				$('#result-modal-state').html(data.state);
 				$('#result-modal').modal('show');
 				success = true;
 			}
@@ -485,26 +674,144 @@ function deleteDeliveryAddress(id) {
 	});
 }
 
+$('#username').change(function(e) {
+	if (ajaxRequest != null) {
+		ajaxRequest.abort();
+	}
+	ajaxRequest = $.ajax({
+		type : "POST",
+		url : "user/manage?type=credentials&action=usernameCheck",
+		dataType : "json",
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify({
+			username : $('#username').val()
+		}),
+		success : function(data) {
+			if (data.result === false) {
+				$('#username-error').remove();
+				$('<em id="username-error" class="error help-block invalid-feedback">Lo username appartiene ad un altro cliente</em>').insertAfter('#username');
+				$('#username').addClass("is-invalid").removeClass("is-valid");
+				$('#mod-username-form').addClass("needs-validation").removeClass(
+				"was-validated");
+				$('#mod-username-button').prop('disabled', true);
+				success = false;
+			} else {
+				$('#username').addClass("is-valid").removeClass("is-invalid");
+				$('#mod-username-button').prop('disabled', false);
+				$('#mod-username-form').addClass("was-validated").removeClass(
+				"needs-validation");
+				success = true;
+			}
+		}
+	});
+});
+
+$('#username').keydown(function(e) {
+	if (e.keyCode == 13) {
+		e.preventDefault();
+	} else {
+		setTimeout(() => {
+			if ($('#username').val() == '') {
+				$('#username-error').remove();
+				$('#username').addClass("is-invalid").removeClass("is-valid");
+				$('<em id="username-error" class="error help-block invalid-feedback">Per favore, inserisca uno username</em>').insertAfter('#username');
+				$('#mod-username-form').addClass("needs-validation").removeClass("was-validated");
+				$('#mod-username-button').prop('disabled', true);
+			} else {
+				$('#username').change();
+			}
+		}, 20);
+	}
+});
+
+$('#name').keypress(function(e) {
+	if (e.keyCode == 13) {
+		e.preventDefault();
+	}
+});
+
+$('#surname').keypress(function(e) {
+	if (e.keyCode == 13) {
+		e.preventDefault();
+	}
+});
+
+$('#email').keypress(function(e) {
+	if (e.keyCode == 13) {
+		e.preventDefault();
+	}
+});
+
 function modUsername() {
-	console.log('username');
+	$('#mod-username-button').html('<span class="spinner-border spinner-border-sm"></span> Caricamento');
+	$('.btn').prop('disabled', true);
+
+	$.ajax({
+		type : "POST",
+		url : "user/manage?type=credentials&action=username",
+		dataType : "json",
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify({
+			username : $('#username').val()
+		}),
+		success : function(data) {
+			if (data.result === false) {
+				$('#result-modal-title').html('Operazione annullata');
+				$('#result-modal-body').addClass('error-message');
+				$('#result-modal-object').html(data.object);
+				$('#result-modal').modal('show');
+				success = false;
+			} else {
+				$('#result-modal-title').html('Operazione completata');
+				$('#result-modal-body').addClass('success-message');
+				$('#result-modal-object').html(data.object);
+				$('#result-modal').modal('show');
+				success = true;
+			}
+		},
+		complete : function() {
+			$('#mod-username-button').html('Modifica');
+			$('.btn').prop('disabled', false);
+		}
+	});
 }
 
 function modPassword() {
-	console.log('Password');
+	if ($('#mod-password-form').valid() === false) {
+		$('#mod-password-form').addClass("was-validated").removeClass(
+				"needs-validation");
+		return;
+	}
 }
 
 function modName() {
-	console.log('Name');
+	if ($('#mod-name-form').valid() === false) {
+		$('#mod-name-form').addClass("was-validated").removeClass(
+				"needs-validation");
+		return;
+	}
 }
 
 function modSurname() {
-	console.log('Surname');
+	if ($('#mod-surname-form').valid() === false) {
+		$('#mod-surname-form').addClass("was-validated").removeClass(
+				"needs-validation");
+		return;
+	}
 }
 
 function modEmail() {
-	console.log('Email');
+	if ($('#mod-email-form').valid() === false) {
+		$('#mod-email-form').addClass("was-validated").removeClass(
+				"needs-validation");
+		return;
+	}
 }
 
 function modBirthDate() {
-	console.log('BirthDate');
+	if ($('#mod-birth-date-form').valid() === false) {
+		$('#mod-birth-date-form').addClass("was-validated").removeClass(
+				"needs-validation");
+		return;
+	}
 }

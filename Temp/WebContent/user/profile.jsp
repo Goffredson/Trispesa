@@ -96,7 +96,7 @@
 							</div>
 						</div>
 						<button id="mod-username-button" type="button"
-							onclick="modUsername()" class="btn btn-success">Modifica</button>
+							onclick="modUsername()" class="btn btn-success" disabled>Modifica</button>
 					</form>
 				</div>
 				<div>

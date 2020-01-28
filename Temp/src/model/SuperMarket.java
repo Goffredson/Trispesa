@@ -1,15 +1,6 @@
 package model;
 
-import java.io.Serializable;
-
-public class SuperMarket implements Serializable {
-
-	// TODO La classe potrebbe contenere un DeliveryAddress, anzich� tre campi privati?
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5506040753356135679L;
+public class SuperMarket {
 	private long id;
 	private String name;
 	private String country;

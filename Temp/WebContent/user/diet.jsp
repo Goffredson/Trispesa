@@ -58,7 +58,7 @@
 		<button type="button" class="btn btn-success"
 			onclick="$('#orderConfirmed').modal('show');">Conferma spesa</button>
 		<button type="button" class="btn btn-danger"
-			onclick="$('#dietCart').empty(); $('#dietCart').hide(); for (var i in spesa) {removeProduct(spesa[i]);} $('#dietCanceled').modal('show');">Rifiuta spesa
+			onclick="$('#dietCart').empty(); $('#dietCart').hide(); for (var i in spesa) {removeProduct(spesa[i]);} $('#dietCanceled').modal('show');">Rifiuta
 			spesa</button>
 	</div>
 

@@ -8,7 +8,8 @@ function removeProduct(product) {
 			productId : product.id,
 			operation : "remove"
 		},
-		success : function() {},
+		success : function() {
+		},
 	});
 }
 
@@ -109,10 +110,15 @@ function storeLeafCategory(id, name) {
 	leafCategories[id] = name;
 }
 
+function removeField() {
+
+}
+
 function addField() {
 	selectCount++;
 
-	formGroup = $('<div class="form-group">').appendTo($("#dietForm"));
+	formGroup = $('<div class="form-group" id="field_' + selectCount + '">')
+			.appendTo($("#dietForm"));
 
 	formGroup.append(
 
@@ -141,4 +147,7 @@ function addField() {
 					+ '</div>'
 					+ '<div class="col-xs-2"> <label for="ex1">Grammi</label> <input class="col-xs-1" name="dietQuantity_'
 					+ selectCount + '" type="text">' + '</div>');
+	formGroup
+			.append('<button type="button" class="btn btn-warning" onclick="$(\'#field_'
+					+ selectCount + '\').remove()" >Rimuovi alimento</button>');
 }

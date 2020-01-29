@@ -12,7 +12,9 @@ body {
 	color: white !important;
 	background-color: #cc0000 !important;
 }
-
+.spanTitle{
+	color: #34d3ca;
+}
 .success-color-scheme {
 	color: white !important;
 	background-color: green !important;

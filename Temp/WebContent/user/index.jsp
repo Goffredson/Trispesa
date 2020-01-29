@@ -85,7 +85,7 @@
 		<div class="container">
 			<ul style="list-style: none;">
 				<li class="nav-item py-0 title"><a
-					class="navbar-brand title-trispesa" href="home">Trispesa</a></li>
+					class="navbar-brand title-trispesa" href="home">Tri<span class="spanTitle">Spesa</span></a></li>
 			</ul>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarResponsive" aria-controls="navbarResponsive"
@@ -373,7 +373,6 @@
 
 	</div>
 
-	<!-- Footer (da mettere: link a github e a sito unical) -->
 	<footer class="footer-distributed">
 		<div class="footer-left">
 			<h3>

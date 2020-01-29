@@ -59,6 +59,11 @@ public class ManageDiet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		if (req.getParameter("customer") == null) {
+			resp.sendRedirect("home");
+			return;			
+		}
+		
 		RequestDispatcher rd = req.getRequestDispatcher("diet.jsp");
 		req.setAttribute("leafCategoriesList", DBManager.getInstance().getLeafCategoriesForDiet());
 		rd.forward(req, resp);

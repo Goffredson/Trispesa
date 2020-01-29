@@ -23,6 +23,11 @@ public class ManageOrder extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		if (req.getParameter("customer") == null) {
+			resp.sendRedirect("home");
+			return;
+		}
+		
 		if (req.getParameter("operation") == null) {
 			RequestDispatcher rd = req.getRequestDispatcher("makeOrder.jsp");
 			rd.forward(req, resp);

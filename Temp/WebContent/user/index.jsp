@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 
 <!DOCTYPE html>
@@ -161,8 +161,7 @@
 						href="manageDiet" class="nav-link"><button type="button"
 								class="btn btn-primary diet-button" data-toggle="modal">Dieta</button></a></li>
 					<li class="nav-item py-0"><input type="button"
-						id="logoutButton"
-						class="btn btn-primary login-dependent logout-button"
+						id="logoutButton" class="btn login-dependent logout-button"
 						value="Logout" onclick="ajaxLog('logout', 500)"></li>
 				</ul>
 			</div>
@@ -246,15 +245,17 @@
 		<div class="col-lg-12">
 			<div class="scrollmenu rounded">
 				<c:forEach items="${listaMacroCategorie}" var="categoria">
-					<a
-						class="w3-bar-item w3-mobile w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green"
-						href="showProducts?categoria=${categoria.id}">${categoria.name}</a>
+					<c:if test="${not fn:startsWith(categoria.name, 'Altro')}">
+						<a
+							class="w3-bar-item w3-mobile w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green"
+							href="showProducts?categoria=${categoria.id}">${categoria.name}</a>
+					</c:if>
 				</c:forEach>
 			</div>
 		</div>
 	</div>
 	<form id="searchProduct" action="showProducts" method="post">
-		<div class="container h-100 ">
+		<div class="container col-md-10 h-100 ">
 			<div class="d-flex justify-content-center h-100">
 				<div class="searchbar">
 					<input class="search_input" id="nomeProdotto" name="nomeProdotto"
@@ -262,6 +263,35 @@
 						class="search_icon"><i onclick='$("#searchProduct").submit();'
 						class="fas fa-search"></i></a>
 				</div>
+			</div>
+			<div class="py-5 text-center">
+			<h2 class="title-secondary">OGGI IN OFFERTA</h2>
+			</div>
+			<div class="owl-carousel owl-theme">
+				<c:forEach items="${prodottiScontati}" var="prodottoScontato">
+					<div class="card">
+						<img width="200" height="300" class="card-img-top"
+							src="${prodottoScontato.imagePath}">
+						<div class="card-body h-20">
+							<h5>${prodottoScontato.name}${prodottoScontato.brand}</h5>
+
+							<div>
+								<del style="color: red;">
+									${prodottoScontato.roundedPrice}&euro; </del>
+							</div>
+
+							<b>${prodottoScontato.roundedDiscountedPrice}&euro;</b> <a
+								style="float: right;"
+								onclick="										
+						updateCart(${prodottoScontato.id}, '${prodottoScontato.name}', ${prodottoScontato.roundedDiscountedPrice}, '${prodottoScontato.superMarket.name}', 'add')"
+								class="btn btn-primary" id="addToCartProductDiscounted">+</a>
+
+						</div>
+						<div class="card-footer">Venduto da:
+							${prodottoScontato.superMarket.name}</div>
+					</div>
+				</c:forEach>
+
 			</div>
 		</div>
 	</form>
@@ -349,39 +379,7 @@
 			</div>
 		</div>
 	</div>
-	<h2 class="title-secondary">PRODOTTI IN OFFERTA</h2>
-	<div class="owl-carousel owl-theme">
-		<c:forEach items="${prodottiScontati}" var="prodottoScontato">
-			<div class="card" style="width: 18rem;">
-				<img width="200" height="200" style="object-fit: cover;"
-					class="card-img-top" src="${prodottoScontato.imagePath}"
-					alt="Card image cap">
-				<div class="card-body">
-					<h4 class="card-title">${prodottoScontato.name}
-						${prodottoScontato.brand}</h4>
-					<h5>${prodottoScontato.superMarket.name}</h5>
-					<p>
-						<del><h6>${prodottoScontato.roundedPrice}&euro;</h6></del>
-					</p>
 
-					<p>
-					<h2>
-						<b>${prodottoScontato.roundedDiscountedPrice}&euro;</b>
-					</h2>
-					</p>
-
-					<a
-						onclick="										
-						updateCart(${prodottoScontato.id}, '${prodottoScontato.name}', ${prodottoScontato.roundedDiscountedPrice}, '${prodottoScontato.superMarket.name}', 'add')"
-						class="btn btn-primary" id="addToCartProductDiscounted"><h3>Aggiungi
-
-						al carrello</h3></a>
-
-				</div>
-			</div>
-		</c:forEach>
-
-	</div>
 
 	<footer class="footer-distributed">
 		<div class="footer-left">

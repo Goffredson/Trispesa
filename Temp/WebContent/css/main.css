@@ -14,7 +14,7 @@ body {
 }
 
 .spanTitle {
-	color: #34d3ca;
+	color: #e9b96e;
 }
 
 .success-color-scheme {
@@ -30,7 +30,7 @@ body {
 }
 
 .cart-button {
-	background-color: #34d3ca !important;
+	background-color: white !important;
 	color: black;
 	border: none;
 	margin-top: 15px;
@@ -38,33 +38,37 @@ body {
 }
 
 .order-button {
-	color: black;
-	background-color: #34d3ca !important;
-	border: none;
-	margin-top: 6px;
+	color: white;
+	background-color: #0f6c17 !important;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #e9b96e;
 }
 
 .profile-button {
-	color: black;
-	background-color: #34d3ca !important;
-	border: none;
-	margin-top: 6px;
+	color: white;
+	background-color: #0f6c17 !important;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #e9b96e;
 	margin-right: 2px;
 }
 
 .diet-button {
-	color: black;
-	background-color: #34d3ca !important;
-	border: none;
-	margin-top: 6px;
+	color: white;
+	background-color: #0f6c17 !important;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #e9b96e;
 	margin-right: 10px;
 }
 
 .logout-button {
-	color: black;
-	background-color: #ef2929 !important;
-	border: none;
-	margin-top: 13px;
+	color: white;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #6d1010;	
+	margin-top: 7px;
 	margin-right: 5px;
 }
 
@@ -94,10 +98,8 @@ body {
 }
 
 .title-secondary {
-	text-transform: uppercase;
-	color: #CCC7B7;
+	color: #0f6c17;
 	margin-bottom: 22px;
-	font-family: '0swald', sans-serif;
 }
 
 h2 {
@@ -112,10 +114,10 @@ h2 {
 }
 .cart-icon{
 	font-size:36px;
-	color: #34d3ca;
+	color: #e9b96e;
 }
 .item-icon-cart{
-	margin-top: 12px;
+	margin-top: 8px;
 	margin-right: 10px;
 }
 #nav {
@@ -132,7 +134,7 @@ h2 {
 }
 
 #addToCartProductDiscounted {
-	background-color: #34d3ca !important;
+	background-color: #0f6c17 !important;
 }
 
 div.scrollmenu {

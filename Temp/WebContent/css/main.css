@@ -13,7 +13,7 @@ body {
 	background-color: #cc0000 !important;
 }
 
-.spanTitle {
+.span-title {
 	color: #e9b96e;
 }
 
@@ -23,10 +23,13 @@ body {
 }
 
 .login-button {
-	background-color: #34d3ca !important;
-	color: black;
-	border: none;
-	margin-top: 15px;
+	color: white;
+	background-color: #0f6c17 !important;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #e9b96e;
+	margin-top: 6px;
+	margin-left: 5px;
 }
 
 .cart-button {
@@ -128,9 +131,14 @@ h2 {
 }
 
 #navCategories {
-	margin-top: 3px;
+	margin-top: 10px;
+	margin-left: 80px;
 	background-color: #eeeeec !important;
 	/* 	transition: width 0.8s ease-out; */
+}
+
+test {
+	margin-top: 20px;
 }
 
 #addToCartProductDiscounted {
@@ -162,9 +170,15 @@ div.scrollmenu a:hover {
  	padding: 10px; 
 
 }
+#categoryCarousel>.owl-stage-outer {
+	border-width: 5px;
+	border-color: green;
+	border-style: solid;
+	border-radius: 25px;
+}
 
 .search_input {
-	color: #2e3436;
+	color: #ffffff;
 	border: 0;
 	outline: 0;
 	background: none;
@@ -183,7 +197,7 @@ div.scrollmenu a:hover {
 
 .searchbar:hover>.search_icon {
 	background: white;
-	color: #e74c3c;
+	color: #e9b96e;
 }
 
 .search_icon {

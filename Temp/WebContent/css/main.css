@@ -12,57 +12,71 @@ body {
 	color: white !important;
 	background-color: #cc0000 !important;
 }
-.spanTitle{
+
+.spanTitle {
 	color: #34d3ca;
 }
+
 .success-color-scheme {
 	color: white !important;
 	background-color: green !important;
 }
 
 .login-button {
-	background-color: cornflowerblue !important;
+	background-color: #34d3ca !important;
+	color: black;
 	border: none;
 	margin-top: 15px;
 }
 
 .cart-button {
-	background-color: cornflowerblue !important;
+	background-color: #34d3ca !important;
+	color: black;
 	border: none;
 	margin-top: 15px;
 	margin-right: 5px;
 }
+
 .order-button {
-	background-color: cornflowerblue !important;
+	color: black;
+	background-color: #34d3ca !important;
 	border: none;
 	margin-top: 6px;
 }
+
 .profile-button {
-	background-color: cornflowerblue !important;
+	color: black;
+	background-color: #34d3ca !important;
 	border: none;
 	margin-top: 6px;
 	margin-right: 2px;
 }
+
 .diet-button {
-	background-color: cornflowerblue !important;
+	color: black;
+	background-color: #34d3ca !important;
 	border: none;
 	margin-top: 6px;
 	margin-right: 10px;
 }
+
 .logout-button {
-	background-color: #ef2929!important;
+	color: black;
+	background-color: #ef2929 !important;
 	border: none;
 	margin-top: 13px;
 	margin-right: 5px;
-
 }
+
+
+
 .title-trispesa {
    	position: absolute;   
-  	left: 50px; 
- 	
+  	left: 100px;
+  	top: -18px;
+  	
+
 }
-
-
 .login-dependent {
 	display: none;
 }
@@ -97,22 +111,31 @@ h2 {
 	margin-inline-start: 0px;
 	margin-inline-end: 0px;
 }
-
+.cart-icon{
+	font-size:36px;
+	color: #34d3ca;
+}
+.item-icon-cart{
+	margin-top: 12px;
+	margin-right: 10px;
+}
 #nav {
-	background-color: #0f6c17!important;
-/* 	width: 100%; */
-/* 	height: 65px; */
-/* 	margin: 0px auto; */
+	background-color: #0f6c17 !important;
+	/* 	width: 100%; */
+	/* 	height: 65px; */
+	/* 	margin: 0px auto; */
 }
 
 #navCategories {
 	margin-top: 3px;
- 	background-color: #eeeeec!important; 	
-/* 	transition: width 0.8s ease-out; */
+	background-color: #eeeeec !important;
+	/* 	transition: width 0.8s ease-out; */
 }
-#addToCartProductDiscounted{
-	background-color: #0f6c17!important;
+
+#addToCartProductDiscounted {
+	background-color: #34d3ca !important;
 }
+
 div.scrollmenu {
 	overflow: hidden;
 	white-space: nowrap;
@@ -130,12 +153,12 @@ div.scrollmenu a:hover {
 }
 /* search bar */
 .searchbar {
- 	margin-bottom: auto; 
- 	margin-top: auto; 
- 	height: 60px; 
- 	background-color: #eeeeec; 
- 	border-radius: 30px; 
- 	padding: 10px; 
+	margin-bottom: auto;
+	margin-top: auto;
+	height: 60px;
+	background-color: #eeeeec;
+	border-radius: 30px;
+	padding: 10px;
 }
 
 .search_input {

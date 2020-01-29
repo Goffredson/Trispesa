@@ -37,7 +37,7 @@ public class ManageDiet extends HttpServlet {
 		System.out.println(productsInDiet);
 		for (ArrayList<String> p : productsInDiet) {
 			ArrayList<Product> productByLeaf = DBManager.getInstance().getProductsForDiet(p.get(0),
-					Boolean.parseBoolean(p.get(1)), Long.parseLong(p.get(2)));
+					Boolean.parseBoolean(p.get(2)), Long.parseLong(p.get(1)));
 			if (productByLeaf.isEmpty() == false)
 				spesa.add(getCheapestProduct(productByLeaf));
 			else {

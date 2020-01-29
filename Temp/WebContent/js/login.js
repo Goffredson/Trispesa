@@ -60,7 +60,7 @@ function ajaxLog(operation, animDelay) {
 				startTimer(30*60, $("#timer"));
 				sessionStorage.setItem("remainingTime", 30*60);
 				if (response.redirect === true)
-					window.location.href = "administration";
+					window.location.href = "../administration";
 				else {
 					$("#toastMessage").html(
 							"Bentornato in trispesa, "

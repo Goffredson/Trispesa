@@ -44,7 +44,7 @@
 					<li class="nav-item"><a class="nav-link" href="#">Statistiche</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="administration/map">Mappe</a></li>
-					<li class="nav-item"><a href="home" id="logoutButton"
+					<li class="nav-item"><a href="user/home" id="logoutButton"
 						class="btn btn-danger" role="button">Logout</a></li>
 				</ul>
 			</div>
@@ -54,7 +54,7 @@
 	<div class="container">
 
 		<div class="row mx-auto">
-			<h1 class="mx-auto">Benvenuto NOME Admin</h1>
+			<h1 class="mx-auto">Benvenuto ${sessionScope.administrator.username}</h1>
 		</div>
 
 		<div class="row mx-auto">

@@ -21,57 +21,97 @@
 </head>
 <body>
 
-	<!-- Navigation NON TOCCARE!!! -->
+	<!-- Navbar principale  -->
 	<nav id="nav"
 		class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="#">Trispesa</a>
+			<ul style="list-style: none;">
+				<li class="nav-item py-0 title"><a
+					class="navbar-brand title-trispesa" href="home">Trispesa</a></li>
+			</ul>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarResponsive" aria-controls="navbarResponsive"
 				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a class="nav-link" href="#">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Dieta</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Ordini</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="user?page=profile">Profilo</a></li>
-					<li class="nav-item"><a class="nav-link" href="#"><img
-							src="images/cart.png" width="30" /></a></li>
-					<!-- Menu form login -->
-					<div class="dropdown">
-						<a class="btn btn-secondary dropdown-toggle login" href="#"
-							role="button" id="buttonLogin" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false">Login</a>
+				<ul class="navbar-nav ml-auto" id="ulNavBar">
+					<li class="nav-item py-0">
+						<button type="button" class="btn btn-primary cart-button"
+							data-toggle="modal" data-target="#modalCart">Carrello</button>
+					</li>
+					<li class="nav-item py-0">
+						<!-- Div di login -->
+						<div class="dropdown" id="loginDropdown">
+							<a class="btn btn-secondary dropdown-toggle login-button" href=""
+								role="button" id="loginButton" data-toggle="dropdown"
+								aria-haspopup="true" aria-expanded="false">Login</a>
+							<div class="dropdown-menu login-dropdown">
+								<form class="px-4 py-3">
+									<div class="form-group">
+										<label for="inputUsername">Nome utente</label> <input
+											type="text" class="form-control" id="inputUsername"
+											placeholder="Inserisci nome utente">
+									</div>
+									<div class="form-group">
+										<label for="inputPassword">Password</label> <input
+											type="password" class="form-control" id="inputPassword"
+											placeholder="Password">
+									</div>
+									<input type="button" class="btn btn-primary color-scheme"
+										value="Autenticati" onclick="ajaxLog('login', 500)">
 
-						<div class="dropdown-menu">
-							<form class="px-4 py-3">
-								<div class="form-group">
-									<label for="exampleDropdownFormEmail1">Indirizzo Email</label>
-									<input type="email" class="form-control"
-										id="exampleDropdownFormEmail1" placeholder="email@example.com">
-								</div>
-								<div class="form-group">
-									<label for="exampleDropdownFormPassword1">Password</label> <input
-										type="password" class="form-control"
-										id="exampleDropdownFormPassword1" placeholder="Password">
-								</div>
-								<button type="submit" class="btn btn-primary">Autenticati</button>
-							</form>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Effettua registrazione</a> <a
-								class="dropdown-item" href="#">Password dimenticata?</a>
-						</div>
-					</div>
-					<!--Chiusura Menu form login -->
-					<li class="nav-item"><a class="nav-link" href="administration">Parte
-							admin (NON TOCCARE!)</a></li>
+								</form>
+								<div class="dropdown-item" id="credenzialiErrate"
+									style="color: red; display: none;">Username o password
+									errati.</div>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="" data-toggle="modal"
+									data-target="#modalLogin">Effettua registrazione</a> <a
+									class="dropdown-item" href="">Password dimenticata?</a>
+							</div>
+						</div> <!-- Animazione slide per il form --> <script
+							type="text/javascript">
+							$('#loginDropdown').on(
+									'show.bs.dropdown',
+									function() {
+										$(this).find('.dropdown-menu').first()
+												.stop(true, true).slideDown();
+									});
+
+							$('#loginDropdown').on(
+									'hide.bs.dropdown',
+									function() {
+										$(this).find('.dropdown-menu').first()
+												.stop(true, true).slideUp();
+									});
+						</script>
+					</li>
+					<li class="nav-item py-0 login-dependent" id="ordini"><a
+						class="nav-link" href="#"><button type="button"
+								class="btn btn-primary order-button" data-toggle="modal">Ordini</button></a></li>
+					<li class="nav-item py-0 login-dependent" id="profilo"><a
+						class="nav-link" href="../user?page=profile"><button
+								type="button" class="btn btn-primary profile-button"
+								data-toggle="modal">Profilo</button></a></li>
+					<li class="nav-item py-0 login-dependent" id="dieta"><a
+						href="manageDiet" class="nav-link"><button type="button"
+								class="btn btn-primary diet-button" data-toggle="modal">Dieta</button></a></li>
+					<li class="nav-item py-0"><input type="button"
+						id="logoutButton"
+						class="btn btn-primary login-dependent logout-button"
+						value="Logout" onclick="ajaxLog('logout', 500)"></li>
 				</ul>
 			</div>
 		</div>
+		<!-- Aggiorno la navbar se c'è un cliente in sessione -->
+		<c:if test="${customer != null}">
+			<script type="text/javascript">
+				updateNavbarDOM('login', 0);
+			</script>
+		</c:if>
 	</nav>
+	<!-- Chiusura navbar principale -->
 
 	<div class="container">
 		<div class="row">

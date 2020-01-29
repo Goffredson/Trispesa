@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -448,6 +449,161 @@ public class CustomerDaoJdbc implements CustomerDao {
 				}
 			}
 			return false;
+		}
+	}
+
+	@Override
+	public void modPassword(long customerId, String passwordNew) {
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			connection.setAutoCommit(false);
+
+			String update = "update customer set password=? where id=?";
+			PreparedStatement statement = connection.prepareStatement(update);
+			statement.setString(1, passwordNew);
+			statement.setLong(2, customerId);
+			statement.executeUpdate();
+
+			connection.commit();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+			try {
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
+		}
+	}
+
+	@Override
+	public void modName(long customerId, String name) {
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			connection.setAutoCommit(false);
+
+			String update = "update customer set name=? where id=?";
+			PreparedStatement statement = connection.prepareStatement(update);
+			statement.setString(1, name);
+			statement.setLong(2, customerId);
+			statement.executeUpdate();
+
+			connection.commit();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+			try {
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
+		}
+	}
+
+	@Override
+	public void modSurname(long customerId, String surname) {
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			connection.setAutoCommit(false);
+
+			String update = "update customer set surname=? where id=?";
+			PreparedStatement statement = connection.prepareStatement(update);
+			statement.setString(1, surname);
+			statement.setLong(2, customerId);
+			statement.executeUpdate();
+
+			connection.commit();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+			try {
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
+		}
+	}
+
+	@Override
+	public void modEmail(long customerId, String email) {
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			connection.setAutoCommit(false);
+
+			String update = "update customer set email=? where id=?";
+			PreparedStatement statement = connection.prepareStatement(update);
+			statement.setString(1, email);
+			statement.setLong(2, customerId);
+			statement.executeUpdate();
+
+			connection.commit();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+			try {
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
+		}
+	}
+
+	@Override
+	public void modBirthDate(long customerId, LocalDate date) {
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			connection.setAutoCommit(false);
+
+			String update = "update customer set birth_date=? where id=?";
+			PreparedStatement statement = connection.prepareStatement(update);
+			statement.setDate(1, Date.valueOf(date));
+			statement.setLong(2, customerId);
+			statement.executeUpdate();
+
+			connection.commit();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+			try {
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
 		}
 	}
 

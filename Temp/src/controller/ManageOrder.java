@@ -23,7 +23,8 @@ public class ManageOrder extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		if (req.getParameter("customer") == null) {
+		if (req.getSession().getAttribute("customer") == null) {
+			System.out.println(req.getParameter("customer"));
 			resp.sendRedirect("home");
 			return;
 		}

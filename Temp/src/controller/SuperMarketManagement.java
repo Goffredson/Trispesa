@@ -16,6 +16,11 @@ public class SuperMarketManagement extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		if (req.getSession().getAttribute("administrator") == null) {
+			resp.sendError(401);
+			return;
+		}
+
 		ArrayList<SuperMarket> superMarkets = DBManager.getInstance().getSuperMarkets();
 		req.setAttribute("superMarkets", superMarkets);
 

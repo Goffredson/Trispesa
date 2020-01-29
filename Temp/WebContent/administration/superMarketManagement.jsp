@@ -52,7 +52,7 @@
 						</div></li>
 					<li class="nav-item"><a class="nav-link" href="#">Statistiche</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">Mappe</a></li>
-					<li class="nav-item"><a href="../home" id="logoutButton"
+					<li class="nav-item"><a href="../user/home" id="logoutButton"
 						class="btn btn-danger" role="button">Logout</a></li>
 				</ul>
 			</div>

@@ -41,6 +41,8 @@
 	href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 
 
 <!-- CSS -->
@@ -157,10 +159,6 @@
 						id="logoutButton"
 						class="btn btn-primary login-dependent logout-button"
 						value="Logout" onclick="ajaxLog('logout', 500)"></li>
-
-
-					<li class="nav-item py-0"><a class="nav-link"
-						href="administration">Parte admin</a></li>
 				</ul>
 			</div>
 		</div>
@@ -239,19 +237,17 @@
 	<!-- Chiusura toast di notifica -->
 
 	<!-- Navbar categorie -->
-	<nav id="navCategories" class="navbar navbar-expand-lg">
-		<div class="container">
-			<div class="col-lg-12">
-				<div class="scrollmenu color-scheme rounded">
-					<c:forEach items="${listaMacroCategorie}" var="categoria">
-						<a class="color-scheme"
-							href="showProducts?categoria=${categoria.id}"
-							class="list-group-item">${categoria.name}</a>
-					</c:forEach>
-				</div>
+	<div id="navCategories" class="w3-bar w3-mobile">
+		<div class="col-lg-12">
+			<div class="scrollmenu rounded">
+				<c:forEach items="${listaMacroCategorie}" var="categoria">
+					<a
+						class="w3-bar-item w3-mobile w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green"
+						href="showProducts?categoria=${categoria.id}">${categoria.name}</a>
+				</c:forEach>
 			</div>
 		</div>
-	</nav>
+	</div>
 	<form id="searchProduct" action="showProducts" method="post">
 		<div class="container h-100 ">
 			<div class="d-flex justify-content-center h-100">
@@ -368,6 +364,7 @@
 						onclick="										
 						updateCart(${prodottoScontato.id}, '${prodottoScontato.name}', ${prodottoScontato.roundedDiscountedPrice}, '${prodottoScontato.superMarket.name}', 'add')"
 						class="btn btn-primary" id="addToCartProductDiscounted">Aggiungi
+
 						al carrello</a>
 
 				</div>

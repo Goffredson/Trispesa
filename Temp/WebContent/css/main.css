@@ -105,6 +105,7 @@ h2 {
 
 #navCategories {
 	margin-top: 3px;
+ 	background-color: #eeeeec!important; 	
 /* 	transition: width 0.8s ease-out; */
 }
 #addToCartProductDiscounted{

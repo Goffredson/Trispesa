@@ -14,6 +14,11 @@ public class AdminDashboard extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		if (req.getSession().getAttribute("administrator") == null) {
+			resp.sendError(401);
+			return;
+		}
+		
 		GoogleDriveUtils.setContextPath(getServletContext().getRealPath("/"));
 
 		RequestDispatcher rd = req.getRequestDispatcher("administration/dashboard.jsp");

@@ -71,7 +71,116 @@ public class ManageUser extends HttpServlet {
 					operationResult.setObject("Lo username è stato aggiornato con successo!");
 				}
 					break;
+
 				case "password": {
+					StringBuffer stringBuffer = new StringBuffer();
+					BufferedReader bufferedReader = new BufferedReader(
+							new InputStreamReader(req.getInputStream(), StandardCharsets.UTF_8));
+					String line = bufferedReader.readLine();
+					while (line != null) {
+						stringBuffer.append(line);
+						line = bufferedReader.readLine();
+					}
+					String passwordOld = gson.fromJson(stringBuffer.toString(), JsonObject.class).get("passwordOld")
+							.getAsString();
+					String passwordNew = gson.fromJson(stringBuffer.toString(), JsonObject.class).get("passwordNew")
+							.getAsString();
+
+					Customer customer = (Customer) req.getSession().getAttribute("customer");
+
+					if (customer.getPassword().equals(passwordOld) && customer.getPassword().equals(passwordNew)) {
+						throw new DBOperationException(
+								"La password che sta cercando di inserire corrisponde alla vecchia password", "");
+					} else if (!(customer.getPassword().equals(passwordOld))) {
+						throw new DBOperationException("La vecchia password non è corretta!", "");
+					}
+
+					DBManager.getInstance().modPassword(customer, passwordNew);
+
+					operationResult.setResult(true);
+					operationResult.setObject("La password è stata aggiornata con successo!");
+				}
+					break;
+
+				case "name": {
+					StringBuffer stringBuffer = new StringBuffer();
+					BufferedReader bufferedReader = new BufferedReader(
+							new InputStreamReader(req.getInputStream(), StandardCharsets.UTF_8));
+					String line = bufferedReader.readLine();
+					while (line != null) {
+						stringBuffer.append(line);
+						line = bufferedReader.readLine();
+					}
+					String name = gson.fromJson(stringBuffer.toString(), JsonObject.class).get("name").getAsString();
+
+					Customer customer = (Customer) req.getSession().getAttribute("customer");
+
+					DBManager.getInstance().modName(customer, name);
+
+					operationResult.setResult(true);
+					operationResult.setObject("Il nome è stato aggiornato con successo!");
+				}
+					break;
+
+				case "surname": {
+					StringBuffer stringBuffer = new StringBuffer();
+					BufferedReader bufferedReader = new BufferedReader(
+							new InputStreamReader(req.getInputStream(), StandardCharsets.UTF_8));
+					String line = bufferedReader.readLine();
+					while (line != null) {
+						stringBuffer.append(line);
+						line = bufferedReader.readLine();
+					}
+					String surname = gson.fromJson(stringBuffer.toString(), JsonObject.class).get("surname")
+							.getAsString();
+
+					Customer customer = (Customer) req.getSession().getAttribute("customer");
+
+					DBManager.getInstance().modSurname(customer, surname);
+
+					operationResult.setResult(true);
+					operationResult.setObject("Il cognome è stato aggiornato con successo!");
+				}
+					break;
+
+				case "email": {
+					StringBuffer stringBuffer = new StringBuffer();
+					BufferedReader bufferedReader = new BufferedReader(
+							new InputStreamReader(req.getInputStream(), StandardCharsets.UTF_8));
+					String line = bufferedReader.readLine();
+					while (line != null) {
+						stringBuffer.append(line);
+						line = bufferedReader.readLine();
+					}
+					String email = gson.fromJson(stringBuffer.toString(), JsonObject.class).get("email").getAsString();
+
+					Customer customer = (Customer) req.getSession().getAttribute("customer");
+
+					DBManager.getInstance().modEmail(customer, email);
+
+					operationResult.setResult(true);
+					operationResult.setObject("L'indirizzo email è stato aggiornato con successo!");
+				}
+					break;
+
+				case "birthDate": {
+					StringBuffer stringBuffer = new StringBuffer();
+					BufferedReader bufferedReader = new BufferedReader(
+							new InputStreamReader(req.getInputStream(), StandardCharsets.UTF_8));
+					String line = bufferedReader.readLine();
+					while (line != null) {
+						stringBuffer.append(line);
+						line = bufferedReader.readLine();
+					}
+					String birthDate = gson.fromJson(stringBuffer.toString(), JsonObject.class).get("birthDate")
+							.getAsString();
+
+					Customer customer = (Customer) req.getSession().getAttribute("customer");
+
+					DBManager.getInstance().modBirthDate(customer, birthDate);
+
+					operationResult.setResult(true);
+					operationResult.setObject("La data di nascita è stata modificata con successo!");
 				}
 					break;
 				}

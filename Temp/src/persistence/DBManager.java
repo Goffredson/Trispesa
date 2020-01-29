@@ -1,5 +1,6 @@
 package persistence;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -400,5 +401,31 @@ public class DBManager {
 
 	public boolean checkIfUsernameExists(String username) {
 		return getCustomerDao().checkIfUsernameExists(username);
+	}
+
+	public void modPassword(Customer customer, String passwordNew) {
+		getCustomerDao().modPassword(customer.getId(), passwordNew);
+		customer.setPassword(passwordNew);
+	}
+
+	public void modName(Customer customer, String name) {
+		getCustomerDao().modName(customer.getId(), name);
+		customer.setName(name);
+	}
+
+	public void modSurname(Customer customer, String surname) {
+		getCustomerDao().modSurname(customer.getId(), surname);
+		customer.setSurname(surname);
+	}
+
+	public void modEmail(Customer customer, String email) {
+		getCustomerDao().modEmail(customer.getId(), email);
+		customer.setEmail(email);
+	}
+
+	public void modBirthDate(Customer customer, String birthDate) {
+		LocalDate date = LocalDate.parse(birthDate);
+		getCustomerDao().modBirthDate(customer.getId(), date);
+		customer.setBirthDate(date);
 	}
 }

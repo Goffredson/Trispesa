@@ -778,40 +778,200 @@ function modUsername() {
 
 function modPassword() {
 	if ($('#mod-password-form').valid() === false) {
-		$('#mod-password-form').addClass("was-validated").removeClass(
-				"needs-validation");
+		$('#mod-password-form').addClass("needs-validation").removeClass("was-validated");
 		return;
 	}
+	
+	$('#mod-password-button').html('<span class="spinner-border spinner-border-sm"></span> Caricamento');
+	$('.btn').prop('disabled', true);
+	
+	$.ajax({
+		type : "POST",
+		url : "user/manage?type=credentials&action=password",
+		dataType : "json",
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify({
+			passwordOld : $('#password-old').val(),
+			passwordNew : $('#password-new').val()
+		}),
+		success : function(data) {
+			if (data.result === false) {
+				$('#result-modal-title').html('Operazione annullata');
+				$('#result-modal-body').addClass('error-message');
+				$('#result-modal-object').html(data.object);
+				$('#result-modal').modal('show');
+				success = false;
+			} else {
+				$('#result-modal-title').html('Operazione completata');
+				$('#result-modal-body').addClass('success-message');
+				$('#result-modal-object').html(data.object);
+				$('#result-modal').modal('show');
+				success = true;
+			}
+		},
+		complete : function() {
+			$('#mod-password-button').html('Modifica');
+			$('.btn').prop('disabled', false);
+		}
+	});
 }
 
 function modName() {
 	if ($('#mod-name-form').valid() === false) {
-		$('#mod-name-form').addClass("was-validated").removeClass(
-				"needs-validation");
+		$('#mod-name-form').addClass("needs-validation").removeClass(
+				"was-validated");
 		return;
 	}
+	
+	$('#mod-name-button').html('<span class="spinner-border spinner-border-sm"></span> Caricamento');
+	$('.btn').prop('disabled', true);
+	
+	$.ajax({
+		type : "POST",
+		url : "user/manage?type=credentials&action=name",
+		dataType : "json",
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify({
+			name : $('#name').val(),
+		}),
+		success : function(data) {
+			if (data.result === false) {
+				$('#result-modal-title').html('Operazione annullata');
+				$('#result-modal-body').addClass('error-message');
+				$('#result-modal-object').html(data.object);
+				$('#result-modal').modal('show');
+				success = false;
+			} else {
+				$('#result-modal-title').html('Operazione completata');
+				$('#result-modal-body').addClass('success-message');
+				$('#result-modal-object').html(data.object);
+				$('#result-modal').modal('show');
+				success = true;
+			}
+		},
+		complete : function() {
+			$('#mod-name-button').html('Modifica');
+			$('.btn').prop('disabled', false);
+		}
+	});
 }
 
 function modSurname() {
 	if ($('#mod-surname-form').valid() === false) {
-		$('#mod-surname-form').addClass("was-validated").removeClass(
-				"needs-validation");
+		$('#mod-surname-form').addClass("needs-validation").removeClass(
+			"was-validated");
 		return;
 	}
+	
+	$('#mod-surname-button').html('<span class="spinner-border spinner-border-sm"></span> Caricamento');
+	$('.btn').prop('disabled', true);
+	
+	$.ajax({
+		type : "POST",
+		url : "user/manage?type=credentials&action=surname",
+		dataType : "json",
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify({
+			surname : $('#surname').val(),
+		}),
+		success : function(data) {
+			if (data.result === false) {
+				$('#result-modal-title').html('Operazione annullata');
+				$('#result-modal-body').addClass('error-message');
+				$('#result-modal-object').html(data.object);
+				$('#result-modal').modal('show');
+				success = false;
+			} else {
+				$('#result-modal-title').html('Operazione completata');
+				$('#result-modal-body').addClass('success-message');
+				$('#result-modal-object').html(data.object);
+				$('#result-modal').modal('show');
+				success = true;
+			}
+		},
+		complete : function() {
+			$('#mod-surname-button').html('Modifica');
+			$('.btn').prop('disabled', false);
+		}
+	});
 }
 
 function modEmail() {
 	if ($('#mod-email-form').valid() === false) {
-		$('#mod-email-form').addClass("was-validated").removeClass(
-				"needs-validation");
+		$('#mod-email-form').addClass("needs-validation").removeClass(
+			"was-validated");
 		return;
 	}
+	
+	$('#mod-email-button').html('<span class="spinner-border spinner-border-sm"></span> Caricamento');
+	$('.btn').prop('disabled', true);
+	
+	$.ajax({
+		type : "POST",
+		url : "user/manage?type=credentials&action=email",
+		dataType : "json",
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify({
+			email : $('#email').val(),
+		}),
+		success : function(data) {
+			if (data.result === false) {
+				$('#result-modal-title').html('Operazione annullata');
+				$('#result-modal-body').addClass('error-message');
+				$('#result-modal-object').html(data.object);
+				$('#result-modal').modal('show');
+				success = false;
+			} else {
+				$('#result-modal-title').html('Operazione completata');
+				$('#result-modal-body').addClass('success-message');
+				$('#result-modal-object').html(data.object);
+				$('#result-modal').modal('show');
+				success = true;
+			}
+		},
+		complete : function() {
+			$('#mod-email-button').html('Modifica');
+			$('.btn').prop('disabled', false);
+		}
+	});
 }
 
 function modBirthDate() {
 	if ($('#mod-birth-date-form').valid() === false) {
-		$('#mod-birth-date-form').addClass("was-validated").removeClass(
-				"needs-validation");
+		$('#mod-birth-date-form').addClass("needs-validation").removeClass(
+			"was-validated");
 		return;
 	}
+	
+	$('#mod-birth-date-button').html('<span class="spinner-border spinner-border-sm"></span> Caricamento');
+	$('.btn').prop('disabled', true);
+	
+	$.ajax({
+		type : "POST",
+		url : "user/manage?type=credentials&action=birthDate",
+		dataType : "json",
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify({
+			birthDate : $('#birth-date').val(),
+		}),
+		success : function(data) {
+			if (data.result === false) {
+				$('#result-modal-title').html('Operazione annullata');
+				$('#result-modal-body').addClass('error-message');
+				$('#result-modal-object').html(data.object);
+				$('#result-modal').modal('show');
+				success = false;
+			} else {
+				$('#result-modal-title').html('Operazione completata');
+				$('#result-modal-body').addClass('success-message');
+				$('#result-modal-object').html(data.object);
+				$('#result-modal').modal('show');
+				success = true;
+			}
+		},
+		complete : function() {
+			$('#mod-birth-date-button').html('Modifica');
+			$('.btn').prop('disabled', false);
+		}
+	});
 }

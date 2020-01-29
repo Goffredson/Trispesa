@@ -42,6 +42,8 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 
@@ -84,8 +86,10 @@
 		class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container">
 			<ul style="list-style: none;">
-				<li class="nav-item py-0 title"><a
-					class="navbar-brand title-trispesa" href="home">Tri<span class="spanTitle">Spesa</span></a></li>
+				<li class="nav-item py-0 title-trispesa"><a
+					class="navbar-brand " href="home"><h2>
+							Tri<span class="spanTitle">Spesa</span>
+						</h2></a></li>
 			</ul>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarResponsive" aria-controls="navbarResponsive"
@@ -94,10 +98,11 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto" id="ulNavBar">
-					<li class="nav-item py-0">
-						<button type="button" class="btn btn-primary cart-button"
-							data-toggle="modal" data-target="#modalCart">Carrello</button>
-					</li>
+					<a href="">
+						<li class="nav-item py-0 item-icon-cart"><i
+							class="fa fa-shopping-cart cart-icon" aria-hidden="true"
+							data-toggle="modal" data-target="#modalCart"></i></li>
+					</a>
 					<li class="nav-item py-0">
 						<!-- Div di login -->
 						<div class="dropdown" id="loginDropdown">
@@ -358,14 +363,19 @@
 					<p>
 						<del><h6>${prodottoScontato.roundedPrice}&euro;</h6></del>
 					</p>
-					<p style="color: red;">${prodottoScontato.roundedDiscountedPrice}&euro;</p>
+
+					<p>
+					<h2>
+						<b>${prodottoScontato.roundedDiscountedPrice}&euro;</b>
+					</h2>
+					</p>
 
 					<a
 						onclick="										
 						updateCart(${prodottoScontato.id}, '${prodottoScontato.name}', ${prodottoScontato.roundedDiscountedPrice}, '${prodottoScontato.superMarket.name}', 'add')"
-						class="btn btn-primary" id="addToCartProductDiscounted">Aggiungi
+						class="btn btn-primary" id="addToCartProductDiscounted"><h3>Aggiungi
 
-						al carrello</a>
+						al carrello</h3></a>
 
 				</div>
 			</div>

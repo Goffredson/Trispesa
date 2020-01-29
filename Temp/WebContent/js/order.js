@@ -64,7 +64,7 @@ $(document).ready(
 								$("#orderConfirmed").modal("show");
 							},
 							error : function() {
-								alert("Errore");
+								$("#errorToast").toast("show");
 							}
 						});
 					});

@@ -73,7 +73,7 @@
 							src="images/cart.png" width="30" /></a></li>
 					<!-- Menu form login -->
 					<li>
-						<button type="button" class="btn btn-primary" data-toggle="modal"
+						<button type="button" class="btn color-scheme" data-toggle="modal"
 							data-target="#modalCart">Carrello</button>
 					</li>
 					<li>
@@ -94,7 +94,7 @@
 											type="password" class="form-control" id="inputPassword"
 											placeholder="Password">
 									</div>
-									<input type="button" class="btn btn-primary color-scheme"
+									<input type="button" class="btn color-scheme color-scheme"
 										value="Autenticati" onclick="ajaxLog('login', 500)">
 
 								</form>
@@ -130,7 +130,7 @@
 					<li class="nav-item" style="display: none;" id="dieta"><a
 						href="manageDiet" class="nav-link" href="#">Dieta</a></li>
 					<li><input type="button" id="logoutButton"
-						class="btn btn-primary login-dependent" value="Logout"
+						class="btn color-scheme login-dependent" value="Logout"
 						onclick="ajaxLog('logout', 500)"></li>
 
 					<!--Chiusura Menu form login -->
@@ -180,7 +180,7 @@
 			</button>
 		</div>
 		<div class="toast-body" id="cartToastMessage">Hai esaurito il
-			tempo a disposizione,il tuo carrello verrà svuotato</div>
+			tempo a disposizione, il tuo carrello è stato svuotato.</div>
 	</div>
 	<!-- Chiusura toast di notifica -->
 
@@ -276,12 +276,12 @@
 							data-dismiss="modal">Chiudi</button>
 						<c:if test="${customer != null}">
 							<a id="orderButton" href="manageOrder"><button
-									class="btn btn-primary">Conferma ordine</button></a>
+									class="btn color-scheme">Conferma ordine</button></a>
 						</c:if>
 						<c:if test="${customer == null}">
 							<a id="orderAnchor" href=""><button id="orderButton"
 									onclick="$('#modalCart').modal('hide'); $('.modal-backdrop').hide(); $('#loginToast').toast('show');"
-									class="btn btn-primary">Conferma ordine</button></a>
+									class="btn color-scheme">Conferma ordine</button></a>
 						</c:if>
 					</div>
 				</div>
@@ -289,29 +289,36 @@
 		</div>
 		<!-- Modal: modalCart -->
 
-		<div class="col-lg-9">
-			<c:forEach items="${listaProdotti}" var="prodotto">
-				<div class="row">
+		<div class="col-lg-9 mx-auto">
+			<div class="row">
+				<c:forEach items="${listaProdotti}" var="prodotto">
 					<div class="col-lg-4 col-md-6 mb-4">
-						<div class="card h-100">
-							<img class="card-img-top" src="../${prodotto.imagePath}"
-								height="250" alt="" />
+						<div class="card h-60">
+							<img class="card-img-top" src="${prodotto.imagePath}"
+								height="200" alt="" />
 							<div class="card-body">
 								<h4 class="card-title">
 									<a href="#">${prodotto.name}</a>
 								</h4>
-								<input type="button"
+								<c:if test="${prodotto.discount == 0}">
+									<h5>${prodotto.roundedPrice}&euro;</h5>
+								</c:if>
+								<c:if test="${prodotto.discount != 0}">
+									<p>
+										<s><h5>${prodotto.roundedPrice}&euro;</h5></s>
+									</p>
+									<p style="color: red;">In sconto: ${prodotto.roundedDiscountedPrice}&euro;</p>
+								</c:if>
+								<input class="btn color-scheme" type="button"
 									onclick="updateCart(${prodotto.id}, '${prodotto.name}', ${prodotto.roundedDiscountedPrice}, '${prodotto.superMarket.name}', 'add')"
 									value="Aggiungi Al Carrello">
-								<h5>${prodotto.roundedPrice}</h5>
-								&euro;
-								<h5>${prodotto.superMarket.name}</h5>
 							</div>
-							<div class="card-footer">Le stelline</div>
+							<div class="card-footer">Venduto da:
+								${prodotto.superMarket.name}</div>
 						</div>
 					</div>
-				</div>
-			</c:forEach>
+				</c:forEach>
+			</div>
 
 		</div>
 		<!-- /.row -->

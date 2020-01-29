@@ -324,7 +324,7 @@
 
 						</tbody>
 					</table>
-					<h2 id="totalCartPrice" class="hidden-xs text-center">${totalCartPrice}</h2>
+					<h2 id="totalCartPrice" class="hidden-xs text-center">${totalCartPrice}&euro;</h2>
 
 				</div>
 				<!--Footer-->
@@ -356,9 +356,9 @@
 						${prodottoScontato.brand}</h4>
 					<h5>${prodottoScontato.superMarket.name}</h5>
 					<p>
-						<strike><h6>${prodottoScontato.roundedPrice}&euro;</h6></strike>
+						<del><h6>${prodottoScontato.roundedPrice}&euro;</h6></del>
 					</p>
-					<p>${prodottoScontato.roundedDiscountedPrice}&euro;</p>
+					<p style="color: red;">${prodottoScontato.roundedDiscountedPrice}&euro;</p>
 
 					<a
 						onclick="										

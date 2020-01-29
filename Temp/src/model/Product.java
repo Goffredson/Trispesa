@@ -23,6 +23,7 @@ public class Product implements Serializable {
 	private String imageId;
 	private String imagePath;
 	private boolean deleted;
+	private BigDecimal roundedDiscountedPrice;
 
 	public Product(long id, long barcode, String name, String brand, double weight, SuperMarket superMarket,
 			Category category, boolean offBrand, double price, long quantity, double discount, String imageId,
@@ -42,6 +43,7 @@ public class Product implements Serializable {
 		this.imageId = imageId;
 		this.imagePath = "https://drive.google.com/uc?export=view&id=" + imageId;
 		this.deleted = deleted;
+		this.roundedDiscountedPrice = new BigDecimal(price - discount).setScale(2, RoundingMode.HALF_UP);
 	}
 
 	public String getBrand() {
@@ -77,9 +79,7 @@ public class Product implements Serializable {
 	}
 
 	public BigDecimal getRoundedDiscountedPrice() {
-		System.out.println(price);
-		System.out.println(discount);
-		return new BigDecimal(price - discount).setScale(2, RoundingMode.HALF_UP);
+		return roundedDiscountedPrice;
 	}
 
 	public double getDiscount() {

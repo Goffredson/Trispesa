@@ -21,7 +21,8 @@ function updateNavbarDOM(operation, animDelay) {
 function fillCartAfterLogin(cartHashMap) {
 	var totalPrice = 0;
 	for (var product in cartHashMap) {
-		totalPrice += cartHashMap[product][0].price*cartHashMap[product][1];
+		alert(cartHashMap[product][0].discountedPrice);
+		totalPrice += cartHashMap[product][0].roundedDiscountedPrice*cartHashMap[product][1];
 		$("#listaProdottiCarrello").append(
 				'<tr id="product_"' + cartHashMap[product][0].id + '>'
 						+ '<th scope="row" id="productQuantity">'
@@ -29,17 +30,18 @@ function fillCartAfterLogin(cartHashMap) {
 						+ '<td id="productName">'
 						+ cartHashMap[product][0].name + '</td>'
 						+ '<td id="productPrice">'
-						+ cartHashMap[product][0].price*cartHashMap[product][1] + '</td>'
+						+ Number.parseFloat(cartHashMap[product][0].roundedDiscountedPrice*cartHashMap[product][1]).toFixed(2) + '&euro;</td>'
 						+ '<td><a><i class="fas fa-times"></i></a></td>'
 						+ '<td><button type="button"' + 'onclick="updateCart('
 						+ cartHashMap[product][0].id + ', \''
 						+ cartHashMap[product][0].name + '\', '
-						+ cartHashMap[product][0].price+ ', \''
+						+ cartHashMap[product][0].discountedPrice+ ', \''
 						+ cartHashMap[product][0].superMarket.name + '\', \'remove\');"'
 						+ 'class="btn btn-danger">Rimuovi</button></td>'
 						+ '</tr>');
 	}
-	$("#totalCartPrice").html(totalPrice);
+	alert(totalPrice);
+	$("#totalCartPrice").html(Number.parseFloat(totalPrice).toFixed(2) + "&euro;");
 }
 
 function emptyCartAfterLogout() {

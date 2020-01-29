@@ -88,10 +88,10 @@
 				<form method="POST" id="orderForm" action="manageOrder">
 					<div class="mb-3">
 						<div class="form-group">
-							<label>Indirizzo di consegna</label> <select
+							<label>Indirizzo di consegna</label> <select required
 								name="deliveryAddressId" id="selectAddress" class="form-control"
 								form="orderForm">
-								<option>Seleziona un indirizzo</option>
+								<option value="">Seleziona un indirizzo</option>
 								<c:forEach items="${customer.deliveryAddresses}"
 									var="deliveryAddress">
 									<option value="${deliveryAddress.id}"
@@ -123,9 +123,9 @@
 					<h4 class="mb-3">Pagamento</h4>
 					<div class="mb-3">
 						<div class="form-group">
-							<label>Metodo di pagamento</label> <select name="paymentId"
+							<label>Metodo di pagamento</label> <select required name="paymentId"
 								id="selectPayment" class="form-control" form="orderForm">
-								<option>Seleziona un metodo di pagamento</option>
+								<option value="">Seleziona un metodo di pagamento</option>
 								<c:forEach items="${customer.paymentMethods}"
 									var="paymentMethod">
 									<option value="${paymentMethod.id}">${paymentMethod}</option>
@@ -178,41 +178,23 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<div class="toast-body" id="toastMessage">Dati OK</div>
+						<div class="toast-body" id="toastMessage">Dati corretti.</div>
+					</div>
+					<div id="errorToast" class="toast notification-toast"
+						role="alert" aria-live="assertive" aria-atomic="true"
+						data-delay="5000">
+						<div class="toast-header error-color-scheme">
+							<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
+							<button type="button" class="ml-2 mb-1 close"
+								data-dismiss="toast" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="toast-body" id="toastMessage">Qualcosa è andato storto. Riprova più tardi.</div>
 					</div>
 
 
 
-					<!-- 					<div class="row"> -->
-					<!-- 						<div class="col-md-6 mb-3"> -->
-					<!-- 							<label for="cc-name">Nome intestatario</label> <input type="text" -->
-					<!-- 								class="form-control" id="cc-name" placeholder="" required=""> -->
-					<!-- 							<div class="invalid-feedback">Attenzione,inserire il nome -->
-					<!-- 								intestatario dela carta</div> -->
-					<!-- 						</div> -->
-					<!-- 						<div class="col-md-6 mb-3"> -->
-					<!-- 							<label for="cc-number">Numero carta di credito</label> <input -->
-					<!-- 								type="text" class="form-control" id="cc-number" -->
-					<!-- 								placeholder="0000-0000-0000-0000" required=""> -->
-					<!-- 							<div class="invalid-feedback">Attenzione,inserire il numero -->
-					<!-- 								della carta di credito</div> -->
-					<!-- 						</div> -->
-					<!-- 					</div> -->
-					<!-- 					<div class="row"> -->
-					<!-- 						<div class="col-md-3 mb-3"> -->
-					<!-- 							<label for="cc-expiration">Scadenza</label> <input type="date" -->
-					<!-- 								class="form-control" id="cc-expiration" placeholder="" -->
-					<!-- 								required=""> -->
-					<!-- 							<div class="invalid-feedback">Attenzione,inserire la data -->
-					<!-- 								si scadenza</div> -->
-					<!-- 						</div> -->
-					<!-- 						<div class="col-md-3 mb-3"> -->
-					<!-- 							<label for="cc-expiration">CVV</label> <input type="text" -->
-					<!-- 								class="form-control" id="cc-cvv" placeholder="" required=""> -->
-					<!-- 							<div class="invalid-feedback">Attenzione,inserire il codice -->
-					<!-- 								di sicurezza</div> -->
-					<!-- 						</div> -->
-					<!-- 					</div> -->
 					<hr class="mb-4">
 					<input type="submit" class="btn btn-primary btn-lg btn-block"
 						value="Conferma Ordine">

@@ -60,16 +60,17 @@ $(document).ready(
 									totalPrice += response[i].price;
 									var productName = response[i].name;
 									var productPrice = response[i].price;
+									alert("Entro nel for con " + i + " e " + productName);
 									$.ajax({
 										type : "GET",
 										url : "manageCart",
+										async: false,
 										data : {
 											productId : response[i].id,
 											operation : "add"
 										},
 										success : function() {
-											$("#dietCart").show("slow");
-											$("#dietCart").prepend(
+											$("#totalUl").prepend(
 													'<li class="list-group-item d-flex justify-content-between lh-condensed">'
 															+ '<div> <h6 class="my-0">' + productName
 															+ '</h6> <small class="text-muted">Quantita: 1</small></div> <span class="text-muted">'
@@ -77,14 +78,16 @@ $(document).ready(
 
 										},
 										error : function() {
+											alert("entro in error con " + productName);
 											$("#noDiet").modal("show");
 										}
 									});
 								}
-								$("#totalPrice").html(totalPrice);
+								$("#dietCart").show("slow");
+								$("#totalPrice").html(totalPrice + "&euro;");
 							},
 							error : function(response) {
-								$("#noDiet").modal("show");
+								$("#noDiet").toast("show");
 							}
 						});
 					});
@@ -112,7 +115,7 @@ function addField() {
 		$(String("#dietSelect_" + selectCount)).append('<option>' + leafCategories[key] + '</option>')
 	}
 	row.append('</select></div>' + '<div class="col-md-2 mb-3"> <label>Grammi</label> <input class="form-control" name="dietQuantity_'
-			+ selectCount + '" type="text"></div>' + '<div class="col-md-2 mb-3"><label>Di marca</label>'
+			+ selectCount + '" type="number" required> </div>' + '<div class="col-md-2 mb-3"><label>Di marca</label>'
 			+ '<div style="margin-top: 10;"> <label>No<input type="radio" name="offBrand_' + selectCount
 			+ '" value="true" checked style="margin-left:5; margin-right: 8;"></label> <label>Si<input type="radio" name="offBrand_'
 			+ selectCount + '" value="false" style="margin-left: 5;"></label></div></div>');

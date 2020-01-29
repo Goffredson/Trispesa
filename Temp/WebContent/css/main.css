@@ -16,7 +16,7 @@ body {
 	color: #34d3ca;
 }
 .success-color-scheme {
-	color: white !important;
+	color: green !important;
 	background-color: green !important;
 }
 
@@ -90,7 +90,6 @@ h2 {
 	line-height: 1.3;
 	margin: 0 0 15px;
 	font-weight: 700;
-	font-family: "Courier New", Courier, monospace;
 	display: block;
 	margin-block-start: 0.83em;
 	margin-block-end: 0.83em;
@@ -133,7 +132,7 @@ div.scrollmenu a:hover {
  	margin-bottom: auto; 
  	margin-top: auto; 
  	height: 60px; 
- 	background-color: #eeeeec; 
+ 	background-color: #0f6c17; 
  	border-radius: 30px; 
  	padding: 10px; 
 }

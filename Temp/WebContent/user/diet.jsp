@@ -142,15 +142,16 @@
 			</div>
 
 		</form>
-
-		<div class="col-md-4 order-md-2 mb-4" id="dietCart"
+	</div>
+	<div class=container>
+		<div class="py-5 text-center" id="dietCart"
 			style="display: none;">
 
 			<h4 class="d-flex justify-content-between align-items-center mb-3">
-				<span class="text-muted">Il tuo carrello</span> <span
+				<span class="text-muted">Ecco cosa ho trovato</span> <span
 					class="badge badge-secondary badge-pill"></span>
 			</h4>
-			<ul class="list-group mb-3">
+			<ul class="list-group mb-3" id="totalUl">
 
 				<li class="list-group-item d-flex justify-content-between"><span>Totale
 				</span> <strong id="totalPrice"></strong></li>
@@ -159,7 +160,7 @@
 				onclick="$('#orderConfirmed').modal('show');">Conferma
 				spesa</button>
 			<button type="button" class="btn btn-danger"
-				onclick="$('#dietCart').empty(); $('#dietCart').hide(); for (var i in spesa) {removeProduct(spesa[i]);} $('#dietCanceled').modal('show');">Rifiuta
+				onclick="$('#totalUl').empty(); $('#dietCart').hide(); for (var i in spesa) {removeProduct(spesa[i]);} $('#dietCanceled').modal('show');">Rifiuta
 				spesa</button>
 		</div>
 	</div>

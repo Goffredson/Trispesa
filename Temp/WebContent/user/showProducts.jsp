@@ -21,7 +21,29 @@
 <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- css -->
+<link href="../css/owl.carousel.css" rel="stylesheet" />
+<link href="../css/footer.css" rel="stylesheet" />
+<link href="../css/owl.theme.default.css" rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+	integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+	crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link href="../css/main.css" rel="stylesheet">
+
+
 <!-- Bootstrap core JavaScript -->
 
 
@@ -37,7 +59,7 @@
 	<nav id="nav"
 		class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="#">Trispesa</a>
+			<a class="navbar-brand" href="home">Trispesa</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarResponsive" aria-controls="navbarResponsive"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -164,188 +186,180 @@
 
 	<!-- Content -->
 	<div class="container">
-
-		<div class="row">
-
-			<!-- barra di ricerca -->
-			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Prodotto">
-				<div class="input-group-append">
-					<a href="#"><span class="input-group-text"><img
-							src="images/search.png" width="25px" /></span></a>
-				</div>
-			</div>
-
-			<!-- carosello -->
-			<div id="carouselExampleIndicators"
-				class="carousel slide my-4  mx-auto" data-ride="carousel">
-				<ol class="carousel-indicators">
-					<li data-target="#carouselExampleIndicators" data-slide-to="0"
-						class="active"></li>
-					<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-					<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-				</ol>
-				<div class="carousel-inner" role="listbox">
-					<div class="carousel-item active">
-						<img class="d-block img-fluid" src="http://placehold.it/900x350"
-							alt="First slide">
-					</div>
-					<div class="carousel-item">
-						<img class="d-block img-fluid" src="http://placehold.it/900x350"
-							alt="Second slide">
-					</div>
-					<div class="carousel-item">
-						<img class="d-block img-fluid" src="http://placehold.it/900x350"
-							alt="Third slide">
+		<!-- Navbar categorie -->
+		<form id="searchProduct" action="showProducts" method="post">
+			<div class="container h-100 ">
+				<div class="d-flex justify-content-center h-100">
+					<div class="searchbar">
+						<input class="search_input" id="nomeProdotto" name="nomeProdotto"
+							type="text" placeholder="Cerca prodotto.."> <a
+							class="search_icon"><i
+							onclick='$("#searchProduct").submit();' class="fas fa-search"></i></a>
 					</div>
 				</div>
-				<a class="carousel-control-prev" href="#carouselExampleIndicators"
-					role="button" data-slide="prev"> <span
-					class="carousel-control-prev-icon" aria-hidden="true"></span> <span
-					class="sr-only">Previous</span>
-				</a> <a class="carousel-control-next" href="#carouselExampleIndicators"
-					role="button" data-slide="next"> <span
-					class="carousel-control-next-icon" aria-hidden="true"></span> <span
-					class="sr-only">Next</span>
-				</a>
 			</div>
-			<!-- /carosello -->
-			<!-- /left col -->
-
-			<!-- Button trigger modal-->
-
-
-			<!-- Modal: modalCart -->
-			<div class="modal fade" id="modalCart" tabindex="-1" role="dialog"
-				aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<!--Header-->
-						<div class="modal-header">
-							<h4 class="modal-title" id="myModalLabel">Il tuo carrello</h4>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true"></span>
-							</button>
+		</form>
+		<!-- Button trigger modal-->
+		<!-- Modal: modalCart -->
+		<div class="modal fade" id="modalCart" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<!--Header-->
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">Il tuo carrello</h4>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true"></span>
+						</button>
+					</div>
+					<!--Body-->
+					<div class="modal-body">
+						<div class="count">
+							<h3>
+								<small>Tempo rimanente</small>
+							</h3>
+							<div id="timer"></div>
 						</div>
-						<!--Body-->
-						<div class="modal-body">
-							<div class="count">
-								<h3>
-									<small>Tempo rimanente</small>
-								</h3>
-								<div id="timer"></div>
-							</div>
-							<table class="table">
-								<thead>
-									<tr>
-										<th>N.</th>
-										<th>Nome prodotto</th>
-										<th>Prezzo</th>
-										<th></th>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>N.</th>
+									<th>Nome prodotto</th>
+									<th>Prezzo</th>
+									<th></th>
 
+								</tr>
+							</thead>
+							<tbody id="listaProdottiCarrello">
+								<c:set var="totalCartPrice" scope="request" value="${0}" />
+								<c:forEach items="${customer.cart}" var="product">
+									<c:set var="totalCartPrice" scope="request"
+										value="${totalCartPrice + product.key.roundedDiscountedPrice*product.value}" />
+
+									<tr id="product_${product.key.id}">
+										<th scope="row" id="productQuantity">${product.value}</th>
+										<td id="productName">${product.key.name}</td>
+										<td id="productPrice">${product.key.roundedDiscountedPrice*product.value}&euro;</td>
+										<td><a><i class="fas fa-times"></i></a></td>
+										<td><button type="button"
+												onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.roundedDiscountedPrice}, '${product.key.superMarket.name}', 'remove');"
+												class="btn btn-danger">Rimuovi</button></td>
 									</tr>
-								</thead>
-								<tbody id="listaProdottiCarrello">
-									<c:set var="totalCartPrice" scope="request" value="${0}" />
-									<c:forEach items="${customer.cart}" var="product">
-										<c:set var="totalCartPrice" scope="request"
-											value="${totalCartPrice + product.key.roundedDiscountedPrice*product.value}" />
 
-										<tr id="product_${product.key.id}">
-											<th scope="row" id="productQuantity">${product.value}</th>
-											<td id="productName">${product.key.name}</td>
-											<td id="productPrice">${product.key.roundedDiscountedPrice*product.value}&euro;</td>
-											<td><a><i class="fas fa-times"></i></a></td>
-											<td><button type="button"
-													onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.roundedDiscountedPrice}, '${product.key.superMarket.name}', 'remove');"
-													class="btn btn-danger">Rimuovi</button></td>
-										</tr>
+								</c:forEach>
+								<c:forEach items="${anonymousCart}" var="product">
+									<c:set var="totalCartPrice" scope="request"
+										value="${totalCartPrice + product.key.roundedDiscountedPrice*product.value}" />
 
-									</c:forEach>
-									<c:forEach items="${anonymousCart}" var="product">
-										<c:set var="totalCartPrice" scope="request"
-											value="${totalCartPrice + product.key.roundedDiscountedPrice*product.value}" />
+									<tr id="product_${product.key.id}">
+										<th scope="row" id="productQuantity">${product.value}</th>
+										<td id="productName">${product.key.name}</td>
+										<td id="productPrice">${product.key.roundedDiscountedPrice*product.value}&euro;</td>
+										<td><a><i class="fas fa-times"></i></a></td>
+										<td><button type="button"
+												onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.roundedDiscountedPrice}, '${product.key.superMarket.name}', 'remove');"
+												class="btn btn-danger">Rimuovi</button></td>
+									</tr>
+								</c:forEach>
 
-										<tr id="product_${product.key.id}">
-											<th scope="row" id="productQuantity">${product.value}</th>
-											<td id="productName">${product.key.name}</td>
-											<td id="productPrice">${product.key.roundedDiscountedPrice*product.value}&euro;</td>
-											<td><a><i class="fas fa-times"></i></a></td>
-											<td><button type="button"
-													onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.roundedDiscountedPrice}, '${product.key.superMarket.name}', 'remove');"
-													class="btn btn-danger">Rimuovi</button></td>
-										</tr>
-									</c:forEach>
+							</tbody>
+						</table>
 
-								</tbody>
-							</table>
+						<h2 id="totalCartPrice" class="hidden-xs text-center">
+							${totalCartPrice} &euro;</h2>
 
-							<h2 id="totalCartPrice" class="hidden-xs text-center">
-								${totalCartPrice} &euro;</h2>
-
-						</div>
-						<!--Footer-->
-						<div class="modal-footer">
-							<button type="button" class="btn btn-outline-primary"
-								data-dismiss="modal">Chiudi</button>
-							<c:if test="${customer != null}">
-								<a id="orderButton" href="manageOrder"><button
-										class="btn btn-primary">Conferma ordine</button></a>
-							</c:if>
-							<c:if test="${customer == null}">
-								<a id="orderAnchor" href=""><button id="orderButton"
-										onclick="$('#modalCart').modal('hide'); $('.modal-backdrop').hide(); $('#loginToast').toast('show');"
-										class="btn btn-primary">Conferma ordine</button></a>
-							</c:if>
-						</div>
+					</div>
+					<!--Footer-->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-outline-primary"
+							data-dismiss="modal">Chiudi</button>
+						<c:if test="${customer != null}">
+							<a id="orderButton" href="manageOrder"><button
+									class="btn btn-primary">Conferma ordine</button></a>
+						</c:if>
+						<c:if test="${customer == null}">
+							<a id="orderAnchor" href=""><button id="orderButton"
+									onclick="$('#modalCart').modal('hide'); $('.modal-backdrop').hide(); $('#loginToast').toast('show');"
+									class="btn btn-primary">Conferma ordine</button></a>
+						</c:if>
 					</div>
 				</div>
 			</div>
-			<!-- Modal: modalCart -->
+		</div>
+		<!-- Modal: modalCart -->
 
-			<div class="col-lg-9">
-				<c:forEach items="${listaProdotti}" var="prodotto">
-					<div class="row">
-						<div class="col-lg-4 col-md-6 mb-4">
-							<div class="card h-100">
-								<img class="card-img-top" src="../${prodotto.imagePath}"
-									height="250" alt="" />
-								<div class="card-body">
-									<h4 class="card-title">
-										<a href="#">${prodotto.name}</a>
-									</h4>
-									<input type="button"
-										onclick="updateCart(${prodotto.id}, '${prodotto.name}', ${prodotto.roundedDiscountedPrice}, '${prodotto.superMarket.name}', 'add')"
-										value="Aggiungi Al Carrello">
-									<h5>${prodotto.roundedPrice}</h5>
-									&euro;
-									<h5>${prodotto.superMarket.name}</h5>
-								</div>
-								<div class="card-footer">Le stelline</div>
+		<div class="col-lg-9">
+			<c:forEach items="${listaProdotti}" var="prodotto">
+				<div class="row">
+					<div class="col-lg-4 col-md-6 mb-4">
+						<div class="card h-100">
+							<img class="card-img-top" src="../${prodotto.imagePath}"
+								height="250" alt="" />
+							<div class="card-body">
+								<h4 class="card-title">
+									<a href="#">${prodotto.name}</a>
+								</h4>
+								<input type="button"
+									onclick="updateCart(${prodotto.id}, '${prodotto.name}', ${prodotto.roundedDiscountedPrice}, '${prodotto.superMarket.name}', 'add')"
+									value="Aggiungi Al Carrello">
+								<h5>${prodotto.roundedPrice}</h5>
+								&euro;
+								<h5>${prodotto.superMarket.name}</h5>
 							</div>
+							<div class="card-footer">Le stelline</div>
 						</div>
 					</div>
-				</c:forEach>
-
-			</div>
-			<!-- /.row -->
+				</div>
+			</c:forEach>
 
 		</div>
-		<!-- /.col-lg-9 -->
+		<!-- /.row -->
 
 	</div>
+	<!-- /.col-lg-9 -->
 	<!-- /.row -->
 
 	<!-- /.container -->
 
-	<!-- Footer -->
-	<footer class="py-5 bg-dark">
-		<div class="container">
-			<p class="m-0 text-center text-white">Copyright &copy; Trispesa
-				2020</p>
+	<footer class="footer-distributed">
+		<div class="footer-left">
+			<h3>
+				Tri<span>Spesa</span>
+			</h3>
+			<p class="footer-company-name">Trispesa © 2020</p>
 		</div>
-		<!-- /.container -->
+		<div class="footer-center">
+			<div>
+				<i class="fa fa-map-marker"></i>
+				<p>
+					<span>Via Pietro Bucci</span>Rende,Cosenza
+				</p>
+			</div>
+			<div>
+				<i class="fa fa-phone"></i>
+				<p>348-3218976</p>
+			</div>
+			<div>
+				<i class="fa fa-envelope"></i>
+				<p>
+					<a href="mailto:trispesaStaff@gmail.com">trispesaStaff@gmail.com</a>
+				</p>
+			</div>
+		</div>
+		<div class="footer-right">
+			<p class="footer-company-about">
+				<span>Informazioni sito:</span> Questo progetto è stato creato da un
+				gruppo di studenti dell'università della Calabria,dipartimento di
+				matematica e informatica, per l'esame di ingegneria del software!
+			</p>
+			<div class="footer-icons">
+				<a href="https://www.mat.unical.it/demacs"><img
+					src="../images/logo_unical.png" width="24" height="24"></img></a> <a
+					href="https://github.com/Goffredson/Trispesa"><i
+					class="fa fa-github"></i></a>
+			</div>
+		</div>
 	</footer>
 
 

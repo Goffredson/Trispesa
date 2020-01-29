@@ -35,7 +35,7 @@ public interface ProductDao {
 
 	public void increaseQuantity(Long product, long l);
 
-	public ArrayList<Product> getDiscountedProducts();
+	public ArrayList<Product> retrieveDiscountedProducts();
 
 	public ArrayList<Product> retrieveByCategoryAndWeight(String categoryName, boolean offBrand, long weight);
 

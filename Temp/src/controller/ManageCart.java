@@ -46,7 +46,8 @@ public class ManageCart extends HttpServlet {
 					return;
 				}
 
-			} else if (operation.equals("remove")) {
+			// Per evitare di avere eccezioni se sul client clicco troppo veloce
+			} else if (operation.equals("remove") && loggedCustomer.getCart().isEmpty() == false) {
 				DBManager.getInstance().increaseProductQuantity(productId, 1L);
 				DBManager.getInstance().removeProductFromCart(product, loggedCustomer);
 			}
@@ -75,7 +76,7 @@ public class ManageCart extends HttpServlet {
 
 			}
 			// Rimozione
-			else if (operation.equals("remove")) {
+			else if (operation.equals("remove") && anonymousCart.isEmpty() == false) {
 				DBManager.getInstance().increaseProductQuantity(productId, 1L);
 				if (anonymousCart.get(product) == 1)
 					anonymousCart.remove(product);

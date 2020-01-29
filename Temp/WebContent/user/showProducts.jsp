@@ -2,6 +2,9 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -247,37 +250,39 @@
 									<c:set var="totalCartPrice" scope="request" value="${0}" />
 									<c:forEach items="${customer.cart}" var="product">
 										<c:set var="totalCartPrice" scope="request"
-											value="${totalCartPrice + product.key.price*product.value}" />
+											value="${totalCartPrice + product.key.roundedDiscountedPrice*product.value}" />
 
 										<tr id="product_${product.key.id}">
 											<th scope="row" id="productQuantity">${product.value}</th>
 											<td id="productName">${product.key.name}</td>
-											<td id="productPrice">${product.key.price*product.value}</td>
+											<td id="productPrice">${product.key.roundedDiscountedPrice*product.value}&euro;</td>
 											<td><a><i class="fas fa-times"></i></a></td>
 											<td><button type="button"
-													onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.price}, '${product.key.superMarket.name}', 'remove');"
+													onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.roundedDiscountedPrice}, '${product.key.superMarket.name}', 'remove');"
 													class="btn btn-danger">Rimuovi</button></td>
 										</tr>
 
 									</c:forEach>
 									<c:forEach items="${anonymousCart}" var="product">
 										<c:set var="totalCartPrice" scope="request"
-											value="${totalCartPrice + product.key.price*product.value}" />
+											value="${totalCartPrice + product.key.roundedDiscountedPrice*product.value}" />
 
 										<tr id="product_${product.key.id}">
 											<th scope="row" id="productQuantity">${product.value}</th>
 											<td id="productName">${product.key.name}</td>
-											<td id="productPrice">${product.key.price*product.value}</td>
+											<td id="productPrice">${product.key.roundedDiscountedPrice*product.value}&euro;</td>
 											<td><a><i class="fas fa-times"></i></a></td>
 											<td><button type="button"
-													onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.price}, '${product.key.superMarket.name}', 'remove');"
+													onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.roundedDiscountedPrice}, '${product.key.superMarket.name}', 'remove');"
 													class="btn btn-danger">Rimuovi</button></td>
 										</tr>
 									</c:forEach>
 
 								</tbody>
 							</table>
-							<h2 id="totalCartPrice" class="hidden-xs text-center">${totalCartPrice}</h2>
+
+							<h2 id="totalCartPrice" class="hidden-xs text-center">
+								${totalCartPrice} &euro;</h2>
 
 						</div>
 						<!--Footer-->
@@ -311,9 +316,10 @@
 										<a href="#">${prodotto.name}</a>
 									</h4>
 									<input type="button"
-										onclick="updateCart(${prodotto.id}, '${prodotto.name}', '${prodotto.superMarket.name}', ${prodotto.price}, 'add')"
+										onclick="updateCart(${prodotto.id}, '${prodotto.name}', ${prodotto.roundedDiscountedPrice}, '${prodotto.superMarket.name}', 'add')"
 										value="Aggiungi Al Carrello">
-									<h5>${prodotto.price}</h5>
+									<h5>${prodotto.roundedPrice}</h5>
+									&euro;
 									<h5>${prodotto.superMarket.name}</h5>
 								</div>
 								<div class="card-footer">Le stelline</div>

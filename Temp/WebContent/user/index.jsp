@@ -2,6 +2,8 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -296,30 +298,30 @@
 							<c:set var="totalCartPrice" scope="request" value="${0}" />
 							<c:forEach items="${customer.cart}" var="product">
 								<c:set var="totalCartPrice" scope="request"
-									value="${totalCartPrice + product.key.price*product.value}" />
+									value="${totalCartPrice + product.key.roundedDiscountedPrice*product.value}" />
 
 								<tr id="product_${product.key.id}">
 									<th scope="row" id="productQuantity">${product.value}</th>
 									<td id="productName">${product.key.name}</td>
-									<td id="productPrice">${product.key.price*product.value}</td>
+									<td id="productPrice">${product.key.roundedDiscountedPrice*product.value}&euro;</td>
 									<td><a><i class="fas fa-times"></i></a></td>
 									<td><button type="button"
-											onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.price}, '${product.key.superMarket.name}', 'remove');"
+											onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.roundedDiscountedPrice}, '${product.key.superMarket.name}', 'remove');"
 											class="btn btn-danger">Rimuovi</button></td>
 								</tr>
 
 							</c:forEach>
 							<c:forEach items="${anonymousCart}" var="product">
 								<c:set var="totalCartPrice" scope="request"
-									value="${totalCartPrice + product.key.price*product.value}" />
+									value="${totalCartPrice + product.key.roundedDiscountedPrice*product.value}" />
 
 								<tr id="product_${product.key.id}">
 									<th scope="row" id="productQuantity">${product.value}</th>
 									<td id="productName">${product.key.name}</td>
-									<td id="productPrice">${product.key.price*product.value}</td>
+									<td id="productPrice">${product.key.roundedDiscountedPrice*product.value}&euro;</td>
 									<td><a><i class="fas fa-times"></i></a></td>
 									<td><button type="button"
-											onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.price}, '${product.key.superMarket.name}', 'remove');"
+											onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.roundedDiscountedPrice}, '${product.key.superMarket.name}', 'remove');"
 											class="btn btn-danger">Rimuovi</button></td>
 								</tr>
 							</c:forEach>
@@ -358,14 +360,16 @@
 						${prodottoScontato.brand}</h4>
 					<h5>${prodottoScontato.superMarket.name}</h5>
 					<p>
-						<strike><h6>${prodottoScontato.price}&euro;</h6></strike>
+						<strike><h6>${prodottoScontato.roundedPrice}&euro;</h6></strike>
 					</p>
-					<p>${prodottoScontato.price} &euro;
-					</p>
-					
-					<a href="#" class="btn btn-primary"
-							id="addToCartProductDiscounted">Aggiungi al carrello</a>
-				
+					<p>${prodottoScontato.roundedDiscountedPrice}&euro;</p>
+
+					<a
+						onclick="										
+						updateCart(${prodottoScontato.id}, '${prodottoScontato.name}', ${prodottoScontato.roundedDiscountedPrice}, '${prodottoScontato.superMarket.name}', 'add')"
+						class="btn btn-primary" id="addToCartProductDiscounted">Aggiungi
+						al carrello</a>
+
 				</div>
 			</div>
 		</c:forEach>
@@ -373,40 +377,44 @@
 	</div>
 
 	<!-- Footer (da mettere: link a github e a sito unical) -->
-<footer class="footer-distributed">
-			<div class="footer-left">
-				<h3>Tri<span>Spesa</span>
+	<footer class="footer-distributed">
+		<div class="footer-left">
+			<h3>
+				Tri<span>Spesa</span>
 			</h3>
-				<p class="footer-company-name">Trispesa © 2020</p>
+			<p class="footer-company-name">Trispesa © 2020</p>
+		</div>
+		<div class="footer-center">
+			<div>
+				<i class="fa fa-map-marker"></i>
+				<p>
+					<span>Via Pietro Bucci</span>Rende,Cosenza
+				</p>
 			</div>
-			<div class="footer-center">
-				<div>
-					<i class="fa fa-map-marker"></i>
-					<p>
-					<span>Via Pietro Bucci</span>Rende,Cosenza</p>
-				</div>
-				<div>
-					<i class="fa fa-phone"></i>
-					<p>348-3218976</p>
-				</div>
-				<div>
-					<i class="fa fa-envelope"></i>
-					<p>
+			<div>
+				<i class="fa fa-phone"></i>
+				<p>348-3218976</p>
+			</div>
+			<div>
+				<i class="fa fa-envelope"></i>
+				<p>
 					<a href="mailto:trispesaStaff@gmail.com">trispesaStaff@gmail.com</a>
 				</p>
-				</div>
 			</div>
-			<div class="footer-right">
-				<p class="footer-company-about">
-					<span>Informazioni sito:</span>
-					Questo progetto è stato creato da un gruppo di studenti dell'università della Calabria,dipartimento di matematica e informatica,
-					per l'esame di ingegneria del software!
-				</p>
-				<div class="footer-icons">
-					<a href="https://www.mat.unical.it/demacs"><img src="../images/logo_unical.png" width="24" height="24"></img></a>
-					<a href="https://github.com/Goffredson/Trispesa"><i class="fa fa-github"></i></a>
-				</div>
+		</div>
+		<div class="footer-right">
+			<p class="footer-company-about">
+				<span>Informazioni sito:</span> Questo progetto è stato creato da un
+				gruppo di studenti dell'università della Calabria,dipartimento di
+				matematica e informatica, per l'esame di ingegneria del software!
+			</p>
+			<div class="footer-icons">
+				<a href="https://www.mat.unical.it/demacs"><img
+					src="../images/logo_unical.png" width="24" height="24"></img></a> <a
+					href="https://github.com/Goffredson/Trispesa"><i
+					class="fa fa-github"></i></a>
 			</div>
-		</footer>
+		</div>
+	</footer>
 </body>
 </html>

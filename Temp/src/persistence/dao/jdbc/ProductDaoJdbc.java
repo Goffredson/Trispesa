@@ -434,14 +434,13 @@ public class ProductDaoJdbc implements ProductDao {
 	}
 
 	@Override
-	public ArrayList<Product> getDiscountedProducts() {
+	public ArrayList<Product> retrieveDiscountedProducts() {
 		Connection connection = null;
 		ArrayList<Product> prodotti = new ArrayList<Product>();
 		try {
 			connection = this.dataSource.getConnection();
-			String query = "select * from product where discount>?";
+			String query = "select * from product where discount>0";
 			PreparedStatement statement = connection.prepareStatement(query);
-			statement.setLong(1, 0);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				prodotti.add(new Product(resultSet.getLong("id"), resultSet.getLong("barcode"),

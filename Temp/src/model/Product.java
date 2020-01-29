@@ -1,6 +1,8 @@
 package model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Product implements Serializable {
 	/**
@@ -74,6 +76,12 @@ public class Product implements Serializable {
 		this.imageId = imagePath;
 	}
 
+	public BigDecimal getRoundedDiscountedPrice() {
+		System.out.println(price);
+		System.out.println(discount);
+		return new BigDecimal(price - discount).setScale(2, RoundingMode.HALF_UP);
+	}
+
 	public double getDiscount() {
 		return discount;
 	}
@@ -98,10 +106,14 @@ public class Product implements Serializable {
 		this.name = name;
 	}
 
-	public double getPrice() {
-		return price - this.discount;
+	public BigDecimal getRoundedPrice() {
+		return new BigDecimal(price).setScale(2, RoundingMode.HALF_UP);
 	}
 
+	public double getPrice() {
+		return price;
+	}
+	
 	public void setPrice(double price) {
 		this.price = price;
 	}

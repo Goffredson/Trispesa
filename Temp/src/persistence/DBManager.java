@@ -328,7 +328,7 @@ public class DBManager {
 	}
 
 	public ArrayList<Product> getDiscountedProducts() {
-		return getProductDao().getDiscountedProducts();
+		return getProductDao().retrieveDiscountedProducts();
 	}
 
 	public void addPaymentMethod(Customer customer, PaymentMethod paymentMethod) throws DBOperationException {

@@ -1,4 +1,4 @@
-package controller;
+package controller.administration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Product;
+import model.SuperMarket;
 import persistence.DBManager;
 
-public class ProductManagement extends HttpServlet {
+public class SuperMarketManagement extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -21,10 +21,10 @@ public class ProductManagement extends HttpServlet {
 			return;
 		}
 
-		ArrayList<Product> products = DBManager.getInstance().getNotDeletedProducts();
-		req.setAttribute("products", products);
+		ArrayList<SuperMarket> superMarkets = DBManager.getInstance().getSuperMarkets();
+		req.setAttribute("superMarkets", superMarkets);
 
-		RequestDispatcher rd = req.getRequestDispatcher("productManagement.jsp");
+		RequestDispatcher rd = req.getRequestDispatcher("superMarketManagement.jsp");
 		rd.forward(req, resp);
 	}
 

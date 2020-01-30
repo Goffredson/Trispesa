@@ -16,7 +16,7 @@
 
 	<servlet>
 		<servlet-name>AdminDashboard</servlet-name>
-		<servlet-class>controller.AdminDashboard</servlet-class>
+		<servlet-class>controller.administration.AdminDashboard</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -26,7 +26,7 @@
 
 	<servlet>
 		<servlet-name>Home</servlet-name>
-		<servlet-class>controller.Home</servlet-class>
+		<servlet-class>controller.user.Home</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -36,7 +36,7 @@
 	
 	<servlet>
 		<servlet-name>HomeRedirect</servlet-name>
-		<servlet-class>controller.HomeRedirect</servlet-class>
+		<servlet-class>controller.user.HomeRedirect</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -47,7 +47,7 @@
 	
 	<servlet>
 		<servlet-name>ShowProducts</servlet-name>
-		<servlet-class>controller.ShowProducts</servlet-class>
+		<servlet-class>controller.user.ShowProducts</servlet-class>
 	</servlet>
 
 
@@ -57,7 +57,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>ManageCart</servlet-name>
-		<servlet-class>controller.ManageCart</servlet-class>
+		<servlet-class>controller.user.ManageCart</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -66,7 +66,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>Login</servlet-name>
-		<servlet-class>controller.Login</servlet-class>
+		<servlet-class>controller.user.Login</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -76,7 +76,7 @@
 
 	<servlet>
 		<servlet-name>SuperMarketManagement</servlet-name>
-		<servlet-class>controller.SuperMarketManagement</servlet-class>
+		<servlet-class>controller.administration.SuperMarketManagement</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -86,7 +86,7 @@
 
 	<servlet>
 		<servlet-name>ProductManagement</servlet-name>
-		<servlet-class>controller.ProductManagement</servlet-class>
+		<servlet-class>controller.administration.ProductManagement</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -96,7 +96,7 @@
 
 	<servlet>
 		<servlet-name>ManageSupermarket</servlet-name>
-		<servlet-class>controller.ManageSupermarket</servlet-class>
+		<servlet-class>controller.administration.ManageSupermarket</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -106,7 +106,7 @@
 
 	<servlet>
 		<servlet-name>ManageProduct</servlet-name>
-		<servlet-class>controller.ManageProduct</servlet-class>
+		<servlet-class>controller.administration.ManageProduct</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -116,7 +116,7 @@
 
 	<servlet>
 		<servlet-name>ManageProductForm</servlet-name>
-		<servlet-class>controller.ManageProductForm</servlet-class>
+		<servlet-class>controller.administration.ManageProductForm</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -126,7 +126,7 @@
 
 	<servlet>
 		<servlet-name>ManageSuperMarketForm</servlet-name>
-		<servlet-class>controller.ManageSuperMarketForm</servlet-class>
+		<servlet-class>controller.administration.ManageSuperMarketForm</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -136,7 +136,7 @@
 
 	<servlet>
 		<servlet-name>Map</servlet-name>
-		<servlet-class>controller.Map</servlet-class>
+		<servlet-class>controller.administration.Map</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -146,7 +146,7 @@
 
 	<servlet>
 		<servlet-name>UserManagement</servlet-name>
-		<servlet-class>controller.UserManagement</servlet-class>
+		<servlet-class>controller.user.UserManagement</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -156,7 +156,7 @@
 
 	<servlet>
 		<servlet-name>ManageUser</servlet-name>
-		<servlet-class>controller.ManageUser</servlet-class>
+		<servlet-class>controller.user.ManageUser</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -166,7 +166,7 @@
 
 	<servlet>
 		<servlet-name>Signup</servlet-name>
-		<servlet-class>controller.Signup</servlet-class>
+		<servlet-class>controller.user.Signup</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -176,7 +176,7 @@
 	
 	<servlet>
 		<servlet-name>ManageOrder</servlet-name>
-		<servlet-class>controller.ManageOrder</servlet-class>
+		<servlet-class>controller.user.ManageOrder</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -186,7 +186,7 @@
 	
 	<servlet>
 		<servlet-name>ManageDiet</servlet-name>
-		<servlet-class>controller.ManageDiet</servlet-class>
+		<servlet-class>controller.user.ManageDiet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -196,7 +196,7 @@
 	
 	<servlet>
 		<servlet-name>ManageUserForm</servlet-name>
-		<servlet-class>controller.ManageUserForm</servlet-class>
+		<servlet-class>controller.user.ManageUserForm</servlet-class>
 	</servlet>
 
 	<servlet-mapping>

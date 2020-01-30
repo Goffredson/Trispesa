@@ -1,4 +1,4 @@
-package controller;
+package controller.administration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,19 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import model.SuperMarket;
 import persistence.DBManager;
 
-public class SuperMarketManagement extends HttpServlet {
+public class Map extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if (req.getSession().getAttribute("administrator") == null) {
-			resp.sendError(401);
-			return;
-		}
-
 		ArrayList<SuperMarket> superMarkets = DBManager.getInstance().getSuperMarkets();
-		req.setAttribute("superMarkets", superMarkets);
-
-		RequestDispatcher rd = req.getRequestDispatcher("superMarketManagement.jsp");
+		for (SuperMarket superMarket : superMarkets) {
+			
+		}
+		
+		RequestDispatcher rd = req.getRequestDispatcher("map.jsp");
 		rd.forward(req, resp);
 	}
 

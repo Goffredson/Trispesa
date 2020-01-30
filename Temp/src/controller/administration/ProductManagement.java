@@ -1,6 +1,7 @@
-package controller;
+package controller.administration;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,9 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import drive.GoogleDriveUtils;
+import model.Product;
+import persistence.DBManager;
 
-public class AdminDashboard extends HttpServlet {
+public class ProductManagement extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -18,10 +20,11 @@ public class AdminDashboard extends HttpServlet {
 			resp.sendError(401);
 			return;
 		}
-		
-		GoogleDriveUtils.setContextPath(getServletContext().getRealPath("/"));
 
-		RequestDispatcher rd = req.getRequestDispatcher("administration/dashboard.jsp");
+		ArrayList<Product> products = DBManager.getInstance().getNotDeletedProducts();
+		req.setAttribute("products", products);
+
+		RequestDispatcher rd = req.getRequestDispatcher("productManagement.jsp");
 		rd.forward(req, resp);
 	}
 

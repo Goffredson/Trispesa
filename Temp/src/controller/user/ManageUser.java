@@ -1,4 +1,4 @@
-package controller;
+package controller.user;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -68,7 +68,7 @@ public class ManageUser extends HttpServlet {
 					DBManager.getInstance().modUsername(customer, username);
 
 					operationResult.setResult(true);
-					operationResult.setObject("Lo username è stato aggiornato con successo!");
+					operationResult.setObject("Lo username ï¿½ stato aggiornato con successo!");
 				}
 					break;
 
@@ -92,13 +92,13 @@ public class ManageUser extends HttpServlet {
 						throw new DBOperationException(
 								"La password che sta cercando di inserire corrisponde alla vecchia password", "");
 					} else if (!(customer.getPassword().equals(passwordOld))) {
-						throw new DBOperationException("La vecchia password non è corretta!", "");
+						throw new DBOperationException("La vecchia password non ï¿½ corretta!", "");
 					}
 
 					DBManager.getInstance().modPassword(customer, passwordNew);
 
 					operationResult.setResult(true);
-					operationResult.setObject("La password è stata aggiornata con successo!");
+					operationResult.setObject("La password ï¿½ stata aggiornata con successo!");
 				}
 					break;
 
@@ -118,7 +118,7 @@ public class ManageUser extends HttpServlet {
 					DBManager.getInstance().modName(customer, name);
 
 					operationResult.setResult(true);
-					operationResult.setObject("Il nome è stato aggiornato con successo!");
+					operationResult.setObject("Il nome ï¿½ stato aggiornato con successo!");
 				}
 					break;
 
@@ -139,7 +139,7 @@ public class ManageUser extends HttpServlet {
 					DBManager.getInstance().modSurname(customer, surname);
 
 					operationResult.setResult(true);
-					operationResult.setObject("Il cognome è stato aggiornato con successo!");
+					operationResult.setObject("Il cognome ï¿½ stato aggiornato con successo!");
 				}
 					break;
 
@@ -159,7 +159,7 @@ public class ManageUser extends HttpServlet {
 					DBManager.getInstance().modEmail(customer, email);
 
 					operationResult.setResult(true);
-					operationResult.setObject("L'indirizzo email è stato aggiornato con successo!");
+					operationResult.setObject("L'indirizzo email ï¿½ stato aggiornato con successo!");
 				}
 					break;
 
@@ -180,7 +180,7 @@ public class ManageUser extends HttpServlet {
 					DBManager.getInstance().modBirthDate(customer, birthDate);
 
 					operationResult.setResult(true);
-					operationResult.setObject("La data di nascita è stata modificata con successo!");
+					operationResult.setObject("La data di nascita ï¿½ stata modificata con successo!");
 				}
 					break;
 				}
@@ -203,7 +203,7 @@ public class ManageUser extends HttpServlet {
 					DBManager.getInstance().addPaymentMethod(customer, paymentMethod);
 
 					operationResult.setResult(true);
-					operationResult.setObject("Il metodo di pagamento è stato aggiunto con successo!");
+					operationResult.setObject("Il metodo di pagamento ï¿½ stato aggiunto con successo!");
 				}
 					break;
 				case "mod": {
@@ -221,7 +221,7 @@ public class ManageUser extends HttpServlet {
 					DBManager.getInstance().modPaymentMethod(customer, paymentMethod);
 
 					operationResult.setResult(true);
-					operationResult.setObject("Il metodo di pagamento è stato modificato con successo!");
+					operationResult.setObject("Il metodo di pagamento ï¿½ stato modificato con successo!");
 				}
 					break;
 				case "del": {
@@ -239,7 +239,7 @@ public class ManageUser extends HttpServlet {
 					DBManager.getInstance().deletePaymentMethod(customer, id);
 
 					operationResult.setResult(true);
-					operationResult.setObject("Il metodo di pagamento è stato eliminato con successo!");
+					operationResult.setObject("Il metodo di pagamento ï¿½ stato eliminato con successo!");
 				}
 					break;
 				}
@@ -262,7 +262,7 @@ public class ManageUser extends HttpServlet {
 					DBManager.getInstance().addDeliveryAddress(customer, deliveryAddress);
 
 					operationResult.setResult(true);
-					operationResult.setObject("L'indirizzo di consegna è stato aggiunto con successo!");
+					operationResult.setObject("L'indirizzo di consegna ï¿½ stato aggiunto con successo!");
 				}
 					break;
 				case "mod": {
@@ -280,7 +280,7 @@ public class ManageUser extends HttpServlet {
 					DBManager.getInstance().modDeliveryAddress(customer, deliveryAddress);
 
 					operationResult.setResult(true);
-					operationResult.setObject("L'indirizzo di consegna è stato modificato con successo!");
+					operationResult.setObject("L'indirizzo di consegna ï¿½ stato modificato con successo!");
 				}
 					break;
 				case "del": {
@@ -299,7 +299,7 @@ public class ManageUser extends HttpServlet {
 					DBManager.getInstance().deleteDeliveryAddress(customer, id);
 
 					operationResult.setResult(true);
-					operationResult.setObject("L'indirizzo di consegna è stato eliminato con successo!");
+					operationResult.setObject("L'indirizzo di consegna ï¿½ stato eliminato con successo!");
 				}
 					break;
 				}

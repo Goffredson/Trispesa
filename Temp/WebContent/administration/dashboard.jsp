@@ -25,7 +25,9 @@
 	<nav id="nav"
 		class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="#">Trispesa</a>
+			<a class="nav-item py-0 navbar-brand" href=""> Tri<span
+				class="span-title">Spesa</span> Administration
+			</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarResponsive" aria-controls="navbarResponsive"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -33,19 +35,16 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a class="nav-link" href="#">Home</a></li>
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Gestione</a>
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="administration/supermarket">Gestione
-								supermercati</a> <a class="dropdown-item"
-								href="administration/product">Gestione prodotti</a>
-						</div></li>
-					<li class="nav-item"><a class="nav-link" href="#">Statistiche</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="administration/map">Mappe</a></li>
-					<li class="nav-item"><a href="user/home" id="logoutButton"
-						class="btn btn-danger" role="button">Logout</a></li>
+					<li class="nav-item active"><a class="btn" id="home-button"
+						href="">Home</a></li>
+					<li class="nav-item"><a class="btn" id="supermarket-button"
+						href="administration/supermarket">Gestione supermercati</a></li>
+					<li class="nav-item"><a class="btn" id="product-button"
+						href="administration/product">Gestione prodotti</a></li>
+					<li class="nav-item"><a class="btn" id="stats-button" href="#">Statistiche</a></li>
+					<li class="nav-item"><a class="btn" id="maps-button" href="#">Mappe</a></li>
+					<li class="nav-item py-0"><a href="user/home"
+						id="logout-button" class="btn">Logout</a></li>
 				</ul>
 			</div>
 		</div>
@@ -54,7 +53,8 @@
 	<div class="container">
 
 		<div class="row mx-auto">
-			<h1 class="mx-auto">Benvenuto ${sessionScope.administrator.username}</h1>
+			<h2 class="mx-auto title-secondary">Benvenuto
+				${sessionScope.administrator.username}</h2>
 		</div>
 
 		<div class="row mx-auto">
@@ -111,13 +111,45 @@
 
 	</div>
 
-	<!-- Footer -->
-	<footer class="py-5 bg-dark">
-		<div class="container">
-			<p class="m-0 text-center text-white">Copyright &copy; Trispesa
-				2020</p>
+	<footer class="footer-distributed">
+		<div class="footer-left">
+			<h3>
+				Tri<span class="span-title">Spesa</span>
+			</h3>
+			<p class="footer-company-name">Trispesa © 2020</p>
 		</div>
-		<!-- /.container -->
+		<div class="footer-center">
+			<div>
+				<i class="fa fa-map-marker"></i>
+				<p>
+					<span>Via Pietro Bucci</span>Rende, Cosenza
+				</p>
+			</div>
+			<div>
+				<i class="fa fa-phone"></i>
+				<p>348-3218976</p>
+			</div>
+			<div>
+				<i class="fa fa-envelope"></i>
+				<p>
+					<a href="mailto:trispesaStaff@gmail.com">trispesastaff@gmail.com</a>
+				</p>
+			</div>
+		</div>
+		<div class="footer-right">
+			<p class="footer-company-about">
+				<span>Informazioni sito:</span> Questo progetto è stato sviluppato
+				da un gruppo di studenti dell'Università della Calabria,
+				dipartimento di Matematica e Informatica, per l'esame di Ingegneria
+				del Software.
+			</p>
+			<div class="footer-icons">
+				<a href="https://www.mat.unical.it/demacs"><img
+					src="../images/logo_unical.png" width="24" height="20"></img></a> <a
+					href="https://github.com/Goffredson/Trispesa"><i
+					class="fa fa-github"></i></a>
+			</div>
+		</div>
 	</footer>
 
 	<!-- Bootstrap core JavaScript -->

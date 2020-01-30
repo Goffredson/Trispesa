@@ -234,19 +234,19 @@ div.scrollmenu a:hover {
 }
 
 #supermarket-affiliate {
-	color: green;
+	color: #008000;
 }
 
 #supermarket-not-affiliate {
-	color: red;
+	color: #bf0000;
 }
 
 #product-not-offbrand {
-	color: green;
+	color: #008000;
 }
 
 #product-offbrand {
-	color: red;
+	color: #bf0000;
 }
 
 .error-message {
@@ -304,4 +304,95 @@ div.scrollmenu a:hover {
 	background: white url("../images/spinner.gif") no-repeat;
 	background-size: 30px 30px;
 	background-position: 95%;
+}
+
+/* un po' di stile */
+#home-button {
+	color: white;
+	background-color: #0f6c17 !important;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #e9b96e;
+	margin: 2px;
+}
+
+#supermarket-button {
+	color: white;
+	background-color: #0f6c17 !important;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #e9b96e;
+	margin: 2px;
+}
+
+#product-button {
+	color: white;
+	background-color: #0f6c17 !important;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #e9b96e;
+	margin: 2px;
+}
+
+#stats-button {
+	color: white;
+	background-color: #0f6c17 !important;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #e9b96e;
+	margin: 2px;
+}
+
+#maps-button {
+	color: white;
+	background-color: #0f6c17 !important;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #e9b96e;
+	margin: 2px;
+}
+
+#logout-button {
+	color: white;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #6d1010;
+	margin: 2px;
+}
+
+.add-item {
+	font-weight: bold;
+	color: black;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #008000;
+	margin: 2px;
+	color: black;
+}
+
+.mod-item {
+	font-weight: bold;
+	color: black;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #0080ff;
+	margin: 2px;
+}
+
+.del-item {
+	font-weight: bold;
+	color: black;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #bf0000;
+	margin: 2px;
+}
+
+.back-item {
+	font-weight: bold;
+	color: black;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #808080;
+	margin: 2px;
 }

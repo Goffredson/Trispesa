@@ -79,7 +79,7 @@ $(document).ready(
 										},
 										error : function() {
 											alert("entro in error con " + productName);
-											$("#noDiet").modal("show");
+											$("#dietError").modal("show");
 										}
 									});
 								}
@@ -87,7 +87,7 @@ $(document).ready(
 								$("#totalPrice").html(totalPrice + "&euro;");
 							},
 							error : function(response) {
-								$("#noDiet").toast("show");
+								$("#dietError").modal("show");
 							}
 						});
 					});

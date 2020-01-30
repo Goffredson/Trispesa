@@ -6,7 +6,7 @@ function updateNavbarDOM(operation, animDelay) {
 		$("#ordini").show(animDelay);
 		$("#profilo").show(animDelay);
 		$("#orderButton").prop("onclick", null).off("click");
-		$("#orderAnchor").attr("href", "makeOrder");
+		$("#orderAnchor").attr("href", "manageOrder");
 	} else {
 		$("#logoutButton").hide(animDelay);
 		$("#dieta").hide(animDelay);

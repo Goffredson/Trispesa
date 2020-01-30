@@ -3,7 +3,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,6 +34,7 @@
 <script src="../js/cart.js"></script>
 <script src="../js/login.js"></script>
 <script src="../js/animations.js"></script>
+<script src="../js/order.js"></script>
 <!-- CSS -->
 <link href="../css/owl.carousel.css" rel="stylesheet" />
 <link href="../css/footer.css" rel="stylesheet" />
@@ -42,7 +42,7 @@
 <link href="../css/main.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="bg-light">
 	<!-- Navbar principale  -->
 	<nav id="nav"
 		class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -368,16 +368,16 @@
 					<h2 id="totalCartPrice" class="hidden-xs text-center">${totalCartPrice}&euro;</h2>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-outline-primary"
+					<button type="button" class="btn color-scheme"
 						data-dismiss="modal">Chiudi</button>
 					<c:if test="${customer != null}">
 						<a id="orderButton" href="manageOrder"><button
-								class="btn btn-primary">Conferma ordine</button></a>
+								class="btn color-scheme">Conferma ordine</button></a>
 					</c:if>
 					<c:if test="${customer == null}">
 						<a id="orderAnchor" href="#"><button id="orderButton"
 								onclick="$('#modalCart').modal('hide'); $('.modal-backdrop').hide(); $('#loginToast').toast('show');"
-								class="btn btn-primary">Conferma ordine</button></a>
+								class="btn color-scheme">Conferma ordine</button></a>
 					</c:if>
 				</div>
 			</div>

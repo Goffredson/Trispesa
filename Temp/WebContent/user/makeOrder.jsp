@@ -6,24 +6,38 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-<title>Trispesa - Conferma ordine</title>
-
-<!-- Inclusioni (Bootstrap, JQuery) -->
+<title>Trispesa - Dieta</title>
+<!-- Inclusioni (bootstrap, JQuery, assets esterni)  -->
 <script src="../vendor/jquery/jquery.min.js"></script>
-<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Script -->
-<script src="../js/order.js"></script>
-
-<!-- CSS -->
-<link href="../css/order-form.css" rel="stylesheet">
+<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="../vendor/owl.carousel.js"></script>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+	integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+	crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"
 	rel="stylesheet">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Script -->
+<script src="../js/cart.js"></script>
+<script src="../js/login.js"></script>
+<script src="../js/diet.js"></script>
+<script src="../js/animations.js"></script>
+<script src="../js/order.js"></script>
+<!-- CSS -->
+<link href="../css/footer.css" rel="stylesheet" />
+<link href="../css/order-form.css" rel="stylesheet" />
+<link href="../css/main.css" rel="stylesheet">
+
 </head>
 
 <body class="bg-light">
@@ -32,14 +46,88 @@
 	<div class="container">
 		<!-- Div logo -->
 		<div class="py-5 text-center">
-			<img class="d-block mx-auto mb-4"
-				src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg"
-				alt="" width="72" height="72">
+			<img class="d-block mx-auto mb-4" src="../images/package.png" alt=""
+				width="128" height="128">
 			<h2>Conferma Ordine</h2>
 			<p class="lead"></p>
 		</div>
 
-		<!-- Div carrello (manca thumbnail del prodotto) -->
+		<!-- Navbar principale  -->
+		<nav id="nav"
+			class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+			<div class="container">
+				<!-- Logo -->
+				<ul style="list-style: none;">
+					<li class="nav-item py-0 title-trispesa"><a
+						class="navbar-brand" href="home"><h2>
+								Tri<span class="span-title">Spesa</span>
+							</h2></a></li>
+				</ul>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navbarResponsive" aria-controls="navbarResponsive"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<!-- UL di carrello, login, etc. -->
+				<div class="collapse navbar-collapse" id="navbarResponsive">
+					<ul class="navbar-nav ml-auto" id="ulNavBar">
+						<li class="nav-item py-0">
+							<!-- Div di login -->
+							<div class="dropdown" id="loginDropdown">
+								<a class="btn btn-secondary dropdown-toggle login-button"
+									href="" role="button" id="loginButton" data-toggle="dropdown"
+									aria-haspopup="true" aria-expanded="false">Login</a>
+								<div class="dropdown-menu login-dropdown">
+									<form class="px-4 py-3">
+										<div class="form-group">
+											<label for="inputUsername">Nome utente</label> <input
+												type="text" class="form-control" id="inputUsername"
+												placeholder="Inserisci nome utente">
+										</div>
+										<div class="form-group">
+											<label for="inputPassword">Password</label> <input
+												type="password" class="form-control" id="inputPassword"
+												placeholder="Password">
+										</div>
+										<input type="button" class="btn color-scheme"
+											value="Autenticati" onclick="ajaxLog('login', 500)">
+
+									</form>
+									<div class="dropdown-item" id="credenzialiErrate"
+										style="color: red; display: none;">Username o password
+										errati.</div>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="" data-toggle="modal"
+										data-target="#modalLogin">Effettua registrazione</a> <a
+										class="dropdown-item" href="">Password dimenticata?</a>
+								</div>
+							</div>
+						</li>
+						<!-- Pulsanti login-dependent -->
+						<li class="nav-item py-0 login-dependent" id="ordini"><a
+							class="nav-link" href="../user?page=orders"><button
+									type="button" class="btn btn-primary order-button"
+									data-toggle="modal">Ordini</button></a></li>
+						<li class="nav-item py-0 login-dependent" id="profilo"><a
+							class="nav-link" href="../user?page=profile"><button
+									type="button" class="btn btn-primary profile-button"
+									data-toggle="modal">Profilo</button></a></li>
+						<li class="nav-item py-0 login-dependent" id="dieta"><a
+							href="manageDiet" class="nav-link"><button type="button"
+									class="btn btn-primary diet-button" data-toggle="modal">Dieta</button></a></li>
+					</ul>
+				</div>
+			</div>
+			<!-- Aggiorno la navbar se c'è un cliente in sessione -->
+			<c:if test="${customer != null}">
+				<script type="text/javascript">
+					updateNavbarDOM('login', 0);
+				</script>
+			</c:if>
+		</nav>
+		<!-- Fine navbar principale -->
+
+		<!-- Carrello sul margine destro -->
 		<div class="row">
 			<div class="col-md-4 order-md-2 mb-4">
 				<h4 class="d-flex justify-content-between align-items-center mb-3">
@@ -123,8 +211,9 @@
 					<h4 class="mb-3">Pagamento</h4>
 					<div class="mb-3">
 						<div class="form-group">
-							<label>Metodo di pagamento</label> <select required name="paymentId"
-								id="selectPayment" class="form-control" form="orderForm">
+							<label>Metodo di pagamento</label> <select required
+								name="paymentId" id="selectPayment" class="form-control"
+								form="orderForm">
 								<option value="">Seleziona un metodo di pagamento</option>
 								<c:forEach items="${customer.paymentMethods}"
 									var="paymentMethod">
@@ -167,43 +256,15 @@
 							</div>
 						</div>
 					</div>
-
-					<div id="paymentToast" class="toast notification-toast"
-						role="alert" aria-live="assertive" aria-atomic="true"
-						data-delay="5000">
-						<div class="toast-header success-color-scheme">
-							<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
-							<button type="button" class="ml-2 mb-1 close"
-								data-dismiss="toast" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="toast-body" id="toastMessage">Dati corretti.</div>
-					</div>
-					<div id="errorToast" class="toast notification-toast"
-						role="alert" aria-live="assertive" aria-atomic="true"
-						data-delay="5000">
-						<div class="toast-header error-color-scheme">
-							<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
-							<button type="button" class="ml-2 mb-1 close"
-								data-dismiss="toast" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="toast-body" id="toastMessage">Qualcosa è andato storto. Riprova più tardi.</div>
-					</div>
-
-
-
 					<hr class="mb-4">
-					<input type="submit" class="btn btn-primary btn-lg btn-block"
+					<input type="submit" class="btn color-scheme btn-lg btn-block"
 						value="Conferma Ordine">
 
 				</form>
 			</div>
 		</div>
 
-		<!-- Modal HTML -->
+		<!-- Sezione modali e toast -->
 		<div id="orderConfirmed" class="modal fade">
 			<div class="modal-dialog modal-confirm">
 				<div class="modal-content">
@@ -218,21 +279,80 @@
 							via mail. Il riepilogo è disponibile nella sezione ordini</p>
 					</div>
 					<div class="modal-footer">
-						<a href="home" class="btn btn-success btn-block">Torna alla home</a>
+						<a href="home" class="btn btn-success btn-block">Torna alla
+							home</a>
 					</div>
 				</div>
 			</div>
 		</div>
-
-		<footer class="py-5 bg-dark">
-			<div class="container">
-				<p class="m-0 text-center text-white">Copyright &copy; Trispesa
-					2020</p>
+		<div id="paymentToast" class="toast notification-toast" role="alert"
+			aria-live="assertive" aria-atomic="true" data-delay="5000">
+			<div class="toast-header color-scheme">
+				<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
+				<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 			</div>
-		</footer>
-	</div>
+			<div class="toast-body" id="toastMessage">Dati corretti.</div>
+		</div>
+		<div id="errorToast" class="toast notification-toast" role="alert"
+			aria-live="assertive" aria-atomic="true" data-delay="5000">
+			<div class="toast-header error-color-scheme">
+				<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
+				<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body" id="toastMessage">Qualcosa è andato
+				storto. Riprova più tardi.</div>
+		</div>
+		<!-- Fine sezione modali e toast -->
 
-	<!-- Check validità form (da mettere) -->
+	</div>
+		<!-- Footer della pagina -->
+		<footer class="footer-distributed">
+			<div class="footer-left">
+				<h3>
+					Tri<span class="span-title">Spesa</span>
+				</h3>
+				<p class="footer-company-name">Trispesa © 2020</p>
+			</div>
+			<div class="footer-center">
+				<div>
+					<i class="fa fa-map-marker"></i>
+					<p>
+						<span>Via Pietro Bucci</span>Rende, Cosenza
+					</p>
+				</div>
+				<div>
+					<i class="fa fa-phone"></i>
+					<p>348-3218976</p>
+				</div>
+				<div>
+					<i class="fa fa-envelope"></i>
+					<p>
+						<a href="mailto:trispesaStaff@gmail.com">trispesastaff@gmail.com</a>
+					</p>
+				</div>
+			</div>
+			<div class="footer-right">
+				<p class="footer-company-about">
+					<span>Informazioni sito:</span> Questo progetto è stato sviluppato
+					da un gruppo di studenti dell'Università della Calabria,
+					dipartimento di Matematica e Informatica, per l'esame di Ingegneria
+					del Software.
+				</p>
+				<div class="footer-icons">
+					<a href="https://www.mat.unical.it/demacs"><img
+						src="../images/logo_unical.png" width="24" height="20"></img></a> <a
+						href="https://github.com/Goffredson/Trispesa"><i
+						class="fa fa-github"></i></a>
+				</div>
+			</div>
+		<!-- Chiusura footer -->
+	</footer>
 
 </body>
 </html>

@@ -279,10 +279,10 @@
 		<div id="productCarousel" class="owl-carousel owl-theme">
 			<c:forEach items="${prodottiScontati}" var="prodottoScontato">
 				<div class="card">
-					<img width="200" height="300" class="card-img-top"
+					<img width="200" height="250" class="card-img-top"
 						src="${prodottoScontato.imagePath}">
 					<div class="card-body h-20">
-						<h5>${prodottoScontato.name}${prodottoScontato.brand}</h5>
+						<h5>${prodottoScontato.name} ${prodottoScontato.brand}</h5>
 
 						<div>
 							<del style="color: red;">

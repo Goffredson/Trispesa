@@ -117,9 +117,6 @@
 					<li class="nav-item py-0 login-dependent" id="dieta"><a
 						href="manageDiet" class="nav-link"><button type="button"
 								class="btn btn-primary diet-button" data-toggle="modal">Dieta</button></a></li>
-					<li class="nav-item py-0"><input type="button"
-						id="logoutButton" class="btn login-dependent logout-button"
-						value="Logout" onclick="ajaxLog('logout', 500)"></li>
 				</ul>
 			</div>
 		</div>

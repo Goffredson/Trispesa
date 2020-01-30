@@ -17,6 +17,15 @@
 
 <!-- css -->
 <link href="css/main.css" rel="stylesheet">
+<link href="css/footer.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+	integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <body>
@@ -64,7 +73,7 @@
 						<img class="card-img-top"
 							src="images/administration/superMarket.png" height="250" alt="" />
 						<div class="card-body mx-auto">
-							<h4 class="card-title">Gestione supermercati</h4>
+							<h4 class="card-title admin-card">Gestione supermercati</h4>
 						</div>
 					</div>
 				</a>
@@ -76,7 +85,7 @@
 						<img class="card-img-top" src="images/administration/products.png"
 							height="250" alt="" />
 						<div class="card-body mx-auto">
-							<h4 class="card-title">Gestione prodotti</h4>
+							<h4 class="card-title admin-card">Gestione prodotti</h4>
 						</div>
 					</div>
 				</a>
@@ -90,7 +99,7 @@
 						<img class="card-img-top"
 							src="images/administration/statistics.jpg" height="250" alt="" />
 						<div class="card-body mx-auto">
-							<h4 class="card-title">Statistiche</h4>
+							<h4 class="card-title admin-card">Statistiche</h4>
 						</div>
 					</div>
 				</a>
@@ -102,7 +111,7 @@
 						<img class="card-img-top" src="images/administration/maps.jpg"
 							height="250" alt="" />
 						<div class="card-body mx-auto">
-							<h4 class="card-title">Mappe</h4>
+							<h4 class="card-title admin-card">Mappe</h4>
 						</div>
 					</div>
 				</a>
@@ -145,7 +154,7 @@
 			</p>
 			<div class="footer-icons">
 				<a href="https://www.mat.unical.it/demacs"><img
-					src="../images/logo_unical.png" width="24" height="20"></img></a> <a
+					src="images/logo_unical.png" width="24" height="20"></img></a> <a
 					href="https://github.com/Goffredson/Trispesa"><i
 					class="fa fa-github"></i></a>
 			</div>

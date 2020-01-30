@@ -17,6 +17,10 @@ body {
 	color: #e9b96e;
 }
 
+.admin-card {
+	color: #0f6c17;
+}
+
 .success-color-scheme {
 	color: green !important;
 	background-color: green !important;

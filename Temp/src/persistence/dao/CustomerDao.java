@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import exceptions.DBOperationException;
 import model.Customer;
+import model.Order;
 
 public interface CustomerDao {
 

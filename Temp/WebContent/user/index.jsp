@@ -101,8 +101,9 @@
 					</li>
 					<!-- Pulsanti login-dependent -->
 					<li class="nav-item py-0 login-dependent" id="ordini"><a
-						class="nav-link" href="#"><button type="button"
-								class="btn btn-primary order-button" data-toggle="modal">Ordini</button></a></li>
+						class="nav-link" href="../user?page=orders"><button
+								type="button" class="btn btn-primary order-button"
+								data-toggle="modal">Ordini</button></a></li>
 					<li class="nav-item py-0 login-dependent" id="profilo"><a
 						class="nav-link" href="../user?page=profile"><button
 								type="button" class="btn btn-primary profile-button"

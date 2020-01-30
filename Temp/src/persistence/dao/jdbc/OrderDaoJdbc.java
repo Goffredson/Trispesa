@@ -42,7 +42,7 @@ public class OrderDaoJdbc implements OrderDao {
 			System.out.println("Prima di update");
 			statement.executeUpdate();
 			System.out.println("Dopo update");
-			
+
 			for (Map.Entry<Product, Long> entry : order.getProducts().entrySet()) {
 				String associationInsert = "insert into order_contains_product(id, orders, product, amount) values (?, ?, ?, ?)";
 				long associationId = IdBroker.getId(connection, associationSequenceName);
@@ -53,8 +53,7 @@ public class OrderDaoJdbc implements OrderDao {
 				associationStatement.setLong(4, entry.getValue());
 				associationStatement.executeUpdate();
 			}
-			
-			
+
 		} catch (SQLException e) {
 			if (connection != null) {
 				try {
@@ -196,6 +195,54 @@ public class OrderDaoJdbc implements OrderDao {
 
 	@Override
 	public void delete(Order order) {
+	}
+
+	@Override
+	public ArrayList<Order> getOrdersOfCustomer(long customerId) {
+		Connection connection = null;
+		ArrayList<Order> orders = new ArrayList<Order>();
+		try {
+			connection = this.dataSource.getConnection();
+			String query = "select * from orders where customer=?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setLong(1, customerId);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				HashMap<Product, Long> products = new HashMap<Product, Long>();
+				Order order = new Order(resultSet.getLong("id"), resultSet.getDouble("total_price"),
+						new CustomerDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("customer")),
+						new DeliveryAddressDaoJdbc(dataSource)
+								.retrieveByPrimaryKey(resultSet.getLong("delivery_address")),
+						new PaymentMethodDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("payment_method")),
+						CurrentState.valueOf(resultSet.getString("current_state")), products);
+				
+//				// retrieve all products
+//				String productsQuery = "select * from order_contains_product where orders=?";
+//				PreparedStatement productsStatement = connection.prepareStatement(productsQuery);
+//				productsStatement.setLong(1, order.getId());
+//				ResultSet productsResultSet = statement.executeQuery();
+//				while (productsResultSet.next()) {
+//					products.put(new ProductDaoJdbc(dataSource).retrieveByPrimaryKey(productsResultSet.getLong("id")),
+//							productsResultSet.getLong("amount"));
+//				}
+				orders.add(order);
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
+		}
+		return orders;
 	}
 
 }

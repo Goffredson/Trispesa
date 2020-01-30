@@ -11,23 +11,11 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Trispesa</title>
-<!-- Inclusioni (bootstrap, JQuery)  -->
+<!-- Inclusioni (bootstrap, JQuery, assets esterni)  -->
 <script src="../vendor/jquery/jquery.min.js"></script>
-
-
 <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <script src="../vendor/owl.carousel.js"></script>
-<!-- Script -->
-<script src="../js/cart.js"></script>
-<script src="../js/login.js"></script>
-
-<link href="../css/owl.carousel.css" rel="stylesheet" />
-<link href="../css/footer.css" rel="stylesheet" />
-<link href="../css/owl.theme.default.css" rel="stylesheet" />
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
 	integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
@@ -41,60 +29,17 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
-
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Script -->
+<script src="../js/cart.js"></script>
+<script src="../js/login.js"></script>
+<script src="../js/animations.js"></script>
 <!-- CSS -->
-
-<script>
-	$(document).ready(function() {
-
-		$('#productCarousel').owlCarousel({
-			loop : true,
-			margin : 10,
-			nav : true,
-			autoplay : true,
-
-			responsive : {
-				0 : {
-					items : 1
-				},
-				600 : {
-					items : 3
-				},
-				1000 : {
-					items : 5
-				}
-			}
-		})
-		
-		$('#categoryCarousel').owlCarousel({
-			loop : false,
-			margin : 10,
-			nav : true,
-			autoplay : false,
-			dots: false,
-
-			responsive : {
-				0 : {
-					items : 1
-				},
-				600 : {
-					items : 6
-				},
-				1000 : {
-					items : 7
-				}
-			}
-		})
-
-	});
-</script>
-
-
-
+<link href="../css/owl.carousel.css" rel="stylesheet" />
+<link href="../css/footer.css" rel="stylesheet" />
+<link href="../css/owl.theme.default.css" rel="stylesheet" />
 <link href="../css/main.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -102,9 +47,10 @@
 	<nav id="nav"
 		class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container">
+			<!-- Logo -->
 			<ul style="list-style: none;">
 				<li class="nav-item py-0 title-trispesa"><a
-					class="navbar-brand " href="home"><h2>
+					class="navbar-brand" href="home"><h2>
 							Tri<span class="span-title">Spesa</span>
 						</h2></a></li>
 			</ul>
@@ -113,9 +59,10 @@
 				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
+			<!-- UL di carrello, login, etc. -->
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto" id="ulNavBar">
-					<a href="">
+					<a href="#">
 						<li class="nav-item py-0 item-icon-cart"><i
 							class="fa fa-shopping-cart cart-icon" aria-hidden="true"
 							data-toggle="modal" data-target="#modalCart"></i></li>
@@ -138,7 +85,7 @@
 											type="password" class="form-control" id="inputPassword"
 											placeholder="Password">
 									</div>
-									<input type="button" class="btn btn-primary color-scheme"
+									<input type="button" class="btn color-scheme"
 										value="Autenticati" onclick="ajaxLog('login', 500)">
 
 								</form>
@@ -150,23 +97,9 @@
 									data-target="#modalLogin">Effettua registrazione</a> <a
 									class="dropdown-item" href="">Password dimenticata?</a>
 							</div>
-						</div> <!-- Animazione slide per il form --> <script
-							type="text/javascript">
-							$('#loginDropdown').on(
-									'show.bs.dropdown',
-									function() {
-										$(this).find('.dropdown-menu').first()
-												.stop(true, true).slideDown();
-									});
-
-							$('#loginDropdown').on(
-									'hide.bs.dropdown',
-									function() {
-										$(this).find('.dropdown-menu').first()
-												.stop(true, true).slideUp();
-									});
-						</script>
+						</div>
 					</li>
+					<!-- Pulsanti login-dependent -->
 					<li class="nav-item py-0 login-dependent" id="ordini"><a
 						class="nav-link" href="../user?page=orders"><button
 								type="button" class="btn btn-primary order-button"
@@ -234,7 +167,7 @@
 							class="form-control">
 						<div class="modal-footer">
 							<input type="submit"
-								class="btn color-scheme btn-info my-4 btn-block waves-effect waves-light"
+								class="btn color-scheme my-4 btn-block waves-effect waves-light"
 								value="Registrati">
 						</div>
 					</form>
@@ -244,7 +177,8 @@
 	</div>
 	<!-- Chiusura modale registrazione -->
 
-	<!-- Toast di notifica -->
+	<!-- Sezione toast -->
+	<!-- Toast di notifica login -->
 	<div id="welcomeToast" class="toast notification-toast" role="alert"
 		aria-live="assertive" aria-atomic="true" data-delay="5000">
 		<div class="toast-header color-scheme">
@@ -256,38 +190,78 @@
 		</div>
 		<div class="toast-body" id="toastMessage"></div>
 	</div>
-	<!-- Chiusura toast di notifica -->
-
-	<!-- Navbar categorie -->
-	<!-- 	<div id="navCategories" class="w3-bar w3-mobile"> -->
-	<!-- 		<div class="col-lg-12"> -->
-	<!-- 			<div class="scrollmenu rounded"> -->
-	<%-- 				<c:forEach items="${listaMacroCategorie}" var="categoria"> --%>
-	<%-- 					<c:if test="${not fn:startsWith(categoria.name, 'Altro')}"> --%>
-	<!-- 						<a -->
-	<!-- 							class="w3-bar-item w3-mobile w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green" -->
-	<%-- 							href="showProducts?categoria=${categoria.id}">${categoria.name}</a> --%>
-	<%-- 					</c:if> --%>
-	<%-- 				</c:forEach> --%>
-	<!-- 			</div> -->
-	<!-- 		</div> -->
-	<!-- 	</div> -->
-	<form id="searchProduct" action="showProducts" method="post">
-		<div class="py-2 text-center">
-			<h2 class="title-secondary">CATEGORIE</h2>
+	<!-- Toast di aggiunta prodotto -->
+	<div id="addToCartToast" class="toast notification-toast" role="alert"
+		aria-live="assertive" aria-atomic="true" data-delay="5000">
+		<div class="toast-header color-scheme">
+			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
+			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
 		</div>
-		<div class="container col-md-10 h-100 ">
-			<div id="categoryCarousel"
-				style="margin-top: 30px; margin-bottom: 30px;"
-				class="owl-carousel owl-theme">
-				<c:forEach items="${listaMacroCategorie}" var="categoria">
-					<c:if test="${not fn:startsWith(categoria.name, 'Altro')}">
-						<a
-							class="w3-bar-item w3-mobile w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green"
-							href="showProducts?categoria=${categoria.id}">${categoria.name}</a>
-					</c:if>
-				</c:forEach>
-			</div>
+		<div class="toast-body" id="toastMessage">Prodotto aggiunto al
+			carrello.</div>
+	</div>
+	<!-- Toast di warning no login -->
+	<div id="loginToast" class="toast notification-toast" role="alert"
+		aria-live="assertive" aria-atomic="true" data-delay="5000">
+		<div class="toast-header error-color-scheme">
+			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
+			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="toast-body" id="loginToastMessage">Devi fare il
+			login prima di poter completare l'ordine.</div>
+	</div>
+	<!-- Toast prodotto terminato -->
+	<div id="unavailableProductToast" class="toast notification-toast" role="alert"
+		aria-live="assertive" aria-atomic="true" data-delay="5000">
+		<div class="toast-header error-color-scheme">
+			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
+			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="toast-body" id="unavailableProductToastMessage"></div>
+	</div>
+	<!-- Toast carrello svuotato -->
+	<div id="cartToast" class="toast notification-toast" role="alert"
+		aria-live="assertive" aria-atomic="true" data-delay="5000">
+		<div class="toast-header error-color-scheme">
+			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
+			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="toast-body" id="cartToastMessage">Hai esaurito il
+			tempo a disposizione, il tuo carrello è stato svuotato.</div>
+	</div>
+	<!-- Chiusura sezione toast -->
+
+	
+	<!-- Carousel di categorie -->
+	<div class="py-2 text-center">
+		<h2 class="title-secondary">CATEGORIE</h2>
+	</div>
+	<div class="container col-md-10 h-100 ">
+		<div id="categoryCarousel"
+			style="margin-top: 30px; margin-bottom: 30px;"
+			class="owl-carousel owl-theme">
+			<c:forEach items="${listaMacroCategorie}" var="categoria">
+				<c:if test="${not fn:startsWith(categoria.name, 'Altro')}">
+					<a
+						class="w3-bar-item w3-mobile w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green"
+						href="showProducts?categoria=${categoria.id}">${categoria.name}</a>
+				</c:if>
+			</c:forEach>
+		</div>
+		<!-- Form di ricerca -->
+		<form id="searchProduct" action="showProducts" method="post">
 			<div class="d-flex justify-content-center h-100">
 				<div class="searchbar">
 					<input class="search_input" id="nomeProdotto" name="nomeProdotto"
@@ -296,43 +270,45 @@
 						class="fas fa-search"></i></a>
 				</div>
 			</div>
-			<div class="py-5 text-center">
-				<h2 class="title-secondary">OGGI IN OFFERTA</h2>
-			</div>
-			<div id="productCarousel" class="owl-carousel owl-theme">
-				<c:forEach items="${prodottiScontati}" var="prodottoScontato">
-					<div class="card">
-						<img width="200" height="300" class="card-img-top"
-							src="${prodottoScontato.imagePath}">
-						<div class="card-body h-20">
-							<h5>${prodottoScontato.name}${prodottoScontato.brand}</h5>
-
-							<div>
-								<del style="color: red;">
-									${prodottoScontato.roundedPrice}&euro; </del>
-							</div>
-
-							<b>${prodottoScontato.roundedDiscountedPrice}&euro;</b>
-							<button style="float: right; color: #e9b96e;"
-								class="btn fa fa-shopping-cart item-icon-cart"
-								onclick="										
-						updateCart(${prodottoScontato.id}, '${prodottoScontato.name}', ${prodottoScontato.roundedDiscountedPrice}, '${prodottoScontato.superMarket.name}', 'add')"
-								id="addToCartProductDiscounted">+</button>
-
-						</div>
-						<div class="card-footer">Venduto da:
-							${prodottoScontato.superMarket.name}</div>
-					</div>
-				</c:forEach>
-
-			</div>
+		</form>
+		<!-- Chiusura form di ricerca -->
+		<div class="py-5 text-center">
+			<h2 class="title-secondary">OGGI IN OFFERTA</h2>
 		</div>
-	</form>
+		<!-- Carousel prodotti -->
+		<div id="productCarousel" class="owl-carousel owl-theme">
+			<c:forEach items="${prodottiScontati}" var="prodottoScontato">
+				<div class="card">
+					<img width="200" height="300" class="card-img-top"
+						src="${prodottoScontato.imagePath}">
+					<div class="card-body h-20">
+						<h5>${prodottoScontato.name}${prodottoScontato.brand}</h5>
+
+						<div>
+							<del style="color: red;">
+								${prodottoScontato.roundedPrice}&euro; </del>
+						</div>
+
+						<b>${prodottoScontato.roundedDiscountedPrice}&euro;</b>
+						<button style="float: right; color: #e9b96e;"
+							class="btn fa fa-shopping-cart item-icon-cart"
+							onclick="$('#addToCartToast').toast('show');										
+						updateCart(${prodottoScontato.id}, '${prodottoScontato.name}', ${prodottoScontato.roundedDiscountedPrice}, '${prodottoScontato.superMarket.name}', 'add')"
+							id="addToCartProductDiscounted">+</button>
+					</div>
+					<div class="card-footer">Venduto da:
+						${prodottoScontato.superMarket.name}</div>
+				</div>
+			</c:forEach>
+		</div>
+	</div>
+	<!-- Chiusura carousel di categorie -->
+
+	<!-- Carrello -->
 	<div class="modal fade" id="modalCart" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				<!--Header-->
 				<div class="modal-header">
 					<h4 class="modal-title" id="myModalLabel">Il tuo carrello</h4>
 					<button type="button" class="close" data-dismiss="modal"
@@ -340,7 +316,6 @@
 						<span aria-hidden="true"></span>
 					</button>
 				</div>
-				<!--Body-->
 				<div class="modal-body" id="modalTemp">
 					<div class="count">
 						<h3>
@@ -373,7 +348,6 @@
 											onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.roundedDiscountedPrice}, '${product.key.superMarket.name}', 'remove');"
 											class="btn btn-danger">Rimuovi</button></td>
 								</tr>
-
 							</c:forEach>
 							<c:forEach items="${anonymousCart}" var="product">
 								<c:set var="totalCartPrice" scope="request"
@@ -389,13 +363,10 @@
 											class="btn btn-danger">Rimuovi</button></td>
 								</tr>
 							</c:forEach>
-
 						</tbody>
 					</table>
 					<h2 id="totalCartPrice" class="hidden-xs text-center">${totalCartPrice}&euro;</h2>
-
 				</div>
-				<!--Footer-->
 				<div class="modal-footer">
 					<button type="button" class="btn btn-outline-primary"
 						data-dismiss="modal">Chiudi</button>
@@ -404,7 +375,7 @@
 								class="btn btn-primary">Conferma ordine</button></a>
 					</c:if>
 					<c:if test="${customer == null}">
-						<a id="orderAnchor" href=""><button id="orderButton"
+						<a id="orderAnchor" href="#"><button id="orderButton"
 								onclick="$('#modalCart').modal('hide'); $('.modal-backdrop').hide(); $('#loginToast').toast('show');"
 								class="btn btn-primary">Conferma ordine</button></a>
 					</c:if>
@@ -412,8 +383,9 @@
 			</div>
 		</div>
 	</div>
+	<!-- Chiusura carrello -->
 
-
+	<!-- Footer della pagina -->
 	<footer class="footer-distributed">
 		<div class="footer-left">
 			<h3>
@@ -454,5 +426,6 @@
 			</div>
 		</div>
 	</footer>
+	<!-- Chiusura footer -->
 </body>
 </html>

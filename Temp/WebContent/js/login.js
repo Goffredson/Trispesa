@@ -20,24 +20,16 @@ function updateNavbarDOM(operation, animDelay) {
 
 function fillCartAfterLogin(cartHashMap) {
 	var totalPrice = 0;
-	for (var product in cartHashMap) {
+	for ( var product in cartHashMap) {
 		alert(cartHashMap[product][0].discountedPrice);
-		totalPrice += cartHashMap[product][0].roundedDiscountedPrice*cartHashMap[product][1];
+		totalPrice += cartHashMap[product][0].roundedDiscountedPrice * cartHashMap[product][1];
 		$("#listaProdottiCarrello").append(
-				'<tr id="product_"' + cartHashMap[product][0].id + '>'
-						+ '<th scope="row" id="productQuantity">'
-						+ cartHashMap[product][1] + '</th>'
-						+ '<td id="productName">'
-						+ cartHashMap[product][0].name + '</td>'
-						+ '<td id="productPrice">'
-						+ Number.parseFloat(cartHashMap[product][0].roundedDiscountedPrice*cartHashMap[product][1]).toFixed(2) + '&euro;</td>'
-						+ '<td><a><i class="fas fa-times"></i></a></td>'
-						+ '<td><button type="button"' + 'onclick="updateCart('
-						+ cartHashMap[product][0].id + ', \''
-						+ cartHashMap[product][0].name + '\', '
-						+ cartHashMap[product][0].discountedPrice+ ', \''
-						+ cartHashMap[product][0].superMarket.name + '\', \'remove\');"'
-						+ 'class="btn btn-danger">Rimuovi</button></td>'
+				'<tr id="product_"' + cartHashMap[product][0].id + '>' + '<th scope="row" id="productQuantity">' + cartHashMap[product][1] + '</th>'
+						+ '<td id="productName">' + cartHashMap[product][0].name + '</td>' + '<td id="productPrice">'
+						+ Number.parseFloat(cartHashMap[product][0].roundedDiscountedPrice * cartHashMap[product][1]).toFixed(2) + '&euro;</td>'
+						+ '<td><a><i class="fas fa-times"></i></a></td>' + '<td><button type="button"' + 'onclick="updateCart('
+						+ cartHashMap[product][0].id + ', \'' + cartHashMap[product][0].name + '\', ' + cartHashMap[product][0].discountedPrice
+						+ ', \'' + cartHashMap[product][0].superMarket.name + '\', \'remove\');"' + 'class="btn btn-danger">Rimuovi</button></td>'
 						+ '</tr>');
 	}
 	alert(totalPrice);
@@ -46,35 +38,30 @@ function fillCartAfterLogin(cartHashMap) {
 
 function emptyCartAfterLogout() {
 	$("#listaProdottiCarrello").empty();
-	$("#totalCartPrice").empty();
+	$("#totalCartPrice").html("0");
 }
 
 function ajaxLog(operation, animDelay) {
 	$.ajax({
 		type : "POST",
-		// TODO: rimappare da user/effettuaLogin
 		url : "effettuaLogin",
 		datatype : "JSON",
-		data : JSON.stringify([ $("#inputUsername").val(),
-				$("#inputPassword").val(), operation ]),
+		data : JSON.stringify([ $("#inputUsername").val(), $("#inputPassword").val(), operation ]),
 		success : function(response) {
 			if (operation == "login") {
-				startTimer(30*60, $("#timer"));
-				sessionStorage.setItem("remainingTime", 30*60);
+				startTimer(30 * 60, $("#timer"));
+				sessionStorage.setItem("remainingTime", 30 * 60);
 				if (response.redirect === true)
 					window.location.href = "../administration";
 				else {
-					$("#toastMessage").html(
-							"Bentornato in trispesa, "
-									+ $("#inputUsername").val());
+					$("#toastMessage").html("Bentornato in trispesa, " + $("#inputUsername").val());
 					fillCartAfterLogin(response);
-					startTimer(30*60, $("#timer"));
+					startTimer(30 * 60, $("#timer"));
 				}
 			} else {
 				clearInterval(intervalId);
 				sessionStorage.removeItem("remainingTime");
-				$("#toastMessage")
-						.html("A presto " + $("#inputUsername").val());
+				$("#toastMessage").html("A presto " + $("#inputUsername").val());
 				emptyCartAfterLogout(response);
 				clearInterval(intervalId);
 				$("#timer").empty();

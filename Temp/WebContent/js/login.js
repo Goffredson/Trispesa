@@ -21,7 +21,6 @@ function updateNavbarDOM(operation, animDelay) {
 function fillCartAfterLogin(cartHashMap) {
 	var totalPrice = 0;
 	for ( var product in cartHashMap) {
-		alert(cartHashMap[product][0].discountedPrice);
 		totalPrice += cartHashMap[product][0].roundedDiscountedPrice * cartHashMap[product][1];
 		$("#listaProdottiCarrello").append(
 				'<tr id="product_"' + cartHashMap[product][0].id + '>' + '<th scope="row" id="productQuantity">' + cartHashMap[product][1] + '</th>'
@@ -32,7 +31,6 @@ function fillCartAfterLogin(cartHashMap) {
 						+ ', \'' + cartHashMap[product][0].superMarket.name + '\', \'remove\');"' + 'class="btn btn-danger">Rimuovi</button></td>'
 						+ '</tr>');
 	}
-	alert(totalPrice);
 	$("#totalCartPrice").html(Number.parseFloat(totalPrice).toFixed(2) + "&euro;");
 }
 

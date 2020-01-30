@@ -4,6 +4,14 @@ $(document).ready(function() {
 		var duration = parseInt(durata[0] * 60) + parseInt(durata[1]);
 		startTimer(duration, $("#timer"));
 	}
+	$("#orderButton").click(function(e) {
+		if ($("#listaProdottiCarrello").children().length === 0) {
+			e.preventDefault();
+			$('#modalCart').modal('hide');
+			$('.modal-backdrop').hide();
+			$("#noProductsInCart").toast("show");
+		}
+	});
 });
 
 var intervalId = null;
@@ -72,12 +80,10 @@ updateCart = function(id, name, price, supermarket, op) {
 				// Altrimenti lo aggiungo
 				else {
 					$("#listaProdottiCarrello").append(
-							'<tr id="' + idTag + '">' + '<th scope="row" id="productQuantity"> 1 </th>'
-									+ '<td id="productName">' + name + '</td>' + '<td id="productPrice">' + price
-									+ '&euro;</td>' + '<td><a><i class="fas fa-times"></i></a></td>'
-									+ '<td><button type="button"' + 'onclick="updateCart(' + id + ',\'' + name + '\','
-									+ price + ',\'' + supermarket + '\',\'remove\')"'
-									+ 'class="btn btn-danger">Rimuovi</button></td>' + '</tr>');
+							'<tr id="' + idTag + '">' + '<th scope="row" id="productQuantity"> 1 </th>' + '<td id="productName">' + name + '</td>'
+									+ '<td id="productPrice">' + price + '&euro;</td>' + '<td><a><i class="fas fa-times"></i></a></td>'
+									+ '<td><button type="button"' + 'onclick="updateCart(' + id + ',\'' + name + '\',' + price + ',\'' + supermarket
+									+ '\',\'remove\')"' + 'class="btn btn-danger">Rimuovi</button></td>' + '</tr>');
 				}
 
 				// Aggiorno il totale del carrello

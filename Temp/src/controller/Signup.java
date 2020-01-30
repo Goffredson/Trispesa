@@ -25,7 +25,7 @@ public class Signup extends HttpServlet {
 		Customer customer = new Customer(username, password, name, lastName, email, birthDate);
 		DBManager.getInstance().getCustomerDao().insert(customer);
 		req.getSession().setAttribute("customer", customer);
-		resp.sendRedirect("../home");
+		resp.sendRedirect("home");
 	}
 
 }

@@ -139,9 +139,8 @@
 				</div>
 				<div class="modal-body">
 					<!-- Form di registrazione -->
-					<form action="user/signup"
-						class="text-center border border-light p-5" method="post"
-						name="registrationForm">
+					<form action="signup" class="text-center border border-light p-5"
+						method="post" name="registrationForm">
 						<div class="form-row mb-4">
 							<div class="col">
 								<input type="text" name="firstName" class="form-control"
@@ -152,18 +151,21 @@
 									placeholder="Cognome">
 							</div>
 						</div>
-						<input type="email" name="email" class="form-control mb-4"
-							placeholder="E-mail"> <input type="text" name="username"
-							class="form-control mb-4" placeholder="Username"> <input
+						<input required type="email" name="email"
+							class="form-control mb-4" placeholder="E-mail"> <input
+							required type="text" name="username" class="form-control mb-4"
+							placeholder="Username"> <input
+							pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required
 							type="password" name="password" class="form-control"
-							placeholder="Password"> <input type="password"
-							name="passwordConfirmation" class="form-control"
+							placeholder="Password"> <input
+							pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required
+							type="password" name="passwordConfirmation" class="form-control"
 							placeholder="Conferma password" aria-describedby="passwordHelp">
 						<small id="passwordHelp" class="form-text text-muted mb-4">
-							Almeno 8 caratteri e un numero</small> <input type="text"
-							placeholder="Data di nascita" name="birthDate"
-							onfocus="(this.type='date')" onblur="(this.type='text')"
-							class="form-control">
+							Almeno un numero, una maiuscola e una minuscola, 8 caratteri</small> <input
+							required type="text" placeholder="Data di nascita"
+							name="birthDate" onfocus="(this.type='date')"
+							onblur="(this.type='text')" class="form-control">
 						<div class="modal-footer">
 							<input type="submit"
 								class="btn color-scheme my-4 btn-block waves-effect waves-light"
@@ -241,6 +243,19 @@
 		<div class="toast-body" id="cartToastMessage">Hai esaurito il
 			tempo a disposizione, il tuo carrello è stato svuotato.</div>
 	</div>
+	<div id="noProductsInCart" class="toast notification-toast"
+		role="alert" aria-live="assertive" aria-atomic="true"
+		data-delay="5000">
+		<div class="toast-header error-color-scheme">
+			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
+			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="toast-body" id="noProductsInCartMessage">Non puoi
+			effettuare un ordine senza prodotti nel carrello.</div>
+	</div>
 	<!-- Chiusura sezione toast -->
 
 	<div class="container col-md-10 h-100">
@@ -268,7 +283,7 @@
 							<img width="200" height="300" class="card-img-top"
 								src="${prodotto.imagePath}">
 							<div class="card-body h-20">
-								<h5>${prodotto.name} ${prodotto.brand}</h5>
+								<h5>${prodotto.name}${prodotto.brand}</h5>
 								<c:if test="${prodotto.discount != 0}">
 									<div>
 										<del style="color: red;"> ${prodotto.roundedPrice}&euro;
@@ -356,15 +371,14 @@
 					<h2 id="totalCartPrice" class="hidden-xs text-center">${totalCartPrice}&euro;</h2>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn color-scheme"
-						data-dismiss="modal">Chiudi</button>
+					<button type="button" class="btn color-scheme" data-dismiss="modal">Chiudi</button>
 					<c:if test="${customer != null}">
 						<a id="orderButton" href="manageOrder"><button
 								class="btn color-scheme">Conferma ordine</button></a>
 					</c:if>
 					<c:if test="${customer == null}">
 						<a id="orderAnchor" href="#"><button id="orderButton"
-								onclick="$('#modalCart').modal('hide'); $('.modal-backdrop').hide(); $('#loginToast').toast('show');"
+								onclick="$('#modalCart').modal('hide'); $('.modal-backdrop').hide(); $('#loginToast').toast('show'); $('.dropdown-menu').show();"
 								class="btn color-scheme">Conferma ordine</button></a>
 					</c:if>
 				</div>

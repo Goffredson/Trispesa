@@ -58,7 +58,6 @@ public class Login extends HttpServlet {
 	    			req.getSession().removeAttribute("anonymousCart");
 	    		}
 	    		response = gson.toJson(customer.getCart(), new TypeToken<HashMap<Product, Long>>(){}.getType());
-	    		System.out.println(response);
 	    	} 
 	    	else if (administrator != null) {
 	    		req.getSession().setAttribute("administrator", administrator);

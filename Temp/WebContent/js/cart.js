@@ -122,8 +122,8 @@ updateCart = function(id, name, price, supermarket, op) {
 			}
 		},
 		error : function(response) {
-			$("#productToastMessage").html(response.responseText);
-			$("#productToast").toast("show");
+			$("#unavailableProductToastMessage").html(response.responseText);
+			$("#unavailableProductToast").toast("show");
 		}
 	});
 }

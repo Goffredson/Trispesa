@@ -98,6 +98,7 @@ body {
 	bottom: 10px;
 	right: 10px;
 	width: 300px !important;
+	z-index: 1;
 }
 
 .title-secondary {
@@ -198,6 +199,10 @@ div.scrollmenu a:hover {
 .searchbar:hover>.search_icon {
 	background: white;
 	color: #e9b96e;
+}
+
+#productCarousel {
+	z-index: 0;
 }
 
 .search_icon {

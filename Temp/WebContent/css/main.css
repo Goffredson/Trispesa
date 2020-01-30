@@ -70,20 +70,17 @@ body {
 	color: white;
 	border-width: 2px;
 	border-style: solid;
-	border-color: #6d1010;	
+	border-color: #6d1010;
 	margin-top: 7px;
 	margin-right: 5px;
 }
 
-
-
 .title-trispesa {
-   	position: absolute;   
-  	left: 100px;
-  	top: -18px;
-  	
-
+	position: absolute;
+	left: 100px;
+	top: -18px;
 }
+
 .login-dependent {
 	display: none;
 }
@@ -115,14 +112,17 @@ h2 {
 	margin-inline-start: 0px;
 	margin-inline-end: 0px;
 }
-.cart-icon{
-	font-size:36px;
+
+.cart-icon {
+	font-size: 36px;
 	color: #e9b96e;
 }
-.item-icon-cart{
+
+.item-icon-cart {
 	margin-top: 8px;
 	margin-right: 10px;
 }
+
 #nav {
 	background-color: #0f6c17 !important;
 	/* 	width: 100%; */
@@ -162,14 +162,14 @@ div.scrollmenu a:hover {
 }
 /* search bar */
 .searchbar {
- 	margin-bottom: auto; 
- 	margin-top: auto; 
- 	height: 60px; 
- 	background-color: #0f6c17; 
- 	border-radius: 30px; 
- 	padding: 10px; 
-
+	margin-bottom: auto;
+	margin-top: auto;
+	height: 60px;
+	background-color: #0f6c17;
+	border-radius: 30px;
+	padding: 10px;
 }
+
 #categoryCarousel>.owl-stage-outer {
 	border-width: 5px;
 	border-color: green;
@@ -212,6 +212,11 @@ div.scrollmenu a:hover {
 	text-decoration: none;
 }
 /* Parte amministrazione */
+#search-bar {
+	margin: 10px !important;
+	width: 75%;
+}
+
 #addSuperMarket {
 	margin: 10px !important;
 }

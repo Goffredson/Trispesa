@@ -20,4 +20,6 @@ public interface OrderDao {
 	// DELETE
 	public void delete(Order order);
 
+	public ArrayList<Order> getOrdersOfCustomer(long id);
+
 }

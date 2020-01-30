@@ -168,8 +168,9 @@
 						</script>
 					</li>
 					<li class="nav-item py-0 login-dependent" id="ordini"><a
-						class="nav-link" href="#"><button type="button"
-								class="btn btn-primary order-button" data-toggle="modal">Ordini</button></a></li>
+						class="nav-link" href="../user?page=orders"><button
+								type="button" class="btn btn-primary order-button"
+								data-toggle="modal">Ordini</button></a></li>
 					<li class="nav-item py-0 login-dependent" id="profilo"><a
 						class="nav-link" href="../user?page=profile"><button
 								type="button" class="btn btn-primary profile-button"
@@ -311,11 +312,12 @@
 									${prodottoScontato.roundedPrice}&euro; </del>
 							</div>
 
-							<b>${prodottoScontato.roundedDiscountedPrice}&euro;</b> <button 
-								style="float: right; color: #e9b96e;" class="btn fa fa-shopping-cart item-icon-cart"
+							<b>${prodottoScontato.roundedDiscountedPrice}&euro;</b>
+							<button style="float: right; color: #e9b96e;"
+								class="btn fa fa-shopping-cart item-icon-cart"
 								onclick="										
 						updateCart(${prodottoScontato.id}, '${prodottoScontato.name}', ${prodottoScontato.roundedDiscountedPrice}, '${prodottoScontato.superMarket.name}', 'add')"
-								 id="addToCartProductDiscounted">+</button>
+								id="addToCartProductDiscounted">+</button>
 
 						</div>
 						<div class="card-footer">Venduto da:

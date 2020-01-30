@@ -21,97 +21,7 @@
 </head>
 <body>
 
-	<!-- Navbar principale  -->
-	<nav id="nav"
-		class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-		<div class="container">
-			<ul style="list-style: none;">
-				<li class="nav-item py-0 title"><a
-					class="navbar-brand title-trispesa" href="home">Trispesa</a></li>
-			</ul>
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarResponsive" aria-controls="navbarResponsive"
-				aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav ml-auto" id="ulNavBar">
-					<li class="nav-item py-0">
-						<button type="button" class="btn btn-primary cart-button"
-							data-toggle="modal" data-target="#modalCart">Carrello</button>
-					</li>
-					<li class="nav-item py-0">
-						<!-- Div di login -->
-						<div class="dropdown" id="loginDropdown">
-							<a class="btn btn-secondary dropdown-toggle login-button" href=""
-								role="button" id="loginButton" data-toggle="dropdown"
-								aria-haspopup="true" aria-expanded="false">Login</a>
-							<div class="dropdown-menu login-dropdown">
-								<form class="px-4 py-3">
-									<div class="form-group">
-										<label for="inputUsername">Nome utente</label> <input
-											type="text" class="form-control" id="inputUsername"
-											placeholder="Inserisci nome utente">
-									</div>
-									<div class="form-group">
-										<label for="inputPassword">Password</label> <input
-											type="password" class="form-control" id="inputPassword"
-											placeholder="Password">
-									</div>
-									<input type="button" class="btn btn-primary color-scheme"
-										value="Autenticati" onclick="ajaxLog('login', 500)">
-
-								</form>
-								<div class="dropdown-item" id="credenzialiErrate"
-									style="color: red; display: none;">Username o password
-									errati.</div>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="" data-toggle="modal"
-									data-target="#modalLogin">Effettua registrazione</a> <a
-									class="dropdown-item" href="">Password dimenticata?</a>
-							</div>
-						</div> <!-- Animazione slide per il form --> <script
-							type="text/javascript">
-							$('#loginDropdown').on(
-									'show.bs.dropdown',
-									function() {
-										$(this).find('.dropdown-menu').first()
-												.stop(true, true).slideDown();
-									});
-
-							$('#loginDropdown').on(
-									'hide.bs.dropdown',
-									function() {
-										$(this).find('.dropdown-menu').first()
-												.stop(true, true).slideUp();
-									});
-						</script>
-					</li>
-					<li class="nav-item py-0 login-dependent" id="ordini"><a
-						class="nav-link" href="#"><button type="button"
-								class="btn btn-primary order-button" data-toggle="modal">Ordini</button></a></li>
-					<li class="nav-item py-0 login-dependent" id="profilo"><a
-						class="nav-link" href="../user?page=profile"><button
-								type="button" class="btn btn-primary profile-button"
-								data-toggle="modal">Profilo</button></a></li>
-					<li class="nav-item py-0 login-dependent" id="dieta"><a
-						href="manageDiet" class="nav-link"><button type="button"
-								class="btn btn-primary diet-button" data-toggle="modal">Dieta</button></a></li>
-					<li class="nav-item py-0"><input type="button"
-						id="logoutButton"
-						class="btn btn-primary login-dependent logout-button"
-						value="Logout" onclick="ajaxLog('logout', 500)"></li>
-				</ul>
-			</div>
-		</div>
-		<!-- Aggiorno la navbar se c'è un cliente in sessione -->
-		<c:if test="${customer != null}">
-			<script type="text/javascript">
-				updateNavbarDOM('login', 0);
-			</script>
-		</c:if>
-	</nav>
-	<!-- Chiusura navbar principale -->
+	<!-- METTETE IL NAV QUI PLS -->
 
 	<div class="container">
 		<div class="row">
@@ -479,16 +389,46 @@
 		</div>
 	</div>
 
-	<!-- Footer -->
-	<footer class="py-5 bg-dark">
-		<div class="container">
-			<p class="m-0 text-center text-white">Copyright &copy; Trispesa
-				2020</p>
+	<footer class="footer-distributed">
+		<div class="footer-left">
+			<h3>
+				Tri<span class="span-title">Spesa</span>
+			</h3>
+			<p class="footer-company-name">Trispesa © 2020</p>
 		</div>
-		<!-- /.container -->
+		<div class="footer-center">
+			<div>
+				<i class="fa fa-map-marker"></i>
+				<p>
+					<span>Via Pietro Bucci</span>Rende, Cosenza
+				</p>
+			</div>
+			<div>
+				<i class="fa fa-phone"></i>
+				<p>348-3218976</p>
+			</div>
+			<div>
+				<i class="fa fa-envelope"></i>
+				<p>
+					<a href="mailto:trispesaStaff@gmail.com">trispesastaff@gmail.com</a>
+				</p>
+			</div>
+		</div>
+		<div class="footer-right">
+			<p class="footer-company-about">
+				<span>Informazioni sito:</span> Questo progetto è stato sviluppato
+				da un gruppo di studenti dell'Università della Calabria,
+				dipartimento di Matematica e Informatica, per l'esame di Ingegneria
+				del Software.
+			</p>
+			<div class="footer-icons">
+				<a href="https://www.mat.unical.it/demacs"><img
+					src="images/logo_unical.png" width="24" height="20"></img></a> <a
+					href="https://github.com/Goffredson/Trispesa"><i
+					class="fa fa-github"></i></a>
+			</div>
+		</div>
 	</footer>
-
-	<!-- Bootstrap core JavaScript -->
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="js/manageUser.js"></script>

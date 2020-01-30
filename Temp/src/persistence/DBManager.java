@@ -428,4 +428,8 @@ public class DBManager {
 		getCustomerDao().modBirthDate(customer.getId(), date);
 		customer.setBirthDate(date);
 	}
+
+	public ArrayList<Order> getOrdersOfCustomer(Customer customer) {
+		return getOrderDao().getOrdersOfCustomer(customer.getId());
+	}
 }

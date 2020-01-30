@@ -1,7 +1,7 @@
 package controller;
 
 import java.io.IOException;
-import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.Customer;
-import model.DeliveryAddress;
-import model.PaymentMethod;
+import model.Order;
 import persistence.DBManager;
 
 public class UserManagement extends HttpServlet {
@@ -26,6 +25,15 @@ public class UserManagement extends HttpServlet {
 		switch (req.getParameter("page")) {
 		case "profile": {
 			RequestDispatcher rd = req.getRequestDispatcher("user/profile.jsp");
+			rd.forward(req, resp);
+		}
+			break;
+
+		case "orders": {
+			Customer customer = (Customer) req.getSession().getAttribute("customer");
+			ArrayList<Order> orders = DBManager.getInstance().getOrdersOfCustomer(customer);
+			req.setAttribute("orders", orders);
+			RequestDispatcher rd = req.getRequestDispatcher("user/orders.jsp");
 			rd.forward(req, resp);
 		}
 			break;

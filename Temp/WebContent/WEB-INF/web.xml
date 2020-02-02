@@ -23,6 +23,16 @@
 		<servlet-name>AdminDashboard</servlet-name>
 		<url-pattern>/administration</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>VerifyPaymentAndDelivery</servlet-name>
+		<servlet-class>controller.user.VerifyPaymentAndDelivery</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>VerifyPaymentAndDelivery</servlet-name>
+		<url-pattern>/user/verifyPaymentAndDelivery</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>Home</servlet-name>

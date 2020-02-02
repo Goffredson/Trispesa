@@ -28,7 +28,7 @@ public class ManageOrder extends HttpServlet {
 			resp.sendRedirect("home");
 			return;
 		}
-		
+
 		if (req.getParameter("operation") == null) {
 			RequestDispatcher rd = req.getRequestDispatcher("makeOrder.jsp");
 			rd.forward(req, resp);
@@ -72,10 +72,10 @@ public class ManageOrder extends HttpServlet {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("trispesaStaff@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(customer.getEmail()));
-			message.setSubject("Conferma ordine");
+			message.setSubject("Trispesa - Conferma Ordine");
 			message.setText(
-					"La ringrazio per aver ordinato su trispesa,il suo ordine è stato confermato ed è in fase di processamento,può controllare il suo stato nella sezione ordini."
-							+ "Cordiali saluti,trispesa staff");
+					"La ringraziamo per aver ordinato su trispesa.\n Il suo ordine è stato confermato ed è in fase di processamento - può controllarne lo nella sezione ordini.\n"
+							+ "Cordiali saluti, TriSpesa Staff");
 			Transport.send(message);
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);

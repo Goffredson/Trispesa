@@ -47,4 +47,8 @@ public interface CustomerDao {
 
 	public void modBirthDate(long id, LocalDate date);
 
+	public String retrieveEmail(String username);
+
+	public void updatePassword(String username, String newPassword);
+
 }

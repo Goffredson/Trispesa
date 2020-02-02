@@ -1,3 +1,24 @@
+function passwordRecovery(username) {
+	$.ajax({
+		type : "GET",
+		url : "effettuaLogin",
+		data : {username: username},
+		success : function(response) {
+			var prevHtml = $("#passwordRecoveredMessage").html();
+			$("#passwordRecoveredMessage").html(prevHtml + response);
+			$('.modal-backdrop').hide();
+			$('#recoveryModal').modal('hide');
+			$("#passwordRecovered").toast("show");
+		},
+		error : function() {
+			$('.modal-backdrop').hide();
+			$('#recoveryModal').modal('hide');
+			$("#passwordNotRecovered").toast("show");
+		}
+	});
+}
+
+
 function updateNavbarDOM(operation, animDelay) {
 	if (operation == "login") {
 		$("#loginDropdown").hide(animDelay);
@@ -5,7 +26,8 @@ function updateNavbarDOM(operation, animDelay) {
 		$("#dieta").show(animDelay);
 		$("#ordini").show(animDelay);
 		$("#profilo").show(animDelay);
-		$("#orderButton").prop("onclick", null).off("click");
+		//$("#orderButton").prop("onclick", null).off("click");
+		
 		$("#orderAnchor").attr("href", "manageOrder");
 	} else {
 		$("#logoutButton").hide(animDelay);
@@ -13,7 +35,7 @@ function updateNavbarDOM(operation, animDelay) {
 		$("#ordini").hide(animDelay);
 		$("#profilo").hide(animDelay);
 		$("#loginDropdown").show(animDelay);
-		$("#orderButton").prop("onclick", null).on("click");
+		//$("#orderButton").prop("onclick", null).on("click");
 		$("#orderAnchor").attr("href", "");
 	}
 }

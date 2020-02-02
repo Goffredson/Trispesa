@@ -31,14 +31,7 @@ public class ManageUser extends HttpServlet {
 			switch (req.getParameter("type")) {
 			case "credentials": {
 				switch (req.getParameter("action")) {
-				case "paymentAndAddressCheck":
-					Customer loggedCustomer = (Customer) req.getSession().getAttribute("customer");
-					if (loggedCustomer.getDeliveryAddresses().isEmpty() || loggedCustomer.getPaymentMethods().isEmpty()) {
-						resp.setStatus(401);
-						return;
-					}
-					break;
-				
+
 				case "usernameCheck": {
 					StringBuffer stringBuffer = new StringBuffer();
 					BufferedReader bufferedReader = new BufferedReader(

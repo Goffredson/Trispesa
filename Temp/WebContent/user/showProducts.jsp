@@ -94,7 +94,8 @@
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="" data-toggle="modal"
 									data-target="#modalLogin">Effettua registrazione</a> <a
-									class="dropdown-item" href="">Password dimenticata?</a>
+									class="dropdown-item" data-toggle="modal"
+									data-target="#recoveryModal" href="#">Password dimenticata?</a>
 							</div>
 						</div>
 					</li>
@@ -157,10 +158,7 @@
 							placeholder="Username"> <input
 							pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required
 							type="password" name="password" class="form-control"
-							placeholder="Password"> <input
-							pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required
-							type="password" name="passwordConfirmation" class="form-control"
-							placeholder="Conferma password" aria-describedby="passwordHelp">
+							placeholder="Password"> 
 						<small id="passwordHelp" class="form-text text-muted mb-4">
 							Almeno un numero, una maiuscola e una minuscola, 8 caratteri</small> <input
 							required type="text" placeholder="Data di nascita"
@@ -176,7 +174,36 @@
 			</div>
 		</div>
 	</div>
-	<!-- Chiusura modale registrazione -->
+		<div class="modal" id="recoveryModal" style="display: none"
+		tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Password dimenticata</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="mb-3">
+						<label for="usernameRecovery">Inserisci qui il tuo
+							username</label> <input type="text" class="form-control"
+							id="usernameRecovery" placeholder="Username">
+					</div>
+					<label><small>Ti verrà inviata per e-mail la nuova
+							password.</small></label>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Chiudi</button>
+					<button type="button" class="btn btn-primary"
+						onclick="passwordRecovery($('#usernameRecovery').val());">Conferma</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Chiusura modale registrazione e pwd-->
 
 	<!-- Sezione toast -->
 	<!-- Toast di notifica login -->
@@ -256,7 +283,7 @@
 		<div class="toast-body" id="noProductsInCartMessage">Non puoi
 			effettuare un ordine senza prodotti nel carrello.</div>
 	</div>
-	<div id="noOrderData" class="toast notification-toast" role="alert"
+		<div id="noOrderData" class="toast notification-toast" role="alert"
 		aria-live="assertive" aria-atomic="true" data-delay="5000">
 		<div class="toast-header error-color-scheme">
 			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
@@ -265,9 +292,31 @@
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
-		<div class="toast-body" id="noProductsInCartMessage">Prima di
+		<div class="toast-body" id="noOrderDataMessage">Prima di
 			effettuare un ordine, devi registrare almeno un metodo di pagamento
 			ed un indirizzo di consegna.</div>
+	</div>
+	<div id="passwordRecovered" class="toast notification-toast" role="alert"
+		aria-live="assertive" aria-atomic="true" data-delay="5000">
+		<div class="toast-header color-scheme">
+			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
+			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="toast-body" id="passwordRecoveredMessage">La tua nuova password è stata mandata all'indirizzo: .</div>
+	</div>
+	<div id="passwordNotRecovered" class="toast notification-toast" role="alert"
+		aria-live="assertive" aria-atomic="true" data-delay="5000">
+		<div class="toast-header error-color-scheme">
+			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
+			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="toast-body" id="passwordNotRecoveredMessage">Questo username non esiste.</div>
 	</div>
 	<!-- Chiusura sezione toast -->
 

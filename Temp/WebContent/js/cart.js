@@ -13,10 +13,10 @@ $(document).ready(function() {
 		}
 		$.ajax({
 			type : "GET",
-			url : "manageUser",
+			url : "verifyPaymentAndDelivery",
 			async : false,
 			data : {
-				type : "paymentAndAddressCheck"
+			
 			},
 			error : function() {
 				$('#modalCart').modal('hide');

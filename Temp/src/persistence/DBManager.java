@@ -432,4 +432,14 @@ public class DBManager {
 	public ArrayList<Order> getOrdersOfCustomer(Customer customer) {
 		return getOrderDao().getOrdersOfCustomer(customer.getId());
 	}
+
+	public String getCustomerEmail(String username) {
+		return getCustomerDao().retrieveEmail(username);
+		
+	}
+
+	public void updateCustomerPassword(String username, String newPassword) {
+		getCustomerDao().updatePassword(username, newPassword);
+		
+	}
 }

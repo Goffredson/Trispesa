@@ -398,7 +398,7 @@ public class CustomerDaoJdbc implements CustomerDao {
 			ResultSet selectResultSet = selectStatement.executeQuery();
 			if (selectResultSet.next()) {
 				throw new DBOperationException(
-						"Attenzione, lo username che stai cercando di inserire appartiene già ad un altro cliente", "");
+						"Attenzione, lo username che stai cercando di inserire appartiene giï¿½ ad un altro cliente", "");
 			}
 
 			String update = "update customer set username=? where id=?";
@@ -605,6 +605,64 @@ public class CustomerDaoJdbc implements CustomerDao {
 				throw new RuntimeException(e.getMessage());
 			}
 		}
+	}
+
+	@Override
+	public String retrieveEmail(String username) {
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+
+			String select = "select email from customer where username=?";
+			PreparedStatement selectStatement = connection.prepareStatement(select);
+			selectStatement.setString(1, username);
+			ResultSet selectResultSet = selectStatement.executeQuery();
+			if (selectResultSet.next()) {
+				return selectResultSet.getString("email");
+				
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void updatePassword(String username, String newPassword) {
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			connection.setAutoCommit(false);
+
+			String update = "update customer set password=? where username=?";
+			PreparedStatement statement = connection.prepareStatement(update);
+			statement.setString(1, newPassword);
+			statement.setString(2, username);
+			statement.executeUpdate();
+
+			connection.commit();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+			try {
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage());
+			}
+		}
+		
 	}
 
 }

@@ -70,7 +70,7 @@ public class PaymentMethod {
 
 	@Override
 	public String toString() {
-		return company + " x-" + cardNumber.substring(12, 16);
+		return company + " x-" + cardNumber.split("-")[3];
 	}
 
 	@Override

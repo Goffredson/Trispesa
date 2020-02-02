@@ -222,40 +222,6 @@
 							</select>
 						</div>
 					</div>
-
-					<div class="modal" id="paymentModal" style="display: none"
-						tabindex="-1" role="dialog">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title">Conferma dati carta</h5>
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body">
-									<div class="col-md-3 mb-3" id="divSecurityCode">
-										<label for="securityCode">CVV</label> <input type="text"
-											class="form-control" id="securityCode" placeholder="CVV">
-										<div class="invalid-feedback">CVV necessario</div>
-									</div>
-									<div class="col-md-3 mb-3" id="divExpirationDate">
-										<label for="expirationDate">Data di scadenza</label> <input
-											type="text" class="form-control" id="expirationDate"
-											placeholder="MM-YY">
-										<div class="invalid-feedback">Scadenza necessaria</div>
-									</div>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary"
-										data-dismiss="modal">Chiudi</button>
-									<button type="button" class="btn btn-primary"
-										onclick="verifyPayment()">Conferma</button>
-								</div>
-							</div>
-						</div>
-					</div>
 					<hr class="mb-4">
 					<input type="submit" class="btn color-scheme btn-lg btn-block"
 						value="Conferma Ordine">
@@ -308,49 +274,83 @@
 			<div class="toast-body" id="toastMessage">Qualcosa è andato
 				storto. Riprova più tardi.</div>
 		</div>
+		<!-- Modale conferma CVC -->
+		<div class="modal" id="paymentModal" style="display: none"
+			tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Conferma dati carta</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="col-md-3 mb-3" id="divSecurityCode">
+							<label for="securityCode">CVV</label> <input type="text"
+								class="form-control" id="securityCode" placeholder="CVV">
+							<div class="invalid-feedback">CVV necessario</div>
+						</div>
+						<div class="col-md-3 mb-3" id="divExpirationDate">
+							<label for="expirationDate">Data di scadenza</label> <input
+								type="text" class="form-control" id="expirationDate"
+								placeholder="MM-YY">
+							<div class="invalid-feedback">Scadenza necessaria</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Chiudi</button>
+						<button type="button" class="btn btn-primary"
+							onclick="verifyPayment()">Conferma</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- Fine sezione modali e toast -->
 
 	</div>
-		<!-- Footer della pagina -->
-		<footer class="footer-distributed">
-			<div class="footer-left">
-				<h3>
-					Tri<span class="span-title">Spesa</span>
-				</h3>
-				<p class="footer-company-name">Trispesa © 2020</p>
-			</div>
-			<div class="footer-center">
-				<div>
-					<i class="fa fa-map-marker"></i>
-					<p>
-						<span>Via Pietro Bucci</span>Rende, Cosenza
-					</p>
-				</div>
-				<div>
-					<i class="fa fa-phone"></i>
-					<p>348-3218976</p>
-				</div>
-				<div>
-					<i class="fa fa-envelope"></i>
-					<p>
-						<a href="mailto:trispesaStaff@gmail.com">trispesastaff@gmail.com</a>
-					</p>
-				</div>
-			</div>
-			<div class="footer-right">
-				<p class="footer-company-about">
-					<span>Informazioni sito:</span> Questo progetto è stato sviluppato
-					da un gruppo di studenti dell'Università della Calabria,
-					dipartimento di Matematica e Informatica, per l'esame di Ingegneria
-					del Software.
+	<!-- Footer della pagina -->
+	<footer class="footer-distributed">
+		<div class="footer-left">
+			<h3>
+				Tri<span class="span-title">Spesa</span>
+			</h3>
+			<p class="footer-company-name">Trispesa © 2020</p>
+		</div>
+		<div class="footer-center">
+			<div>
+				<i class="fa fa-map-marker"></i>
+				<p>
+					<span>Via Pietro Bucci</span>Rende, Cosenza
 				</p>
-				<div class="footer-icons">
-					<a href="https://www.mat.unical.it/demacs"><img
-						src="../images/logo_unical.png" width="24" height="20"></img></a> <a
-						href="https://github.com/Goffredson/Trispesa"><i
-						class="fa fa-github"></i></a>
-				</div>
 			</div>
+			<div>
+				<i class="fa fa-phone"></i>
+				<p>348-3218976</p>
+			</div>
+			<div>
+				<i class="fa fa-envelope"></i>
+				<p>
+					<a href="mailto:trispesaStaff@gmail.com">trispesastaff@gmail.com</a>
+				</p>
+			</div>
+		</div>
+		<div class="footer-right">
+			<p class="footer-company-about">
+				<span>Informazioni sito:</span> Questo progetto è stato sviluppato
+				da un gruppo di studenti dell'Università della Calabria,
+				dipartimento di Matematica e Informatica, per l'esame di Ingegneria
+				del Software.
+			</p>
+			<div class="footer-icons">
+				<a href="https://www.mat.unical.it/demacs"><img
+					src="../images/logo_unical.png" width="24" height="20"></img></a> <a
+					href="https://github.com/Goffredson/Trispesa"><i
+					class="fa fa-github"></i></a>
+			</div>
+		</div>
 		<!-- Chiusura footer -->
 	</footer>
 

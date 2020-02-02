@@ -11,6 +11,20 @@ $(document).ready(function() {
 			$('.modal-backdrop').hide();
 			$("#noProductsInCart").toast("show");
 		}
+		$.ajax({
+			type : "GET",
+			url : "manageUser",
+			async : false,
+			data : {
+				type : "paymentAndAddressCheck"
+			},
+			error : function() {
+				$('#modalCart').modal('hide');
+				$('.modal-backdrop').hide();
+				$("#noOrderData").toast("show");
+				e.preventDefault();
+			}
+		});
 	});
 });
 

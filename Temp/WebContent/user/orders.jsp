@@ -62,11 +62,6 @@
 			<!-- UL di carrello, login, etc. -->
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto" id="ulNavBar">
-					<a href="#">
-						<li class="nav-item py-0 item-icon-cart"><i
-							class="fa fa-shopping-cart cart-icon" aria-hidden="true"
-							data-toggle="modal" data-target="#modalCart"></i></li>
-					</a>
 					<li class="nav-item py-0">
 						<!-- Div di login -->
 						<div class="dropdown" id="loginDropdown">
@@ -138,86 +133,6 @@
 			tempo a disposizione, il tuo carrello è stato svuotato.</div>
 	</div>
 	<!-- Chiusura sezione toast -->
-	<!-- Carrello -->
-	<div class="modal fade" id="modalCart" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title" id="myModalLabel">Il tuo carrello</h4>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true"></span>
-					</button>
-				</div>
-				<div class="modal-body" id="modalTemp">
-					<div class="count">
-						<h3>
-							<small>Tempo rimanente</small>
-						</h3>
-						<div id="timer"></div>
-					</div>
-					<table class="table">
-						<thead>
-							<tr>
-								<th>N.</th>
-								<th>Nome prodotto</th>
-								<th>Prezzo</th>
-								<th></th>
-
-							</tr>
-						</thead>
-						<tbody id="listaProdottiCarrello">
-							<c:set var="totalCartPrice" scope="request" value="${0}" />
-							<c:forEach items="${customer.cart}" var="product">
-								<c:set var="totalCartPrice" scope="request"
-									value="${totalCartPrice + product.key.roundedDiscountedPrice*product.value}" />
-
-								<tr id="product_${product.key.id}">
-									<th scope="row" id="productQuantity">${product.value}</th>
-									<td id="productName">${product.key.name}</td>
-									<td id="productPrice">${product.key.roundedDiscountedPrice*product.value}&euro;</td>
-									<td><a><i class="fas fa-times"></i></a></td>
-									<td><button type="button"
-											onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.roundedDiscountedPrice}, '${product.key.superMarket.name}', 'remove');"
-											class="btn btn-danger">Rimuovi</button></td>
-								</tr>
-							</c:forEach>
-							<c:forEach items="${anonymousCart}" var="product">
-								<c:set var="totalCartPrice" scope="request"
-									value="${totalCartPrice + product.key.roundedDiscountedPrice*product.value}" />
-
-								<tr id="product_${product.key.id}">
-									<th scope="row" id="productQuantity">${product.value}</th>
-									<td id="productName">${product.key.name}</td>
-									<td id="productPrice">${product.key.roundedDiscountedPrice*product.value}&euro;</td>
-									<td><a><i class="fas fa-times"></i></a></td>
-									<td><button type="button"
-											onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.roundedDiscountedPrice}, '${product.key.superMarket.name}', 'remove');"
-											class="btn btn-danger">Rimuovi</button></td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-					<h2 id="totalCartPrice" class="hidden-xs text-center">${totalCartPrice}&euro;</h2>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn color-scheme"
-						data-dismiss="modal">Chiudi</button>
-					<c:if test="${customer != null}">
-						<a id="orderButton" href="manageOrder"><button
-								class="btn color-scheme">Conferma ordine</button></a>
-					</c:if>
-					<c:if test="${customer == null}">
-						<a id="orderAnchor" href="#"><button id="orderButton"
-								onclick="$('#modalCart').modal('hide'); $('.modal-backdrop').hide(); $('#loginToast').toast('show');"
-								class="btn color-scheme">Conferma ordine</button></a>
-					</c:if>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Chiusura carrello -->
 
 	<div class="container">
 		<h2>Riepilogo ordini</h2>

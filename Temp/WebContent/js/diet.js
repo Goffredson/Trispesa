@@ -60,7 +60,6 @@ $(document).ready(
 									totalPrice += response[i].price;
 									var productName = response[i].name;
 									var productPrice = response[i].price;
-									alert("Entro nel for con " + i + " e " + productName);
 									$.ajax({
 										type : "GET",
 										url : "manageCart",
@@ -70,6 +69,10 @@ $(document).ready(
 											operation : "add"
 										},
 										success : function() {
+											$("#addButton").prop("disabled", true);
+											$(".minus-button").each(function() {
+											    $(this).prop("disabled", true);
+											});
 											$("#totalUl").prepend(
 													'<li class="list-group-item d-flex justify-content-between lh-condensed">'
 															+ '<div> <h6 class="my-0">' + productName
@@ -78,7 +81,6 @@ $(document).ready(
 
 										},
 										error : function() {
-											alert("entro in error con " + productName);
 											$("#dietError").modal("show");
 										}
 									});
@@ -119,7 +121,7 @@ function addField() {
 			+ '<div style="margin-top: 10;"> <label>No<input type="radio" name="offBrand_' + selectCount
 			+ '" value="true" checked style="margin-left:5; margin-right: 8;"></label> <label>Si<input type="radio" name="offBrand_'
 			+ selectCount + '" value="false" style="margin-left: 5;"></label></div></div>');
-	row.append('<div style="margin-top: 32; "><button type="button" class="btn btn-danger" onclick="$(\'#field_' + selectCount
+	row.append('<div style="margin-top: 32; "><button type="button" class="btn btn-danger minus-button" onclick="$(\'#field_' + selectCount
 			+ '\').remove()" ><b>-</b></button></div></div>');
 	formGroup.show("slow");
 }

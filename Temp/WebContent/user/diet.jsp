@@ -220,7 +220,8 @@
 				un alimento</p>
 			<p class="lead"></p>
 			<div class="float-md-right">
-				<button type="button" class="btn color-scheme" onclick="addField()">
+				<button type="button" id="addButton" class="btn color-scheme"
+					onclick="addField()">
 					<b>+</b>
 				</button>
 			</div>
@@ -249,7 +250,7 @@
 			<button type="button" class="btn btn-success"
 				onclick="$('#dietConfirmed').modal('show');">Conferma spesa</button>
 			<button type="button" class="btn btn-danger"
-				onclick="$('#totalUl').empty(); $('#dietCart').hide(); for (var i in spesa) {removeProduct(spesa[i]);} $('#dietCanceled').modal('show');">Rifiuta
+				onclick="$('#totalUl').empty(); $('#dietCart').hide(); for (var i in spesa) {removeProduct(spesa[i]);} $('#dietCanceled').modal('show'); $('#addButton').prop('disabled', false); $('.minus-button').each(function() {$(this).prop('disabled', false);});">Rifiuta
 				spesa</button>
 		</div>
 	</div>

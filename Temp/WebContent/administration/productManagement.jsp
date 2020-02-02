@@ -240,8 +240,7 @@
 						class="btn add-item"></button>
 					<button id="reset-button" type="button" class="btn back-item"
 						onclick="clearForm()">Reset</button>
-					<button type="button" class="btn back-item"
-						data-dismiss="modal">Chiudi</button>
+					<button type="button" class="btn back-item" data-dismiss="modal">Chiudi</button>
 				</div>
 			</div>
 		</div>

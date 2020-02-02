@@ -17,21 +17,18 @@ public class ShowProducts extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RequestDispatcher rd = req.getRequestDispatcher("showProducts.jsp");
-		long categoryId =Long.parseLong(req.getParameter("categoria"));
+		long categoryId = Long.parseLong(req.getParameter("categoria"));
 		ArrayList<Product> prodotti = DBManager.getInstance().getProductsByCategory(categoryId);
-		req.setAttribute("listaProdotti",prodotti);
+		req.setAttribute("listaProdotti", prodotti);
 		rd.forward(req, resp);
-//		req.setAttribute("listaProdotti", prodotti);
-//		System.out.println(prodotti.get(0).getImagePath());
-//		rd.forward(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RequestDispatcher rd = req.getRequestDispatcher("showProducts.jsp");
-		String nomeProdotto=req.getParameter("nomeProdotto");
-		ArrayList<Product> prodotti=DBManager.getInstance().getProductsByName(nomeProdotto);
-		req.setAttribute("listaProdotti",prodotti);
+		String nomeProdotto = req.getParameter("nomeProdotto");
+		ArrayList<Product> prodotti = DBManager.getInstance().getProductsByName(nomeProdotto);
+		req.setAttribute("listaProdotti", prodotti);
 		rd.forward(req, resp);
 
 	}

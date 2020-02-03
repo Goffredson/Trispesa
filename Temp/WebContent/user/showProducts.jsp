@@ -345,7 +345,7 @@
 							<img width="200" height="300" class="card-img-top"
 								src="${prodotto.imagePath}">
 							<div class="card-body h-20">
-								<h5>${prodotto.name}${prodotto.brand}</h5>
+								<h5>${prodotto.name} ${prodotto.brand}</h5>
 								<c:if test="${prodotto.discount != 0}">
 									<div>
 										<del style="color: red;"> ${prodotto.roundedPrice}&euro;

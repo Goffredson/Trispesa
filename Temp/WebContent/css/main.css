@@ -17,6 +17,11 @@ body {
 	color: #e9b96e;
 }
 
+.g-recaptcha {
+    transform:scale(0.67);
+    transform-origin:0 0;
+}
+
 .admin-card {
 	color: #0f6c17;
 }

@@ -2,7 +2,9 @@ function passwordRecovery(username) {
 	$.ajax({
 		type : "GET",
 		url : "effettuaLogin",
-		data : {username: username},
+		data : {
+			username : username
+		},
 		success : function(response) {
 			var prevHtml = $("#passwordRecoveredMessage").html();
 			$("#passwordRecoveredMessage").html(prevHtml + response);
@@ -18,7 +20,6 @@ function passwordRecovery(username) {
 	});
 }
 
-
 function updateNavbarDOM(operation, animDelay) {
 	if (operation == "login") {
 		$("#loginDropdown").hide(animDelay);
@@ -26,8 +27,8 @@ function updateNavbarDOM(operation, animDelay) {
 		$("#dieta").show(animDelay);
 		$("#ordini").show(animDelay);
 		$("#profilo").show(animDelay);
-		//$("#orderButton").prop("onclick", null).off("click");
-		
+		// $("#orderButton").prop("onclick", null).off("click");
+
 		$("#orderAnchor").attr("href", "manageOrder");
 	} else {
 		$("#logoutButton").hide(animDelay);
@@ -35,7 +36,7 @@ function updateNavbarDOM(operation, animDelay) {
 		$("#ordini").hide(animDelay);
 		$("#profilo").hide(animDelay);
 		$("#loginDropdown").show(animDelay);
-		//$("#orderButton").prop("onclick", null).on("click");
+		// $("#orderButton").prop("onclick", null).on("click");
 		$("#orderAnchor").attr("href", "");
 	}
 }
@@ -61,6 +62,14 @@ function emptyCartAfterLogout() {
 	$("#totalCartPrice").html("0");
 }
 
+function enableButton() {
+	$("#authButton").prop("disabled", false);
+}
+
+function disableButton() {
+	$("#authButton").prop("disabled", true);
+}
+
 function ajaxLog(operation, animDelay) {
 	$.ajax({
 		type : "POST",
@@ -69,6 +78,8 @@ function ajaxLog(operation, animDelay) {
 		data : JSON.stringify([ $("#inputUsername").val(), $("#inputPassword").val(), operation ]),
 		success : function(response) {
 			if (operation == "login") {
+				disableButton();
+				grecaptcha.reset();
 				startTimer(30 * 60, $("#timer"));
 				sessionStorage.setItem("remainingTime", 30 * 60);
 				if (response.redirect === true)

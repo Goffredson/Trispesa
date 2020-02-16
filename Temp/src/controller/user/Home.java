@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mifmif.common.regex.Generex;
-
 import persistence.DBManager;
 
 public class Home extends HttpServlet {
@@ -17,6 +15,7 @@ public class Home extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//req.setAttribute("listaCategorieFoglia", DBManager.getInstance().getLeafCategories());
+		req.setCharacterEncoding("UTF-8");
 		req.setAttribute("listaMacroCategorie", DBManager.getInstance().getMacroCategories());
 		req.setAttribute("prodottiScontati", DBManager.getInstance().getDiscountedProducts());
 		

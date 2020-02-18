@@ -16,7 +16,7 @@ import javax.websocket.server.ServerEndpoint;
 
 import model.Message;
 
-@ServerEndpoint(value = "/ciaone", decoders = MessageDecoder.class, encoders = MessageEncoder.class)
+@ServerEndpoint(value = "/user/chat/{username}", decoders = MessageDecoder.class, encoders = MessageEncoder.class)
 public class ChatEndpoint {
     private Session session;
     private static final Set<ChatEndpoint> chatEndpoints = new CopyOnWriteArraySet<>();
@@ -25,6 +25,8 @@ public class ChatEndpoint {
     @OnOpen
     public void onOpen(Session session, @PathParam("username") String username) throws IOException, EncodeException {
 
+    	// Nel momento in cui non ci sono amministratori connessi, allora devo aspettare.
+    	
         this.session = session;
         chatEndpoints.add(this);
         users.put(session.getId(), username);

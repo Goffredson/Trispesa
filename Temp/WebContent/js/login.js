@@ -27,6 +27,7 @@ function updateNavbarDOM(operation, animDelay) {
 		$("#dieta").show(animDelay);
 		$("#ordini").show(animDelay);
 		$("#profilo").show(animDelay);
+		$("#faqId").show(animDelay);
 		// $("#orderButton").prop("onclick", null).off("click");
 
 		$("#orderAnchor").attr("href", "manageOrder");

@@ -23,7 +23,7 @@
 		<servlet-name>AdminDashboard</servlet-name>
 		<url-pattern>/administration</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>VerifyPaymentAndDelivery</servlet-name>
 		<servlet-class>controller.user.VerifyPaymentAndDelivery</servlet-class>
@@ -43,7 +43,7 @@
 		<servlet-name>Home</servlet-name>
 		<url-pattern>/user/home</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>HomeRedirect</servlet-name>
 		<servlet-class>controller.user.HomeRedirect</servlet-class>
@@ -53,8 +53,26 @@
 		<servlet-name>HomeRedirect</servlet-name>
 		<url-pattern></url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>Faq</servlet-name>
+		<servlet-class>controller.user.Faq</servlet-class>
+	</servlet>
 
-	
+	<servlet-mapping>
+		<servlet-name>Faq</servlet-name>
+		<url-pattern>/user/faq</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>Chat</servlet-name>
+		<servlet-class>controller.user.Chat</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Chat</servlet-name>
+		<url-pattern>/user/chat</url-pattern>
+	</servlet-mapping>
+
+
 	<servlet>
 		<servlet-name>ShowProducts</servlet-name>
 		<servlet-class>controller.user.ShowProducts</servlet-class>
@@ -183,7 +201,7 @@
 		<servlet-name>Signup</servlet-name>
 		<url-pattern>/user/signup</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>ManageOrder</servlet-name>
 		<servlet-class>controller.user.ManageOrder</servlet-class>
@@ -193,7 +211,7 @@
 		<servlet-name>ManageOrder</servlet-name>
 		<url-pattern>/user/manageOrder</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>ManageDiet</servlet-name>
 		<servlet-class>controller.user.ManageDiet</servlet-class>
@@ -203,7 +221,7 @@
 		<servlet-name>ManageDiet</servlet-name>
 		<url-pattern>/user/manageDiet</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>ManageUserForm</servlet-name>
 		<servlet-class>controller.user.ManageUserForm</servlet-class>
@@ -213,5 +231,5 @@
 		<servlet-name>ManageUserForm</servlet-name>
 		<url-pattern>/user/manageUserForm</url-pattern>
 	</servlet-mapping>
-	
+
 </web-app>

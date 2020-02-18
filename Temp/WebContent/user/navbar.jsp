@@ -79,6 +79,7 @@
 					type="button" id="logoutButton"
 					class="btn login-dependent logout-button" value="Logout"
 					onclick="ajaxLog('logout', 500)"></li>
+				<a id="faqId" class="btn btn-secondary" href="faq" role="button">FAQ</a>
 			</ul>
 		</div>
 		<script type="text/javascript">

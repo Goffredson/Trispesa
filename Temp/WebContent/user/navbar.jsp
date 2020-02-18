@@ -51,10 +51,12 @@
 										placeholder="Password">
 								</div>
 								<div class="g-recaptcha"
-									data-sitekey="6Lc1aNkUAAAAAPqQpuwuHaujwOzeV5Yda8EIeljO" data-callback="enableButton"></div>
+									data-sitekey="6Lc1aNkUAAAAAPqQpuwuHaujwOzeV5Yda8EIeljO"
+									data-callback="enableButton"></div>
 
-								<button type="submit" id="authButton" disabled class="btn color-scheme"
-									value="Autenticati"> Autenticati </button>
+								<button type="submit" id="authButton" disabled
+									class="btn color-scheme" value="Autenticati">
+									Autenticati</button>
 
 							</form>
 							<div class="dropdown-item" id="credenzialiErrate"
@@ -72,6 +74,7 @@
 				<li class="nav-item py-0 login-dependent" id="dieta"><a
 					href="manageDiet" class="nav-link"><button type="button"
 							class="btn btn-primary diet-button" data-toggle="modal">Dieta</button></a></li>
+
 				<li class="nav-item py-0" id="logoutListItem"><input
 					type="button" id="logoutButton"
 					class="btn login-dependent logout-button" value="Logout"

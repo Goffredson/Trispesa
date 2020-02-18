@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -67,17 +67,17 @@
 					<c:set var="totalCartPrice" scope="request" value="${0}" />
 					<c:forEach items="${customer.cart}" var="product">
 						<c:set var="totalCartPrice" scope="request"
-							value="${totalCartPrice + product.key.price*product.value}" />
+							value="${totalCartPrice + product.key.roundedDiscountedPrice*product.value}" />
 						<li
 							class="list-group-item d-flex justify-content-between lh-condensed">
 							<div>
 								<h6 class="my-0">${product.key.name}</h6>
 								<small class="text-muted">Quantita: ${product.value}</small>
-							</div> <span class="text-muted">${product.key.price*product.value}&euro;</span>
+							</div> <span class="text-muted">${product.key.roundedDiscountedPrice*product.value}&euro;</span>
 						</li>
 					</c:forEach>
 					<li class="list-group-item d-flex justify-content-between"><span>Totale
-					</span> <strong>${totalCartPrice}&euro;</strong></li>
+					</span> <strong id="cartPrice">${totalCartPrice}&euro;</strong></li>
 				</ul>
 			</div>
 			<!-- Div dati account -->
@@ -138,6 +138,97 @@
 					<hr class="mb-4">
 
 					<h4 class="mb-3">Pagamento</h4>
+					<div id="paypal-button"></div>
+					<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+					<script>
+						var itemsInCart = [];
+						$("#listaProdottiCarrello").children().each(function() {
+							var productPrice = $(this).find("#productPrice").html();
+							// Simbolo dell'euro
+							productPrice = productPrice.replace(/\u20AC/g, "");
+							var product = {
+									name: $(this).find("#productName").html(),
+									quantity: $(this).find("#productQuantity").html(),
+									description: "La marca", 
+									price: productPrice,
+									currency: 'EUR'
+							};
+							itemsInCart.push(product);
+						});
+						paypal.Button
+								.render(
+										{
+											// Configure environment
+											env : 'sandbox',
+											client : {
+												sandbox : 'demo_sandbox_client_id',
+												production : 'demo_production_client_id'
+											},
+											// Customize button (optional)
+											locale : 'it_IT',
+											style : {
+												size : 'small',
+												color : 'silver',
+												shape : 'pill',
+											},
+
+											// Enable Pay Now checkout flow (optional)
+											commit : true,
+
+											// Set up a payment
+											payment : function(data, actions) {
+												return actions.payment
+														.create({
+															transactions : [ {
+																amount : {
+																	total : $("#cartPrice").html().substring(0, $("#cartPrice").html().length-1),
+																	currency : 'EUR',
+																	details : {
+																		subtotal : $("#cartPrice").html().substring(0, $("#cartPrice").html().length-1),
+																		shipping : '0.00',
+																	//	handling_fee : '1.00',
+																	//	shipping_discount : '-1.00',
+																	//	insurance : '0.01'
+																	}
+																},
+																description : 'Ordine TriSpesa via PayPal',
+																//custom : '90048630024435',
+																invoice_number: '12345',
+																payment_options : {
+																	allowed_payment_method : 'INSTANT_FUNDING_SOURCE'
+																},
+																//soft_descriptor : 'ECHI5786786',
+																item_list : {
+																	items : itemsInCart,
+																	shipping_address : {
+																		recipient_name : $("#firstName").val() + " " + $("#lastName").val(),
+																		line1 : $('#selectAddress').find(":selected").text().split(",")[0],
+																		line2 : $('#selectAddress').find(":selected").text().split(",")[1],
+																		city : $('#selectAddress').find(":selected").text().split(",")[3],
+																		country_code : 'IT',
+																		postal_code : $('#selectAddress').find(":selected").attr("data-address-zipcode"),
+																		//phone : '011862212345678',
+																		//state : 'CA'
+																	}
+																}
+															} ],
+															note_to_payer : 'Grazie per aver scelto TriSpesa.'
+														});
+											},
+											// Execute the payment
+											onAuthorize : function(data,
+													actions) {
+												return actions.payment
+														.execute()
+														.then(
+																function() {
+																	// Show a confirmation message to the buyer
+																	window
+																			.alert('deve partire il modale con la spunta verde');
+																});
+											}
+										}, '#paypal-button');
+					</script>
 					<div class="mb-3">
 						<div class="form-group">
 							<label>Metodo di pagamento</label> <select required
@@ -170,8 +261,8 @@
 						<h4 class="modal-title">Ordine confermato</h4>
 					</div>
 					<div class="modal-body">
-						<p class="text-center">La conferma dell'ordine è stata inviata
-							via mail. Il riepilogo è disponibile nella sezione ordini</p>
+						<p class="text-center">La conferma dell'ordine Ã¨ stata inviata
+							via mail. Il riepilogo Ã¨ disponibile nella sezione ordini</p>
 					</div>
 					<div class="modal-footer">
 						<a href="home" class="btn btn-success btn-block">Torna alla
@@ -200,8 +291,8 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="toast-body" id="toastMessage">Qualcosa è andato
-				storto. Riprova più tardi.</div>
+			<div class="toast-body" id="toastMessage">Qualcosa Ã¨ andato
+				storto. Riprova piÃ¹ tardi.</div>
 		</div>
 		<!-- Modale conferma CVC -->
 		<div class="modal" id="paymentModal" style="display: none"
@@ -246,7 +337,7 @@
 			<h3>
 				Tri<span class="span-title">Spesa</span>
 			</h3>
-			<p class="footer-company-name">Trispesa © 2020</p>
+			<p class="footer-company-name">Trispesa Â© 2020</p>
 		</div>
 		<div class="footer-center">
 			<div>
@@ -268,8 +359,8 @@
 		</div>
 		<div class="footer-right">
 			<p class="footer-company-about">
-				<span>Informazioni sito:</span> Questo progetto è stato sviluppato
-				da un gruppo di studenti dell'Università della Calabria,
+				<span>Informazioni sito:</span> Questo progetto Ã¨ stato sviluppato
+				da un gruppo di studenti dell'UniversitÃ  della Calabria,
 				dipartimento di Matematica e Informatica, per l'esame di Ingegneria
 				del Software.
 			</p>

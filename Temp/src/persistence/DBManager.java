@@ -2,23 +2,10 @@ package persistence;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.Properties;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.NoSuchProviderException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
-import com.sun.mail.smtp.SMTPTransport;
+import java.util.Vector;
 
 import exceptions.DBOperationException;
 import model.Administrator;
@@ -50,6 +37,7 @@ public class DBManager {
 
 	private static DBManager istance = null;
 	private static DataSource dataSource = null;
+	private static Vector<String> adminsAvailable = null;
 
 	public static DBManager getInstance() {
 		if (istance == null)
@@ -62,6 +50,7 @@ public class DBManager {
 			Class.forName("org.postgresql.Driver").newInstance();
 			dataSource = new DataSource("jdbc:postgresql://rogue.db.elephantsql.com:5432/zqnyocaq", "zqnyocaq",
 					"DJ8nD9eyeT4VjZAvTnAvUDcc-ExoZTN_");
+			adminsAvailable = new Vector<String>();
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -71,6 +60,10 @@ public class DBManager {
 		return new AdministratorDaoJdbc(dataSource);
 	}
 
+	public Vector<String> getAdminsAvailable() {
+		return adminsAvailable;
+	}
+	
 	public CategoryDao getCategoryDao() {
 		return new CategoryDaoJdbc(dataSource);
 	}

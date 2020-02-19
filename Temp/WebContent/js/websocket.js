@@ -3,8 +3,8 @@ var ws;
 function connect() {
     var username = document.getElementById("username").value;
     
-    var host = document.location.host;
-    var pathname = document.location.pathname;
+    //var host = document.location.host;
+    //var pathname = document.location.pathname;
     
     ws = new WebSocket("ws://localhost:8080/Trispesa/user/chat/" + username);
 
@@ -21,6 +21,7 @@ function send() {
     var json = JSON.stringify({
         "content":content
     });
+    log.innerHTML += username + " : " + content + "\n";
 
     ws.send(json);
 }

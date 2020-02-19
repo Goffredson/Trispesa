@@ -23,14 +23,20 @@ public class WaitingRoom extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Customer customer = (Customer) req.getSession().getAttribute("customer");
-		System.out.println("Entrato come user");
-		int nQueuedCustomers = EndpointBroker.getInstance().processCustomer(customer);
-		String response = "{\"nQueued\" : " + nQueuedCustomers + "}";
-		PrintWriter out = resp.getWriter();
-		resp.setCharacterEncoding("UTF-8");
-		resp.setContentType("application/json");
-		out.print(response);
-		out.flush();
+		System.out.println("Entra " + customer.getUsername());
+		if (req.getParameter("operation").equals("add")) {
+			int nQueuedCustomers = EndpointBroker.getInstance().processCustomer(customer);
+			String response = "{\"nQueued\" : " + nQueuedCustomers + "}";
+			System.out.println("e si prende " + response); 
+			PrintWriter out = resp.getWriter();
+			resp.setCharacterEncoding("UTF-8");
+			resp.setContentType("application/json");
+			out.print(response);
+			out.flush();			
+		}
+		else {
+			EndpointBroker.getInstance().cancelCustomerProcessing(customer);
+		}
 	}
 	
 }

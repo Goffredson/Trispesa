@@ -25,24 +25,41 @@
 </head>
 <body>
 	<script>
-	$(document).ready(function () {
-	    intervalId = setInterval(function () {
-	        $.ajax({
-	            type: "POST",
-	            url: "waitingRoom",
-	            async: false,
-	            success: function (response) {
-	                if (response.nQueued === 0) {
-	                    clearInterval(intervalId);
-	                    window.location.href = "chat";
-	                }
-	            }
-	        });
-	    }, 3000);
-	});
+		$(window).on("unload", (function() {
+			$.ajax({
+				type : "POST",
+				url : "waitingRoom",
+				data : {
+					operation: "remove"
+				},
+				async : false,
+				success : function() {}
+			});
+		}));
+		$(document).ready(function() {
+			intervalId = setInterval(function() {
+				$.ajax({
+					type : "POST",
+					url : "waitingRoom",
+					data : {
+						operation: "add"
+					},
+					async : false,
+					success : function(response) {
+						if (response.nQueued === 0) {
+							clearInterval(intervalId);
+							window.location.href = "chat";
+						} else {
+							$("#nQueued").html(response.nQueued);
+						}
+					}
+				});
+			}, 3000);
+		});
 	</script>
 	<h2>Sei in attesa.</h2>
 	<h3>Clienti prima di te:</h3>
+	<h4 id="nQueued"></h4>
 </body>
 
 <script src="../js/websocket.js"></script>

@@ -21,7 +21,7 @@ public class EndpointBroker {
 		queuedCustomers = new Vector<>();
 	}
 
-	public int processCustomer(Customer customer) {
+	public synchronized int processCustomer(Customer customer) {
 		int retVal = 0;
 		if (availableAdmins.isEmpty()) {
 			System.out.println("No admin disponibili");

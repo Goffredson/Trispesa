@@ -1,7 +1,9 @@
 package websocket;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
@@ -22,9 +24,9 @@ public class ChatEndpoint {
 	// private static HashMap<String, ChatEndpoint> adminEndpoints = new
 	// HashMap<>();
 
-	private static HashMap<String, ChatEndpoint> userToAdminMap = new HashMap<>();
-	private static HashMap<String, ChatEndpoint> adminToUserMap = new HashMap<>();
-	private static HashMap<ChatEndpoint, String> adminIdMap = new HashMap<>();
+	private static Map<String, ChatEndpoint> userToAdminMap = Collections.synchronizedMap(new HashMap<>());
+	private static Map<String, ChatEndpoint> adminToUserMap = Collections.synchronizedMap(new HashMap<>());
+	private static Map<ChatEndpoint, String> adminIdMap = Collections.synchronizedMap(new HashMap<>());
 	//private static Vector<ChatEndpoint> availableAdmins = new Vector<>();
 
 	@OnOpen

@@ -25,7 +25,10 @@ public class WaitingRoom extends HttpServlet {
 		Customer customer = (Customer) req.getSession().getAttribute("customer");
 		System.out.println("Entra " + customer.getUsername());
 		if (req.getParameter("operation").equals("add")) {
-			int nQueuedCustomers = EndpointBroker.getInstance().processCustomer(customer);
+			int nQueuedCustomers = 0;
+			synchronized(this) {
+				nQueuedCustomers = EndpointBroker.getInstance().processCustomer(customer);				
+			}
 			String response = "{\"nQueued\" : " + nQueuedCustomers + "}";
 			System.out.println("e si prende " + response); 
 			PrintWriter out = resp.getWriter();

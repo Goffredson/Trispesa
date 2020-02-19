@@ -153,7 +153,8 @@
 				<div id="collapseFive" class="collapse"
 					aria-labelledby="headingFive" data-parent="#accordionExample">
 					<div class="card-body">Utilizza la nostra chat per parlare con un amministratore online!</div>
-					<a id="faqId" class="btn btn-secondary" href="chat" role="button">Chat TRISPESA</a>
+					<a id="faqId" class="btn btn-secondary" href="waitingRoom" role="button">Chat CLIENTE</a>
+					<a id="faqId" class="btn btn-secondary" href="chat" role="button">Chat ADMIN</a>
 				</div>
 			</div>
 

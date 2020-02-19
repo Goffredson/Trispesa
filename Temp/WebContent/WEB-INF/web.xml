@@ -71,6 +71,15 @@
 		<servlet-name>Chat</servlet-name>
 		<url-pattern>/user/chat</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>WaitingRoom</servlet-name>
+		<servlet-class>controller.user.WaitingRoom</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>WaitingRoom</servlet-name>
+		<url-pattern>/user/waitingRoom</url-pattern>
+	</servlet-mapping>
 
 
 	<servlet>

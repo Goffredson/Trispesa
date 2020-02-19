@@ -2,7 +2,6 @@ package websocket;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Vector;
 
 import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
@@ -13,7 +12,6 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-import javafx.util.Pair;
 import model.Message;
 
 @ServerEndpoint(value = "/user/chat/{username}", decoders = MessageDecoder.class, encoders = MessageEncoder.class)
@@ -27,7 +25,7 @@ public class ChatEndpoint {
 	private static HashMap<String, ChatEndpoint> userToAdminMap = new HashMap<>();
 	private static HashMap<String, ChatEndpoint> adminToUserMap = new HashMap<>();
 	private static HashMap<ChatEndpoint, String> adminIdMap = new HashMap<>();
-	private static Vector<ChatEndpoint> availableAdmins = new Vector<>();
+	//private static Vector<ChatEndpoint> availableAdmins = new Vector<>();
 
 	@OnOpen
 	public void onOpen(Session session, @PathParam("username") String username) throws IOException, EncodeException {
@@ -38,7 +36,8 @@ public class ChatEndpoint {
 		// Se sono un admin, mi metto in attesa
 		if (username.contains("admin")) {
 			//System.out.println("Sono un admin (id " + session.getId() + ") che si mette a disposizione");
-			availableAdmins.add(this);
+			EndpointBroker.getInstance().addAdmin(this);
+			//availableAdmins.add(this);
 			System.out.println("Ho aggiunto " + this + " alla queue di disponibili");
 			adminIdMap.put(this, session.getId());
 			adminToUserMap.put(session.getId(), this);
@@ -46,7 +45,7 @@ public class ChatEndpoint {
 			// Se sono un customer, chiedo aiuto al primo admin che trovo
 			// Assumo che troverò sempre un admin a disposizione
 			System.out.println("Sono un cliente (id " + session.getId() + ") che chiede aiuto");
-			ChatEndpoint adminEndpoint = availableAdmins.remove(0);
+			ChatEndpoint adminEndpoint = EndpointBroker.getInstance().takeAdmin();
 			System.out.println("Ho rimosso " + adminEndpoint + " dalla queue di disponibili");
 			userToAdminMap.put(session.getId(), adminEndpoint);
 			adminToUserMap.put(adminIdMap.get(adminEndpoint), this);
@@ -78,7 +77,7 @@ public class ChatEndpoint {
 		ChatEndpoint adminLiberato = userToAdminMap.get(session.getId());
 		if (adminLiberato != null) {
 			System.out.println("Uno user sta chiudendo la connessione");
-			availableAdmins.add(adminLiberato);
+			EndpointBroker.getInstance().addAdmin(adminLiberato);
 			System.out.println("Ho riaggiunto " + adminLiberato + " alla queue di disponibili");
 			userToAdminMap.remove(session.getId());
 			Message message = new Message();

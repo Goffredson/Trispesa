@@ -1,7 +1,5 @@
 package websocket;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Vector;
 
 import model.Customer;
@@ -9,7 +7,7 @@ import model.Customer;
 public class EndpointBroker {
 
 	private static Vector<ChatEndpoint> availableAdmins = null;
-	private static Set<Customer> queuedCustomers = null;
+	private static Vector<Customer> queuedCustomers = null;
 	private static EndpointBroker instance = null;
 
 	public static EndpointBroker getInstance() {
@@ -20,16 +18,16 @@ public class EndpointBroker {
 
 	private EndpointBroker() {
 		availableAdmins = new Vector<>();
-		queuedCustomers = new HashSet<>();
+		queuedCustomers = new Vector<>();
 	}
 
 	public int processCustomer(Customer customer) {
 		int retVal = 0;
 		if (availableAdmins.isEmpty()) {
 			System.out.println("No admin disponibili");
-			// if (queuedCustomers.contains(customer) == false) {
-			queuedCustomers.add(customer);
-			// }
+			if (queuedCustomers.contains(customer) == false) {
+				queuedCustomers.add(customer);
+			}
 			int nCustomerBeforeThis = 1;
 			for (Customer c : queuedCustomers) {
 				if (c.equals(customer))

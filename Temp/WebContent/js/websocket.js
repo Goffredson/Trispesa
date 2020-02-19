@@ -11,7 +11,10 @@ function connect(username) {
 		var log = document.getElementById("log");
 		console.log(event.data);
 		var message = JSON.parse(event.data);
-		log.innerHTML += message.from + " : " + message.content + "\n";
+		if (message.content === "Disconnesso.")
+			log.innerHTML = "Disconnesso.";
+		else
+			log.innerHTML += message.from + " : " + message.content + "\n";
 	};
 }
 
@@ -19,7 +22,7 @@ function send(username) {
 	var content = document.getElementById("msg").value;
 	var json = JSON.stringify({
 		"content" : content,
-		"from": username
+		"from" : username
 	});
 	log.innerHTML += username + " : " + content + "\n";
 

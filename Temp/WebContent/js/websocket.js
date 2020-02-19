@@ -1,27 +1,27 @@
 var ws;
 
-function connect() {
-    var username = document.getElementById("username").value;
-    
-    //var host = document.location.host;
-    //var pathname = document.location.pathname;
-    
-    ws = new WebSocket("ws://localhost:8080/Trispesa/user/chat/" + username);
+function connect(username) {
 
-    ws.onmessage = function(event) {
-    var log = document.getElementById("log");
-        console.log(event.data);
-        var message = JSON.parse(event.data);
-        log.innerHTML += message.from + " : " + message.content + "\n";
-    };
+	// var host = document.location.host;
+	// var pathname = document.location.pathname;
+
+	ws = new WebSocket("ws://localhost:8080/Trispesa/user/chat/" + username);
+
+	ws.onmessage = function(event) {
+		var log = document.getElementById("log");
+		console.log(event.data);
+		var message = JSON.parse(event.data);
+		log.innerHTML += message.from + " : " + message.content + "\n";
+	};
 }
 
-function send() {
-    var content = document.getElementById("msg").value;
-    var json = JSON.stringify({
-        "content":content
-    });
-    log.innerHTML += username + " : " + content + "\n";
+function send(username) {
+	var content = document.getElementById("msg").value;
+	var json = JSON.stringify({
+		"content" : content,
+		"from": username
+	});
+	log.innerHTML += username + " : " + content + "\n";
 
-    ws.send(json);
+	ws.send(json);
 }

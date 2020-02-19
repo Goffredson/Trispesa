@@ -37,7 +37,6 @@ public class DBManager {
 
 	private static DBManager istance = null;
 	private static DataSource dataSource = null;
-	private static Vector<String> adminsAvailable = null;
 
 	public static DBManager getInstance() {
 		if (istance == null)
@@ -50,7 +49,6 @@ public class DBManager {
 			Class.forName("org.postgresql.Driver").newInstance();
 			dataSource = new DataSource("jdbc:postgresql://rogue.db.elephantsql.com:5432/zqnyocaq", "zqnyocaq",
 					"DJ8nD9eyeT4VjZAvTnAvUDcc-ExoZTN_");
-			adminsAvailable = new Vector<String>();
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -60,10 +58,6 @@ public class DBManager {
 		return new AdministratorDaoJdbc(dataSource);
 	}
 
-	public Vector<String> getAdminsAvailable() {
-		return adminsAvailable;
-	}
-	
 	public CategoryDao getCategoryDao() {
 		return new CategoryDaoJdbc(dataSource);
 	}

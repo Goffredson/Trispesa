@@ -58,7 +58,7 @@
 									data-sitekey="6Lc1aNkUAAAAAPqQpuwuHaujwOzeV5Yda8EIeljO"
 									data-callback="enableButton"></div>
 
-								<button type="submit" id="authButton" disabled
+								<button type="submit" id="authButton" 
 									class="btn color-scheme" value="Autenticati">
 									Autenticati</button>
 

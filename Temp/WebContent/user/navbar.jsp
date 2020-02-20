@@ -6,8 +6,12 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- api google login -->
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src="../js/login.js"></script>
+<meta name="google-signin-client_id"
+	content="1050449629834-c2tein318v6mi0jq29cs52807l2le00s.apps.googleusercontent.com">
 </head>
-
 <!-- Navbar principale  -->
 <nav id="nav"
 	class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -67,6 +71,7 @@
 								data-target="#modalLogin">Effettua registrazione</a> <a
 								class="dropdown-item" data-toggle="modal"
 								data-target="#recoveryModal" href="#">Password dimenticata?</a>
+							<div class="g-signin2" id="googleLogin" data-onsuccess="onSignIn"></div>
 						</div>
 					</div>
 				</li>
@@ -122,10 +127,11 @@
 								placeholder="Cognome">
 						</div>
 					</div>
-					<input required type="email" name="email" class="form-control mb-4"
-						placeholder="E-mail"> <input required type="text"
-						name="username" class="form-control mb-4" placeholder="Username">
-					<input pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required
+					<input required type="email" id="email" name="email"
+						class="form-control mb-4" placeholder="E-mail"> <input
+						required type="text" name="username" class="form-control mb-4"
+						placeholder="Username"> <input
+						pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required
 						type="password" name="password" class="form-control"
 						placeholder="Password"> <small id="passwordHelp"
 						class="form-text text-muted mb-4"> Almeno un numero, una

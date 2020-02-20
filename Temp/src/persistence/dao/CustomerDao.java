@@ -51,4 +51,6 @@ public interface CustomerDao {
 
 	public void updatePassword(String username, String newPassword);
 
+	public Customer getCustomer(String email);
+
 }

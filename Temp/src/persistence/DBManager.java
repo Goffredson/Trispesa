@@ -429,4 +429,8 @@ public class DBManager {
 		getCustomerDao().updatePassword(username, newPassword);
 		
 	}
+
+	public Customer getCustomer(String email) {
+		return getCustomerDao().getCustomer(email);
+	}
 }

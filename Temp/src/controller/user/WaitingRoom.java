@@ -24,7 +24,7 @@ public class WaitingRoom extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		Customer customer = (Customer) req.getSession().getAttribute("customer");
-		System.out.println("ENTRA IN SERVLET " + customer.getUsername() + " con attributi");
+		System.out.println("doPost WaitingRoom: " + customer.getUsername());
 		if (req.getParameter("operation").equals("add")) {
 			int nQueuedCustomers = 0;
 			nQueuedCustomers = EndpointBroker.getInstance().processCustomer(customer);

@@ -10,6 +10,7 @@ public class EndpointBroker {
 	private static EndpointBroker instance = null;
 	private Vector<ChatEndpoint> availableAdmins = null;
 	private Vector<Customer> queuedCustomers = null;
+	private Vector<ChatEndpoint> transitionAdmins = null;
 	private ReentrantLock rLock = null;
 
 	public static EndpointBroker getInstance() {
@@ -21,6 +22,7 @@ public class EndpointBroker {
 	private EndpointBroker() {
 		availableAdmins = new Vector<>();
 		queuedCustomers = new Vector<>();
+		transitionAdmins = new Vector<>();
 		rLock = new ReentrantLock();
 	}
 
@@ -42,7 +44,7 @@ public class EndpointBroker {
 				retVal = nCustomerBeforeThis;
 			} else {
 				System.out.println("Admin disponibili");
-				//queuedCustomers.remove(customer);
+				transitionAdmins.add(availableAdmins.remove(0));
 			}
 			return retVal;
 		} finally {
@@ -53,7 +55,7 @@ public class EndpointBroker {
 	public ChatEndpoint takeAdmin() {
 		rLock.lock();
 		try {
-			return availableAdmins.remove(0);
+			return transitionAdmins.remove(0);
 		} finally {
 			rLock.unlock();
 		}
@@ -62,6 +64,7 @@ public class EndpointBroker {
 	public void addAdmin(ChatEndpoint adminEndpoint) {
 		rLock.lock();
 		try {
+			System.out.println("Aggiungo in availableAdmins " + adminEndpoint);
 			availableAdmins.add(adminEndpoint);
 		} finally {
 			rLock.unlock();

@@ -19,27 +19,25 @@ public class WaitingRoom extends HttpServlet {
 		RequestDispatcher rd = req.getRequestDispatcher("waitingRoom.jsp");
 		rd.forward(req, resp);
 	}
-	
+
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		Customer customer = (Customer) req.getSession().getAttribute("customer");
-		System.out.println("Entra " + customer.getUsername());
+		System.out.println("ENTRA IN SERVLET " + customer.getUsername() + " con attributi");
 		if (req.getParameter("operation").equals("add")) {
 			int nQueuedCustomers = 0;
-			synchronized(this) {
-				nQueuedCustomers = EndpointBroker.getInstance().processCustomer(customer);				
-			}
+			nQueuedCustomers = EndpointBroker.getInstance().processCustomer(customer);
 			String response = "{\"nQueued\" : " + nQueuedCustomers + "}";
-			System.out.println("e si prende " + response); 
+			System.out.println("e si prende " + response);
 			PrintWriter out = resp.getWriter();
 			resp.setCharacterEncoding("UTF-8");
 			resp.setContentType("application/json");
 			out.print(response);
-			out.flush();			
-		}
-		else {
+			out.flush();
+		} else if(req.getParameter("operation").equals("remove")) {
 			EndpointBroker.getInstance().cancelCustomerProcessing(customer);
 		}
 	}
-	
+
 }

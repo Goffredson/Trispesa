@@ -52,7 +52,7 @@
 						} else {
 							$("#nQueued").html(response.nQueued);
 						}
-					}
+					},
 				});
 			}, 3000);
 		});

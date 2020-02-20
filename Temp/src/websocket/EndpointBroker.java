@@ -1,14 +1,16 @@
 package websocket;
 
 import java.util.Vector;
+import java.util.concurrent.locks.ReentrantLock;
 
 import model.Customer;
 
 public class EndpointBroker {
 
-	private static Vector<ChatEndpoint> availableAdmins = null;
-	private static Vector<Customer> queuedCustomers = null;
 	private static EndpointBroker instance = null;
+	private Vector<ChatEndpoint> availableAdmins = null;
+	private Vector<Customer> queuedCustomers = null;
+	private ReentrantLock rLock = null;
 
 	public static EndpointBroker getInstance() {
 		if (instance == null)
@@ -19,41 +21,61 @@ public class EndpointBroker {
 	private EndpointBroker() {
 		availableAdmins = new Vector<>();
 		queuedCustomers = new Vector<>();
+		rLock = new ReentrantLock();
 	}
 
-	public synchronized int processCustomer(Customer customer) {
-		int retVal = 0;
-		if (availableAdmins.isEmpty()) {
-			System.out.println("No admin disponibili");
-			if (queuedCustomers.contains(customer) == false) {
-				queuedCustomers.add(customer);
+	public int processCustomer(Customer customer) {
+		rLock.lock();
+		try {
+			int retVal = 0;
+			if (availableAdmins.isEmpty()) {
+				System.out.println("No admin disponibili");
+				if (queuedCustomers.contains(customer) == false) {
+					queuedCustomers.add(customer);
+				}
+				int nCustomerBeforeThis = 1;
+				for (Customer c : queuedCustomers) {
+					if (c.equals(customer))
+						break;
+					nCustomerBeforeThis++;
+				}
+				retVal = nCustomerBeforeThis;
+			} else {
+				System.out.println("Admin disponibili");
+				//queuedCustomers.remove(customer);
 			}
-			int nCustomerBeforeThis = 1;
-			for (Customer c : queuedCustomers) {
-				if (c.equals(customer))
-					break;
-				nCustomerBeforeThis++;
-			}
-			retVal = nCustomerBeforeThis;
-		} else {
-			System.out.println("Admin disponibili");
-			queuedCustomers.remove(customer);
+			return retVal;
+		} finally {
+			rLock.unlock();
 		}
-		return retVal;
 	}
 
 	public ChatEndpoint takeAdmin() {
-		return availableAdmins.remove(0);
+		rLock.lock();
+		try {
+			return availableAdmins.remove(0);
+		} finally {
+			rLock.unlock();
+		}
 	}
 
 	public void addAdmin(ChatEndpoint adminEndpoint) {
-		availableAdmins.add(adminEndpoint);
+		rLock.lock();
+		try {
+			availableAdmins.add(adminEndpoint);
+		} finally {
+			rLock.unlock();
+		}
 	}
 
 	public void cancelCustomerProcessing(Customer customer) {
-		queuedCustomers.remove(customer);
-		System.out.println("Ho rimosso " + customer.getUsername());
-
+		rLock.lock();
+		try {
+			queuedCustomers.remove(customer);
+			System.out.println("Ho rimosso " + customer.getUsername());
+		} finally {
+			rLock.unlock();
+		}
 	}
 
 }

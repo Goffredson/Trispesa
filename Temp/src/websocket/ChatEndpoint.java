@@ -84,7 +84,7 @@ public class ChatEndpoint {
 			userToAdminMap.remove(session.getId());
 			Message message = new Message();
 			message.setFrom(session.getId());
-			message.setContent("Disconnesso.");
+			message.setContent("DISCONNECTED");
 			adminLiberato.session.getBasicRemote().sendObject(message);
 		}
 			

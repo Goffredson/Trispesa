@@ -10,9 +10,10 @@ function connect(username) {
 		var log = document.getElementById("log");
 		console.log(event.data);
 		var message = JSON.parse(event.data);
-		if (message.content === "Disconnesso.")
-			alert("Qui compare spinner fin quando non trovo un altro");
+		if (message.content === "DISCONNECTED") 
+			$('#adminOnlyModal').modal('show');
 		else {
+			$('#adminOnlyModal').modal('hide');
 			var receivedMessage = '<div class="incoming_msg">' + '<div class="incoming_msg_img">'
 					+ '<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"></div>' + '<div class="received_msg">'
 					+ '<div class="received_withd_msg">' + '<p style="background-color: #e9b96e;">' + message.content + '</p>' + '<span class="time_date">' + message.date + " | "

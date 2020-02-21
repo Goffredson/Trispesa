@@ -43,6 +43,7 @@
 <link href="../css/owl.theme.default.css" rel="stylesheet" />
 <link href="../css/main.css" rel="stylesheet">
 <link href="../css/faq.css" rel="stylesheet">
+<link href="../css/order-form.css" rel="stylesheet">
 
 <script>
 	$(function() {
@@ -57,6 +58,13 @@
 	<script>
 		$(document).ready(function() {
 			connect($("#username").val());
+			if ($("#username").val().includes("admin")) {
+				$("#centerIcon").attr("src", "../images/admin.png");
+				$("#firstTitle").html("Aiuta un cliente");
+				$("#secondTitle").html("Aiuta sto cliente bla bla loren ipsum sit ecc.");
+				$('#adminOnlyModal').modal('show');
+			}
+
 			$("#sendBox").on('keypress', function(e) {
 				if (e.which == 13) {
 					send($('#username').val());
@@ -69,11 +77,11 @@
 	<!-- Chiusura navbar principale -->
 	<div class="container">
 		<div class="py-5 text-center">
-			<img class="d-block mx-auto mb-4" src="../images/chat.png" alt=""
-				width="128" height="128">
-			<h2>Qual è il problema?</h2>
-			<p style="font-size: medium;">Parlaci del tuo problema problema
-				qui sotto, e lo risolveremo il prima possibile.</p>
+			<img id="centerIcon" class="d-block mx-auto mb-4"
+				src="../images/chat.png" alt="" width="128" height="128">
+			<h2 id="firstTitle">Qual è il problema?</h2>
+			<p id="secondTitle" style="font-size: medium;">Parlaci del tuo
+				problema problema qui sotto, e lo risolveremo il prima possibile.</p>
 			<p class="lead"></p>
 		</div>
 
@@ -84,8 +92,8 @@
 				<div class="msg_history" id="msgHistory"></div>
 				<div class="type_msg">
 					<div class="input_msg_write">
-						<input type="text" class="write_msg" style="outline-width: 0;" id="sendBox"
-							placeholder="Type a message" />
+						<input type="text" class="write_msg" style="outline-width: 0;"
+							id="sendBox" placeholder="Type a message" />
 						<button class="msg_send_btn" onclick="send($('#username').val());"
 							type="button">
 							<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
@@ -95,6 +103,29 @@
 			</div>
 		</div>
 
+	</div>
+
+	<div id="adminOnlyModal" class="modal fade">
+		<div class="modal-dialog modal-confirm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="icon-box">
+						<i class="material-icons">&#xE876;</i>
+					</div>
+					<h4 class="modal-title">Attendi</h4>
+				</div>
+				<div class="modal-body">
+					<p class="text-center">Aspetta un cliente</p>
+					<div class="spinner-border text-success" role="status">
+						<span class="sr-only">Loading...</span>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a href="home" class="btn color-scheme btn-block">Torna alla
+						home</a>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<div id="footerDiv"></div>

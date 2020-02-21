@@ -19,6 +19,50 @@ function passwordRecovery(username) {
 		}
 	});
 }
+function checkLoginFacebook(){
+	FB.getLoginStatus(function(response) {
+	    if(response.status=='connected'){
+	    	FB.login(function(response) {
+	    		}, {scope:'email'},{scope:'name'}
+	    		);
+	    	FB.api(
+	    			  '/me',
+	    			  'GET',
+	    			  {"fields":"email,name",},
+	    			  function(response) {
+	    				 name=response.name;
+	    			     email=response.email;
+	    			     operation="accessoFacebook";
+	    				    $.ajax({
+	    						type : "POST",
+	    						url : "effettuaLogin",
+	    						datatype : "JSON",
+	    						data : JSON.stringify([ email, operation ]),
+	    						success : function(response) {
+	    							if (response.redirect === true) {
+	    								$('#completaRegistrazione').toast('show');
+	    								$('#email').val(email);
+	    								$('#modalLogin').modal('show');
+	    							} else {
+	    								disableButton();
+	    								grecaptcha.reset();
+	    								startTimer(30 * 60, $("#timer"));
+	    								sessionStorage.setItem("remainingTime", 30 * 60);
+	    								$("#toastMessage").html(
+	    										"Bentornato in trispesa, " + name);
+	    								fillCartAfterLogin(response);
+	    								startTimer(30 * 60, $("#timer"));
+	    								$('#welcomeToast').toast('show');
+	    								updateNavbarDOM("login", 0);
+	    								$('#credenzialiErrate').hide();
+	    							}
+	    						}
+	    					});
+	    			  }
+	    			);
+	    }
+	  });
+}
 function onSignIn(googleUser) {
 	var profile = googleUser.getBasicProfile();
 	var operation = "loginGoogle"

@@ -75,7 +75,31 @@ public class Login extends HttpServlet {
 			outP.print(response);
 			outP.flush();
 
-		} else if (credentials.get(2).equals("login"))
+		}
+		else if (credentials.size() > 1 && credentials.get(1).equals("accessoFacebook")) {
+			String response = "{\"redirect\" : true}";
+			Customer customer = DBManager.getInstance().getCustomer(credentials.get(0));
+			req.getSession().setAttribute("customer", customer);
+			req.getSession().setMaxInactiveInterval(-1);
+			if (req.getSession().getAttribute("anonymousCart") != null) {
+				HashMap<Product, Long> anonymousCart = (HashMap<Product, Long>) req.getSession()
+						.getAttribute("anonymousCart");
+				// customer.setCart(anonymousCart);
+				DBManager.getInstance().fillCartFromAnonymous(customer, anonymousCart);
+				req.getSession().removeAttribute("anonymousCart");
+			}
+			if (customer != null) {
+				response = gson.toJson(customer.getCart(), new TypeToken<HashMap<Product, Long>>() {
+				}.getType());
+			}
+			PrintWriter outP = resp.getWriter();
+			resp.setContentType("application/json");
+			resp.setCharacterEncoding("UTF-8");
+			outP.print(response);
+			outP.flush();
+
+		}
+		else if (credentials.get(2).equals("login"))
 
 		{
 //			String url = "https://www.google.com/recaptcha/api/siteverify",

@@ -58,7 +58,7 @@
 <link href="../css/main.css" rel="stylesheet">
 </head>
 
-<body class="bg-light" onload="signOut();">
+<body class="bg-light">
 	<!-- Navbar principale  -->
 	<jsp:include page="navbar.jsp"></jsp:include>
 	<!-- Chiusura navbar principale -->

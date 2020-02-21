@@ -40,38 +40,38 @@
 </head>
 <body>
 	<script>
-		// 		$(window).on("unload", (function() {
-		// 			$.ajax({
-		// 				type : "POST",
-		// 				url : "waitingRoom",
-		// 				data : {
-		// 					operation : "remove"
-		// 				},
-		// 				async : false,
-		// 				success : function() {
-		// 				}
-		// 			});
-		// 		}));
-		// 		$(document).ready(function() {
-		// 			intervalId = setInterval(function() {
-		// 				$.ajax({
-		// 					type : "POST",
-		// 					url : "waitingRoom",
-		// 					data : {
-		// 						operation : "add"
-		// 					},
-		// 					async : false,
-		// 					success : function(response) {
-		// 						if (response.nQueued === 0) {
-		// 							clearInterval(intervalId);
-		// 							window.location.href = "chat";
-		// 						} else {
-		// 							$("#nQueued").html(response.nQueued);
-		// 						}
-		// 					},
-		// 				});
-		// 			}, 3000);
-		// 		});
+		$(window).on("unload", (function() {
+			$.ajax({
+				type : "POST",
+				url : "waitingRoom",
+				data : {
+					operation : "remove"
+				},
+				async : false,
+				success : function() {
+				}
+			});
+		}));
+		$(document).ready(function() {
+			intervalId = setInterval(function() {
+				$.ajax({
+					type : "POST",
+					url : "waitingRoom",
+					data : {
+						operation : "add"
+					},
+					async : false,
+					success : function(response) {
+						if (response.nQueued === 0) {
+							clearInterval(intervalId);
+							window.location.href = "chat";
+						} else {
+							$("#nQueued").html(response.nQueued);
+						}
+					},
+				});
+			}, 3000);
+		});
 	</script>
 
 	<!-- Navbar principale  -->

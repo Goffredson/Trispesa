@@ -1,7 +1,6 @@
 var ws;
 
 function connect(username) {
-
 	// var host = document.location.host;
 	// var pathname = document.location.pathname;
 
@@ -12,19 +11,32 @@ function connect(username) {
 		console.log(event.data);
 		var message = JSON.parse(event.data);
 		if (message.content === "Disconnesso.")
-			log.innerHTML = "Disconnesso.";
-		else
-			log.innerHTML += message.from + " : " + message.content + "\n";
+			alert("Qui compare spinner fin quando non trovo un altro");
+		else {
+			var receivedMessage = '<div class="incoming_msg">' + '<div class="incoming_msg_img">'
+					+ '<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"></div>' + '<div class="received_msg">'
+					+ '<div class="received_withd_msg">' + '<p style="background-color: #e9b96e;">' + message.content + '</p>' + '<span class="time_date">' + message.date + " | "
+					+ message.from + '</span>' + '</div>' + '</div>' + '</div>';
+			$("#msgHistory").append(receivedMessage);
+		}
+		// log.innerHTML += message.from + " : " + message.content + "\n";
 	};
 }
 
 function send(username) {
-	var content = document.getElementById("msg").value;
+	var content = $("#sendBox").val();
+
 	var json = JSON.stringify({
 		"content" : content,
 		"from" : username
 	});
-	log.innerHTML += username + " : " + content + "\n";
+	var date = new Date();
+	var currentTime = date.getHours().toString() + date.getMinutes().toString();
+	var sentMessage = '<div class="outgoing_msg">' + '<div class="sent_msg">' + '<p>' + content
+	'</p>' + '<span class="time_date">' + currentTime + ' | ' + username + '</span>' + '</div>' + '</div>';
+	$("#sendBox").val("");
+	$("#msgHistory").append(sentMessage);
+	// log.innerHTML += username + " : " + content + "\n";
 
 	ws.send(json);
 }

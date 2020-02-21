@@ -1,5 +1,12 @@
+
+
+
 <html>
 <head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Trispesa</title>
 <!-- Inclusioni (bootstrap, JQuery, assets esterni)  -->
 <script src="../vendor/jquery/jquery.min.js"></script>
 <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -21,31 +28,76 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<title>Chat</title>
+<!-- Script -->
+<script src="../js/cart.js"></script>
+<script src="../js/login.js"></script>
+<script src="../js/animations.js"></script>
+<script src="../js/order.js"></script>
+<script src="../js/websocket.js"></script>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+	type="text/css" rel="stylesheet">
+<link href="../css/chat.css" rel="stylesheet">
+<link href="../css/owl.carousel.css" rel="stylesheet" />
+<link href="../css/footer.css" rel="stylesheet" />
+<link href="../css/owl.theme.default.css" rel="stylesheet" />
+<link href="../css/main.css" rel="stylesheet">
+<link href="../css/faq.css" rel="stylesheet">
+
+<script>
+	$(function() {
+		$("#footerDiv").load("footer.html");
+	});
+</script>
+
 </head>
 <body>
+	<input readonly type="text" id="username" style="display: none;"
+		value="${customer.username}" />
 	<script>
 		$(document).ready(function() {
 			connect($("#username").val());
+			$("#sendBox").on('keypress', function(e) {
+				if (e.which == 13) {
+					send($('#username').val());
+				}
+			});
 		});
 	</script>
-	<table>
-		<tr>
-			<td colspan="2"><input readonly type="text" id="username"
-				value="${customer.username}" />
-				<button type="button" onclick="connect();">Connect</button></td>
-		</tr>
-		<tr>
-			<td><textarea readonly="true" rows="10" cols="80" id="log"></textarea>
-			</td>
-		</tr>
-		<tr>
-			<td><input type="text" size="51" id="msg" placeholder="Message" />
-				<button type="button" onclick="send($('#username').val());">Send</button></td>
-		</tr>
-	</table>
+	<!-- Navbar principale  -->
+	<jsp:include page="navbar.jsp"></jsp:include>
+	<!-- Chiusura navbar principale -->
+	<div class="container">
+		<div class="py-5 text-center">
+			<img class="d-block mx-auto mb-4" src="../images/chat.png" alt=""
+				width="128" height="128">
+			<h2>Qual è il problema?</h2>
+			<p style="font-size: medium;">Parlaci del tuo problema problema
+				qui sotto, e lo risolveremo il prima possibile.</p>
+			<p class="lead"></p>
+		</div>
+
+	</div>
+	<div class="container">
+		<div class="messaging row justify-content-center">
+			<div class="mesgs">
+				<div class="msg_history" id="msgHistory"></div>
+				<div class="type_msg">
+					<div class="input_msg_write">
+						<input type="text" class="write_msg" style="outline-width: 0;" id="sendBox"
+							placeholder="Type a message" />
+						<button class="msg_send_btn" onclick="send($('#username').val());"
+							type="button">
+							<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div id="footerDiv"></div>
+
 </body>
-
-<script src="../js/websocket.js"></script>
-
 </html>

@@ -110,19 +110,21 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<div class="icon-box">
-						<i class="material-icons">&#xE876;</i>
+						<i class="material-icons">&#xE0B1;</i>
 					</div>
-					<h4 class="modal-title">Attendi</h4>
+					<h4 class="modal-title">In attesa di richieste d'aiuto</h4>
 				</div>
 				<div class="modal-body">
-					<p class="text-center">Aspetta un cliente</p>
-					<div class="spinner-border text-success" role="status">
-						<span class="sr-only">Loading...</span>
+					<p class="text-center">Questa finestrella scomparirà non appena
+						arriverà una richiesta d'aiuto da parte di un cliente.</p>
+					<div class="d-flex justify-content-center">
+						<div class="spinner-border text-success" role="status">
+							<span class="sr-only">Loading...</span>
+						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<a href="home" class="btn color-scheme btn-block">Torna alla
-						home</a>
+					<a href="home" class="btn color-scheme btn-block">Logout</a>
 				</div>
 			</div>
 		</div>

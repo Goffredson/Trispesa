@@ -55,7 +55,7 @@
 									data-callback="enableButton"></div>
 
 								<button type="submit" id="authButton" 
-									class="btn color-scheme" value="Autenticati">
+									class="btn color-scheme" disabled value="Autenticati">
 									Autenticati</button>
 
 							</form>

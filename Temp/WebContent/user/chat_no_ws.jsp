@@ -1,14 +1,13 @@
-<!doctype html>
-<html lang="en">
-<head>
 
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
-	integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy"
-	crossorigin="anonymous">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="../css/chat.css">
+
+
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Trispesa</title>
+<!-- Inclusioni (bootstrap, JQuery, assets esterni)  -->
 <script src="../vendor/jquery/jquery.min.js"></script>
 <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -34,25 +33,15 @@
 <script src="../js/login.js"></script>
 <script src="../js/animations.js"></script>
 <script src="../js/order.js"></script>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
-<link rel="stylesheet" href="../css/chat.css">
-<!-- CSS -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+	type="text/css" rel="stylesheet">
+<link href="../css/chat2.css" rel="stylesheet">
 <link href="../css/owl.carousel.css" rel="stylesheet" />
 <link href="../css/footer.css" rel="stylesheet" />
 <link href="../css/owl.theme.default.css" rel="stylesheet" />
 <link href="../css/main.css" rel="stylesheet">
-<jsp:include page="navbar.jsp"></jsp:include>
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-	crossorigin="anonymous"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-	crossorigin="anonymous"></script>
+<link href="../css/faq.css" rel="stylesheet">
 <script>
 	$(function() {
 		$("#footerDiv").load("footer.html");
@@ -60,126 +49,88 @@
 </script>
 </head>
 <body>
+	<!-- Navbar principale  -->
+	<jsp:include page="navbar.jsp"></jsp:include>
+	<!-- Chiusura navbar principale -->
 	<div class="container">
-		<div class="row mt-5">
-			<div
-				class="col-md-6 offset-md-3 col-sm-6 offset-sm-3 col-12 comments-main pt-4 rounded">
-				<ul class="p-0">
-					<li>
-						<div class="row comments mb-2">
-							<div class="col-md-2 col-sm-2 col-3 text-center user-img">
-								<img id="profile-photo"
-									src="http://nicesnippets.com/demo/man01.png"
-									class="rounded-circle" />
-							</div>
-							<div class="col-md-9 col-sm-9 col-9 comment rounded mb-2">
-								<h4 class="m-0">
-									<a href="#">Jacks David</a>
-								</h4>
-								<time class="text-white ml-3">1 hours ago</time>
-								<like></like>
-								<p class="mb-0 text-white">Thank you for visiting all the
-									way from New York.</p>
+		<div class="py-5 text-center">
+			<img class="d-block mx-auto mb-4" src="../images/chat.png" alt=""
+				width="128" height="128">
+			<h2>Qual è il problema?</h2>
+			<p style="font-size: medium;">Esponi il problema qui sotto, e lo risolveremo il prima possibile.</p>
+			<p class="lead"></p>
+		</div>
+
+	</div>
+	<div class="container">
+		<div class="messaging row justify-content-center">
+			<div class="mesgs">
+				<div class="msg_history">
+					<div class="incoming_msg">
+						<div class="incoming_msg_img">
+							<img src="https://ptetutorials.com/images/user-profile.png"
+								alt="sunil">
+						</div>
+						<div class="received_msg">
+							<div class="received_withd_msg">
+								<p>Test which is a new approach to have all solutions</p>
+								<span class="time_date"> 11:01 AM | June 9</span>
 							</div>
 						</div>
-					</li>
-					<ul class="p-0">
-						<li>
-							<div class="row comments mb-2">
-								<div
-									class="col-md-2 offset-md-2 col-sm-2 offset-sm-2 col-3 offset-1 text-center user-img">
-									<img id="profile-photo"
-										src="http://nicesnippets.com/demo/man02.png"
-										class="rounded-circle" />
-								</div>
-								<div class="col-md-7 col-sm-7 col-8 comment rounded mb-2">
-									<h4 class="m-0">
-										<a href="#">Steve Alex</a>
-									</h4>
-									<time class="text-white ml-3">1 week ago</time>
-									<like></like>
-									<p class="mb-0 text-white">Thank you for visiting all the
-										way from NYC.</p>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</ul>
-				<ul class="p-0">
-					<li>
-						<div class="row comments mb-2">
-							<div class="col-md-2 col-sm-2 col-3 text-center user-img">
-								<img id="profile-photo"
-									src="http://nicesnippets.com/demo/man03.png"
-									class="rounded-circle" />
-							</div>
-							<div class="col-md-9 col-sm-9 col-9 comment rounded mb-2">
-								<h4 class="m-0">
-									<a href="#">Andrew Filander</a>
-								</h4>
-								<time class="text-white ml-3">7 day ago</time>
-								<like></like>
-								<p class="mb-0 text-white">Thank you for visiting all the
-									way from New York.</p>
-							</div>
-						</div>
-					</li>
-					<ul class="p-0">
-						<li>
-							<div class="row comments mb-2">
-								<div
-									class="col-md-2 offset-md-2 col-sm-2 offset-sm-2 col-3 offset-1 text-center user-img">
-									<img id="profile-photo"
-										src="http://nicesnippets.com/demo/man04.png"
-										class="rounded-circle" />
-								</div>
-								<div class="col-md-7 col-sm-7 col-8 comment rounded mb-2">
-									<h4 class="m-0">
-										<a href="#">james Cordon</a>
-									</h4>
-									<time class="text-white ml-3">1 min ago</time>
-									<like></like>
-									<p class="mb-0 text-white">Thank you for visiting from an
-										unknown location.</p>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</ul>
-				<ul class="p-0">
-					<li>
-						<div class="row comments mb-2">
-							<div class="col-md-2 col-sm-2 col-3 text-center user-img">
-								<img id="profile-photo"
-									src="http://nicesnippets.com/demo/man01.png"
-									class="rounded-circle" />
-							</div>
-							<div class="col-md-9 col-sm-9 col-9 comment rounded mb-2">
-								<h4 class="m-0">
-									<a href="#">Tye Simmon</a>
-								</h4>
-								<time class="text-white ml-3">1 month ago</time>
-								<like></like>
-								<p class="mb-0 text-white">Thank you for visiting all the
-									way from New York.</p>
-							</div>
-						</div>
-					</li>
-				</ul>
-				<div class="row comment-box-main p-3 rounded-bottom">
-					<div class="col-md-9 col-sm-9 col-9 pr-0 comment-box">
-						<input type="text" class="form-control" placeholder="comment ...." />
 					</div>
-					<div class="col-md-3 col-sm-2 col-2 pl-0 text-center send-btn">
-						<button class="btn btn-info">Send</button>
+					<div class="outgoing_msg">
+						<div class="sent_msg">
+							<p>Test which is a new approach to have all solutions</p>
+							<span class="time_date"> 11:01 AM | June 9</span>
+						</div>
+					</div>
+					<div class="incoming_msg">
+						<div class="incoming_msg_img">
+							<img src="https://ptetutorials.com/images/user-profile.png"
+								alt="sunil">
+						</div>
+						<div class="received_msg">
+							<div class="received_withd_msg">
+								<p>Test, which is a new approach to have</p>
+								<span class="time_date"> 11:01 AM | Yesterday</span>
+							</div>
+						</div>
+					</div>
+					<div class="outgoing_msg">
+						<div class="sent_msg">
+							<p>Apollo University, Delhi, India Test</p>
+							<span class="time_date"> 11:01 AM | Today</span>
+						</div>
+					</div>
+					<div class="incoming_msg">
+						<div class="incoming_msg_img">
+							<img src="https://ptetutorials.com/images/user-profile.png"
+								alt="sunil">
+						</div>
+						<div class="received_msg">
+							<div class="received_withd_msg">
+								<p>We work directly with our designers and suppliers, and
+									sell direct to you, which means quality, exclusive products, at
+									a price anyone can afford.</p>
+								<span class="time_date"> 11:01 AM | Today</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="type_msg">
+					<div class="input_msg_write">
+						<input type="text" class="write_msg" placeholder="Type a message" />
+						<button class="msg_send_btn" type="button">
+							<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+						</button>
 					</div>
 				</div>
 			</div>
 		</div>
+
 	</div>
+
 	<div id="footerDiv"></div>
 
 </body>
-<script
-	src='https://cdnjs.cloudflare.com/ajax/libs/vue/0.12.14/vue.min.js'></script>
 </html>

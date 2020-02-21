@@ -36,6 +36,8 @@
 <script src="../js/login.js"></script>
 <script src="../js/animations.js"></script>
 <script src="../js/order.js"></script>
+
+
 <script> 
     $(function(){
       $("#footerDiv").load("footer.html"); 
@@ -164,6 +166,18 @@
 		</div>
 		<div class="toast-body" id="passwordRecoveredMessage">La tua
 			nuova password è stata mandata all'indirizzo:</div>
+	</div>
+	<div id="completaRegistrazione" class="toast notification-toast"
+		role="alert" aria-live="assertive" aria-atomic="true"
+		data-delay="5000">
+		<div class="toast-header color-scheme">
+			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
+			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="toast-body" id="passwordRecoveredMessage">Gentile cliente,deve prima completare la registrazione.</div>
 	</div>
 	<div id="passwordNotRecovered" class="toast notification-toast"
 		role="alert" aria-live="assertive" aria-atomic="true"

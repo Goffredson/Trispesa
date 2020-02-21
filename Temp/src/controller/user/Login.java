@@ -53,8 +53,55 @@ public class Login extends HttpServlet {
 		Type arrayListType = new TypeToken<ArrayList<String>>() {
 		}.getType();
 		ArrayList<String> credentials = gson.fromJson(jsonReceived.toString(), arrayListType);
+		if (credentials.size() > 1 && credentials.get(1).equals("loginGoogle")) {
+			String response = "{\"redirect\" : true}";
+			Customer customer = DBManager.getInstance().getCustomer(credentials.get(0));
+			req.getSession().setAttribute("customer", customer);
+			req.getSession().setMaxInactiveInterval(-1);
+			if (req.getSession().getAttribute("anonymousCart") != null) {
+				HashMap<Product, Long> anonymousCart = (HashMap<Product, Long>) req.getSession()
+						.getAttribute("anonymousCart");
+				// customer.setCart(anonymousCart);
+				DBManager.getInstance().fillCartFromAnonymous(customer, anonymousCart);
+				req.getSession().removeAttribute("anonymousCart");
+			}
+			if (customer != null) {
+				response = gson.toJson(customer.getCart(), new TypeToken<HashMap<Product, Long>>() {
+				}.getType());
+			}
+			PrintWriter outP = resp.getWriter();
+			resp.setContentType("application/json");
+			resp.setCharacterEncoding("UTF-8");
+			outP.print(response);
+			outP.flush();
 
-		if (credentials.get(2).equals("login")) {
+		}
+		else if (credentials.size() > 1 && credentials.get(1).equals("accessoFacebook")) {
+			String response = "{\"redirect\" : true}";
+			Customer customer = DBManager.getInstance().getCustomer(credentials.get(0));
+			req.getSession().setAttribute("customer", customer);
+			req.getSession().setMaxInactiveInterval(-1);
+			if (req.getSession().getAttribute("anonymousCart") != null) {
+				HashMap<Product, Long> anonymousCart = (HashMap<Product, Long>) req.getSession()
+						.getAttribute("anonymousCart");
+				// customer.setCart(anonymousCart);
+				DBManager.getInstance().fillCartFromAnonymous(customer, anonymousCart);
+				req.getSession().removeAttribute("anonymousCart");
+			}
+			if (customer != null) {
+				response = gson.toJson(customer.getCart(), new TypeToken<HashMap<Product, Long>>() {
+				}.getType());
+			}
+			PrintWriter outP = resp.getWriter();
+			resp.setContentType("application/json");
+			resp.setCharacterEncoding("UTF-8");
+			outP.print(response);
+			outP.flush();
+
+		}
+		else if (credentials.get(2).equals("login"))
+
+		{
 //			String url = "https://www.google.com/recaptcha/api/siteverify",
 //					params = "secret=6Lc1aNkUAAAAAEQNJ9j6TLniloNHkbKaMMBl5j4X" + "&response=" + credentials.get(3);
 //
@@ -80,7 +127,7 @@ public class Login extends HttpServlet {
 //			System.out.println(validationString);
 //			res.close();
 
-			//return json.getBoolean("success");
+			// return json.getBoolean("success");
 			Customer customer = DBManager.getInstance().checkIfCustomerExists(credentials.get(0), credentials.get(1));
 			Administrator administrator = DBManager.getInstance().checkIfAdministratorExists(credentials.get(0),
 					credentials.get(1));

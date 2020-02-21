@@ -665,4 +665,69 @@ public class CustomerDaoJdbc implements CustomerDao {
 		
 	}
 
+	@Override
+	public Customer getCustomer(String email) {
+		Connection connection = null;
+		Customer customer = null;
+		try {
+			connection = this.dataSource.getConnection();
+			String query = "select * from customer where email=?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, email);
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				ArrayList<DeliveryAddress> deliveryAddresses = new ArrayList<DeliveryAddress>();
+				ArrayList<PaymentMethod> paymentMethods = new ArrayList<PaymentMethod>();
+				HashMap<Product, Long> cart = new HashMap<Product, Long>();
+				customer = new Customer(resultSet.getLong("id"), resultSet.getString("username"),
+						resultSet.getString("password"), resultSet.getString("name"), resultSet.getString("surname"),
+						resultSet.getString("email"), resultSet.getDate("birth_date").toLocalDate(),
+						resultSet.getDate("registration_date").toLocalDate(), deliveryAddresses, paymentMethods, cart);
+				// retrieve all delivery addresses
+				String deliveryAddressesQuery = "select delivery_address from delivery_address_refers_to_customer where customer=?";
+				PreparedStatement deliveryAddressesStatement = connection.prepareStatement(deliveryAddressesQuery);
+				deliveryAddressesStatement.setLong(1, customer.getId());
+				ResultSet deliveryAddressesResultSet = deliveryAddressesStatement.executeQuery();
+				while (deliveryAddressesResultSet.next()) {
+					deliveryAddresses.add(new DeliveryAddressDaoJdbc(dataSource)
+							.retrieveByPrimaryKey(deliveryAddressesResultSet.getLong("delivery_address")));
+				}
+				// retrieve all payment methods
+				String paymentMethodsQuery = "select payment_method from payment_method_refers_to_customer where customer=?";
+				PreparedStatement paymentMethodsStatement = connection.prepareStatement(paymentMethodsQuery);
+				paymentMethodsStatement.setLong(1, customer.getId());
+				ResultSet paymentMethodsResultSet = paymentMethodsStatement.executeQuery();
+				while (paymentMethodsResultSet.next()) {
+					paymentMethods.add(new PaymentMethodDaoJdbc(dataSource)
+							.retrieveByPrimaryKey(paymentMethodsResultSet.getLong("payment_method")));
+				}
+
+				// retrieve the cart
+				String cartQuery = "select product, amount from cart where customer=?";
+				PreparedStatement cartStatement = connection.prepareStatement(cartQuery);
+				cartStatement.setLong(1, customer.getId());
+				ResultSet cartResultSet = cartStatement.executeQuery();
+				while (cartResultSet.next()) {
+					cart.put(new ProductDaoJdbc(dataSource).retrieveByPrimaryKey(cartResultSet.getLong("product")),
+							cartResultSet.getLong("amount"));
+				}
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		} finally {
+//			try {
+//				connection.close();
+//			} catch (SQLException e) {
+//				throw new RuntimeException(e.getMessage());
+//			}
+		}
+		return customer;
+	}
+
 }

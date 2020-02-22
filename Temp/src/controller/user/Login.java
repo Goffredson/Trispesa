@@ -76,7 +76,7 @@ public class Login extends HttpServlet {
 			outP.print(response);
 			outP.flush();
 
-		} else if (credentials.size() > 1 && credentials.get(1).equals("accessoFacebook")) {
+		} else if (credentials.get(1).equals("accessoFacebook")) {
 			String response = "{\"redirect\" : true}";
 			Customer customer = DBManager.getInstance().getCustomer(credentials.get(0));
 			req.getSession().setAttribute("customer", customer);

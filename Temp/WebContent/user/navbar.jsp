@@ -11,8 +11,10 @@
 <script src="../js/login.js"></script>
 <meta name="google-signin-client_id"
 	content="1050449629834-c2tein318v6mi0jq29cs52807l2le00s.apps.googleusercontent.com">
+<div id="fb-root"></div>
 <script async defer crossorigin="anonymous"
 	src="https://connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v6.0&appId=334210327485920&autoLogAppEvents=1"></script>
+
 <script>
 $(document).ready(function() {
   window.fbAsyncInit = function() {
@@ -83,9 +85,8 @@ $(document).ready(function() {
 									data-sitekey="6Lc1aNkUAAAAAPqQpuwuHaujwOzeV5Yda8EIeljO"
 									data-callback="enableButton"></div>
 
-								<button type="submit" id="authButton" 
-									class="btn color-scheme" disabled value="Autenticati">
-									Autenticati</button>
+								<button type="submit" id="authButton" class="btn color-scheme"
+									disabled value="Autenticati">Autenticati</button>
 
 
 							</form>
@@ -97,10 +98,9 @@ $(document).ready(function() {
 								data-target="#modalLogin">Effettua registrazione</a> <a
 								class="dropdown-item" data-toggle="modal"
 								data-target="#recoveryModal" href="#">Password dimenticata?</a>
-							<div class="fb-login-button" data-width="" data-size="medium"
-								data-button-type="continue_with" data-auto-logout-link="false"
-								data-use-continue-as="false"
-								data-onlogin="checkLoginFacebook();"></div>
+							<div class="fb-login-button" data-width="1" data-size="medium"
+								data-button-type="login_with" data-auto-logout-link="false"
+								data-use-continue-as="false" data-onlogin="checkLoginFacebook();"></div>
 
 							<div class="g-signin2" id="googleLogin" data-onsuccess="onSignIn"></div>
 
@@ -112,8 +112,8 @@ $(document).ready(function() {
 				<li class="nav-item py-0 login-dependent" id="dieta"><a
 					href="manageDiet" class="nav-link"><button type="button"
 							class="btn btn-primary diet-button" data-toggle="modal">Dieta</button></a></li>
-				<li class="nav-item py-0" id="faq"><a
-					href="faq" class="nav-link"><button type="button"
+				<li class="nav-item py-0" id="faq"><a href="faq"
+					class="nav-link"><button type="button"
 							class="btn btn-primary faq-button" data-toggle="modal">Aiuto</button></a></li>
 				<li class="nav-item py-0" id="logoutListItem"><input
 					type="button" id="logoutButton"

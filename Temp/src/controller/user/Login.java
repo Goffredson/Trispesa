@@ -38,6 +38,7 @@ import persistence.DBManager;
 
 public class Login extends HttpServlet {
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -75,8 +76,7 @@ public class Login extends HttpServlet {
 			outP.print(response);
 			outP.flush();
 
-		}
-		else if (credentials.size() > 1 && credentials.get(1).equals("accessoFacebook")) {
+		} else if (credentials.size() > 1 && credentials.get(1).equals("accessoFacebook")) {
 			String response = "{\"redirect\" : true}";
 			Customer customer = DBManager.getInstance().getCustomer(credentials.get(0));
 			req.getSession().setAttribute("customer", customer);
@@ -98,8 +98,7 @@ public class Login extends HttpServlet {
 			outP.print(response);
 			outP.flush();
 
-		}
-		else if (credentials.get(2).equals("login"))
+		} else if (credentials.get(2).equals("login"))
 
 		{
 //			String url = "https://www.google.com/recaptcha/api/siteverify",
@@ -129,27 +128,28 @@ public class Login extends HttpServlet {
 
 			// return json.getBoolean("success");
 			Customer customer = DBManager.getInstance().checkIfCustomerExists(credentials.get(0), credentials.get(1));
-			Administrator administrator = DBManager.getInstance().checkIfAdministratorExists(credentials.get(0),
-					credentials.get(1));
-
 			String response = "{\"redirect\" : true}";
 
 			if (customer != null) {
 				req.getSession().setAttribute("customer", customer);
 				req.getSession().setMaxInactiveInterval(-1);
+				
+				if (customer.getUsername().contains("admin")) {
+					response = "{\"redirect\" : true}";
+				} else {
 
-				if (req.getSession().getAttribute("anonymousCart") != null) {
-					HashMap<Product, Long> anonymousCart = (HashMap<Product, Long>) req.getSession()
-							.getAttribute("anonymousCart");
-					// customer.setCart(anonymousCart);
-					System.out.println("Faccio il fill");
-					DBManager.getInstance().fillCartFromAnonymous(customer, anonymousCart);
-					req.getSession().removeAttribute("anonymousCart");
+					if (req.getSession().getAttribute("anonymousCart") != null) {
+						HashMap<Product, Long> anonymousCart = (HashMap<Product, Long>) req.getSession()
+								.getAttribute("anonymousCart");
+						// customer.setCart(anonymousCart);
+						System.out.println("Faccio il fill");
+						DBManager.getInstance().fillCartFromAnonymous(customer, anonymousCart);
+						req.getSession().removeAttribute("anonymousCart");
+					}
+					response = gson.toJson(customer.getCart(), new TypeToken<HashMap<Product, Long>>() {
+					}.getType());
+
 				}
-				response = gson.toJson(customer.getCart(), new TypeToken<HashMap<Product, Long>>() {
-				}.getType());
-			} else if (administrator != null) {
-				req.getSession().setAttribute("administrator", administrator);
 			} else {
 				resp.sendError(401);
 			}

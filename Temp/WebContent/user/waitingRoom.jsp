@@ -89,6 +89,11 @@
 				Clienti in coda prima di te: <strong id="nQueued"></strong>
 			</p>
 			<p class="lead"></p>
+			<div class="d-flex justify-content-center">
+				<div class="spinner-border text-success" role="status">
+					<span class="sr-only">Loading...</span>
+				</div>
+			</div>
 		</div>
 
 	</div>

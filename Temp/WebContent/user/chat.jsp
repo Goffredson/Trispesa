@@ -1,4 +1,7 @@
 
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
 <html>
@@ -49,6 +52,10 @@
 	$(function() {
 		$("#footerDiv").load("footer.html");
 	});
+	function logoutAdmin() {
+		ajaxLog('logout', 500);
+		window.location.href = "home";
+	}
 </script>
 
 </head>
@@ -63,6 +70,8 @@
 				$("#firstTitle").html("Aiuta un cliente");
 				$("#secondTitle").html("Aiuta sto cliente bla bla loren ipsum sit ecc.");
 				$('#adminOnlyModal').modal('show');
+			} else {
+				$("#connectedToast").toast("show");
 			}
 
 			$("#sendBox").on('keypress', function(e) {
@@ -93,7 +102,7 @@
 				<div class="type_msg">
 					<div class="input_msg_write">
 						<input type="text" class="write_msg" style="outline-width: 0;"
-							id="sendBox" placeholder="Type a message" />
+							id="sendBox" placeholder="Scrivi un messaggio" />
 						<button class="msg_send_btn" onclick="send($('#username').val());"
 							type="button">
 							<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
@@ -124,10 +133,23 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<a href="home" class="btn color-scheme btn-block">Logout</a>
+					<button class="btn color-scheme btn-block" onclick="logoutAdmin();">Logout</button>
 				</div>
 			</div>
 		</div>
+	</div>
+
+	<div id="connectedToast" class="toast notification-toast" role="alert"
+		aria-live="assertive" aria-atomic="true" data-delay="5000">
+		<div class="toast-header color-scheme">
+			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
+			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="toast-body" id="toastMessage">Ora sei in contatto
+			con uno specialista.</div>
 	</div>
 
 	<div id="footerDiv"></div>

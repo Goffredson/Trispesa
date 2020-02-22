@@ -1,3 +1,8 @@
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -218,7 +223,18 @@
 					</div>
 				</div>
 				<div class="tab-pane" id="tab4">
-					<a href="waitingRoom" role="button" class="btn color-scheme btn-lg btn-block">Contattaci via Live Chat</a>
+					<c:if test="${customer != null}">
+						<a href="waitingRoom" id="waitingRoomAnchor" role="button"
+							class="btn color-scheme btn-lg btn-block">Contattaci
+							via Live Chat</a>
+
+					</c:if>
+					<c:if test="${customer == null}">
+						<a href="waitingRoom" id="waitingRoomAnchor" role="button"
+							class="btn color-scheme btn-lg btn-block disabled-live-chat">Contattaci
+							via Live Chat</a>
+
+					</c:if>
 
 				</div>
 			</div>

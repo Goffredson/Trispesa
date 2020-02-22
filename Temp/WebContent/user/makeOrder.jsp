@@ -144,90 +144,85 @@
 						var itemsInCart = [];
 						$("#listaProdottiCarrello").children().each(function() {
 							var productPrice = $(this).find("#productPrice").html();
+							var qty = $(this).find("#productQuantity").html();
 							// Simbolo dell'euro
 							productPrice = productPrice.replace(/\u20AC/g, "");
+							productPrice /= qty;
 							var product = {
-									name: $(this).find("#productName").html(),
-									quantity: $(this).find("#productQuantity").html(),
-									description: "La marca", 
-									price: productPrice,
-									currency: 'EUR'
+								name : $(this).find("#productName").html(),
+								quantity : qty,
+								description : "La marca",
+								price : productPrice,
+								currency : 'EUR'
 							};
 							itemsInCart.push(product);
 						});
-						paypal.Button
-								.render(
-										{
-											// Configure environment
-											env : 'sandbox',
-											client : {
-												sandbox : 'demo_sandbox_client_id',
-												production : 'demo_production_client_id'
-											},
-											// Customize button (optional)
-											locale : 'it_IT',
-											style : {
-												size : 'small',
-												color : 'silver',
-												shape : 'pill',
-											},
+						paypal.Button.render({
+							// Configure environment
+							env : 'sandbox',
+							client : {
+								sandbox : 'demo_sandbox_client_id',
+								production : 'demo_production_client_id'
+							},
+							// Customize button (optional)
+							locale : 'it_IT',
+							style : {
+								size : 'small',
+								color : 'silver',
+								shape : 'pill',
+							},
 
-											// Enable Pay Now checkout flow (optional)
-											commit : true,
+							// Enable Pay Now checkout flow (optional)
+							commit : true,
 
-											// Set up a payment
-											payment : function(data, actions) {
-												return actions.payment
-														.create({
-															transactions : [ {
-																amount : {
-																	total : $("#cartPrice").html().substring(0, $("#cartPrice").html().length-1),
-																	currency : 'EUR',
-																	details : {
-																		subtotal : $("#cartPrice").html().substring(0, $("#cartPrice").html().length-1),
-																		shipping : '0.00',
-																	//	handling_fee : '1.00',
-																	//	shipping_discount : '-1.00',
-																	//	insurance : '0.01'
-																	}
-																},
-																description : 'Ordine TriSpesa via PayPal',
-																//custom : '90048630024435',
-																invoice_number: '12345',
-																payment_options : {
-																	allowed_payment_method : 'INSTANT_FUNDING_SOURCE'
-																},
-																//soft_descriptor : 'ECHI5786786',
-																item_list : {
-																	items : itemsInCart,
-																	shipping_address : {
-																		recipient_name : $("#firstName").val() + " " + $("#lastName").val(),
-																		line1 : $('#selectAddress').find(":selected").text().split(",")[0],
-																		line2 : $('#selectAddress').find(":selected").text().split(",")[1],
-																		city : $('#selectAddress').find(":selected").text().split(",")[3],
-																		country_code : 'IT',
-																		postal_code : $('#selectAddress').find(":selected").attr("data-address-zipcode"),
-																		//phone : '011862212345678',
-																		//state : 'CA'
-																	}
-																}
-															} ],
-															note_to_payer : 'Grazie per aver scelto TriSpesa.'
-														});
-											},
-											// Execute the payment
-											onAuthorize : function(data,
-													actions) {
-												return actions.payment
-														.execute()
-														.then(
-																function() {
-																	// Show a confirmation message to the buyer
-																	window
-																			.alert('deve partire il modale con la spunta verde');
-																});
+							// Set up a payment
+							payment : function(data, actions) {
+								return actions.payment.create({
+									transactions : [ {
+										amount : {
+											total : $("#cartPrice").html().substring(0, $("#cartPrice").html().length - 1),
+											currency : 'EUR',
+											details : {
+												subtotal : $("#cartPrice").html().substring(0, $("#cartPrice").html().length - 1),
+												shipping : '0.00',
+											//	handling_fee : '1.00',
+											//	shipping_discount : '-1.00',
+											//	insurance : '0.01'
 											}
-										}, '#paypal-button');
+										},
+										description : 'Ordine TriSpesa via PayPal',
+										//custom : '90048630024435',
+
+										
+										//soft_descriptor : 'ECHI5786786',
+										item_list : {
+											items : itemsInCart,
+											shipping_address : {
+												recipient_name : $("#firstName").val() + " " + $("#lastName").val(),
+												line1 : $('#selectAddress').find(":selected").text().split(",")[0],
+												line2 : $('#selectAddress').find(":selected").text().split(",")[1],
+												city : $('#selectAddress').find(":selected").text().split(",")[3],
+												country_code : 'IT',
+												postal_code : $('#selectAddress').find(":selected").attr("data-address-zipcode"),
+											//phone : '011862212345678',
+											//state : 'CA'
+											}
+										}
+									} ],
+									application_context : {
+										brand_name : 'TriSpesa Staff'
+									},
+									note_to_payer : 'Grazie per aver scelto TriSpesa.',
+								});
+							},
+							// Execute the payment
+							onAuthorize : function(data, actions) {
+								return actions.payment.execute().then(function() {
+									// Show a confirmation message to the buyer
+									window.alert('deve partire il modale con la spunta verde');
+								});
+							}
+						}, '#paypal-button');
 					</script>
 					<div class="mb-3">
 						<div class="form-group">
@@ -261,8 +256,9 @@
 						<h4 class="modal-title">Ordine confermato</h4>
 					</div>
 					<div class="modal-body">
-						<p class="text-center">La conferma dell'ordine è stata inviata
-							via mail. Il riepilogo è disponibile nella sezione ordini</p>
+						<p class="text-center">La conferma dell'ordine è stata
+							inviata via mail. Il riepilogo è disponibile nella sezione
+							ordini</p>
 					</div>
 					<div class="modal-footer">
 						<a href="home" class="btn btn-success btn-block">Torna alla

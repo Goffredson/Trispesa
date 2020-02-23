@@ -36,7 +36,11 @@ function checkLoginFacebook() {
 					data : JSON.stringify([ email, operation ]),
 					success : function(response) {
 						if (response.redirect === true) {
+							user=name.split(" ");
 							$('#email').val(email);
+							$('#firstName').val(user[0]);
+							$('#lastName').val(user[1]);
+							$('#birthDate').val(birthDate);
 							$('#completaRegistrazione').toast('show');
 							$('#modalLogin').modal('show');
 						} else {

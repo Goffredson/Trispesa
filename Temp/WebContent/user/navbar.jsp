@@ -156,11 +156,11 @@ $(document).ready(function() {
 					method="post" name="registrationForm">
 					<div class="form-row mb-4">
 						<div class="col">
-							<input type="text" name="firstName" class="form-control"
+							<input type="text" id="firstName" name="firstName" class="form-control"
 								placeholder="Nome">
 						</div>
 						<div class="col">
-							<input type="text" name="lastName" class="form-control"
+							<input type="text" name="lastName" id="lastName" class="form-control"
 								placeholder="Cognome">
 						</div>
 					</div>
@@ -173,7 +173,7 @@ $(document).ready(function() {
 						placeholder="Password"> <small id="passwordHelp"
 						class="form-text text-muted mb-4"> Almeno un numero, una
 						maiuscola e una minuscola, 8 caratteri</small> <input required type="text"
-						placeholder="Data di nascita" name="birthDate"
+						placeholder="Data di nascita" name="birthDate" id="birthDate"
 						onfocus="(this.type='date')" onblur="(this.type='text')"
 						class="form-control">
 					<div class="d-flex justify-content-center" style="margin-top: 10px; margin-bottom: 10px;">

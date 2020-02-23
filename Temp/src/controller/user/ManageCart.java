@@ -22,6 +22,7 @@ import persistence.DBManager;
 
 public class ManageCart extends HttpServlet {
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -86,6 +87,7 @@ public class ManageCart extends HttpServlet {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		StringBuffer jsonReceived = new StringBuffer();
@@ -109,9 +111,11 @@ public class ManageCart extends HttpServlet {
 			anonymousCart.clear();
 		}
 		else {
-			Customer customer = (Customer) req.getSession().getAttribute("customer");
-			customer.getCart().clear();
-			DBManager.getInstance().emptyCustomerCart(customer.getId());
+			if (req.getSession().getAttribute("customer") != null) {
+				Customer customer = (Customer) req.getSession().getAttribute("customer");
+				customer.getCart().clear();
+				DBManager.getInstance().emptyCustomerCart(customer.getId());				
+			}
 		}
 		
 		

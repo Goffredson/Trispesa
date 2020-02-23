@@ -81,7 +81,7 @@ $(document).ready(function() {
 										type="password" class="form-control" id="inputPassword"
 										placeholder="Password">
 								</div>
-								<div class="g-recaptcha"
+								<div class="g-recaptcha custom-recaptcha"
 									data-sitekey="6Lc1aNkUAAAAAPqQpuwuHaujwOzeV5Yda8EIeljO"
 									data-callback="enableButton"></div>
 
@@ -100,9 +100,12 @@ $(document).ready(function() {
 								data-target="#recoveryModal" href="#">Password dimenticata?</a>
 							<div class="fb-login-button" data-width="1" data-size="medium"
 								data-button-type="login_with" data-auto-logout-link="false"
-								data-use-continue-as="false" data-onlogin="checkLoginFacebook();"></div>
+								data-use-continue-as="false"
+								data-onlogin="checkLoginFacebook();"></div>
 
-							<div class="g-signin2" id="googleLogin" data-onsuccess="onSignIn"></div>
+							<div class="g-signin2" id="googleLogin"
+								style="margin-left: 20px; margin-top: 10px;"
+								data-onsuccess="onSignIn"></div>
 
 
 						</div>
@@ -173,8 +176,13 @@ $(document).ready(function() {
 						placeholder="Data di nascita" name="birthDate"
 						onfocus="(this.type='date')" onblur="(this.type='text')"
 						class="form-control">
+					<div class="d-flex justify-content-center" style="margin-top: 10px; margin-bottom: 10px;">
+						<div class="g-recaptcha"
+							data-sitekey="6Lc1aNkUAAAAAPqQpuwuHaujwOzeV5Yda8EIeljO"
+							data-callback="enableRegButton"></div>
+					</div>
 					<div class="modal-footer">
-						<input type="submit"
+						<input id="regButton" disabled type="submit"
 							class="btn color-scheme my-4 btn-block waves-effect waves-light"
 							value="Registrati">
 					</div>

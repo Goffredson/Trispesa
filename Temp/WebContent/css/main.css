@@ -23,7 +23,11 @@ a.disabled-live-chat {
 	background-color: #888a85 !important;
 }
 
-.g-recaptcha {
+.fb-login-button {
+	margin-left: 20px;
+}
+
+.custom-recaptcha {
 	transform: scale(0.67);
 	transform-origin: 0 0;
 }
@@ -88,7 +92,6 @@ a.disabled-live-chat {
 	border-style: solid;
 	border-color: #e9b96e;
 	margin-right: 10px;
-	
 }
 
 .logout-button {

@@ -163,6 +163,14 @@ function disableButton() {
 	$("#authButton").prop("disabled", true);
 }
 
+function enableRegButton() {
+	$("#regButton").prop("disabled", false);
+}
+
+function disableRegButton() {
+	$("#regButton").prop("disabled", true);
+}
+
 function ajaxLog(operation, animDelay) {
 	$.ajax({
 		type : "POST",

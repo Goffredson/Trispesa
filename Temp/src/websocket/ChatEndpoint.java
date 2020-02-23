@@ -27,7 +27,7 @@ public class ChatEndpoint {
 	private static Map<String, ChatEndpoint> userToAdminMap = Collections.synchronizedMap(new HashMap<>());
 	private static Map<String, ChatEndpoint> adminToUserMap = Collections.synchronizedMap(new HashMap<>());
 	private static Map<ChatEndpoint, String> adminIdMap = Collections.synchronizedMap(new HashMap<>());
-	//private static Vector<ChatEndpoint> availableAdmins = new Vector<>();
+	// private static Vector<ChatEndpoint> availableAdmins = new Vector<>();
 
 	@OnOpen
 	public void onOpen(Session session, @PathParam("username") String username) throws IOException, EncodeException {
@@ -37,9 +37,10 @@ public class ChatEndpoint {
 
 		// Se sono un admin, mi metto in attesa
 		if (username.contains("admin")) {
-			//System.out.println("Sono un admin (id " + session.getId() + ") che si mette a disposizione");
+			// System.out.println("Sono un admin (id " + session.getId() + ") che si mette a
+			// disposizione");
 			EndpointBroker.getInstance().addAdmin(this);
-			//availableAdmins.add(this);
+			// availableAdmins.add(this);
 			System.out.println("Ho aggiunto " + this + " alla queue di disponibili");
 			adminIdMap.put(this, session.getId());
 			adminToUserMap.put(session.getId(), this);
@@ -82,16 +83,22 @@ public class ChatEndpoint {
 			EndpointBroker.getInstance().addAdmin(adminLiberato);
 			System.out.println("Ho riaggiunto " + adminLiberato + " alla queue di disponibili");
 			userToAdminMap.remove(session.getId());
+			
+//			Iterator<Map.Entry<String, ChatEndpoint>> iterator = adminToUserMap.entrySet().iterator();
+//			while (iterator.hasNext()) {
+//				Map.Entry<String, ChatEndpoint> entry = iterator.next();
+//				if (this == entry.getValue()) 
+//					iterator.remove();
+//			}
+			
 			Message message = new Message();
 			message.setFrom(session.getId());
 			message.setContent("DISCONNECTED");
 			adminLiberato.session.getBasicRemote().sendObject(message);
 		}
-			
+
 		System.out.println("Socket chiuso");
-		
-		
-		
+
 //		chatEndpoints.remove(this);
 //		broadcast(message);
 	}

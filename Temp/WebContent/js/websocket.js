@@ -13,8 +13,7 @@ function connect(username) {
 		if (message.content === "DISCONNECTED") {
 			$('#adminOnlyModal').modal('show');
 			$('#msgHistory').empty();
-		}
-		else {
+		} else {
 			$('#adminOnlyModal').modal('hide');
 			var receivedMessage = '<div class="incoming_msg">' + '<div class="incoming_msg_img">'
 					+ '<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"></div>' + '<div class="received_msg">'
@@ -34,7 +33,7 @@ function send(username) {
 		"from" : username
 	});
 	var date = new Date();
-	var currentTime = date.getHours().toString() + ":" + date.getMinutes().toString();
+	var currentTime = date.getHours().toString() + ":" + ('0' + date.getMinutes()).slice(-2);
 	var sentMessage = '<div class="outgoing_msg">' + '<div class="sent_msg">' + '<p>' + content + '</p>' + '<span class="time_date">' + currentTime
 			+ ' | ' + username + '</span>' + '</div>' + '</div>';
 	$("#sendBox").val("");

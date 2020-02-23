@@ -24,6 +24,15 @@ function verifyPayment() {
 	});
 }
 
+function updateDOMForPayPal() {
+	$("#paypal-button").show("slow");
+	$("#paymentSelect").hide("slow");
+}
+function updateDOMForCreditCard() {
+	$("#paypal-button").hide("slow");
+	$("#paymentSelect").show("slow");
+}
+
 $(document).ready(function() {
 	$('#selectAddress').on('change', function(e) {
 		var optionSelected = $("#selectAddress").find("option:selected");

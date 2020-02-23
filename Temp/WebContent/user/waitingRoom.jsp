@@ -36,7 +36,7 @@
 		$("#footerDiv").load("footer.html");
 	});
 </script>
-<title>Chat</title>
+<title>TriSpesa - Sala d'attesa</title>
 </head>
 <body>
 	<script>

@@ -121,7 +121,7 @@ function addField() {
 			+ '<div style="margin-top: 10;"> <label>No<input type="radio" name="offBrand_' + selectCount
 			+ '" value="true" checked style="margin-left:5; margin-right: 8;"></label> <label>Si<input type="radio" name="offBrand_'
 			+ selectCount + '" value="false" style="margin-left: 5;"></label></div></div>');
-	row.append('<div style="margin-top: 32; "><button type="button" class="btn btn-danger minus-button" onclick="$(\'#field_' + selectCount
+	row.append('<div style="margin-left: 15px;"><button type="button" class="btn btn-danger minus-button" onclick="$(\'#field_' + selectCount
 			+ '\').remove()" ><b>-</b></button></div></div>');
 	formGroup.show("slow");
 }

@@ -114,10 +114,10 @@ $(document).ready(function() {
 				<!-- Pulsanti login-dependent -->
 				<li class="nav-item py-0 login-dependent" id="dieta"><a
 					href="manageDiet" class="nav-link"><button type="button"
-							class="btn btn-primary diet-button" data-toggle="modal">Dieta</button></a></li>
+							class="btn diet-button" data-toggle="modal">Dieta</button></a></li>
 				<li class="nav-item py-0" id="faq"><a href="faq"
 					class="nav-link"><button type="button"
-							class="btn btn-primary faq-button" data-toggle="modal">Aiuto</button></a></li>
+							class="btn faq-button" data-toggle="modal">Aiuto</button></a></li>
 				<li class="nav-item py-0" id="logoutListItem"><input
 					type="button" id="logoutButton"
 					class="btn login-dependent logout-button" value="Logout"
@@ -260,7 +260,6 @@ $(document).ready(function() {
 								<th scope="row" id="productQuantity">${product.value}</th>
 								<td id="productName">${product.key.name}</td>
 								<td id="productPrice">${product.key.roundedDiscountedPrice*product.value}&euro;</td>
-								<td><a><i class="fas fa-times"></i></a></td>
 								<td><button type="button"
 										onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.roundedDiscountedPrice}, '${product.key.superMarket.name}', 'remove');"
 										class="btn btn-danger">Rimuovi</button></td>

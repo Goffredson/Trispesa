@@ -260,7 +260,6 @@ $(document).ready(function() {
 								<th scope="row" id="productQuantity">${product.value}</th>
 								<td id="productName">${product.key.name}</td>
 								<td id="productPrice">${product.key.roundedDiscountedPrice*product.value}&euro;</td>
-								<td><a><i class="fas fa-times"></i></a></td>
 								<td><button type="button"
 										onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.roundedDiscountedPrice}, '${product.key.superMarket.name}', 'remove');"
 										class="btn btn-danger">Rimuovi</button></td>

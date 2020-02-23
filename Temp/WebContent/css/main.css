@@ -1,4 +1,9 @@
 /* Parte index */
+
+html * {
+	font-family: "Varela Round";
+}
+
 body {
 	padding-top: 56px;
 }

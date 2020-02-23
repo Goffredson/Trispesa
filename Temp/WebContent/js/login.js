@@ -40,7 +40,6 @@ function checkLoginFacebook() {
 							$('#email').val(email);
 							$('#firstName').val(user[0]);
 							$('#lastName').val(user[1]);
-							$('#birthDate').val(birthDate);
 							$('#completaRegistrazione').toast('show');
 							$('#modalLogin').modal('show');
 						} else {

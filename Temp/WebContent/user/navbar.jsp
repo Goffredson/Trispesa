@@ -116,8 +116,8 @@ $(document).ready(function() {
 					href="manageDiet" class="nav-link"><button type="button"
 							class="btn diet-button" data-toggle="modal">Dieta</button></a></li>
 				<li class="nav-item py-0" id="faq"><a href="faq"
-					class="nav-link"><button type="button"
-							class="btn faq-button" data-toggle="modal">Aiuto</button></a></li>
+					class="nav-link"><button type="button" class="btn faq-button"
+							data-toggle="modal">Aiuto</button></a></li>
 				<li class="nav-item py-0" id="logoutListItem"><input
 					type="button" id="logoutButton"
 					class="btn login-dependent logout-button" value="Logout"
@@ -156,12 +156,12 @@ $(document).ready(function() {
 					method="post" name="registrationForm">
 					<div class="form-row mb-4">
 						<div class="col">
-							<input type="text" id="firstName" name="firstName" class="form-control"
-								placeholder="Nome">
+							<input type="text" id="firstName" name="firstName"
+								class="form-control" placeholder="Nome">
 						</div>
 						<div class="col">
-							<input type="text" name="lastName" id="lastName" class="form-control"
-								placeholder="Cognome">
+							<input type="text" name="lastName" id="lastName"
+								class="form-control" placeholder="Cognome">
 						</div>
 					</div>
 					<input required type="email" id="email" name="email"
@@ -176,7 +176,8 @@ $(document).ready(function() {
 						placeholder="Data di nascita" name="birthDate" id="birthDate"
 						onfocus="(this.type='date')" onblur="(this.type='text')"
 						class="form-control">
-					<div class="d-flex justify-content-center" style="margin-top: 10px; margin-bottom: 10px;">
+					<div class="d-flex justify-content-center"
+						style="margin-top: 10px; margin-bottom: 10px;">
 						<div class="g-recaptcha"
 							data-sitekey="6Lc1aNkUAAAAAPqQpuwuHaujwOzeV5Yda8EIeljO"
 							data-callback="enableRegButton"></div>
@@ -273,7 +274,6 @@ $(document).ready(function() {
 								<th scope="row" id="productQuantity">${product.value}</th>
 								<td id="productName">${product.key.name}</td>
 								<td id="productPrice">${product.key.roundedDiscountedPrice*product.value}&euro;</td>
-								<td><a><i class="fas fa-times"></i></a></td>
 								<td><button type="button"
 										onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.roundedDiscountedPrice}, '${product.key.superMarket.name}', 'remove');"
 										class="btn btn-danger">Rimuovi</button></td>
@@ -285,15 +285,10 @@ $(document).ready(function() {
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn color-scheme" data-dismiss="modal">Chiudi</button>
-				<c:if test="${customer != null}">
-					<a id="orderButton" href="manageOrder"><button
-							class="btn color-scheme">Conferma ordine</button></a>
-				</c:if>
-				<c:if test="${customer == null}">
-					<a id="orderAnchor" href="#"><button id="orderButton"
-							onclick="$('#modalCart').modal('hide'); $('.modal-backdrop').hide(); $('#loginToast').toast('show'); $('.dropdown-menu').show();"
-							class="btn color-scheme">Conferma ordine</button></a>
-				</c:if>
+				<a id="orderButton" href="manageOrder"><button id="orderInnerButton"
+						onclick="event.preventDefault(); $('#modalCart').modal('hide'); $('.modal-backdrop').hide(); $('#loginToast').toast('show'); $('.dropdown-menu').show();"
+						class="btn color-scheme">Conferma ordine</button></a>
+
 			</div>
 		</div>
 	</div>

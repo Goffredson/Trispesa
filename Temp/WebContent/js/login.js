@@ -28,7 +28,7 @@ function checkLoginFacebook() {
 				name = response.name;
 				email = response.email;
 				operation = "accessoFacebook";
-				
+
 				$.ajax({
 					type : "POST",
 					url : "effettuaLogin",
@@ -36,7 +36,7 @@ function checkLoginFacebook() {
 					data : JSON.stringify([ email, operation ]),
 					success : function(response) {
 						if (response.redirect === true) {
-							user=name.split(" ");
+							user = name.split(" ");
 							$('#email').val(email);
 							$('#firstName').val(user[0]);
 							$('#lastName').val(user[1]);
@@ -75,9 +75,9 @@ function onSignIn(googleUser) {
 				$('#email').val(profile.getEmail());
 				$('#modalLogin').modal('show');
 				var auth2 = gapi.auth2.getAuthInstance();
-				auth2.signOut().then(function () {
-		            auth2.disconnect();
-		        });
+				auth2.signOut().then(function() {
+					auth2.disconnect();
+				});
 			} else {
 				disableButton();
 				grecaptcha.reset();
@@ -91,9 +91,9 @@ function onSignIn(googleUser) {
 				updateNavbarDOM("login", 0);
 				$('#credenzialiErrate').hide();
 				var auth2 = gapi.auth2.getAuthInstance();
-				auth2.signOut().then(function () {
-		            auth2.disconnect();
-		        });
+				auth2.signOut().then(function() {
+					auth2.disconnect();
+				});
 			}
 		}
 	});
@@ -175,65 +175,80 @@ function disableRegButton() {
 }
 
 function ajaxLog(operation, animDelay) {
-	$.ajax({
-		type : "POST",
-		url : "effettuaLogin",
-		datatype : "JSON",
-		data : JSON.stringify([ $("#inputUsername").val(),
-				$("#inputPassword").val(), operation ]),
-		success : function(response) {
-			if (operation == "login") {
+	$
+			.ajax({
+				type : "POST",
+				url : "effettuaLogin",
+				datatype : "JSON",
+				data : JSON.stringify([ $("#inputUsername").val(),
+						$("#inputPassword").val(), operation ]),
+				success : function(response) {
+					if (operation == "login") {
 
-				if (window.location.href.split("/").pop() == "faq") {
-					$("#waitingRoomAnchor").removeClass("disabled-live-chat");
-				}
+						if (window.location.href.split("/").pop() == "faq") {
+							$("#waitingRoomAnchor").removeClass(
+									"disabled-live-chat");
+						}
 
-				disableButton();
-				grecaptcha.reset();
-				if (response.redirect === true)
-					window.location.href = "chat";
-				else {
-					startTimer(30 * 60, $("#timer"));
-					sessionStorage.setItem("remainingTime", 30 * 60);
-					$("#toastMessage").html(
-							"Bentornato in trispesa, "
-									+ $("#inputUsername").val());
-					fillCartAfterLogin(response);
-					startTimer(30 * 60, $("#timer"));
+						alert("disabilito onclick");
+						$("#orderInnerButton").attr("onclick", "");
+
+						
+						disableButton();
+						grecaptcha.reset();
+						if (response.redirect === true)
+							window.location.href = "chat";
+						else {
+							startTimer(30 * 60, $("#timer"));
+							sessionStorage.setItem("remainingTime", 30 * 60);
+							$("#toastMessage").html(
+									"Bentornato in trispesa, "
+											+ $("#inputUsername").val());
+							fillCartAfterLogin(response);
+							startTimer(30 * 60, $("#timer"));
+						}
+					} else {
+
+
+						$("#orderInnerButton")
+						.attr(
+								"onclick",
+								"$('#modalCart').modal('hide'); $('.modal-backdrop').hide(); $('#loginToast').toast('show'); $('.dropdown-menu').show();");
+
+						
+						clearInterval(intervalId);
+						if (window.location.href.split("/").pop() == "faq") {
+							$("#waitingRoomAnchor").addClass(
+									"disabled-live-chat");
+						}
+						sessionStorage.removeItem("remainingTime");
+						$("#toastMessage").html(
+								"A presto " + $("#inputUsername").val());
+						var auth2 = gapi.auth2.getAuthInstance();
+						auth2.signOut();
+						emptyCartAfterLogout(response);
+						clearInterval(intervalId);
+						$("#timer").empty();
+						sessionStorage.removeItem("remainingTime");
+					}
+					$('#welcomeToast').toast('show');
+					updateNavbarDOM(operation, animDelay);
+					$('#credenzialiErrate').hide();
+				},
+				error : function(httpObj, textStatus) {
+					if (httpObj.status == 401) {
+						if ($("#credenzialiErrate").css('display') == 'none') {
+							$("#credenzialiErrate").toggle(animDelay);
+						} else {
+							$("#credenzialiErrate").animate({
+								opacity : 0
+							}, 200, "linear", function() {
+								$(this).animate({
+									opacity : 1
+								}, 200);
+							});
+						}
+					}
 				}
-			} else {
-				clearInterval(intervalId);
-				if (window.location.href.split("/").pop() == "faq") {
-					$("#waitingRoomAnchor").addClass("disabled-live-chat");
-				}
-				sessionStorage.removeItem("remainingTime");
-				$("#toastMessage")
-						.html("A presto " + $("#inputUsername").val());
-				var auth2 = gapi.auth2.getAuthInstance();
-				auth2.signOut();
-				emptyCartAfterLogout(response);
-				clearInterval(intervalId);
-				$("#timer").empty();
-				sessionStorage.removeItem("remainingTime");
-			}
-			$('#welcomeToast').toast('show');
-			updateNavbarDOM(operation, animDelay);
-			$('#credenzialiErrate').hide();
-		},
-		error : function(httpObj, textStatus) {
-			if (httpObj.status == 401) {
-				if ($("#credenzialiErrate").css('display') == 'none') {
-					$("#credenzialiErrate").toggle(animDelay);
-				} else {
-					$("#credenzialiErrate").animate({
-						opacity : 0
-					}, 200, "linear", function() {
-						$(this).animate({
-							opacity : 1
-						}, 200);
-					});
-				}
-			}
-		}
-	});
+			});
 }

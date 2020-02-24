@@ -69,10 +69,7 @@
 		aria-live="assertive" aria-atomic="true" data-delay="5000">
 		<div class="toast-header color-scheme">
 			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
-			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
-				aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
+			
 		</div>
 		<div class="toast-body" id="toastMessage"></div>
 	</div>
@@ -101,10 +98,7 @@
 		data-delay="5000">
 		<div class="toast-header error-color-scheme">
 			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
-			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
-				aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
+			
 		</div>
 		<div class="toast-body" id="unavailableProductToastMessage"></div>
 	</div>
@@ -113,10 +107,7 @@
 		aria-live="assertive" aria-atomic="true" data-delay="5000">
 		<div class="toast-header error-color-scheme">
 			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
-			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
-				aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
+			
 		</div>
 		<div class="toast-body" id="cartToastMessage">Hai esaurito il
 			tempo a disposizione, il tuo carrello è stato svuotato.</div>
@@ -126,10 +117,7 @@
 		data-delay="5000">
 		<div class="toast-header error-color-scheme">
 			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
-			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
-				aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
+			
 		</div>
 		<div class="toast-body" id="noProductsInCartMessage">Non puoi
 			effettuare un ordine senza prodotti nel carrello.</div>
@@ -138,10 +126,7 @@
 		aria-live="assertive" aria-atomic="true" data-delay="5000">
 		<div class="toast-header error-color-scheme">
 			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
-			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
-				aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
+			
 		</div>
 		<div class="toast-body" id="noOrderDataMessage">Prima di
 			effettuare un ordine, devi registrare almeno un metodo di pagamento
@@ -152,10 +137,7 @@
 		data-delay="5000">
 		<div class="toast-header color-scheme">
 			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
-			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
-				aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
+			
 		</div>
 		<div class="toast-body" id="passwordRecoveredMessage">La tua
 			nuova password è stata mandata all'indirizzo:</div>
@@ -165,10 +147,7 @@
 		data-delay="5000">
 		<div class="toast-header color-scheme">
 			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
-			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
-				aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
+			
 		</div>
 		<div class="toast-body" id="passwordRecoveredMessage">Gentile cliente, deve prima completare la registrazione.</div>
 	</div>
@@ -177,10 +156,7 @@
 		data-delay="5000">
 		<div class="toast-header error-color-scheme">
 			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
-			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
-				aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
+
 		</div>
 		<div class="toast-body" id="passwordNotRecoveredMessage">Questo
 			username non esiste.</div>

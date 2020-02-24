@@ -81,10 +81,6 @@
 		aria-live="assertive" aria-atomic="true" data-delay="5000">
 		<div class="toast-header color-scheme">
 			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
-			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
-				aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
 		</div>
 		<div class="toast-body" id="toastMessage">Prodotto aggiunto al
 			carrello.</div>
@@ -94,10 +90,7 @@
 		aria-live="assertive" aria-atomic="true" data-delay="5000">
 		<div class="toast-header error-color-scheme">
 			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
-			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
-				aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
+
 		</div>
 		<div class="toast-body" id="loginToastMessage">Devi fare il
 			login prima di poter completare l'ordine.</div>
@@ -177,7 +170,7 @@
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
-		<div class="toast-body" id="passwordRecoveredMessage">Gentile cliente,deve prima completare la registrazione.</div>
+		<div class="toast-body" id="passwordRecoveredMessage">Gentile cliente, deve prima completare la registrazione.</div>
 	</div>
 	<div id="passwordNotRecovered" class="toast notification-toast"
 		role="alert" aria-live="assertive" aria-atomic="true"
@@ -233,7 +226,7 @@
 					<img width="200" height="250" class="card-img-top"
 						src="${prodottoScontato.imagePath}">
 					<div class="card-body h-20">
-						<h5>${prodottoScontato.name}${prodottoScontato.brand}</h5>
+						<h5>${prodottoScontato.name} ${prodottoScontato.brand}</h5>
 
 						<div>
 							<del style="color: red;">

@@ -37,7 +37,11 @@
 <link href="../css/footer.css" rel="stylesheet" />
 <link href="../css/order-form.css" rel="stylesheet" />
 <link href="../css/main.css" rel="stylesheet">
-
+<script>
+	$(function() {
+		$("#footerDiv").load("footer.html");
+	});
+</script>
 </head>
 
 <body class="bg-light">
@@ -334,8 +338,8 @@
 						<h4 class="modal-title">Ordine confermato</h4>
 					</div>
 					<div class="modal-body">
-						<p class="text-center">La conferma dell'ordine è stata
-							inviata via mail. Il riepilogo è disponibile nella sezione
+						<p class="text-center">La conferma dell'ordine &egrave; stata
+							inviata via mail. Il riepilogo &egrave; disponibile nella sezione
 							ordini</p>
 					</div>
 					<div class="modal-footer">
@@ -349,10 +353,7 @@
 			aria-live="assertive" aria-atomic="true" data-delay="5000">
 			<div class="toast-header color-scheme">
 				<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
-				<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
+
 			</div>
 			<div class="toast-body" id="toastMessage">Dati corretti.</div>
 		</div>
@@ -360,13 +361,10 @@
 			aria-live="assertive" aria-atomic="true" data-delay="5000">
 			<div class="toast-header error-color-scheme">
 				<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
-				<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
+
 			</div>
-			<div class="toast-body" id="toastMessage">Qualcosa è andato
-				storto. Riprova più tardi.</div>
+			<div class="toast-body" id="toastMessage">Qualcosa &egrave;
+				andato storto. Riprova pi&ugrave; tardi.</div>
 		</div>
 		<!-- Modale conferma CVC -->
 		<div class="modal" id="paymentModal" style="display: none"
@@ -375,10 +373,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title">Conferma dati carta</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
+
 					</div>
 					<div class="modal-body">
 						<div class="col-md-3 mb-3" id="divSecurityCode">
@@ -406,47 +401,7 @@
 
 	</div>
 	<!-- Footer della pagina -->
-	<footer class="footer-distributed">
-		<div class="footer-left">
-			<h3>
-				Tri<span class="span-title">Spesa</span>
-			</h3>
-			<p class="footer-company-name">Trispesa © 2020</p>
-		</div>
-		<div class="footer-center">
-			<div>
-				<i class="fa fa-map-marker"></i>
-				<p>
-					<span>Via Pietro Bucci</span>Rende, Cosenza
-				</p>
-			</div>
-			<div>
-				<i class="fa fa-phone"></i>
-				<p>348-3218976</p>
-			</div>
-			<div>
-				<i class="fa fa-envelope"></i>
-				<p>
-					<a href="mailto:trispesaStaff@gmail.com">trispesastaff@gmail.com</a>
-				</p>
-			</div>
-		</div>
-		<div class="footer-right">
-			<p class="footer-company-about">
-				<span>Informazioni sito:</span> Questo progetto è stato sviluppato
-				da un gruppo di studenti dell'Università della Calabria,
-				dipartimento di Matematica e Informatica, per l'esame di Ingegneria
-				del Software.
-			</p>
-			<div class="footer-icons">
-				<a href="https://www.mat.unical.it/demacs"><img
-					src="../images/logo_unical.png" width="24" height="20"></img></a> <a
-					href="https://github.com/Goffredson/Trispesa"><i
-					class="fa fa-github"></i></a>
-			</div>
-		</div>
-		<!-- Chiusura footer -->
-	</footer>
+	<div class="footerDiv"></div>
 
 </body>
 </html>

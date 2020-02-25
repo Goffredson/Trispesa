@@ -185,7 +185,7 @@ public class CategoryDaoJdbc implements CategoryDao {
 		ArrayList<Category> categories = new ArrayList<Category>();
 		try {
 			connection = this.dataSource.getConnection();
-			String query = "select * from category as C1 where not exists (select * from category as C2 where C2.parent = C1.id) and exists(select * from category as C3,category as C2 where C2.id=C1.parent and C2.parent=C3.id and C3.name='Alimentare')";
+			String query = "select * from category as C1 where not exists (select * from category as C2 where C2.parent = C1.id) and exists(select * from category as C3,category as C2 where C2.id=C1.parent and C2.parent=C3.id and C3.name='Alimentare') and C1.name not in(select * from nonindieta)";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {

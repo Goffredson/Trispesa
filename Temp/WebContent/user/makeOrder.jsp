@@ -156,8 +156,8 @@
 						<!-- Default checked -->
 						<div class="custom-control custom-radio" style="display: inline;">
 							<input type="radio" class="custom-control-input"
-								id="defaultUnchecked" name="defaultExampleRadios">
-							<label class="custom-control-label" for="defaultUnchecked"
+								id="defaultUnchecked" name="defaultExampleRadios"> <label
+								class="custom-control-label" for="defaultUnchecked"
 								onclick="updateDOMForCreditCard()">Carta di credito</label>
 						</div>
 					</div>

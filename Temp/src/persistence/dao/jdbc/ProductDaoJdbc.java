@@ -467,21 +467,19 @@ public class ProductDaoJdbc implements ProductDao {
 	public ArrayList<Product> retrieveByCategoryAndWeight(String categoryName, boolean offBrand, long weight) {
 		Connection connection = null;
 		ArrayList<Product> products = new ArrayList<Product>();
+		boolean resultVuoto=true;
 		try {
 			connection = this.dataSource.getConnection();
 			String query = "select * "
 					+ "from product as prod, category as c "
-					+ "where prod.category=c.id and c.name=? and prod.quantity > 0 and prod.weight>=? and prod.offbrand=? or exists "
-					+ "(select * from category as cat where cat.name=? and cat.parent=prod.category and prod.weight>=? and prod.offbrand=? and prod.quantity > 0)";
+					+ "where prod.category=c.id and c.name=? and prod.quantity > 0 and prod.weight>=? and prod.offbrand=?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, categoryName);
 			statement.setLong(2, weight);
 			statement.setBoolean(3, offBrand);
-			statement.setString(4, categoryName);
-			statement.setLong(5, weight);
-			statement.setBoolean(6, offBrand);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
+				resultVuoto=false;
 				products.add(new Product(resultSet.getLong("id"), resultSet.getLong("barcode"),
 						resultSet.getString("name"), resultSet.getString("brand"), resultSet.getDouble("weight"),
 						new SuperMarketDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("supermarket")),
@@ -489,6 +487,23 @@ public class ProductDaoJdbc implements ProductDao {
 						resultSet.getBoolean("offbrand"), resultSet.getDouble("price"), resultSet.getLong("quantity"),
 						resultSet.getDouble("discount"), resultSet.getString("image_path"),
 						resultSet.getBoolean("deleted")));
+			}
+			if(resultVuoto==true) {
+				query="select * from product as prod,category as c where exists (select * from category as cat where cat.name=? and cat.parent=c.parent and c.id=prod.category and prod.weight>=? and prod.offbrand=? and prod.quantity > 0)";
+				statement = connection.prepareStatement(query);
+				statement.setString(1, categoryName);
+				statement.setLong(2, weight);
+				statement.setBoolean(3, offBrand);
+				resultSet = statement.executeQuery();
+				while (resultSet.next()) {
+					products.add(new Product(resultSet.getLong("id"), resultSet.getLong("barcode"),
+							resultSet.getString("name"), resultSet.getString("brand"), resultSet.getDouble("weight"),
+							new SuperMarketDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("supermarket")),
+							new CategoryDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("category")),
+							resultSet.getBoolean("offbrand"), resultSet.getDouble("price"), resultSet.getLong("quantity"),
+							resultSet.getDouble("discount"), resultSet.getString("image_path"),
+							resultSet.getBoolean("deleted")));
+				}
 			}
 		} catch (SQLException e) {
 			if (connection != null) {

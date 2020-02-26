@@ -74,6 +74,7 @@ updateCart = function(id, name, price, supermarket, op) {
 	$.ajax({
 		type : "GET",
 		url : "manageCart",
+		async: false,
 		data : {
 			productId : id,
 			operation : op
@@ -95,8 +96,7 @@ updateCart = function(id, name, price, supermarket, op) {
 				else {
 					$("#listaProdottiCarrello").append(
 							'<tr id="' + idTag + '">' + '<th scope="row" id="productQuantity"> 1 </th>' + '<td id="productName">' + name + '</td>'
-									+ '<td id="productPrice">' + price + '&euro;</td>' + '<td><a><i class="fas fa-times"></i></a></td>'
-									+ '<td><button type="button"' + 'onclick="updateCart(' + id + ',\'' + name + '\',' + price + ',\'' + supermarket
+									+ '<td id="productPrice">' + price + '&euro;</td>' + '<td><button type="button"' + 'onclick="updateCart(' + id + ',\'' + name + '\',' + price + ',\'' + supermarket
 									+ '\',\'remove\')"' + 'class="btn btn-danger">Rimuovi</button></td>' + '</tr>');
 				}
 

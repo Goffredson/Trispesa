@@ -125,9 +125,9 @@ function fillCartAfterLogin(cartHashMap) {
 		totalPrice += cartHashMap[product][0].roundedDiscountedPrice
 				* cartHashMap[product][1];
 		$("#listaProdottiCarrello").append(
-				'<tr id="product_"'
+				'<tr id="product_'
 						+ cartHashMap[product][0].id
-						+ '>'
+						+ '">'
 						+ '<th scope="row" id="productQuantity">'
 						+ cartHashMap[product][1]
 						+ '</th>'
@@ -139,11 +139,10 @@ function fillCartAfterLogin(cartHashMap) {
 								cartHashMap[product][0].roundedDiscountedPrice
 										* cartHashMap[product][1]).toFixed(2)
 						+ '&euro;</td>'
-						+ '<td><a><i class="fas fa-times"></i></a></td>'
 						+ '<td><button type="button"' + 'onclick="updateCart('
 						+ cartHashMap[product][0].id + ', \''
 						+ cartHashMap[product][0].name + '\', '
-						+ cartHashMap[product][0].discountedPrice + ', \''
+						+ cartHashMap[product][0].roundedDiscountedPrice + ', \''
 						+ cartHashMap[product][0].superMarket.name
 						+ '\', \'remove\');"'
 						+ 'class="btn btn-danger">Rimuovi</button></td>'
@@ -190,7 +189,6 @@ function ajaxLog(operation, animDelay) {
 									"disabled-live-chat");
 						}
 
-						alert("disabilito onclick");
 						$("#orderInnerButton").attr("onclick", "");
 
 						

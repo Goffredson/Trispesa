@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
 <!DOCTYPE html>
@@ -162,37 +163,51 @@
 		<!-- Div risultati ricerca -->
 		<div class="col-lg-9 mx-auto">
 			<div class="row">
-				<c:forEach items="${listaProdotti}" var="prodotto">
-					<div class="col-lg-4 col-md-6 mb-4">
-						<div class="card">
-							<img width="200" height="300" class="card-img-top"
-								src="${prodotto.imagePath}">
-							<div class="card-body h-20">
-								<h5>${prodotto.name}${prodotto.brand}</h5>
-								<c:if test="${prodotto.discount != 0}">
-									<div>
-										<del style="color: red;"> ${prodotto.roundedPrice}&euro;
-										</del>
-									</div>
-								</c:if>
-
-								<b>${prodotto.roundedDiscountedPrice}&euro;</b>
-								<button style="float: right; color: #e9b96e;"
-									class="btn fa fa-shopping-cart item-icon-cart"
-									onclick="$('#addToCartToast').toast('show');										
-						updateCart(${prodotto.id}, '${prodotto.name}', ${prodotto.roundedDiscountedPrice}, '${prodotto.superMarket.name}', 'add')"
-									id="addToCartProductDiscounted">+</button>
-							</div>
-							<div class="card-footer">Venduto da:
-								${prodotto.superMarket.name}</div>
+				<c:if test="${fn:length(listaProdotti) == 0}">
+					<div class="container">
+						<!-- Div logo -->
+						<div class="py-5 text-center">
+							<img class="d-block mx-auto mb-4" src="../images/noResults.png"
+								alt="" width="128" height="128">
+							<h2>Nessun prodotto trovato</h2>
+							<p style="font-size: medium;">Prova a cercare usando parole diverse.</p>
+							<p class="lead"></p>
 						</div>
 					</div>
-				</c:forEach>
+				</c:if>
+				<c:if test="${fn:length(listaProdotti) != 0}">
+					<c:forEach items="${listaProdotti}" var="prodotto">
+						<div class="col-lg-4 col-md-6 mb-4">
+							<div class="card">
+								<img width="200" height="300" class="card-img-top"
+									src="${prodotto.imagePath}">
+								<div class="card-body h-20">
+									<h5>${prodotto.name}${prodotto.brand}</h5>
+									<c:if test="${prodotto.discount != 0}">
+										<div>
+											<del style="color: red;">
+												${prodotto.roundedPrice}&euro; </del>
+										</div>
+									</c:if>
+
+									<b>${prodotto.roundedDiscountedPrice}&euro;</b>
+									<button style="float: right; color: #e9b96e;"
+										class="btn fa fa-shopping-cart item-icon-cart"
+										onclick="$('#addToCartToast').toast('show');										
+						updateCart(${prodotto.id}, '${prodotto.name}', ${prodotto.roundedDiscountedPrice}, '${prodotto.superMarket.name}', 'add')"
+										id="addToCartProductDiscounted">+</button>
+								</div>
+								<div class="card-footer">Venduto da:
+									${prodotto.superMarket.name}</div>
+							</div>
+						</div>
+					</c:forEach>
+				</c:if>
 			</div>
 		</div>
 	</div>
 
-	<div class="footerDiv"></div>
+	<div id="footerDiv"></div>
 
 </body>
 

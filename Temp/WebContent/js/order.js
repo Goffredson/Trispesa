@@ -62,6 +62,7 @@ $(document).ready(
 						var addressSelected = $("#selectAddress").find(
 								"option:selected").val();
 						event.preventDefault();
+						$("#waitingModal").modal("show");
 						$.ajax({
 							type : "POST",
 							url : "manageOrder",
@@ -70,6 +71,7 @@ $(document).ready(
 								deliveryAddressId : addressSelected,
 							},
 							success : function() {
+								$("#waitingModal").modal("show");
 								$("#orderConfirmed").modal("show");
 							},
 							error : function() {

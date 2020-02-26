@@ -26,11 +26,11 @@ function verifyPayment() {
 
 function updateDOMForPayPal() {
 	$("#paypal-button").show("slow");
-	$("#paymentSelect").hide("slow");
+	$("#selectPayment").hide("slow");
 }
 function updateDOMForCreditCard() {
 	$("#paypal-button").hide("slow");
-	$("#paymentSelect").show("slow");
+	$("#selectPayment").show("slow");
 }
 
 $(document).ready(function() {
@@ -71,7 +71,7 @@ $(document).ready(
 								deliveryAddressId : addressSelected,
 							},
 							success : function() {
-								$("#waitingModal").modal("show");
+								$("#waitingModal").modal("hide");
 								$("#orderConfirmed").modal("show");
 							},
 							error : function() {

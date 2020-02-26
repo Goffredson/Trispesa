@@ -8,14 +8,23 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- api google login -->
 <script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script src="../js/login.js"></script>
 <meta name="google-signin-client_id"
 	content="1050449629834-c2tein318v6mi0jq29cs52807l2le00s.apps.googleusercontent.com">
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous"
 	src="https://connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v6.0&appId=334210327485920&autoLogAppEvents=1"></script>
-
+<script> 
+    $(function(){
+      $("#loginForm").submit(function(e) {
+    		e.preventDefault();
+			ajaxLog('login', 500);
+      }); 
+    });
+</script>
 <script>
+
 $(document).ready(function() {
   window.fbAsyncInit = function() {
     FB.init({
@@ -126,7 +135,7 @@ $(document).ready(function() {
 		</div>
 		<script type="text/javascript">
 					var currLocation = window.location.pathname.split("/").pop();
-					if (currLocation === "manageDiet" || currLocation === "manageOrder")
+					if (currLocation === "manageDiet" || currLocation === "manageOrder" || currLocation === "chat")
 						$("#logoutListItem").hide();
 					</script>
 	</div>
@@ -285,9 +294,16 @@ $(document).ready(function() {
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn color-scheme" data-dismiss="modal">Chiudi</button>
-				<a id="orderButton" href="manageOrder"><button id="orderInnerButton"
-						onclick="event.preventDefault(); $('#modalCart').modal('hide'); $('.modal-backdrop').hide(); $('#loginToast').toast('show'); $('.dropdown-menu').show();"
-						class="btn color-scheme">Conferma ordine</button></a>
+				<a id="orderButton" href="manageOrder"> <c:if
+						test="${customer == null}">
+						<button id="orderInnerButton"
+							onclick="event.preventDefault(); $('#modalCart').modal('hide'); $('.modal-backdrop').hide(); $('#loginToast').toast('show'); $('.dropdown-menu').show();"
+							class="btn color-scheme">Conferma ordine</button>
+					</c:if> <c:if test="${customer != null}">
+						<button id="orderInnerButton" class="btn color-scheme">Conferma
+							ordine</button>
+					</c:if>
+				</a>
 
 			</div>
 		</div>

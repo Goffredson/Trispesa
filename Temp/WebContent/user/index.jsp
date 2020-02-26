@@ -14,7 +14,6 @@
 <script src="../vendor/jquery/jquery.min.js"></script>
 <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script src="../vendor/owl.carousel.js"></script>
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
@@ -43,14 +42,7 @@
       $("#footerDiv").load("footer.html"); 
     });
 </script>
-<script> 
-    $(function(){
-      $("#loginForm").submit(function(e) {
-    		e.preventDefault();
-			ajaxLog('login', 500);
-      }); 
-    });
-</script>
+
 <!-- CSS -->
 <link href="../css/owl.carousel.css" rel="stylesheet" />
 <link href="../css/footer.css" rel="stylesheet" />

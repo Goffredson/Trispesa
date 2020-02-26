@@ -90,19 +90,19 @@
 				<h4 class="mb-3">Consegna</h4>
 				<div class="row">
 					<div class="col-md-6 mb-3">
-						<label for="firstName">Nome</label> <input type="text"
-							class="form-control" id="firstName" value="${customer.name}"
+						<label for="orderFirstName">Nome</label> <input type="text"
+							class="form-control" id="orderFirstName" value="${customer.name}"
 							readonly>
 					</div>
 					<div class="col-md-6 mb-3">
-						<label for="lastName">Cognome</label> <input type="text"
-							class="form-control" id="lastName" value="${customer.surname}"
+						<label for="orderLastName">Cognome</label> <input type="text"
+							class="form-control" id="orderLastName" value="${customer.surname}"
 							readonly>
 					</div>
 				</div>
 				<div class="mb-3">
-					<label for="email">Email <span class="text-muted"></span></label> <input
-						type="email" class="form-control" id="email"
+					<label for="orderEmail">Email <span class="text-muted"></span></label> <input
+						type="email" class="form-control" id="orderEmail"
 						value="${customer.email}" readonly>
 				</div>
 
@@ -224,7 +224,7 @@
 										item_list : {
 											items : itemsInCart,
 											shipping_address : {
-												recipient_name : $("#firstName").val() + " " + $("#lastName").val(),
+												recipient_name : $("#orderFirstName").val() + " " + $("#orderLastName").val(),
 												line1 : $('#selectAddress').find(":selected").text().split(",")[0],
 												line2 : $('#selectAddress').find(":selected").text().split(",")[1],
 												city : $('#selectAddress').find(":selected").text().split(",")[3],
@@ -252,7 +252,7 @@
 					</script>
 					<div class="mb-3">
 						<div class="form-group">
-							<select id="paymentSelect" style="display: none;" required
+							<select id="selectPayment" style="display: none;" required
 								name="paymentId" id="selectPayment" class="form-control"
 								form="orderForm">
 								<option value="">Seleziona una carta di credito</option>
@@ -283,8 +283,7 @@
 					</div>
 					<div class="modal-body">
 						<p class="text-center">La conferma dell'ordine &egrave; stata
-							inviata via mail. Il riepilogo &egrave; disponibile nella sezione
-							ordini</p>
+							inviata via mail. Grazie per aver ordinato su TriSpesa.</p>
 					</div>
 					<div class="modal-footer">
 						<a href="home" class="btn btn-success btn-block">Torna alla
@@ -347,7 +346,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<div class="icon-box">
-							<i class="material-icons">&#xE0B1;</i>
+							<i class="material-icons">&#xE5D3;</i>
 						</div>
 						<h4 class="modal-title">Processamento ordine in corso</h4>
 					</div>
@@ -359,10 +358,6 @@
 								<span class="sr-only">Loading...</span>
 							</div>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<button class="btn color-scheme btn-block"
-							onclick="logoutAdmin();">Logout</button>
 					</div>
 				</div>
 			</div>

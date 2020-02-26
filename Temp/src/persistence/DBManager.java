@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.Vector;
 
 import exceptions.DBOperationException;
-import model.Administrator;
 import model.Category;
 import model.Customer;
 import model.DeliveryAddress;
@@ -16,7 +14,6 @@ import model.Order;
 import model.PaymentMethod;
 import model.Product;
 import model.SuperMarket;
-import persistence.dao.AdministratorDao;
 import persistence.dao.CategoryDao;
 import persistence.dao.CustomerDao;
 import persistence.dao.DeliveryAddressDao;
@@ -24,7 +21,6 @@ import persistence.dao.OrderDao;
 import persistence.dao.PaymentMethodDao;
 import persistence.dao.ProductDao;
 import persistence.dao.SuperMarketDao;
-import persistence.dao.jdbc.AdministratorDaoJdbc;
 import persistence.dao.jdbc.CategoryDaoJdbc;
 import persistence.dao.jdbc.CustomerDaoJdbc;
 import persistence.dao.jdbc.DeliveryAddressDaoJdbc;
@@ -54,9 +50,6 @@ public class DBManager {
 		}
 	}
 
-	public AdministratorDao getAdministratorDao() {
-		return new AdministratorDaoJdbc(dataSource);
-	}
 
 	public CategoryDao getCategoryDao() {
 		return new CategoryDaoJdbc(dataSource);
@@ -208,11 +201,6 @@ public class DBManager {
 	public Customer checkIfCustomerExists(String username, String password) {
 		Customer customer = getCustomerDao().checkIfExists(username, password);
 		return customer;
-	}
-
-	public Administrator checkIfAdministratorExists(String username, String password) {
-		Administrator administrator = getAdministratorDao().checkIfExists(username, password);
-		return administrator;
 	}
 
 	public void escludiProdotti(String categoria, ArrayList<Product> prodotti) {

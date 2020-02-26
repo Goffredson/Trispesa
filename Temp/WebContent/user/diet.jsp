@@ -33,6 +33,11 @@
 <script src="../js/diet.js"></script>
 <script src="../js/animations.js"></script>
 <script src="../js/order.js"></script>
+<script> 
+    $(function(){
+      $("#footerDiv").load("footer.html"); 
+    });
+</script>
 <!-- CSS -->
 <link href="../css/footer.css" rel="stylesheet" />
 <link href="../css/order-form.css" rel="stylesheet" />
@@ -245,48 +250,31 @@
 			</div>
 		</div>
 	</div>
+	<!-- Modale spinner -->
+		<div id="waitingModal" class="modal fade">
+			<div class="modal-dialog modal-confirm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<div class="icon-box">
+							<i class="material-icons">&#xE5D3;</i>
+						</div>
+						<h4 class="modal-title">Processamento dieta in corso</h4>
+					</div>
+					<div class="modal-body">
+						<p class="text-center">Questa finestrella scomparirà non
+							appena la dieta sarà calcolata.</p>
+						<div class="d-flex justify-content-center">
+							<div class="spinner-border text-success" role="status">
+								<span class="sr-only">Loading...</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	<!-- Fine sezione modali -->
 	<!-- Footer della pagina -->
-	<footer class="footer-distributed">
-		<div class="footer-left">
-			<h3>
-				Tri<span class="span-title">Spesa</span>
-			</h3>
-			<p class="footer-company-name">Trispesa © 2020</p>
-		</div>
-		<div class="footer-center">
-			<div>
-				<i class="fa fa-map-marker"></i>
-				<p>
-					<span>Via Pietro Bucci</span>Rende, Cosenza
-				</p>
-			</div>
-			<div>
-				<i class="fa fa-phone"></i>
-				<p>348-3218976</p>
-			</div>
-			<div>
-				<i class="fa fa-envelope"></i>
-				<p>
-					<a href="mailto:trispesaStaff@gmail.com">trispesastaff@gmail.com</a>
-				</p>
-			</div>
-		</div>
-		<div class="footer-right">
-			<p class="footer-company-about">
-				<span>Informazioni sito:</span> Questo progetto è stato sviluppato
-				da un gruppo di studenti dell'Università della Calabria,
-				dipartimento di Matematica e Informatica, per l'esame di Ingegneria
-				del Software.
-			</p>
-			<div class="footer-icons">
-				<a href="https://www.mat.unical.it/demacs"><img
-					src="../images/logo_unical.png" width="24" height="20"></img></a> <a
-					href="https://github.com/Goffredson/Trispesa"><i
-					class="fa fa-github"></i></a>
-			</div>
-		</div>
-	</footer>
+	<div id="footerDiv"></div>
 	<!-- Chiusura footer -->
 </body>
 </html>

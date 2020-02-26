@@ -21,6 +21,7 @@ $(document).ready(
 		function() {
 			$("#dietForm").submit(
 					function(event) {
+						$("#waitingModal").modal("show");
 
 						var formData = $("#dietForm").serialize().replace(/%20/g, " ").split("&");
 
@@ -63,7 +64,7 @@ $(document).ready(
 									$.ajax({
 										type : "GET",
 										url : "manageCart",
-										async: false,
+										async : false,
 										data : {
 											productId : response[i].id,
 											operation : "add"
@@ -71,7 +72,7 @@ $(document).ready(
 										success : function() {
 											$("#addButton").prop("disabled", true);
 											$(".minus-button").each(function() {
-											    $(this).prop("disabled", true);
+												$(this).prop("disabled", true);
 											});
 											$("#totalUl").prepend(
 													'<li class="list-group-item d-flex justify-content-between lh-condensed">'
@@ -85,10 +86,15 @@ $(document).ready(
 										}
 									});
 								}
+								$("#waitingModal").modal("hide");
 								$("#dietCart").show("slow");
 								$("#totalPrice").html(totalPrice + "&euro;");
 							},
 							error : function(response) {
+								setTimeout(function() {
+									$("#waitingModal").modal("hide");
+								}, 500);
+								// $("#waitingModal").modal("hide");
 								$("#dietError").modal("show");
 							}
 						});
@@ -102,25 +108,23 @@ function storeLeafCategory(id, name) {
 	leafCategories[id] = name;
 }
 
-
-
 function addField() {
 	selectCount++;
 
 	formGroup = $('<div class="form-group" style="display:none;" id="field_' + selectCount + '">').prependTo($("#dietForm"));
 	row = $('<div class="row">');
 	formGroup.append(row);
-	
-	row.append('<div class="col-md-5 mb-3"><label>Categoria:</label><select class="form-control" name="dietSelect_'
-			+ selectCount + '" id="dietSelect_' + selectCount + '">');
+
+	row.append('<div class="col-md-5 mb-3"><label>Categoria:</label><select class="form-control" name="dietSelect_' + selectCount
+			+ '" id="dietSelect_' + selectCount + '">');
 	for ( let key in leafCategories) {
 		$(String("#dietSelect_" + selectCount)).append('<option>' + leafCategories[key] + '</option>')
 	}
-	row.append('</select></div>' + '<div class="col-md-2 mb-3"> <label>Grammi</label> <input class="form-control" name="dietQuantity_'
-			+ selectCount + '" type="number" required> </div>' + '<div class="col-md-2 mb-3"><label>Di marca</label>'
+	row.append('</select></div>' + '<div class="col-md-2 mb-3"> <label>Grammi</label> <input class="form-control" name="dietQuantity_' + selectCount
+			+ '" type="number" required> </div>' + '<div class="col-md-2 mb-3"><label>Di marca</label>'
 			+ '<div style="margin-top: 10;"> <label>No<input type="radio" name="offBrand_' + selectCount
-			+ '" value="true" checked style="margin-left:5; margin-right: 8;"></label> <label>Si<input type="radio" name="offBrand_'
-			+ selectCount + '" value="false" style="margin-left: 5;"></label></div></div>');
+			+ '" value="true" checked style="margin-left:5; margin-right: 8;"></label> <label>Si<input type="radio" name="offBrand_' + selectCount
+			+ '" value="false" style="margin-left: 5;"></label></div></div>');
 	row.append('<div style="margin-left: 15px;"><button type="button" class="btn btn-danger minus-button" onclick="$(\'#field_' + selectCount
 			+ '\').remove()" ><b>-</b></button></div></div>');
 	formGroup.show("slow");

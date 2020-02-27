@@ -68,7 +68,7 @@
 			if ($("#username").val().includes("admin")) {
 				$("#centerIcon").attr("src", "../images/admin.png");
 				$("#firstTitle").html("Aiuta un cliente");
-				$("#secondTitle").html("Aiuta sto cliente bla bla loren ipsum sit ecc.");
+				$("#secondTitle").html("Aiuta il cliente connesso qui sotto fornendogli assistenza tecnica.");
 				$('#adminOnlyModal').modal('show');
 			} else {
 				$("#connectedToast").toast("show");

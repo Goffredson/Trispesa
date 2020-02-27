@@ -82,11 +82,9 @@
 			<ul class="list-group help-group">
 				<div class="faq-list list-group nav nav-tabs">
 					<a href="#tab1" class="list-group-item active" role="tab"
-						data-toggle="tab">Ordine</a> <a href="#tab2"
+						data-toggle="tab">Generali</a> <a href="#tab2"
 						class="list-group-item" role="tab" data-toggle="tab"><i
-						class="mdi mdi-account"></i> Profilo</a> <a href="#tab3"
-						class="list-group-item" role="tab" data-toggle="tab"><i
-						class="mdi mdi-account-settings"></i> Chi siamo</a> <a href="#tab4"
+						class="mdi mdi-account"></i> Carrello e Pagamento</a> <a href="#tab4"
 						class="list-group-item" role="tab" data-toggle="tab"><i
 						class="mdi mdi-star"></i> Contatta Servizio Clienti</a>
 				</div>
@@ -100,19 +98,17 @@
 							<a href="#opret-produkt" data-toggle="collapse"
 								data-parent="#help-accordion-1">
 								<div class="panel-heading">
-									<h2>How do I edit my profile?</h2>
+									<h2>Come funziona il servizio?</h2>
 								</div>
 							</a>
 							<div id="opret-produkt" class="collapse in">
 								<div class="panel-body">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-										elit. Doloribus nesciunt ut officiis accusantium quisquam
-										minima praesentium, beatae fugit illo nobis fugiat adipisci
-										quia distinctio repellat culpa saepe, optio aperiam est!</p>
-									<p>
-										<strong>Example: </strong>Facere, id excepturi iusto aliquid
-										beatae delectus nemo enim, ad saepe nam et.
-									</p>
+									<p>E' semplice! Hai a disposizione un carrello virtuale,
+										all'interno del quale puoi mettere qualsiasi articolo ti
+										aggradi nella quantità che preferisci: proprio come al
+										supermercato. Una volta che hai finito di scegliere i
+										prodotti, puoi "andare alla cassa" e pagare.</p>
+
 								</div>
 							</div>
 						</div>
@@ -120,19 +116,16 @@
 							<a href="#rediger-produkt" data-toggle="collapse"
 								data-parent="#help-accordion-1">
 								<div class="panel-heading">
-									<h2>How do I upload a new profile picture?</h2>
+									<h2>Da quali supermercati posso scegliere di acquistare?</h2>
 								</div>
 							</a>
 							<div id="rediger-produkt" class="collapse">
 								<div class="panel-body">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-										elit. Doloribus nesciunt ut officiis accusantium quisquam
-										minima praesentium, beatae fugit illo nobis fugiat adipisci
-										quia distinctio repellat culpa saepe, optio aperiam est!</p>
-									<p>
-										<strong>Example: </strong>Facere, id excepturi iusto aliquid
-										beatae delectus nemo enim, ad saepe nam et.
-									</p>
+									<p>L'insieme di supermercati affiliati a TriSpesa è
+										soggetto a cambiamenti, ma per il momento abbiamo più di 5
+										catene di supermercati convenzionate, tra cui Crai, Conad e
+										Despar.</p>
+
 								</div>
 							</div>
 						</div>
@@ -140,19 +133,16 @@
 							<a href="#ret-pris" data-toggle="collapse"
 								data-parent="#help-accordion-1">
 								<div class="panel-heading">
-									<h2>Can I change my phone number?</h2>
+									<h2>Come faccio a registrarmi?</h2>
 								</div>
 							</a>
 							<div id="ret-pris" class="collapse">
 								<div class="panel-body">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-										elit. Doloribus nesciunt ut officiis accusantium quisquam
-										minima praesentium, beatae fugit illo nobis fugiat adipisci
-										quia distinctio repellat culpa saepe, optio aperiam est!</p>
-									<p>
-										<strong>Example: </strong>Facere, id excepturi iusto aliquid
-										beatae delectus nemo enim, ad saepe nam et.
-									</p>
+									<p>Guarda in alto a destra: vedi il pulsante "Login"?
+										Cliccandoci sopra, si aprirà un menu a tendina con diverse
+										voci, tra cui "Effettua Registrazione". Clicca proprio li per
+										avviare la procedura di registrazione.</p>
+
 								</div>
 							</div>
 						</div>
@@ -160,42 +150,18 @@
 							<a href="#slet-produkt" data-toggle="collapse"
 								data-parent="#help-accordion-1">
 								<div class="panel-heading">
-									<h2>Where do I change my privacy settings?</h2>
+									<h2>Quali dati sono necessari per registrarsi al sito?</h2>
 								</div>
 							</a>
 							<div id="slet-produkt" class="collapse">
 								<div class="panel-body">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-										elit. Doloribus nesciunt ut officiis accusantium quisquam
-										minima praesentium, beatae fugit illo nobis fugiat adipisci
-										quia distinctio repellat culpa saepe, optio aperiam est!</p>
-									<p>
-										<strong>Example: </strong>Facere, id excepturi iusto aliquid
-										beatae delectus nemo enim, ad saepe nam et.
-									</p>
+									<p>Sono necessari: nome, cognome, e-mail (oltre ad username
+										e password).</p>
+
 								</div>
 							</div>
 						</div>
-						<div class="panel panel-default panel-help">
-							<a href="#opret-kampagne" data-toggle="collapse"
-								data-parent="#help-accordion-1">
-								<div class="panel-heading">
-									<h2>What is this?</h2>
-								</div>
-							</a>
-							<div id="opret-kampagne" class="collapse">
-								<div class="panel-body">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-										elit. Doloribus nesciunt ut officiis accusantium quisquam
-										minima praesentium, beatae fugit illo nobis fugiat adipisci
-										quia distinctio repellat culpa saepe, optio aperiam est!</p>
-									<p>
-										<strong>Example: </strong>Facere, id excepturi iusto aliquid
-										beatae delectus nemo enim, ad saepe nam et.
-									</p>
-								</div>
-							</div>
-						</div>
+
 					</div>
 				</div>
 				<div class="tab-pane" id="tab2">
@@ -204,19 +170,36 @@
 							<a href="#help-three" data-toggle="collapse"
 								data-parent="#help-accordion-2">
 								<div class="panel-heading">
-									<h2>Lorem ipsum?</h2>
+									<h2>Come funziona il carrello?</h2>
 								</div>
 							</a>
 							<div id="help-three" class="collapse in">
 								<div class="panel-body">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-										elit. Doloribus nesciunt ut officiis accusantium quisquam
-										minima praesentium, beatae fugit illo nobis fugiat adipisci
-										quia distinctio repellat culpa saepe, optio aperiam est!</p>
-									<p>
-										<strong>Example: </strong>Facere, id excepturi iusto aliquid
-										beatae delectus nemo enim, ad saepe nam et.
-									</p>
+									<p>Nel momento in cui metti un prodotto nel carrello, quel
+										prodotto è già tuo: devi solo pagarlo. Il carrello è dotato di
+										un timer, con una durata di default di 30 minuti. Se passano
+										30 minuti senza che il carrello venga toccato (ovvero, senza
+										che vengano da esso aggiunti o rimossi prodotti), allora il
+										carrello viene svuotato. Ciò serve per evitare che un cliente
+										possa reclamare un prodotto come suo per un tempo
+										indeterminato.</p>
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel-group" id="help-accordion-3">
+						<div class="panel panel-default panel-help">
+							<a href="#help-four" data-toggle="collapse"
+								data-parent="#help-accordion-3">
+								<div class="panel-heading">
+									<h2>Come funziona il pagamento?</h2>
+								</div>
+							</a>
+							<div id="help-four" class="collapse in">
+								<div class="panel-body">
+									<p>Puoi pagare utilizzando un account PayPal oppure una carta di credito .</p>
+
 								</div>
 							</div>
 						</div>
@@ -225,8 +208,8 @@
 				<div class="tab-pane" id="tab4">
 					<c:if test="${customer != null}">
 						<a href="waitingRoom" id="waitingRoomAnchor" role="button"
-							class="btn color-scheme btn-lg btn-block">Contattaci
-							via Live Chat</a>
+							class="btn color-scheme btn-lg btn-block">Contattaci via Live
+							Chat</a>
 
 					</c:if>
 					<c:if test="${customer == null}">

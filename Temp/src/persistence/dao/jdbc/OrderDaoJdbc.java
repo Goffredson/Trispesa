@@ -36,13 +36,17 @@ public class OrderDaoJdbc implements OrderDao {
 			statement.setLong(1, order.getId());
 			statement.setDouble(2, order.getTotalPrice());
 			statement.setLong(3, order.getCustomer().getId());
-			statement.setLong(4, order.getDeliveryAddress().getId());
-			if(order.getPaymentMethod()==null) {
-				statement.setNull(5, java.sql.Types.BIGINT);
+			if (order.getDeliveryAddress() == null) {
+				statement.setNull(4, java.sql.Types.BIGINT);
+			} else {
+				statement.setLong(4, order.getDeliveryAddress().getId());
 			}
-			else {
+			if (order.getPaymentMethod() == null) {
+				statement.setNull(5, java.sql.Types.BIGINT);
+			} else {
 				statement.setLong(5, order.getPaymentMethod().getId());
 			}
+
 			statement.setString(6, order.getCurrentState().toString());
 			System.out.println("Prima di update");
 			statement.executeUpdate();
@@ -220,7 +224,7 @@ public class OrderDaoJdbc implements OrderDao {
 								.retrieveByPrimaryKey(resultSet.getLong("delivery_address")),
 						new PaymentMethodDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("payment_method")),
 						CurrentState.valueOf(resultSet.getString("current_state")), products);
-				
+
 //				// retrieve all products
 //				String productsQuery = "select * from order_contains_product where orders=?";
 //				PreparedStatement productsStatement = connection.prepareStatement(productsQuery);

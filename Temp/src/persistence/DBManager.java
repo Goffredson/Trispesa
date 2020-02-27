@@ -50,7 +50,6 @@ public class DBManager {
 		}
 	}
 
-
 	public CategoryDao getCategoryDao() {
 		return new CategoryDaoJdbc(dataSource);
 	}
@@ -265,12 +264,13 @@ public class DBManager {
 
 	public void createOrder(Customer customer, String paymentId, String deliveryAddressId) {
 		long totalPrice = customer.getCartTotalPrice();
-		DeliveryAddress deliveryAddress = getDeliveryAddressDao()
-				.retrieveByPrimaryKey(Long.parseLong(deliveryAddressId));
+		DeliveryAddress deliveryAddress = null;
+		if (Long.parseLong(deliveryAddressId) == -1)
+			deliveryAddress = getDeliveryAddressDao().retrieveByPrimaryKey(Long.parseLong(deliveryAddressId));
 		PaymentMethod paymentMethod;
 		System.out.println(paymentId);
-		if(paymentId==null)
-			paymentMethod=null;
+		if (paymentId == null)
+			paymentMethod = null;
 		else
 			paymentMethod = getPaymentMethodDao().retrieveByPrimaryKey(Long.parseLong(paymentId));
 		Order order = new Order(totalPrice, customer, deliveryAddress, paymentMethod, customer.getCart());
@@ -415,12 +415,12 @@ public class DBManager {
 
 	public String getCustomerEmail(String username) {
 		return getCustomerDao().retrieveEmail(username);
-		
+
 	}
 
 	public void updateCustomerPassword(String username, String newPassword) {
 		getCustomerDao().updatePassword(username, newPassword);
-		
+
 	}
 
 	public Customer getCustomer(String email) {

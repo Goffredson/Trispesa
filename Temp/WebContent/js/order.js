@@ -92,6 +92,7 @@ $(document).ready(
 								$("#orderConfirmed").modal("show");
 							},
 							error : function() {
+								$("#waitingModal").modal("hide");
 								$("#errorToast").toast("show");
 							}
 						});

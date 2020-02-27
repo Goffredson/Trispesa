@@ -74,8 +74,8 @@ $(document).ready(function() {
 
 $(document).ready(function() {
 	$('#selectPayment').on('change', function(e) {
+		$("#buttonSubmit").attr("disabled", false);
 		if ($("#selectPayment").find("option:selected").val() != '-1') {
-			$("#buttonSubmit").attr("disabled", false);
 			var optionSelected = $("#selectPayment").find("option:selected");
 			var id = optionSelected.val();
 			$("#paymentModal").modal("show");			

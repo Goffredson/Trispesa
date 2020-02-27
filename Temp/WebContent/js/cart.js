@@ -11,20 +11,21 @@ $(document).ready(function() {
 			$('.modal-backdrop').hide();
 			$("#noProductsInCart").toast("show");
 		}
-		$.ajax({
-			type : "GET",
-			url : "verifyPaymentAndDelivery",
-			async : false,
-			data : {
-			
-			},
-			error : function() {
-				$('#modalCart').modal('hide');
-				$('.modal-backdrop').hide();
-				$("#noOrderData").toast("show");
-				e.preventDefault();
-			}
-		});
+// Non serve più siccome posso ordinare anche senza payment e delivery.
+//		$.ajax({
+//			type : "GET",
+//			url : "verifyPaymentAndDelivery",
+//			async : false,
+//			data : {
+//			
+//			},
+//			error : function() {
+//				$('#modalCart').modal('hide');
+//				$('.modal-backdrop').hide();
+//				$("#noOrderData").toast("show");
+//				e.preventDefault();
+//			}
+//		});
 	});
 });
 

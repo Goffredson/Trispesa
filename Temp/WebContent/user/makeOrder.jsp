@@ -344,22 +344,32 @@
 											}
 										}, '#paypal-button');
 					</script>
-					<div class="mb-3">
+					<div class="mb-3" id="paymentDiv" style="display: none;">
 						<div class="form-group">
-							<select id="selectPayment" style="display: none;" required
-								name="paymentId" id="selectPayment" class="form-control"
-								form="orderForm">
-								<option value="" disabled selected>Seleziona una carta
-									di credito</option>
-								<c:forEach items="${customer.paymentMethods}"
-									var="paymentMethod">
-									<option value="${paymentMethod.id}">${paymentMethod}</option>
-								</c:forEach>
-							</select>
+							<div class="row">
+								<div class="col-md-10 mb-3">
+									<select id="selectPayment" required name="paymentId"
+										id="selectPayment" class="form-control" form="orderForm">
+										<option value="" disabled selected>Seleziona una
+											carta di credito</option>
+										<c:forEach items="${customer.paymentMethods}"
+											var="paymentMethod">
+											<option value="${paymentMethod.id}">${paymentMethod}</option>
+										</c:forEach>
+									</select>
+								</div>
+								<div class="col-md-1 mb-3">
+									<button data-toggle="modal" data-target="#addPaymentModal"
+										type="button" class="btn color-scheme">
+										<b>+</b>
+									</button>
+								</div>
+							</div>
+
 						</div>
 					</div>
 					<hr class="mb-4">
-					<input type="submit" id="buttonSubmit" disabled=true
+					<input type="submit" id="buttonSubmit" disabled
 						class="btn color-scheme btn-lg btn-block" value="Conferma Ordine">
 
 				</form>
@@ -470,6 +480,45 @@
 							data-dismiss="modal">Chiudi</button>
 						<button type="button" data-dismiss="modal" class="btn btn-primary"
 							onclick="addAddressToSelect()">Conferma</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="addPaymentModal" style="display: none"
+			tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Inserisci un indirizzo</h5>
+
+					</div>
+					<div class="modal-body">
+						<div class="mb-3">
+							<label for="cardCompany">Compagnia carta <span
+								class="text-muted"></span></label> <input type="text"
+								class="form-control" id="cardCompany">
+						</div>
+						<div class="row">
+							<div class="col-md-5 mb-3">
+								<label for="cardNumber">Numero carta</label> <input type="text"
+									class="form-control" id="cardNumber">
+							</div>
+							<div class="col-md-4 mb-3">
+								<label for="cardExpirationDate">Scadenza</label> <input
+									type="text" class="form-control" id="cardExpirationDate">
+							</div>
+							<div class="col-md-3 mb-3">
+								<label for="cardCVC">CVC2/CVV</label> <input type="number"
+									class="form-control" id="cardCVC">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Chiudi</button>
+						<button type="button" data-dismiss="modal" class="btn btn-primary"
+							onclick="addPaymentToSelect()">Conferma</button>
 					</div>
 				</div>
 			</div>

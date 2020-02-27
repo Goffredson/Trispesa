@@ -40,13 +40,23 @@ function addAddressToSelect() {
 	$("#selectAddress").append(newOption);
 }
 
+function addPaymentToSelect() {
+	var company = $("#cardCompany").val();
+	var number = $("#cardNumber").val().split("-")[3];
+
+	var newOption = "<option value='-1'>" + company + " x-" + number
+			+ "</option>";
+
+	$("#selectPayment").append(newOption);
+}
+
 function updateDOMForPayPal() {
 	$("#paypal-button").show("slow");
-	$("#selectPayment").hide("slow");
+	$("#paymentDiv").hide("slow");
 }
 function updateDOMForCreditCard() {
 	$("#paypal-button").hide("slow");
-	$("#selectPayment").show("slow");
+	$("#paymentDiv").show("slow");
 }
 
 $(document).ready(function() {
@@ -64,10 +74,12 @@ $(document).ready(function() {
 
 $(document).ready(function() {
 	$('#selectPayment').on('change', function(e) {
-		$("#buttonSubmit").attr("disabled", false);
-		var optionSelected = $("#selectPayment").find("option:selected");
-		var id = optionSelected.val();
-		$("#paymentModal").modal("show");
+		if ($("#selectPayment").find("option:selected").val() != '-1') {
+			$("#buttonSubmit").attr("disabled", false);
+			var optionSelected = $("#selectPayment").find("option:selected");
+			var id = optionSelected.val();
+			$("#paymentModal").modal("show");			
+		}
 	});
 });
 $(document).ready(

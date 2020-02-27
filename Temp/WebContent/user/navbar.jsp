@@ -244,11 +244,9 @@ $(document).ready(function() {
 				</button>
 			</div>
 			<div class="modal-body" id="modalTemp">
-				<div class="count">
-					<h3>
-						<small>Tempo rimanente</small>
-					</h3>
-					<div id="timer"></div>
+				<div class="count" style="margin-bottom: 7px;">
+					<h4 style="display: inline;">Tempo rimanente: </h4>
+					<div id="timer" style="display: inline;"></div>
 				</div>
 				<table class="table">
 					<thead>
@@ -256,7 +254,7 @@ $(document).ready(function() {
 							<th>N.</th>
 							<th>Nome prodotto</th>
 							<th>Prezzo</th>
-							<th></th>
+							<th>Azioni</th>
 
 						</tr>
 					</thead>

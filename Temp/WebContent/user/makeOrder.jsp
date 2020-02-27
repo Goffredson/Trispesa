@@ -96,13 +96,13 @@
 					</div>
 					<div class="col-md-6 mb-3">
 						<label for="orderLastName">Cognome</label> <input type="text"
-							class="form-control" id="orderLastName" value="${customer.surname}"
-							readonly>
+							class="form-control" id="orderLastName"
+							value="${customer.surname}" readonly>
 					</div>
 				</div>
 				<div class="mb-3">
-					<label for="orderEmail">Email <span class="text-muted"></span></label> <input
-						type="email" class="form-control" id="orderEmail"
+					<label for="orderEmail">Email <span class="text-muted"></span></label>
+					<input type="email" class="form-control" id="orderEmail"
 						value="${customer.email}" readonly>
 				</div>
 
@@ -111,19 +111,29 @@
 				<form method="POST" id="orderForm" action="manageOrder">
 					<div class="mb-3">
 						<div class="form-group">
-							<label>Indirizzo di consegna</label> <select required
-								name="deliveryAddressId" id="selectAddress" class="form-control"
-								form="orderForm">
-								<option value="">Seleziona un indirizzo</option>
-								<c:forEach items="${customer.deliveryAddresses}"
-									var="deliveryAddress">
-									<option value="${deliveryAddress.id}"
-										data-address="${deliveryAddress.address}"
-										data-address-city="${deliveryAddress.city}"
-										data-address-province="${deliveryAddress.province}"
-										data-address-zipcode="${deliveryAddress.zipcode}">${deliveryAddress}</option>
-								</c:forEach>
-							</select>
+							<label>Indirizzo di consegna</label>
+							<div class="row">
+								<div class="col-md-10 mb-3">
+									<select required name="deliveryAddressId" id="selectAddress"
+										class="form-control" form="orderForm">
+										<option value="">Seleziona un indirizzo</option>
+										<c:forEach items="${customer.deliveryAddresses}"
+											var="deliveryAddress">
+											<option value="${deliveryAddress.id}"
+												data-address="${deliveryAddress.address}"
+												data-address-city="${deliveryAddress.city}"
+												data-address-province="${deliveryAddress.province}"
+												data-address-zipcode="${deliveryAddress.zipcode}">${deliveryAddress}</option>
+										</c:forEach>
+									</select>
+								</div>
+								<div class="col-md-1 mb-3">
+									<button data-toggle="modal" data-target="#addAddressModal"
+										type="button" id="addButton" class="btn color-scheme">
+										<b>+</b>
+									</button>
+								</div>
+							</div>
 						</div>
 					</div>
 					<!-- Caselle da riempire con jQuery -->
@@ -169,86 +179,142 @@
 					<script src="https://www.paypalobjects.com/api/checkout.js"></script>
 					<script>
 						var itemsInCart = [];
-						$("#listaProdottiCarrello").children().each(function() {
-							var productPrice = $(this).find("#productPrice").html();
-							var qty = $(this).find("#productQuantity").html();
-							// Simbolo dell'euro
-							productPrice = productPrice.replace(/\u20AC/g, "");
-							productPrice /= qty;
-							var product = {
-								name : $(this).find("#productName").html(),
-								quantity : qty,
-								description : "La marca",
-								price : productPrice,
-								currency : 'EUR'
-							};
-							itemsInCart.push(product);
-						});
-						paypal.Button.render({
-							// Configure environment
-							env : 'sandbox',
-							client : {
-								sandbox : 'demo_sandbox_client_id',
-								production : 'demo_production_client_id'
-							},
-							// Customize button (optional)
-							locale : 'it_IT',
-							style : {
-								size : 'medium',
-								color : 'gold',
-								shape : 'pill',
-							},
-
-							// Enable Pay Now checkout flow (optional)
-							commit : true,
-
-							// Set up a payment
-							payment : function(data, actions) {
-								return actions.payment.create({
-									transactions : [ {
-										amount : {
-											total : $("#cartPrice").html().substring(0, $("#cartPrice").html().length - 1),
-											currency : 'EUR',
-											details : {
-												subtotal : $("#cartPrice").html().substring(0, $("#cartPrice").html().length - 1),
-												shipping : '0.00',
-											//	handling_fee : '1.00',
-											//	shipping_discount : '-1.00',
-											//	insurance : '0.01'
-											}
-										},
-										description : 'Ordine TriSpesa via PayPal',
-										//custom : '90048630024435',
-
-										//soft_descriptor : 'ECHI5786786',
-										item_list : {
-											items : itemsInCart,
-											shipping_address : {
-												recipient_name : $("#orderFirstName").val() + " " + $("#orderLastName").val(),
-												line1 : $('#selectAddress').find(":selected").text().split(",")[0],
-												line2 : $('#selectAddress').find(":selected").text().split(",")[1],
-												city : $('#selectAddress').find(":selected").text().split(",")[3],
-												country_code : 'IT',
-												postal_code : $('#selectAddress').find(":selected").attr("data-address-zipcode"),
-											//phone : '011862212345678',
-											//state : 'CA'
-											}
-										}
-									} ],
-									application_context : {
-										brand_name : 'TriSpesa Staff'
-									},
-									note_to_payer : 'Grazie per aver scelto TriSpesa.',
+						$("#listaProdottiCarrello").children().each(
+								function() {
+									var productPrice = $(this).find(
+											"#productPrice").html();
+									var qty = $(this).find("#productQuantity")
+											.html();
+									// Simbolo dell'euro
+									productPrice = productPrice.replace(
+											/\u20AC/g, "");
+									productPrice /= qty;
+									var product = {
+										name : $(this).find("#productName")
+												.html(),
+										quantity : qty,
+										description : "La marca",
+										price : productPrice,
+										currency : 'EUR'
+									};
+									itemsInCart.push(product);
 								});
-							},
-							// Execute the payment
-							onAuthorize : function(data, actions) {
-								return actions.payment.execute().then(function() {
-									// Show a confirmation message to the buyer
-									window.alert('deve partire il modale con la spunta verde');
-								});
-							}
-						}, '#paypal-button');
+						paypal.Button
+								.render(
+										{
+											// Configure environment
+											env : 'sandbox',
+											client : {
+												sandbox : 'demo_sandbox_client_id',
+												production : 'demo_production_client_id'
+											},
+											// Customize button (optional)
+											locale : 'it_IT',
+											style : {
+												size : 'medium',
+												color : 'gold',
+												shape : 'pill',
+											},
+
+											// Enable Pay Now checkout flow (optional)
+											commit : true,
+
+											// Set up a payment
+											payment : function(data, actions) {
+												return actions.payment
+														.create({
+															transactions : [ {
+																amount : {
+																	total : $(
+																			"#cartPrice")
+																			.html()
+																			.substring(
+																					0,
+																					$(
+																							"#cartPrice")
+																							.html().length - 1),
+																	currency : 'EUR',
+																	details : {
+																		subtotal : $(
+																				"#cartPrice")
+																				.html()
+																				.substring(
+																						0,
+																						$(
+																								"#cartPrice")
+																								.html().length - 1),
+																		shipping : '0.00',
+																	//	handling_fee : '1.00',
+																	//	shipping_discount : '-1.00',
+																	//	insurance : '0.01'
+																	}
+																},
+																description : 'Ordine TriSpesa via PayPal',
+																//custom : '90048630024435',
+
+																//soft_descriptor : 'ECHI5786786',
+																item_list : {
+																	items : itemsInCart,
+																	shipping_address : {
+																		recipient_name : $(
+																				"#orderFirstName")
+																				.val()
+																				+ " "
+																				+ $(
+																						"#orderLastName")
+																						.val(),
+																		line1 : $(
+																				'#selectAddress')
+																				.find(
+																						":selected")
+																				.text()
+																				.split(
+																						",")[0],
+																		line2 : $(
+																				'#selectAddress')
+																				.find(
+																						":selected")
+																				.text()
+																				.split(
+																						",")[1],
+																		city : $(
+																				'#selectAddress')
+																				.find(
+																						":selected")
+																				.text()
+																				.split(
+																						",")[3],
+																		country_code : 'IT',
+																		postal_code : $(
+																				'#selectAddress')
+																				.find(
+																						":selected")
+																				.attr(
+																						"data-address-zipcode"),
+																	//phone : '011862212345678',
+																	//state : 'CA'
+																	}
+																}
+															} ],
+															application_context : {
+																brand_name : 'TriSpesa Staff'
+															},
+															note_to_payer : 'Grazie per aver scelto TriSpesa.',
+														});
+											},
+											// Execute the payment
+											onAuthorize : function(data,
+													actions) {
+												return actions.payment
+														.execute()
+														.then(
+																function() {
+																	// Show a confirmation message to the buyer
+																	window
+																			.alert('deve partire il modale con la spunta verde');
+																});
+											}
+										}, '#paypal-button');
 					</script>
 					<div class="mb-3">
 						<div class="form-group">
@@ -340,6 +406,46 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- Modale conferma CVC -->
+		<div class="modal fade" id="addAddressModal" style="display: none"
+			tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Inserisci un indirizzo</h5>
+
+					</div>
+					<div class="modal-body">
+						<div class="mb-3">
+							<label for="orderEmail">Via <span class="text-muted"></span></label>
+							<input type="text" class="form-control" id="inputVia">
+						</div>
+						<div class="row">
+							<div class="col-md-5 mb-3">
+								<label for="province">Provincia</label> <input type="text"
+									class="form-control" id="inputProvincia">
+							</div>
+							<div class="col-md-4 mb-3">
+								<label for="city">Comune</label> <input type="text"
+									class="form-control" id="inputCitta">
+							</div>
+							<div class="col-md-3 mb-3">
+								<label for="zipcode">CAP</label> <input type="number"
+									class="form-control" id="inputCAP">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Chiudi</button>
+						<button type="button" data-dismiss="modal" class="btn btn-primary"
+							onclick="addAddressToSelect()">Conferma</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<!-- Modale spinner -->
 		<div id="waitingModal" class="modal fade">
 			<div class="modal-dialog modal-confirm">

@@ -24,6 +24,22 @@ function verifyPayment() {
 	});
 }
 
+function addAddressToSelect() {
+	var via = $("#inputVia").val();
+	var citta = $("#inputCitta").val();
+	var provincia = $("#inputProvincia").val();
+	var cap = $("#inputCAP").val();
+
+	var indirizzoCompleto = via + ", Italia, " + citta + ", " + provincia
+			+ ", " + cap;
+	var newOption = "<option value='-1' data-address='" + indirizzoCompleto
+			+ "' data-address-city='" + citta + "' data-address-province='"
+			+ provincia + "' data-address-zipcode='" + cap + "'>"
+			+ indirizzoCompleto + "</option>";
+
+	$("#selectAddress").append(newOption);
+}
+
 function updateDOMForPayPal() {
 	$("#paypal-button").show("slow");
 	$("#selectPayment").hide("slow");

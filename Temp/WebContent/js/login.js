@@ -73,6 +73,9 @@ function onSignIn(googleUser) {
 			if (response.redirect === true) {
 				$('#completaRegistrazione').toast('show');
 				$('#email').val(profile.getEmail());
+				user = profile.getName().split(" ");
+				$('#firstName').val(user[0]);
+				$('#lastName').val(user[1]);
 				$('#modalLogin').modal('show');
 				var auth2 = gapi.auth2.getAuthInstance();
 				auth2.signOut().then(function() {
@@ -120,6 +123,7 @@ function updateNavbarDOM(operation, animDelay) {
 }
 
 function fillCartAfterLogin(cartHashMap) {
+	$("#listaProdottiCarrello").empty();
 	var totalPrice = 0;
 	for ( var product in cartHashMap) {
 		totalPrice += cartHashMap[product][0].roundedDiscountedPrice

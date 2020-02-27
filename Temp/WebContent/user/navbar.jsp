@@ -246,7 +246,7 @@ $(document).ready(function() {
 			<div class="modal-body" id="modalTemp">
 				<div class="count" style="margin-bottom: 7px;">
 					<h4 style="display: inline;">Tempo rimanente: </h4>
-					<div id="timer" style="display: inline;"></div>
+					<div id="timer" style="display: inline;">00:00</div>
 				</div>
 				<table class="table">
 					<thead>

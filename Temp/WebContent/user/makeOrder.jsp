@@ -116,7 +116,8 @@
 								<div class="col-md-10 mb-3">
 									<select required name="deliveryAddressId" id="selectAddress"
 										class="form-control" form="orderForm">
-										<option value="">Seleziona un indirizzo</option>
+										<option value="" disabled selected>Seleziona un
+											indirizzo</option>
 										<c:forEach items="${customer.deliveryAddresses}"
 											var="deliveryAddress">
 											<option value="${deliveryAddress.id}"
@@ -134,6 +135,7 @@
 									</button>
 								</div>
 							</div>
+
 						</div>
 					</div>
 					<!-- Caselle da riempire con jQuery -->
@@ -309,9 +311,35 @@
 														.execute()
 														.then(
 																function() {
-																	// Show a confirmation message to the buyer
-																	window
-																			.alert('deve partire il modale con la spunta verde');
+																	var addressSelected = $(
+																			"#selectAddress")
+																			.find(
+																					"option:selected")
+																			.val();
+																	$
+																			.ajax({
+																				type : "POST",
+																				url : "manageOrder",
+																				data : {
+																					deliveryAddressId : addressSelected,
+																				},
+																				success : function() {
+																					$(
+																							"#waitingModal")
+																							.modal(
+																									"hide");
+																					$(
+																							"#orderConfirmed")
+																							.modal(
+																									"show");
+																				},
+																				error : function() {
+																					$(
+																							"#errorToast")
+																							.toast(
+																									"show");
+																				}
+																			});
 																});
 											}
 										}, '#paypal-button');
@@ -321,7 +349,8 @@
 							<select id="selectPayment" style="display: none;" required
 								name="paymentId" id="selectPayment" class="form-control"
 								form="orderForm">
-								<option value="">Seleziona una carta di credito</option>
+								<option value="" disabled selected>Seleziona una carta
+									di credito</option>
 								<c:forEach items="${customer.paymentMethods}"
 									var="paymentMethod">
 									<option value="${paymentMethod.id}">${paymentMethod}</option>
@@ -330,8 +359,8 @@
 						</div>
 					</div>
 					<hr class="mb-4">
-					<input type="submit" class="btn color-scheme btn-lg btn-block"
-						value="Conferma Ordine">
+					<input type="submit" id="buttonSubmit" disabled=true
+						class="btn color-scheme btn-lg btn-block" value="Conferma Ordine">
 
 				</form>
 			</div>

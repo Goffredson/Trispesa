@@ -37,7 +37,12 @@ public class OrderDaoJdbc implements OrderDao {
 			statement.setDouble(2, order.getTotalPrice());
 			statement.setLong(3, order.getCustomer().getId());
 			statement.setLong(4, order.getDeliveryAddress().getId());
-			statement.setLong(5, order.getPaymentMethod().getId());
+			if(order.getPaymentMethod()==null) {
+				statement.setNull(5, java.sql.Types.BIGINT);
+			}
+			else {
+				statement.setLong(5, order.getPaymentMethod().getId());
+			}
 			statement.setString(6, order.getCurrentState().toString());
 			System.out.println("Prima di update");
 			statement.executeUpdate();

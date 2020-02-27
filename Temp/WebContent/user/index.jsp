@@ -102,7 +102,7 @@
 			
 		</div>
 		<div class="toast-body" id="cartToastMessage">Hai esaurito il
-			tempo a disposizione, il tuo carrello è stato svuotato.</div>
+			tempo a disposizione, il tuo carrello &egrave; stato svuotato.</div>
 	</div>
 	<div id="noProductsInCart" class="toast notification-toast"
 		role="alert" aria-live="assertive" aria-atomic="true"
@@ -132,7 +132,7 @@
 			
 		</div>
 		<div class="toast-body" id="passwordRecoveredMessage">La tua
-			nuova password è stata mandata all'indirizzo:</div>
+			nuova password &egrave; stata mandata all'indirizzo:</div>
 	</div>
 	<div id="completaRegistrazione" class="toast notification-toast"
 		role="alert" aria-live="assertive" aria-atomic="true"

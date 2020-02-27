@@ -267,7 +267,12 @@ public class DBManager {
 		long totalPrice = customer.getCartTotalPrice();
 		DeliveryAddress deliveryAddress = getDeliveryAddressDao()
 				.retrieveByPrimaryKey(Long.parseLong(deliveryAddressId));
-		PaymentMethod paymentMethod = getPaymentMethodDao().retrieveByPrimaryKey(Long.parseLong(paymentId));
+		PaymentMethod paymentMethod;
+		System.out.println(paymentId);
+		if(paymentId==null)
+			paymentMethod=null;
+		else
+			paymentMethod = getPaymentMethodDao().retrieveByPrimaryKey(Long.parseLong(paymentId));
 		Order order = new Order(totalPrice, customer, deliveryAddress, paymentMethod, customer.getCart());
 		getOrderDao().insert(order);
 		customer.getCart().clear();
